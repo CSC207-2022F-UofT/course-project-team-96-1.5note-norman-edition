@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="csc207 [run]" type="GradleRunConfiguration" factoryName="Gradle" nameIsGenerated="true">
+  <configuration default="false" name="gradle [run]" type="GradleRunConfiguration" factoryName="Gradle">
     <ExternalSystemSettings>
       <option name="executionName" />
       <option name="externalProjectPath" value="$PROJECT_DIR$" />
