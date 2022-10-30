@@ -1,0 +1,5 @@
+.toolbar {
+    -fx-background-color: -fx-background;
+    -fx-border-color: lightgray;
+    -fx-border-width: 0 0 1 0;
+}

@@ -1,27 +1,29 @@
 import javafx.application.*;
 import javafx.stage.*;
 import javafx.scene.*;
-import javafx.scene.text.*;
-import javafx.scene.layout.*;
+
+import gui.GUICreator;
 
 
 public class Main extends Application {
 
-    private static String getMessage() {
-        return "Come on, fhqwhgads.";
-    }
+    private static final int MIN_WIDTH = 500;
+    private static final int MIN_HEIGHT= 500;
+    private static final int INITIAL_WIDTH = 1000;
+    private static final int INITIAL_HEIGHT = 800;
 
     @Override
     public void start(Stage stage) throws Exception {
-        stage.setWidth(300);
-        stage.setHeight(100);
-        stage.setResizable(true);
+        Parent gui = GUICreator.createGUI();
 
-        Text text = new Text(getMessage());
-        Pane pane = new BorderPane(text);
+        Scene scene = new Scene(gui);
+        scene.getStylesheets().add("file:res/css/base.css");
 
-        stage.setScene(new Scene(pane));
-
+        stage.setScene(scene);
+        stage.setWidth(INITIAL_WIDTH);
+        stage.setHeight(INITIAL_HEIGHT);
+        stage.setMinWidth(MIN_WIDTH);
+        stage.setMinHeight(MIN_HEIGHT);
         stage.show();
     }
 
