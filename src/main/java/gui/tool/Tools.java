@@ -16,7 +16,15 @@ public final class Tools {
     public static GUIPageTool[] getTools() {
         GUIPageTool[] tools = {
             new DummyTool("Tool 1"),
-            new DummyTool("Tool 2")
+            new DummyTool("Tool 2"),
+            new DummyTool("Tool 3"),
+            new DummyTool("Tool 4"),
+            new DummyTool("Tool 5"),
+            new DummyTool("Tool 6"),
+            new DummyTool("Tool 7"),
+            new DummyTool("Tool 8"),
+            new DummyTool("Tool 9"),
+            new DummyTool("Tool 10")
         };
 
         return tools;
