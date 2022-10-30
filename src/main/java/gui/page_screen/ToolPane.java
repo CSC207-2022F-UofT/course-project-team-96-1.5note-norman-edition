@@ -1,4 +1,4 @@
-package gui.page;
+package gui.page_screen;
 
 import javafx.scene.*;
 import javafx.scene.layout.*;
@@ -8,6 +8,8 @@ import javafx.geometry.*;
 import javafx.beans.value.*;
 import javafx.animation.Transition;
 
+import gui.page.GUIPageTool;
+
 
 /**
  * GUI element which contains the settings for the selected tool.
@@ -16,7 +18,7 @@ import javafx.animation.Transition;
  * automatically displays the relevant settings GUI when the selected tool
  * changes.
  */
-class GUIPageToolPane extends BorderPane {
+class ToolPane extends BorderPane {
 
     private static final int PADDING = 5;
     private static final int PANE_SIZE = 300;
@@ -30,7 +32,7 @@ class GUIPageToolPane extends BorderPane {
     private FlowPane toolSettingsGUI;
     private ToggleButton showHideButton;
 
-    public GUIPageToolPane(ObservableValue<GUIPageTool> selectedTool) {
+    public ToolPane(ObservableValue<GUIPageTool> selectedTool) {
         // Don't block mouse clicks/other input
         setPickOnBounds(false);
 

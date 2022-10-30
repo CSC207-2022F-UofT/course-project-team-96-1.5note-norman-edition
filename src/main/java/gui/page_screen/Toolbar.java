@@ -1,4 +1,4 @@
-package gui.page;
+package gui.page_screen;
 
 import javafx.scene.layout.*;
 import javafx.scene.text.*;
@@ -11,11 +11,13 @@ import javafx.beans.property.*;
 import java.util.Map;
 import java.util.HashMap;
 
+import gui.page.GUIPageTool;
+
 
 /**
  * GUI element which allows the user to select the active tool.
  */
-class GUIPageToolbar extends FlowPane {
+class Toolbar extends FlowPane {
 
     private static final int PADDING = 5;
 
@@ -23,7 +25,7 @@ class GUIPageToolbar extends FlowPane {
     private Map<Toggle, GUIPageTool> toolMap;
     private ReadOnlyObjectWrapper<GUIPageTool> selectedTool;
 
-    public GUIPageToolbar(GUIPageTool[] tools) {
+    public Toolbar(GUIPageTool[] tools) {
         super(PADDING, PADDING);
 
         paddingProperty().setValue(new Insets(PADDING));

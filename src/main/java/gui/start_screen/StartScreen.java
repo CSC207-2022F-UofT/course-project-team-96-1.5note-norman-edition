@@ -8,7 +8,7 @@ import javafx.stage.FileChooser;
 import java.io.File;
 
 import gui.SwapPane;
-import gui.page.GUIPage;
+import gui.page_screen.PageScreen;
 import gui.page.GUIPageTool;
 
 import storage.FileStorage;
@@ -30,7 +30,7 @@ public class StartScreen extends VBox {
     private Button newPageButton;
     private Button loadPageButton;
 
-    private GUIPage page;
+    private PageScreen pageScreen;
 
     public StartScreen(SwapPane parent, MenuBar menuBar, GUIPageTool[] tools) {
         this.parent = parent;
@@ -70,9 +70,9 @@ public class StartScreen extends VBox {
 
         FileStorage storage = new FileStorage(file);
         MediaCommunicator c = MediaCommunicator.getFor(storage);
-        page = new GUIPage(tools, c);
+        pageScreen = new PageScreen(tools, c);
 
-        parent.swapTo(page);
+        parent.swapTo(pageScreen);
     }
 
     private void newPage() {
@@ -90,9 +90,9 @@ public class StartScreen extends VBox {
     }
 
     private void closePage() {
-        if (page != null) {
-            page.close();
-            page = null;
+        if (pageScreen != null) {
+            pageScreen.close();
+            pageScreen = null;
         }
 
         parent.swapBack();
