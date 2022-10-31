@@ -10,7 +10,7 @@ public class Main extends Application {
     private static final int MIN_WIDTH = 500;
     private static final int MIN_HEIGHT= 500;
     private static final int INITIAL_WIDTH = 1000;
-    private static final int INITIAL_HEIGHT = 800;
+    private static final int INITIAL_HEIGHT = 700;
 
     @Override
     public void start(Stage stage) throws Exception {
