@@ -10,16 +10,15 @@ import app.Page;
 public class GUIPage extends StackPane implements Page {
 
     private MediaCommunicator c;
-    private ObservableValue<GUIPageTool> t;
+    private ObservableValue<? extends GUIPageTool> t;
 
-    public GUIPage(MediaCommunicator c, ObservableValue<GUIPageTool> t) {
+    public GUIPage(
+            MediaCommunicator c, ObservableValue<? extends GUIPageTool> t)
+    {
         this.c = c;
         this.t = t;
 
         c.addPage(this);
-        t.addListener((o, oldVal, newVal) -> {
-            setCursor(newVal.getCursor());
-        });
         getStyleClass().add("page");
     }
 

@@ -9,7 +9,6 @@ import java.io.File;
 
 import gui.SwapPane;
 import gui.page_screen.PageScreen;
-import gui.page.GUIPageTool;
 
 import storage.FileStorage;
 
@@ -26,16 +25,14 @@ public class StartScreen extends VBox {
     private SwapPane parent;
     private MenuBar menuBar;
     private Menu pageMenu;
-    private GUIPageTool[] tools;
     private Button newPageButton;
     private Button loadPageButton;
 
     private PageScreen pageScreen;
 
-    public StartScreen(SwapPane parent, MenuBar menuBar, GUIPageTool[] tools) {
+    public StartScreen(SwapPane parent, MenuBar menuBar) {
         this.parent = parent;
         this.menuBar = menuBar;
-        this.tools = tools;
 
         newPageButton = new NewPageButton();
         loadPageButton = new LoadPageButton();
@@ -70,7 +67,7 @@ public class StartScreen extends VBox {
 
         FileStorage storage = new FileStorage(file);
         MediaCommunicator c = MediaCommunicator.getFor(storage);
-        pageScreen = new PageScreen(tools, c);
+        pageScreen = new PageScreen(c);
 
         parent.swapTo(pageScreen);
     }

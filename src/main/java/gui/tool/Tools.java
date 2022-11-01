@@ -3,7 +3,7 @@ package gui.tool;
 import javafx.scene.text.*;
 import javafx.scene.layout.*;
 
-import gui.page.GUIPageTool;
+import gui.page_screen.Tool;
 
 
 /**
@@ -13,8 +13,8 @@ public final class Tools {
 
     private Tools() {}
 
-    public static GUIPageTool[] getTools() {
-        GUIPageTool[] tools = {
+    public static Tool[] getTools() {
+        Tool[] tools = {
             new DummyTool("Tool 1"),
             new DummyTool("Tool 2"),
             new DummyTool("Tool 3"),
@@ -33,7 +33,7 @@ public final class Tools {
 
 
 // TODO: Remove this class once actual Tools are available.
-class DummyTool implements GUIPageTool {
+class DummyTool implements Tool {
 
     private String name;
 

@@ -6,8 +6,8 @@ import javafx.scene.control.*;
 import javafx.geometry.Pos;
 
 import gui.SwapPane;
-import gui.page.GUIPageTool;
 import gui.page.GUIPage;
+import gui.tool.Tools;
 
 import app.Page;
 import app.MediaCommunicator;
@@ -25,7 +25,9 @@ public class PageScreen extends VBox {
     private Toolbar toolBar;
     private ToolPane toolPane;
 
-    public PageScreen(GUIPageTool[] tools, MediaCommunicator c) {
+    public PageScreen(MediaCommunicator c) {
+        Tool[] tools = Tools.getTools();
+
         toolBar = new Toolbar(tools);
         getChildren().add(toolBar);
 

@@ -6,7 +6,6 @@ import javafx.scene.control.*;
 
 import gui.start_screen.StartScreen;
 import gui.SwapPane;
-import gui.tool.Tools;
 
 
 public final class GUICreator {
@@ -17,7 +16,7 @@ public final class GUICreator {
         MenuBar menuBar = new MenuBar();
         SwapPane swapPane = new SwapPane();
 
-        Node startScreen = new StartScreen(swapPane, menuBar, Tools.getTools());
+        Node startScreen = new StartScreen(swapPane, menuBar);
         swapPane.setBase(startScreen);
 
         VBox vBox = new VBox(menuBar, swapPane);

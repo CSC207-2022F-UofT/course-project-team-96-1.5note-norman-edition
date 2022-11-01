@@ -11,8 +11,6 @@ import javafx.beans.property.*;
 import java.util.Map;
 import java.util.HashMap;
 
-import gui.page.GUIPageTool;
-
 
 /**
  * GUI element which allows the user to select the active tool.
@@ -22,10 +20,10 @@ class Toolbar extends FlowPane {
     private static final int PADDING = 5;
 
     private ToggleGroup toggles;
-    private Map<Toggle, GUIPageTool> toolMap;
-    private ReadOnlyObjectWrapper<GUIPageTool> selectedTool;
+    private Map<Toggle, Tool> toolMap;
+    private ReadOnlyObjectWrapper<Tool> selectedTool;
 
-    public Toolbar(GUIPageTool[] tools) {
+    public Toolbar(Tool[] tools) {
         super(PADDING, PADDING);
 
         paddingProperty().setValue(new Insets(PADDING));
@@ -43,12 +41,12 @@ class Toolbar extends FlowPane {
             }
         });
 
-        for (GUIPageTool tool: tools) {
+        for (Tool tool: tools) {
             addTool(tool);
         }
     }
 
-    private void addTool(GUIPageTool tool) {
+    private void addTool(Tool tool) {
         ToggleButton toolButton = new ToolButton(tool);
         toggles.getToggles().add(toolButton);
         toolMap.put(toolButton, tool);
@@ -56,7 +54,7 @@ class Toolbar extends FlowPane {
         getChildren().add(toolButton);
     }
 
-    public ObservableValue<GUIPageTool> selectedTool() {
+    public ObservableValue<Tool> selectedTool() {
         return selectedTool.getReadOnlyProperty();
     }
 }
@@ -64,7 +62,7 @@ class Toolbar extends FlowPane {
 
 class ToolButton extends ToggleButton {
 
-    public ToolButton(GUIPageTool tool) {
+    public ToolButton(Tool tool) {
         super(null, tool.getGraphic());
 
         // Prevent de-selecting a ToolButton by clicking it, i.e. the only way

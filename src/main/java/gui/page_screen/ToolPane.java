@@ -8,8 +8,6 @@ import javafx.geometry.*;
 import javafx.beans.value.*;
 import javafx.animation.Transition;
 
-import gui.page.GUIPageTool;
-
 
 /**
  * GUI element which contains the settings for the selected tool.
@@ -32,7 +30,7 @@ class ToolPane extends BorderPane {
     private FlowPane toolSettingsGUI;
     private ToggleButton showHideButton;
 
-    public ToolPane(ObservableValue<GUIPageTool> selectedTool) {
+    public ToolPane(ObservableValue<Tool> selectedTool) {
         // Don't block mouse clicks/other input
         setPickOnBounds(false);
 
@@ -97,7 +95,7 @@ class ToolPane extends BorderPane {
         }
     }
 
-    private void setTool(GUIPageTool tool) {
+    private void setTool(Tool tool) {
         settingsPane.setContent(null);
 
         titleBar.setTitle(tool.getName());
