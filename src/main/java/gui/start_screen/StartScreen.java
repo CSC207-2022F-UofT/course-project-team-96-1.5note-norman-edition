@@ -28,8 +28,6 @@ public class StartScreen extends VBox {
     private Button newPageButton;
     private Button loadPageButton;
 
-    private PageScreen pageScreen;
-
     public StartScreen(SwapPane parent, MenuBar menuBar) {
         this.parent = parent;
         this.menuBar = menuBar;
@@ -66,8 +64,8 @@ public class StartScreen extends VBox {
         closePage();
 
         FileStorage storage = new FileStorage(file);
-        MediaCommunicator c = MediaCommunicator.getFor(storage);
-        pageScreen = new PageScreen(c);
+        MediaCommunicator c = new MediaCommunicator(storage);
+        PageScreen pageScreen = new PageScreen(c);
 
         parent.swapTo(pageScreen);
     }
@@ -87,11 +85,6 @@ public class StartScreen extends VBox {
     }
 
     private void closePage() {
-        if (pageScreen != null) {
-            pageScreen.close();
-            pageScreen = null;
-        }
-
         parent.swapBack();
     }
 

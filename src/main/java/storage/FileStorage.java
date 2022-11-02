@@ -2,10 +2,10 @@ package storage;
 
 import java.io.File;
 
-import app.Storage;
+import app.MediaStorage;
 
 
-public class FileStorage implements Storage {
+public class FileStorage implements MediaStorage {
 
     public FileStorage(File file) {
     }

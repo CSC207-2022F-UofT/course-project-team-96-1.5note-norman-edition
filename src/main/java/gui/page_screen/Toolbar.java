@@ -11,6 +11,8 @@ import javafx.beans.property.*;
 import java.util.Map;
 import java.util.HashMap;
 
+import gui.tool.Tool;
+
 
 /**
  * GUI element which allows the user to select the active tool.

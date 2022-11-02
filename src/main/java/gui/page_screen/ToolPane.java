@@ -6,7 +6,8 @@ import javafx.scene.control.*;
 import javafx.scene.text.*;
 import javafx.geometry.*;
 import javafx.beans.value.*;
-import javafx.animation.Transition;
+
+import gui.tool.Tool;
 
 
 /**

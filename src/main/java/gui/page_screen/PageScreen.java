@@ -5,11 +5,14 @@ import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.geometry.Pos;
 
-import gui.SwapPane;
-import gui.page.GUIPage;
-import gui.tool.Tools;
+import java.util.List;
+import java.util.ArrayList;
 
-import app.Page;
+import gui.SwapPane;
+import gui.page.Page;
+import gui.tool.Tools;
+import gui.tool.Tool;
+
 import app.MediaCommunicator;
 
 
@@ -21,18 +24,22 @@ import app.MediaCommunicator;
 public class PageScreen extends VBox {
 
     private StackPane layers;
-    private GUIPage page;
     private Toolbar toolBar;
     private ToolPane toolPane;
 
     public PageScreen(MediaCommunicator c) {
-        Tool[] tools = Tools.getTools();
+        Tool[] tools = Tools.getTools(c);
 
         toolBar = new Toolbar(tools);
         getChildren().add(toolBar);
 
 
-        page = new GUIPage(c, toolBar.selectedTool());
+        Page page = new Page(c);
+        toolBar.selectedTool().addListener((o, oldVal, newVal) -> {
+            // Set the currently selected tool to handle input events for the
+            // page.
+            page.setEventHandler(newVal);
+        });
 
         layers = new StackPane(page);
         VBox.setVgrow(layers, Priority.ALWAYS);
@@ -46,15 +53,5 @@ public class PageScreen extends VBox {
 
     private void addLayer(Node layer) {
         layers.getChildren().add(layer);
-    }
-
-    /**
-     * Run cleanup tasks.
-     * <p>
-     * This method should be called <i>at most</i> once, and the GUIPage,
-     * PageScreen, and/or any of their contents should not be used afterwards.
-     */
-    public void close() {
-        page.close();
     }
 }

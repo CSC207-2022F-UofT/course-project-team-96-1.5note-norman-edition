@@ -1,10 +1,10 @@
-package gui.page_screen;
+package gui.tool;
 
 import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.*;
 
-import gui.page.GUIPageTool;
+import gui.page.PageEventHandler;
 
 
 /**
@@ -18,7 +18,7 @@ import gui.page.GUIPageTool;
  *  <li> The GUI with which the tool is configured.
  * </ul>
  */
-public interface Tool extends GUIPageTool {
+public interface Tool extends PageEventHandler {
 
     default Node getGraphic() {
         return new Text(getName());

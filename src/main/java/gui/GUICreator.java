@@ -8,6 +8,9 @@ import gui.start_screen.StartScreen;
 import gui.SwapPane;
 
 
+/**
+ * Utility class which instantiates main GUI components.
+ */
 public final class GUICreator {
 
     private GUICreator() {}

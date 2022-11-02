@@ -3,7 +3,7 @@ package gui.tool;
 import javafx.scene.text.*;
 import javafx.scene.layout.*;
 
-import gui.page_screen.Tool;
+import app.MediaCommunicator;
 
 
 /**
@@ -13,7 +13,7 @@ public final class Tools {
 
     private Tools() {}
 
-    public static Tool[] getTools() {
+    public static Tool[] getTools(MediaCommunicator c) {
         Tool[] tools = {
             new DummyTool("Tool 1"),
             new DummyTool("Tool 2"),
