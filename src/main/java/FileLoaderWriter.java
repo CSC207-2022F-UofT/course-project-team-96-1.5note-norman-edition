@@ -1,6 +1,7 @@
 public class FileLoaderWriter implements Storage {
     // TODO: Implement a file cache, which stores recently opened files to prevent consecutive reopening
     private int cacheSize = 10; // Size of the internal file cache
+
     private byte[][] fileCache = new byte[cacheSize][]; // Internal file cache
 
     public byte[] readFile(String path){
