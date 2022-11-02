@@ -71,7 +71,7 @@ class ToolPane extends BorderPane {
         double width = getWidth();
         double height = getHeight();
 
-        if (width <= height) {
+        if (width - PANE_SIZE < PANE_SIZE) {
             setOrientation(Orientation.HORIZONTAL);
         } else {
             setOrientation(Orientation.VERTICAL);
