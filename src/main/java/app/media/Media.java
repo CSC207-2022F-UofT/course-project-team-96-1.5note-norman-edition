@@ -63,7 +63,7 @@ public class Media implements Serializable, Observable {
 
     @Override
     public void removeListener(InvalidationListener listener) {
-        listeners.remove(listener);
+        while (listeners.remove(listener)) {};
     }
 
     // This method calls each InvalidationListener to indicate to them that
