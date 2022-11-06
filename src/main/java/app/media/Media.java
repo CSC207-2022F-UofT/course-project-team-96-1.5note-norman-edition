@@ -12,7 +12,7 @@ import java.util.ArrayList;
 /**
  * Core entity representing a piece of media which can be displayed on a page.
  */
-public class Media<D extends Serializable> implements Serializable, Observable {
+public class Media implements Serializable, Observable {
 
     // Identification
     private String name;
@@ -30,14 +30,12 @@ public class Media<D extends Serializable> implements Serializable, Observable {
     // "Vertical" Order
     private int zIndex;
 
-    private D data;
-
     private transient List<InvalidationListener> listeners;
 
 
     public Media(
             String name, Set<String> tags, double x, double y,
-            double width, double height, double angle, int zIndex, D data)
+            double width, double height, double angle, int zIndex)
     {
         this.name = name;
         this.tags = tags;
@@ -47,15 +45,14 @@ public class Media<D extends Serializable> implements Serializable, Observable {
         this.height = height;
         this.angle = angle;
         this.zIndex = zIndex;
-        this.data = data;
 
         this.listeners = new ArrayList<>();
     }
 
     public Media(
-        String name, double x, double y, double width, double height, D data)
+        String name, double x, double y, double width, double height)
     {
-        this(name, new HashSet<>(), x, y, width, height, 0, 0, data);
+        this(name, new HashSet<>(), x, y, width, height, 0, 0);
     }
 
 
