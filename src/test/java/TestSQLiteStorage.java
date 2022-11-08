@@ -84,7 +84,7 @@ public class TestSQLiteStorage {
         Media m2 = new Media("bar", 0, 0, 0, 0);
         s.insertMedia(m2);
 
-        Set<String> names = s.selectAllMediaNames();
+        Set<String> names = s.selectAllNames();
 
         assertTrue(names.contains(m1.getName()));
         assertTrue(names.contains(m2.getName()));

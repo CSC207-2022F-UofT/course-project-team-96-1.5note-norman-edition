@@ -145,7 +145,7 @@ public class SQLiteStorage implements MediaStorage {
         s.executeUpdate();
     }
 
-    public Set<String> selectAllMediaNames() throws Exception {
+    public Set<String> selectAllNames() throws Exception {
         Statement s = connection.createStatement();
 
         ResultSet r = s.executeQuery("""
