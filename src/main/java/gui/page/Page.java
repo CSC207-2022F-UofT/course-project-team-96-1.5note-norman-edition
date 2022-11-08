@@ -5,7 +5,7 @@ import javafx.scene.layout.*;
 import javafx.scene.transform.*;
 import javafx.scene.input.*;
 import javafx.beans.value.*;
-import javafx.geometry.Point2D;
+import javafx.geometry.*;
 
 import app.MediaCommunicator;
 import app.MediaObserver;
