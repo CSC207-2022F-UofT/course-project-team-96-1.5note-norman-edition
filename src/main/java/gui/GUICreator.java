@@ -18,6 +18,7 @@ public final class GUICreator {
     public static Parent createGUI() {
         MenuBar menuBar = new MenuBar();
         SwapPane swapPane = new SwapPane();
+        swapPane.setViewOrder(1);
 
         Node startScreen = new StartScreen(swapPane, menuBar);
         swapPane.setBase(startScreen);

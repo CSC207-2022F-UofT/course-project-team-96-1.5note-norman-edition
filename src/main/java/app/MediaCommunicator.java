@@ -51,14 +51,22 @@ public class MediaCommunicator {
      * objects within the rectangular region with top left corner at (`x`, `y`)
      * and with width `w` and height `h`.
      */
-    public Set<String> getMediaNamesWithin(int x, int y, int w, int h) {
+    public Set<String> getMediaNamesWithin(
+            double x, double y, double w, double h)
+    {
         return null;
     }
 
     /**
-     * Return the Media object with the given name
+     * Return the Media object with the given name.
      */
     public Media getMediaWithName(String name) {
         return null;
+    }
+
+    /**
+     * Save changes to storage.
+     */
+    public void save() throws Exception {
     }
 }

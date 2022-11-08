@@ -10,7 +10,7 @@ import java.io.File;
 import gui.SwapPane;
 import gui.page_screen.PageScreen;
 
-import storage.FileStorage;
+import storage.SQLiteStorage;
 
 import app.MediaCommunicator;
 
@@ -27,6 +27,10 @@ public class StartScreen extends VBox {
     private Menu pageMenu;
     private Button newPageButton;
     private Button loadPageButton;
+    private PageScreen pageScreen;
+
+    private SQLiteStorage storage;
+    private MediaCommunicator c;
 
     public StartScreen(SwapPane parent, MenuBar menuBar) {
         this.parent = parent;
@@ -41,6 +45,8 @@ public class StartScreen extends VBox {
         MenuItem newPageItem = new MenuItem("New");
         MenuItem loadPageItem = new MenuItem("Load");
         MenuItem closePageItem = new MenuItem("Close");
+        MenuItem savePageItem = new MenuItem("Save");
+        MenuItem savePageAsItem = new MenuItem("Save As");
 
         newPageButton.setOnAction(e -> newPage());
         newPageItem.setOnAction(e -> newPage());
@@ -48,26 +54,36 @@ public class StartScreen extends VBox {
         loadPageButton.setOnAction(e -> loadPage());
         loadPageItem.setOnAction(e -> loadPage());
         closePageItem.setOnAction(e -> closePage());
+        savePageItem.setOnAction(e -> savePage());
+        savePageAsItem.setOnAction(e -> savePageAs());
 
         HBox pageButtonsRow = new HBox(
                 PADDING, newPageButton, loadPageButton);
         pageButtonsRow.paddingProperty().setValue(new Insets(PADDING));
 
-        pageMenu.getItems().addAll(newPageItem, loadPageItem, closePageItem);
-        setPageOnlyMenuItems(closePageItem);
+        pageMenu.getItems().addAll(
+                newPageItem, loadPageItem, closePageItem,
+                savePageItem, savePageAsItem);
+        setPageOnlyMenuItems(closePageItem, savePageItem, savePageAsItem);
 
         getChildren().add(pageButtonsRow);
         getChildren().add(new Separator());
     }
 
     private void newPageForFile(File file) {
-        closePage();
+        try {
+            storage = new SQLiteStorage(file);
+            c = new MediaCommunicator(storage);
 
-        FileStorage storage = new FileStorage(file);
-        MediaCommunicator c = new MediaCommunicator(storage);
-        PageScreen pageScreen = new PageScreen(c);
-
-        parent.swapTo(pageScreen);
+            if (pageScreen == null) {
+                pageScreen = new PageScreen(c);
+                parent.swapTo(pageScreen);
+            } else {
+                pageScreen.newPage(c);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void newPage() {
@@ -85,7 +101,41 @@ public class StartScreen extends VBox {
     }
 
     private void closePage() {
+        pageScreen = null;
+        storage = null;
+        c = null;
         parent.swapBack();
+    }
+
+    private void savePage() {
+        if (storage != null) {
+            if (storage.isInMemory()) {
+                savePageAs();
+            } else {
+                try {
+                    c.save();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+    }
+
+    private void savePageAs() {
+        if (storage != null) {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Save Notebook");
+            fileChooser.setInitialFileName("new.notebook");
+            File file = fileChooser.showSaveDialog(getScene().getWindow());
+
+            if (file != null) {
+                try {
+                    storage.saveTo(file);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
     }
 
     // Make the given MenuItems only usable when a page is open, i.e. when the

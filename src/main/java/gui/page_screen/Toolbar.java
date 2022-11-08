@@ -22,6 +22,8 @@ class Toolbar extends FlowPane {
     private static final int PADDING = 5;
 
     private ToggleGroup toggles;
+    // Map toggle buttons to tools, so we can get the currently selected tool
+    // when the selected toggle changes.
     private Map<Toggle, Tool> toolMap;
     private ReadOnlyObjectWrapper<Tool> selectedTool;
 
@@ -45,6 +47,10 @@ class Toolbar extends FlowPane {
 
         for (Tool tool: tools) {
             addTool(tool);
+        }
+
+        if (tools.length > 0) {
+            toggles.getToggles().get(0).setSelected(true);
         }
     }
 

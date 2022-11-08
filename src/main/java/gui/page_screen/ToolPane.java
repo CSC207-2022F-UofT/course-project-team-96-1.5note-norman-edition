@@ -62,6 +62,7 @@ class ToolPane extends BorderPane {
         widthProperty().addListener(w -> setOrientationForCurrentSize());
         heightProperty().addListener(h -> setOrientationForCurrentSize());
 
+        setTool(selectedTool.getValue());
         selectedTool.addListener((o, oldVal, newVal) -> setTool(newVal));
     }
 

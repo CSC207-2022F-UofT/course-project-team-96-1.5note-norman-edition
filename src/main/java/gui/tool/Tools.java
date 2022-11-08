@@ -2,8 +2,10 @@ package gui.tool;
 
 import javafx.scene.text.*;
 import javafx.scene.layout.*;
+import javafx.event.*;
 
 import app.MediaCommunicator;
+import gui.page.PageEventHandler;
 
 
 /**
@@ -13,8 +15,10 @@ public final class Tools {
 
     private Tools() {}
 
-    public static Tool[] getTools(MediaCommunicator c) {
+    public static Tool[] getTools() {
         Tool[] tools = {
+            new PenTool(),
+            /*
             new DummyTool("Tool 1"),
             new DummyTool("Tool 2"),
             new DummyTool("Tool 3"),
@@ -25,6 +29,7 @@ public final class Tools {
             new DummyTool("Tool 8"),
             new DummyTool("Tool 9"),
             new DummyTool("Tool 10")
+            */
         };
 
         return tools;
@@ -32,6 +37,7 @@ public final class Tools {
 }
 
 
+/*
 // TODO: Remove this class once actual Tools are available.
 class DummyTool implements Tool {
 
@@ -73,4 +79,17 @@ class DummyTool implements Tool {
 
         return f;
     }
+
+    @Override
+    public PageEventHandler.HandlerMethod[] getHandlerMethods() {
+        PageEventHandler.HandlerMethod[] handlers = {
+            new PageEventHandler.HandlerMethod(Event.ANY, e -> {
+                System.out.println(getName());
+                System.out.println(e);
+            })
+        };
+
+        return handlers;
+    }
 }
+*/

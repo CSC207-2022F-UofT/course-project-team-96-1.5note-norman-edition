@@ -24,25 +24,22 @@ import app.MediaCommunicator;
 public class PageScreen extends VBox {
 
     private StackPane layers;
+    private Tool[] tools;
     private Toolbar toolBar;
     private ToolPane toolPane;
+    private Page page;
 
     public PageScreen(MediaCommunicator c) {
-        Tool[] tools = Tools.getTools(c);
+        tools = Tools.getTools();
 
         toolBar = new Toolbar(tools);
         getChildren().add(toolBar);
 
-
-        Page page = new Page(c);
-        toolBar.selectedTool().addListener((o, oldVal, newVal) -> {
-            // Set the currently selected tool to handle input events for the
-            // page.
-            page.setEventHandler(newVal);
-        });
-
-        layers = new StackPane(page);
+        layers = new StackPane();
+        layers.setViewOrder(1);
         VBox.setVgrow(layers, Priority.ALWAYS);
+
+        newPage(c);
 
         getChildren().add(layers);
 
@@ -53,5 +50,26 @@ public class PageScreen extends VBox {
 
     private void addLayer(Node layer) {
         layers.getChildren().add(layer);
+    }
+
+    public void newPage(MediaCommunicator c) {
+        if (page != null) {
+            page.setEventHandler(null);
+            layers.getChildren().remove(page);
+        }
+
+        for (Tool tool: tools) {
+            tool.setCommunicator(c);
+        }
+
+        page = new Page(c);
+        page.setEventHandler(toolBar.selectedTool().getValue());
+        toolBar.selectedTool().addListener((o, oldVal, newVal) -> {
+            // Set the currently selected tool to handle input events for the
+            // page.
+            page.setEventHandler(newVal);
+        });
+
+        layers.getChildren().add(0, page);
     }
 }

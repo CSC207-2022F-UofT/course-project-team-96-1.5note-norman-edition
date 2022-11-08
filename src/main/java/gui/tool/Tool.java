@@ -5,6 +5,7 @@ import javafx.scene.layout.*;
 import javafx.scene.text.*;
 
 import gui.page.PageEventHandler;
+import app.MediaCommunicator;
 
 
 /**
@@ -31,4 +32,6 @@ public interface Tool extends PageEventHandler {
     default FlowPane getSettingsGUI() {
         return null;
     }
+
+    default void setCommunicator(MediaCommunicator c) {};
 }
