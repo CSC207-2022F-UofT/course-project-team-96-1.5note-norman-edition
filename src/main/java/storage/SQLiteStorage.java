@@ -164,12 +164,25 @@ public class SQLiteStorage implements MediaStorage {
     public Set<String> selectNamesWithin(
             double x, double y, double w, double h) throws Exception
     {
-        String query = """
+        PreparedStatement s = connection.prepareStatement("""
             SELECT name FROM media WHERE
-            """;
-        PreparedStatement s = connection.prepareStatement(query);
+            x BETWEEN ? - width AND ?
+            AND y BETWEEN ? - height AND ?
+            """);
+        s.setDouble(1, x);
+        s.setDouble(2, x + w);
+        s.setDouble(3, y);
+        s.setDouble(4, y + h);
 
-        return null;
+        ResultSet r = s.executeQuery();
+
+        Set<String> names = new HashSet<>();
+
+        while (r.next()) {
+            names.add(r.getString(1));
+        }
+
+        return names;
     }
 
     public boolean contains(String name) throws Exception {

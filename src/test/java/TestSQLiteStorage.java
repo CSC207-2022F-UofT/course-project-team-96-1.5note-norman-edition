@@ -89,4 +89,26 @@ public class TestSQLiteStorage {
         assertTrue(names.contains(m1.getName()));
         assertTrue(names.contains(m2.getName()));
     }
+
+    @Test
+    public void testSQLiteSelectWithin() throws Exception {
+        // Test selecting media within a rectangular region
+
+        SQLiteStorage s = new SQLiteStorage(null);
+
+        Media m1 = new Media("foo", 0, 0, 2, 2);
+        s.insertMedia(m1);
+
+        Media m2 = new Media("bar", 10, 10, 2, 2);
+        s.insertMedia(m2);
+
+        Set<String> names1 = s.selectNamesWithin(0, 0, 5, 5);
+        Set<String> names2 = s.selectNamesWithin(9, 9, 5, 5);
+
+        assertTrue(names1.contains(m1.getName()));
+        assertFalse(names1.contains(m2.getName()));
+
+        assertTrue(names2.contains(m2.getName()));
+        assertFalse(names2.contains(m1.getName()));
+    }
 }
