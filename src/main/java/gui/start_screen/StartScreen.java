@@ -9,6 +9,7 @@ import java.io.File;
 
 import gui.SwapPane;
 import gui.page_screen.PageScreen;
+import gui.error_window.ErrorWindow;
 
 import storage.SQLiteStorage;
 
@@ -82,7 +83,10 @@ public class StartScreen extends VBox {
                 pageScreen.newPage(c);
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            new ErrorWindow(
+                    this, null,
+                    "The page could not be loaded.", e)
+                .showAndWait();
         }
     }
 
@@ -92,7 +96,7 @@ public class StartScreen extends VBox {
 
     private void loadPage() {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Load Notebook");
+        fileChooser.setTitle("Load Page");
         File file = fileChooser.showOpenDialog(getScene().getWindow());
 
         if (file != null) {
@@ -115,7 +119,10 @@ public class StartScreen extends VBox {
                 try {
                     c.save();
                 } catch (Exception e) {
-                    throw new RuntimeException(e);
+                    new ErrorWindow(
+                            this, null,
+                            "The page could not be saved.", e)
+                        .showAndWait();
                 }
             }
         }
@@ -124,12 +131,13 @@ public class StartScreen extends VBox {
     private void savePageAs() {
         if (storage != null) {
             FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Save Notebook");
-            fileChooser.setInitialFileName("new.notebook");
+            fileChooser.setTitle("Save Page");
+            fileChooser.setInitialFileName("new.page");
             File file = fileChooser.showSaveDialog(getScene().getWindow());
 
             if (file != null) {
                 try {
+                    c.save();
                     storage.saveTo(file);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
