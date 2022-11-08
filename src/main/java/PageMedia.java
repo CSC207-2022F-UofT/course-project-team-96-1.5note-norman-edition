@@ -5,8 +5,12 @@ public class PageMedia {
     private String name;
     private String tag;
 
+    private byte[] rawData;
 
-    public PageMedia(double[] position, double[] dimensions, double angle, int zIndex, String name, String tag) {
+
+
+    public PageMedia(double[] position, double[] dimensions, double angle, int zIndex, String name, String tag,
+                     byte[] rawData) {
         this.position = position;
         this.dimensions = dimensions;
         this.angle = angle;
@@ -39,6 +43,10 @@ public class PageMedia {
         return tag;
     }
 
+    public byte[] getRawData() {
+        return rawData;
+    }
+
     public void setPosition(double[] position) {
         this.position = position;
     }
@@ -61,5 +69,9 @@ public class PageMedia {
 
     public void setTag(String tag) {
         this.tag = tag;
+    }
+
+    public void setRawData(byte[] rawData) {
+        this.rawData = rawData;
     }
 }
