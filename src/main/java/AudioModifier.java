@@ -3,11 +3,6 @@ public class AudioModifier implements MediaManager {
     private String TimeStamp;
 
     @Override
-    public void createObject() {
-
-    }
-
-    @Override
     public void addMedia() {
 
     }
@@ -23,6 +18,7 @@ public class AudioModifier implements MediaManager {
     }
 
     public void addTimeStamp(String givenTimeStamp){
+
         this.TimeStamp = givenTimeStamp;
     }
 
