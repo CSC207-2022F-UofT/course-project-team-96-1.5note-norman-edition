@@ -1,11 +1,6 @@
 public class TextModifier implements MediaManager{
     private String link;
     @Override
-    public void createObject() {
-
-    }
-
-    @Override
     public void addMedia() {
 
     }
