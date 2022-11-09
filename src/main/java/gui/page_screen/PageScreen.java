@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 import gui.SwapPane;
 import gui.page.Page;
-import gui.tool.Tools;
+import gui.tool.ToolFactory;
 import gui.tool.Tool;
 
 import app.MediaCommunicator;
@@ -30,7 +30,7 @@ public class PageScreen extends VBox {
     private Page page;
 
     public PageScreen(MediaCommunicator c) {
-        tools = Tools.getTools();
+        tools = ToolFactory.getTools();
 
         toolBar = new Toolbar(tools);
         getChildren().add(toolBar);

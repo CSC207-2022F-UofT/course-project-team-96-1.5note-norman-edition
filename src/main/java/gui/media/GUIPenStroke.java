@@ -9,6 +9,7 @@ import javafx.scene.paint.*;
 import javafx.geometry.Point2D;
 
 import app.media.PenStroke;
+import app.media.Media;
 
 
 public class GUIPenStroke extends GUIMedia<PenStroke> {
@@ -18,12 +19,35 @@ public class GUIPenStroke extends GUIMedia<PenStroke> {
     private double startY;
 
     private Path path;
+    private Circle startCircle;
 
     private Point2D prevSegmentDir;
     private Point2D avgDir;
 
-    public GUIPenStroke(Point2D point, double thickness) {
-        super(new PenStroke(point.getX(), point.getY(), thickness));
+    private void setInitialValues() {
+        path = new Path(new MoveTo(0, 0));
+        path.setStrokeLineCap(StrokeLineCap.ROUND);
+        path.setStrokeLineJoin(StrokeLineJoin.ROUND);
+
+        segments = new ArrayList<>();
+
+        startCircle = new Circle();
+
+        getChildren().clear();
+        getChildren().addAll(path, startCircle);
+
+        prevSegmentDir = Point2D.ZERO;
+        avgDir = Point2D.ZERO;
+    }
+
+    public GUIPenStroke(Point2D point, double thickness, Color colour) {
+        super(new PenStroke(point.getX(), point.getY(), thickness, colour.toString()));
+
+        setInitialValues();
+        segments.add(new Segment(0, 0));
+
+        path.setStroke(colour);
+        startCircle.setFill(colour);
 
         double x = point.getX();
         double y = point.getY();
@@ -31,22 +55,47 @@ public class GUIPenStroke extends GUIMedia<PenStroke> {
         startX = x;
         startY = y;
 
-        path = new Path(new MoveTo(0, 0));
-        path.setStrokeLineCap(StrokeLineCap.ROUND);
-        path.setStrokeLineJoin(StrokeLineJoin.ROUND);
+        startCircle.setRadius(thickness / 2);
+    }
 
-        segments = new ArrayList<>();
-        addSegment(new Segment(0, 0));
+    public GUIPenStroke(PenStroke media) {
+        super(media);
+        setStroke(media);
+    }
 
-        getChildren().add(path);
+    @Override
+    public void mediaUpdated(Media media) {
+        PenStroke newStroke = (PenStroke) media;
+        PenStroke currentStroke = getMedia();
 
-        prevSegmentDir = Point2D.ZERO;
-        avgDir = Point2D.ZERO;
+        if (currentStroke != newStroke) {
+            setMedia(newStroke);
+            setStroke(newStroke);
+        }
+    }
+
+    private void setStroke(PenStroke stroke) {
+        setInitialValues();
+
+        double thickness = stroke.getThickness();
+        Color colour = Color.valueOf(stroke.getColour());
+
+        startCircle.setRadius(thickness / 2);
+        startCircle.setFill(colour);
+
+        path.setStrokeWidth(thickness);
+        path.setStroke(colour);
+
+        for (PenStroke.Segment s: stroke.getSegments()) {
+            addSegment(new Segment(s.endX(), s.endY()));
+        }
     }
 
     public void update(Point2D point, double thickness, boolean straight) {
         double x = point.getX();
         double y = point.getY();
+
+        startCircle.setRadius(thickness / 2);
 
         Segment s = getLastSegment();
 
@@ -104,8 +153,10 @@ class Segment extends LineTo {
 
     public Segment(double x, double y) {
         super(x, y);
+
         startX = x;
         startY = y;
+
         endX = x;
         endY = y;
     }

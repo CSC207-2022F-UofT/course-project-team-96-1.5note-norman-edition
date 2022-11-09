@@ -15,11 +15,11 @@ public class TestSQLiteStorage {
 
         SQLiteStorage s = new SQLiteStorage(null);
 
-        Media m1 = new Media("foo", 0, 0, 0, 0);
+        Media m1 = new Media(1, "foo", 0, 0, 0, 0);
         s.insertMedia(m1);
 
-        Media m2 = s.selectMedia(m1.getName());
-        assertEquals(m1.getName(), m2.getName());
+        Media m2 = s.selectMediaByID(m1.getID());
+        assertEquals(m1.getID(), m2.getID());
     }
 
     @Test
@@ -31,11 +31,11 @@ public class TestSQLiteStorage {
 
         SQLiteStorage s = new SQLiteStorage(dbFile);
 
-        Media m1 = new Media("bar", 0, 0, 0, 0);
+        Media m1 = new Media(1, "bar", 0, 0, 0, 0);
         s.insertMedia(m1);
 
-        Media m2 = s.selectMedia(m1.getName());
-        assertEquals(m1.getName(), m2.getName());
+        Media m2 = s.selectMediaByID(m1.getID());
+        assertEquals(m1.getID(), m2.getID());
     }
 
     @Test
@@ -44,15 +44,15 @@ public class TestSQLiteStorage {
 
         SQLiteStorage s = new SQLiteStorage(null);
 
-        Media m1 = new Media("foo", 0, 0, 0, 0);
+        Media m1 = new Media(1, "foo", 0, 0, 0, 0);
         s.insertMedia(m1);
 
-        Media m2 = s.selectMedia(m1.getName());
+        Media m2 = s.selectMediaByID(m1.getID());
         assertNotNull(m2);
 
-        s.deleteMedia(m1.getName());
+        s.deleteMediaByID(m1.getID());
 
-        Media m3 = s.selectMedia(m1.getName());
+        Media m3 = s.selectMediaByID(m1.getID());
         assertNull(m3);
     }
 
@@ -62,13 +62,13 @@ public class TestSQLiteStorage {
 
         SQLiteStorage s = new SQLiteStorage(null);
 
-        Media m1 = new Media("foo", 0, 0, 0, 0);
+        Media m1 = new Media(1, "foo", 0, 0, 0, 0);
         s.insertMedia(m1);
 
-        Media m2 = new Media("foo", 1, 0, 0, 0);
+        Media m2 = new Media(1, "foo", 1, 0, 0, 0);
         s.insertMedia(m2);
 
-        Media m3 = s.selectMedia(m1.getName());
+        Media m3 = s.selectMediaByID(m1.getID());
         assertEquals(m3.getX(), m2.getX(), 0.00001);
     }
 
@@ -78,16 +78,16 @@ public class TestSQLiteStorage {
 
         SQLiteStorage s = new SQLiteStorage(null);
 
-        Media m1 = new Media("foo", 0, 0, 0, 0);
+        Media m1 = new Media(1, "foo", 0, 0, 0, 0);
         s.insertMedia(m1);
 
-        Media m2 = new Media("bar", 0, 0, 0, 0);
+        Media m2 = new Media(2, "bar", 0, 0, 0, 0);
         s.insertMedia(m2);
 
-        Set<String> names = s.selectAllNames();
+        Set<Long> names = s.selectAllIDs();
 
-        assertTrue(names.contains(m1.getName()));
-        assertTrue(names.contains(m2.getName()));
+        assertTrue(names.contains(m1.getID()));
+        assertTrue(names.contains(m2.getID()));
     }
 
     @Test
@@ -96,19 +96,19 @@ public class TestSQLiteStorage {
 
         SQLiteStorage s = new SQLiteStorage(null);
 
-        Media m1 = new Media("foo", 0, 0, 2, 2);
+        Media m1 = new Media(1, "foo", 0, 0, 2, 2);
         s.insertMedia(m1);
 
-        Media m2 = new Media("bar", 10, 10, 2, 2);
+        Media m2 = new Media(2, "bar", 10, 10, 2, 2);
         s.insertMedia(m2);
 
-        Set<String> names1 = s.selectNamesWithin(0, 0, 5, 5);
-        Set<String> names2 = s.selectNamesWithin(9, 9, 5, 5);
+        Set<Long> ids1 = s.selectIDsWithin(0, 0, 5, 5);
+        Set<Long> ids2 = s.selectIDsWithin(9, 9, 5, 5);
 
-        assertTrue(names1.contains(m1.getName()));
-        assertFalse(names1.contains(m2.getName()));
+        assertTrue(ids1.contains(m1.getID()));
+        assertFalse(ids1.contains(m2.getID()));
 
-        assertTrue(names2.contains(m2.getName()));
-        assertFalse(names2.contains(m1.getName()));
+        assertTrue(ids2.contains(m2.getID()));
+        assertFalse(ids2.contains(m1.getID()));
     }
 }

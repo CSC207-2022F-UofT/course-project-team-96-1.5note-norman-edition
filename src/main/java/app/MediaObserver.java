@@ -15,7 +15,7 @@ public interface MediaObserver {
     default void mediaUpdated(Media media) {}
 
     /**
-     * Called whenever a Media object is removed.
+     * Called whenever a Media object is deleted.
      */
-    default void mediaRemoved(String name) {}
+    default void mediaDeleted(long id) {}
 }

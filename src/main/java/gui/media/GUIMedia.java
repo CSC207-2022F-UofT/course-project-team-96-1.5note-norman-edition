@@ -42,6 +42,31 @@ public class GUIMedia<M extends Media> extends Pane {
 
     public GUIMedia(M media) {
         this();
+        setMedia(media);
+    }
+
+    public String getName() {
+        return getMedia().getName();
+    }
+
+    public Long getID() {
+        return getMedia().getID();
+    }
+
+    public M getMedia() {
+        return media;
+    }
+
+    public void setMedia(M media) {
+        if (this.media != null) {
+            translateXProperty().unbindBidirectional(this.media.xProperty());
+            translateYProperty().unbindBidirectional(this.media.yProperty());
+            layoutWidth.unbindBidirectional(this.media.widthProperty());
+            layoutHeight.unbindBidirectional(this.media.heightProperty());
+            rotateProperty().unbindBidirectional(this.media.angleProperty());
+            viewOrderProperty().unbindBidirectional(this.media.zIndexProperty());
+        }
+
         this.media = media;
 
         translateXProperty().bindBidirectional(media.xProperty());
@@ -52,7 +77,5 @@ public class GUIMedia<M extends Media> extends Pane {
         viewOrderProperty().bindBidirectional(media.zIndexProperty());
     }
 
-    public M getMedia() {
-        return media;
-    }
+    public void mediaUpdated(Media media) {}
 }

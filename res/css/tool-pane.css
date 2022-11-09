@@ -11,9 +11,12 @@
     -fx-border-width: 0 1 1 0;
 }
 
-
 .tool-pane > .scroll-pane {
-    -fx-focus-color: transparent;
-    -fx-faint-focus-color: transparent;
     -fx-padding: 0;
+    -fx-background-insets: 0;
+}
+
+.tool-pane > .scroll-pane:disabled {
+    -fx-hbar-policy: never;
+    -fx-vbar-policy: never;
 }

@@ -21,6 +21,9 @@ import java.util.ArrayList;
  */
 public class Media implements Serializable {
 
+    public static final Long EMPTY_ID = 0l;
+
+    long id;
     StringProperty name;
     ObservableSet<String> tags;
     DoubleProperty x;
@@ -34,6 +37,7 @@ public class Media implements Serializable {
     // for the purpose of actually serializing and de-seralizing the data which
     // is then loaded into an instance of Media with the `setFields` method.
     private static record Data(
+            long id,
             String name, Set<String> tags,
             double x, double y,
             double width, double height,
@@ -41,7 +45,7 @@ public class Media implements Serializable {
 
     private void writeObject(ObjectOutputStream out) throws IOException {
         Data d = new Data(
-                getName(), new HashSet<>(tags), getX(), getY(),
+                id, getName(), new HashSet<>(tags), getX(), getY(),
                 getWidth(), getHeight(), getAngle(), getZIndex());
 
         out.writeObject(d);
@@ -52,7 +56,7 @@ public class Media implements Serializable {
     {
         Data d = (Data) in.readObject();
         setFields(
-                d.name(), d.tags(), d.x(), d.y(),
+                d.id(), d.name(), d.tags(), d.x(), d.y(),
                 d.width(), d.height(), d.angle(), d.zIndex());
     }
 
@@ -66,17 +70,25 @@ public class Media implements Serializable {
 
 
     public Media(
+            long id, String name, Set<String> tags, double x, double y,
+            double width, double height, double angle, int zIndex)
+    {
+        setFields(id, name, tags, x, y, width, height, angle, zIndex);
+    }
+
+    public Media(
             String name, Set<String> tags, double x, double y,
             double width, double height, double angle, int zIndex)
     {
-        setFields(name, tags, x, y, width, height, angle, zIndex);
+        this(EMPTY_ID, name, tags, x, y, width, height, angle, zIndex);
     }
 
 
     private void setFields(
-            String name, Set<String> tags, double x, double y,
+            long id, String name, Set<String> tags, double x, double y,
             double width, double height, double angle, int zIndex)
     {
+        this.id = id;
         this.name = new SimpleStringProperty(name);
         this.tags = new SimpleSetProperty<String>();
         this.tags.addAll(tags);
@@ -89,69 +101,98 @@ public class Media implements Serializable {
     }
 
     public Media(
-        String name, double x, double y, double width, double height)
+        long id, String name, double x, double y, double width, double height)
     {
-        this(name, new HashSet<>(), x, y, width, height, 0, 0);
+        this(id, name, new HashSet<>(), x, y, width, height, 0, 0);
     }
 
-    public StringProperty nameProperty() {
+    public Media(
+        String name, double x, double y, double width, double height)
+    {
+        this(EMPTY_ID, name, new HashSet<>(), x, y, width, height, 0, 0);
+    }
+
+    public final long getID() {
+        return id;
+    }
+
+    public final void setID(long id) throws Exception {
+        if (this.id == EMPTY_ID) {
+            this.id = id;
+        } else {
+            throw new Exception("Cannot assign ID to Media twice.");
+        }
+    }
+
+    public final StringProperty nameProperty() {
         return name;
     }
 
-    public String getName() {
+    public final String getName() {
         return name.getValue();
     }
 
-    public ObservableSet<String> getTags() {
+    public final ObservableSet<String> getTags() {
         return tags;
     }
 
-    public DoubleProperty xProperty() {
+    public final DoubleProperty xProperty() {
         return x;
     }
 
-    public double getX() {
+    public final double getX() {
         return x.getValue();
     }
 
-    public DoubleProperty yProperty() {
+    public final DoubleProperty yProperty() {
         return y;
     }
 
-    public double getY() {
+    public final double getY() {
         return y.getValue();
     }
 
-    public DoubleProperty widthProperty() {
+    public final DoubleProperty widthProperty() {
         return width;
     }
 
-    public double getWidth() {
+    public final double getWidth() {
         return width.getValue();
     }
 
-    public DoubleProperty heightProperty() {
+    public final DoubleProperty heightProperty() {
         return height;
     }
 
-    public double getHeight() {
+    public final double getHeight() {
         return height.getValue();
     }
 
-    public DoubleProperty angleProperty() {
+    public final DoubleProperty angleProperty() {
         return angle;
     }
 
-    public double getAngle() {
+    public final double getAngle() {
         return angle.getValue();
     }
 
-    public IntegerProperty zIndexProperty() {
+    public final IntegerProperty zIndexProperty() {
         return zIndex;
     }
 
-    public int getZIndex() {
+    public final int getZIndex() {
         return zIndex.getValue();
+    }
+
+
+    /**
+     * Return whether or not the Media object is within the rectangle with
+     * width `w`, height `h`, and top-left corner at (`x`, `y`).
+     */
+    public final boolean isWithin(double x, double y, double w, double h) {
+        return
+            (getX() >= x - getWidth() && getX() <= x + w)
+            && (getY() >= y - getHeight() && getY() <= y + h);
     }
 
     @Override

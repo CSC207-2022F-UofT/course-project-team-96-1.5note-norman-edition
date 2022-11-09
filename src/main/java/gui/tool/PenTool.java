@@ -1,6 +1,12 @@
 package gui.tool;
 
 import javafx.scene.input.*;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import javafx.scene.text.*;
+import javafx.scene.paint.*;
+import javafx.geometry.*;
+import javafx.beans.property.*;
 
 import app.MediaCommunicator;
 import gui.page.PageEventHandler.*;
@@ -13,16 +19,21 @@ public class PenTool implements Tool {
     private MediaCommunicator c;
     private HandlerMethod[] handlers;
     private Page page;
+    private PenSettings settings;
+    private ObjectProperty<Color> colour;
 
     private GUIPenStroke currentStroke;
 
-    public PenTool() {
+    public PenTool(ObjectProperty<Color> colour) {
         HandlerMethod[] handlers = {
             new HandlerMethod<>(MouseEvent.MOUSE_PRESSED, this::startStroke),
             new HandlerMethod<>(MouseEvent.MOUSE_RELEASED, this::endStroke),
             new HandlerMethod<>(MouseEvent.MOUSE_DRAGGED, this::updateStroke)
         };
         this.handlers = handlers;
+
+        this.colour = colour;
+        settings = new PenSettings();
     }
 
     @Override
@@ -51,11 +62,17 @@ public class PenTool implements Tool {
         finishStroke();
     }
 
+    @Override
+    public FlowPane getSettingsGUI() {
+        return settings;
+    }
+
     private void startStroke(MouseEvent e) {
         if (e.getButton() == MouseButton.PRIMARY) {
             e.consume();
 
-            currentStroke = new GUIPenStroke(page.getMouseCoords(e), 5.0);
+            currentStroke = new GUIPenStroke(
+                    page.getMouseCoords(e), settings.getThickness(), colour.getValue());
             page.addMedia(currentStroke);
         }
     }
@@ -64,7 +81,7 @@ public class PenTool implements Tool {
         if (e.getButton() == MouseButton.PRIMARY) {
             e.consume();
 
-            currentStroke.update(page.getMouseCoords(e), 5.0, e.isShiftDown());
+            currentStroke.update(page.getMouseCoords(e), settings.getThickness(), e.isShiftDown());
         }
     }
 
@@ -79,8 +96,47 @@ public class PenTool implements Tool {
     private void finishStroke() {
         if (currentStroke != null) {
             currentStroke.end();
-            c.updateMedia(currentStroke.getMedia());
+            page.updateMedia(currentStroke);
             currentStroke = null;
         }
+    }
+}
+
+class PenSettings extends FlowPane {
+
+    private static double MIN_THICKNESS = 1;
+    private static double MAX_THICKNESS = 20;
+    private static double DEFAULT_THICKNESS = 3;
+
+    private static int PADDING = 5;
+
+    private Slider thicknessSlider;
+    private Spinner<Double> thicknessSpinner;
+    private ObjectProperty<Double> thicknessProperty;
+
+    public PenSettings() {
+        thicknessSlider = new Slider(MIN_THICKNESS, MAX_THICKNESS, DEFAULT_THICKNESS);
+        thicknessSpinner = new Spinner<>(MIN_THICKNESS, MAX_THICKNESS, DEFAULT_THICKNESS);
+        thicknessSpinner.setPrefWidth(75);
+        thicknessSpinner.setEditable(true);
+
+        thicknessProperty = thicknessSlider.valueProperty().asObject();
+
+        SpinnerValueFactory.DoubleSpinnerValueFactory spinnerFactory =
+            (SpinnerValueFactory.DoubleSpinnerValueFactory) thicknessSpinner.getValueFactory();
+
+        spinnerFactory.valueProperty().bindBidirectional(thicknessProperty);
+        spinnerFactory.setAmountToStepBy(0.5);
+
+        HBox thicknessSettings = new HBox(
+                PADDING, new Label("Thickness:"), thicknessSpinner, thicknessSlider);
+        thicknessSettings.setAlignment(Pos.CENTER_LEFT);
+        HBox.setHgrow(thicknessSlider, Priority.ALWAYS);
+
+        getChildren().addAll(thicknessSettings);
+    }
+
+    public double getThickness() {
+        return thicknessProperty.getValue();
     }
 }

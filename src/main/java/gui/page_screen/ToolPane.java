@@ -126,6 +126,7 @@ class ToolPane extends BorderPane {
 class ToolPaneTitleBar extends HBox {
 
     private static final int PADDING = 2;
+    private static final int LEFT_PADDING = 5;
 
     private Text titleText;
 
@@ -135,7 +136,7 @@ class ToolPaneTitleBar extends HBox {
         titleText = new Text();
 
         setAlignment(Pos.CENTER_LEFT);
-        paddingProperty().setValue(new Insets(PADDING));
+        paddingProperty().setValue(new Insets(PADDING, PADDING, PADDING, LEFT_PADDING));
 
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
@@ -145,7 +146,7 @@ class ToolPaneTitleBar extends HBox {
     }
 
     public void setTitle(String title) {
-        titleText.setText(title);
+        titleText.setText(title + " Settings");
     }
 }
 

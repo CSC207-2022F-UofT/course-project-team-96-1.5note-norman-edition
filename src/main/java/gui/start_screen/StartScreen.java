@@ -84,8 +84,8 @@ public class StartScreen extends VBox {
             }
         } catch (Exception e) {
             new ErrorWindow(
-                    this, null,
-                    "The page could not be loaded.", e)
+                    this, "Couldn't load page from file.",
+                    "Make sure the file selected is a valid page file.", e)
                 .showAndWait();
         }
     }
@@ -120,8 +120,8 @@ public class StartScreen extends VBox {
                     c.save();
                 } catch (Exception e) {
                     new ErrorWindow(
-                            this, null,
-                            "The page could not be saved.", e)
+                            this, "The page could not be saved.",
+                            "Make sure the page file exists and is writable.", e)
                         .showAndWait();
                 }
             }
@@ -140,7 +140,10 @@ public class StartScreen extends VBox {
                     c.save();
                     storage.saveTo(file);
                 } catch (Exception e) {
-                    throw new RuntimeException(e);
+                    new ErrorWindow(
+                            this, "The page could not be saved as the selected file.",
+                            "Make sure the selected page file is writable.", e)
+                        .showAndWait();
                 }
             }
         }

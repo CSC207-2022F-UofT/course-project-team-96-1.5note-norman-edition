@@ -59,7 +59,8 @@ public class SQLiteStorage implements MediaStorage {
         Statement s = connection.createStatement();
         s.executeUpdate("""
                 CREATE TABLE IF NOT EXISTS media(
-                    name TEXT PRIMARY KEY,
+                    id BIGINT PRIMARY KEY,
+                    name TEXT,
                     tags TEXT,
                     x REAL, y REAL,
                     width REAL, height REAL,
@@ -78,54 +79,39 @@ public class SQLiteStorage implements MediaStorage {
     }
 
     public void insertMedia(Media media) throws Exception {
-        insertMedia(media, true);
-    }
-
-    public void insertMedia(Media media, boolean updateData) throws Exception {
-        PreparedStatement s = connection.prepareStatement("""
-                INSERT OR REPLACE INTO media (
-                    name, tags, x, y, width, height, z_index, angle)
-                VALUES (
-                    ?, ?, ?, ?, ?, ?, ?, ?
-                )
-                """);
-
-        s.setString(1, media.getName());
-        s.setString(2, String.join(",", media.getTags()));
-        s.setDouble(3, media.getX());
-        s.setDouble(4, media.getY());
-        s.setDouble(5, media.getWidth());
-        s.setDouble(6, media.getHeight());
-        s.setDouble(7, media.getAngle());
-        s.setInt(8, media.getZIndex());
-
-        s.executeUpdate();
-
-        if (updateData) {
-            insertMediaDataBytes(media);
+        if (media.getID() == Media.EMPTY_ID) {
+            throw new Exception("Tried to store Media with empty ID");
         }
-    }
-
-    private void insertMediaDataBytes(Media media) throws Exception {
-        PreparedStatement s = connection.prepareStatement("""
-                UPDATE media SET data = ? WHERE name = ?
-                """);
 
         ByteArrayOutputStream b = new ByteArrayOutputStream();
         ObjectOutputStream o = new ObjectOutputStream(b);
         o.writeObject(media);
 
-        s.setBytes(1, b.toByteArray());
+        PreparedStatement s = connection.prepareStatement("""
+                INSERT OR REPLACE INTO media VALUES (
+                    ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+                )
+                """);
+
+        s.setLong(1, media.getID());
         s.setString(2, media.getName());
+        s.setString(3, String.join(",", media.getTags()));
+        s.setDouble(4, media.getX());
+        s.setDouble(5, media.getY());
+        s.setDouble(6, media.getWidth());
+        s.setDouble(7, media.getHeight());
+        s.setDouble(8, media.getAngle());
+        s.setInt(9, media.getZIndex());
+        s.setBytes(10, b.toByteArray());
 
         s.executeUpdate();
-    };
+    }
 
-    public Media selectMedia(String name) throws Exception {
+    public Media selectMediaByID(Long id) throws Exception {
         PreparedStatement s = connection.prepareStatement("""
-                SELECT data FROM media WHERE name = ?
+                SELECT data FROM media WHERE id = ?
                 """);
-        s.setString(1, name);
+        s.setLong(1, id);
         ResultSet r = s.executeQuery();
 
         if (r.next()) {
@@ -137,35 +123,35 @@ public class SQLiteStorage implements MediaStorage {
         }
     }
 
-    public void deleteMedia(String name) throws Exception {
+    public void deleteMediaByID(Long id) throws Exception {
         PreparedStatement s = connection.prepareStatement("""
-                DELETE FROM media WHERE name = ?
+                DELETE FROM media WHERE id = ?
                 """);
-        s.setString(1, name);
+        s.setLong(1, id);
         s.executeUpdate();
     }
 
-    public Set<String> selectAllNames() throws Exception {
+    public Set<Long> selectAllIDs() throws Exception {
         Statement s = connection.createStatement();
 
         ResultSet r = s.executeQuery("""
-                SELECT name FROM media
+                SELECT id FROM media
                 """);
 
-        Set<String> names = new HashSet<>();
+        Set<Long> ids = new HashSet<>();
 
         while (r.next()) {
-            names.add(r.getString(1));
+            ids.add(r.getLong(1));
         }
 
-        return names;
+        return ids;
     }
 
-    public Set<String> selectNamesWithin(
+    public Set<Long> selectIDsWithin(
             double x, double y, double w, double h) throws Exception
     {
         PreparedStatement s = connection.prepareStatement("""
-            SELECT name FROM media WHERE
+            SELECT id FROM media WHERE
             x BETWEEN ? - width AND ?
             AND y BETWEEN ? - height AND ?
             """);
@@ -176,22 +162,50 @@ public class SQLiteStorage implements MediaStorage {
 
         ResultSet r = s.executeQuery();
 
-        Set<String> names = new HashSet<>();
+        Set<Long> ids = new HashSet<>();
 
         while (r.next()) {
-            names.add(r.getString(1));
+            ids.add(r.getLong(1));
         }
 
-        return names;
+        return ids;
     }
 
-    public boolean contains(String name) throws Exception {
+    public boolean contains(Long id) throws Exception {
         PreparedStatement s = connection.prepareStatement("""
-                SELECT name FROM media WHERE name = ?
+                SELECT id FROM media WHERE id = ?
                 """);
-        s.setString(1, name);
+        s.setLong(1, id);
         ResultSet r = s.executeQuery();
 
         return r.next();
+    }
+
+
+    @Override
+    public void deleteMedia(long id) throws Exception {
+        deleteMediaByID(id);
+    }
+
+    @Override
+    public void saveMedia(Media media) throws Exception {
+        insertMedia(media);
+    }
+
+    @Override
+    public Media loadMedia(long id) throws Exception {
+        return selectMediaByID(id);
+    }
+
+    @Override
+    public Set<Long> getIDsWithin(
+            double x, double y, double w, double h) throws Exception
+    {
+        return selectIDsWithin(x, y, w, h);
+    }
+
+    @Override
+    public boolean isIDtaken(long id) throws Exception {
+        return contains(id);
     }
 }

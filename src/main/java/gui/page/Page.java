@@ -7,27 +7,61 @@ import javafx.scene.input.*;
 import javafx.beans.value.*;
 import javafx.geometry.*;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Set;
+import java.util.HashSet;
+
+import app.media.Media;
 import app.MediaCommunicator;
 import app.MediaObserver;
 import gui.media.GUIMedia;
+import gui.media.GUIMediaFactory;
+import gui.error_window.ErrorWindow;
 
 
 public class Page extends StackPane implements MediaObserver {
+
+    // Additional padding added to the visible region
+    private static double VISIBLE_BOUNDS_MARGIN = 100;
 
     private MediaCommunicator c;
     private PageEventHandler.HandlerMethod<?>[] handlerMethods;
     private PageEventHandler handler;
     private Pane mediaLayer;
 
+    private Map<Long, GUIMedia> contents;
+
+    private Bounds prevVisibleBounds;
+
     public Page(MediaCommunicator c) {
         this.c = c;
-        this.handlerMethods = new PageEventHandler.HandlerMethod<?>[0];
+        handlerMethods = new PageEventHandler.HandlerMethod<?>[0];
         getStyleClass().add("page");
 
+        contents = new HashMap<>();
         mediaLayer = new Pane();
+        mediaLayer.setManaged(false);
         getChildren().add(mediaLayer);
 
+        prevVisibleBounds = new BoundingBox(0, 0, 0, 0);
+
         c.addObserver(this);
+
+        mediaLayer.boundsInParentProperty().addListener(o -> reloadMedia());
+        layoutBoundsProperty().addListener(o -> reloadMedia());
+    }
+
+    // Do necessary loading/unloading of Media for the currently visible region.
+    // If an error occurs, catch it and report it to the user with ErrorWindow.
+    private void reloadMedia() {
+        try {
+            reloadMediaForVisibleBounds();
+        } catch (Exception e) {
+            new ErrorWindow(this, null, "Failed to load media", e).show();
+        }
     }
 
     /**
@@ -71,9 +105,27 @@ public class Page extends StackPane implements MediaObserver {
     }
 
     /**
+     * Indicate that the given GUIMedia object has been updated.
+     */
+    public void updateMedia(GUIMedia media) {
+        try {
+            if (media.getID() == Media.EMPTY_ID) {
+                media.getMedia().setID(c.getNewID());
+            }
+
+            contents.put(media.getID(), media);
+            c.updateMedia(media.getMedia());
+        } catch (Exception e) {
+            new ErrorWindow(this, null, "Updating Media object failed.", e)
+                .show();
+        }
+    }
+
+    /**
      * Remove the given GUIMedia object from this page.
      */
     public void removeMedia(GUIMedia media) {
+        contents.remove(media.getID());
         mediaLayer.getChildren().remove(media);
     }
 
@@ -81,11 +133,7 @@ public class Page extends StackPane implements MediaObserver {
      * Transform the given coordinates into the page's coordinate space.
      */
     public Point2D getCoords(Point2D coords) {
-        try {
-            return mediaLayer.getLocalToParentTransform().inverseTransform(coords);
-        } catch (NonInvertibleTransformException e) {
-            throw new RuntimeException(e);
-        }
+        return mediaLayer.parentToLocal(coords);
     }
 
     public Point2D getCoords(double x, double y) {
@@ -100,9 +148,121 @@ public class Page extends StackPane implements MediaObserver {
     }
 
     /**
-     * Return a rectangle which contains everything that is currently visible on the page.
+     * Return a regions containing everything that is currently visible on the page.
      */
-    public Rectangle2D getVisibleRegion() {
-        return null;
+    private Bounds getVisibleBounds() {
+        Bounds b = mediaLayer.parentToLocal(getLayoutBounds());
+        // Add the VISIBLE_BOUNDS_MARGIN to each dimension to make sure we only
+        // have to load in more media objects for large movements instead of for
+        // every movement.
+        return new BoundingBox(
+                b.getMinX() - VISIBLE_BOUNDS_MARGIN,
+                b.getMinY() - VISIBLE_BOUNDS_MARGIN,
+                b.getWidth() + VISIBLE_BOUNDS_MARGIN,
+                b.getHeight() + VISIBLE_BOUNDS_MARGIN);
+    }
+
+    /*
+     * Return the maximum of all the distances between the vertices of two
+     * bounding rectangles.
+     *
+     * This method is used to decide whether or not the viewable region has
+     * moved far enough that loading in new Media objects may be required.
+     */
+    private static double boundsDistance(Bounds b1, Bounds b2) {
+        Double[] distances = {
+            // top left
+            new Point2D(b1.getMinX(), b1.getMinY()).distance(b2.getMinX(), b2.getMinY()),
+            // top right
+            new Point2D(b1.getMaxX(), b1.getMinY()).distance(b2.getMaxX(), b2.getMinY()),
+            // bottom left
+            new Point2D(b1.getMinX(), b1.getMaxY()).distance(b2.getMinX(), b2.getMaxY()),
+            // bottom right
+            new Point2D(b1.getMaxX(), b1.getMaxY()).distance(b2.getMaxX(), b2.getMaxY())
+        };
+
+        return Collections.max(Arrays.asList(distances));
+    }
+
+    private void reloadMediaForVisibleBounds() throws Exception {
+        Bounds visibleBounds = getVisibleBounds();
+
+        // If the visible region moved far enough that we need to load/unload media
+        if (boundsDistance(visibleBounds, prevVisibleBounds) >= VISIBLE_BOUNDS_MARGIN) {
+            prevVisibleBounds = visibleBounds;
+
+            // First, remove nodes which are no longer visible
+            Set<Node> nodesToRemove = new HashSet<>();
+            Set<Long> initialIDs = new HashSet<>(contents.keySet());
+
+            for (long id: initialIDs) {
+                if (!contents.get(id).getBoundsInParent().intersects(visibleBounds)) {
+                    nodesToRemove.add(contents.get(id));
+                    contents.remove(id);
+                }
+            }
+
+            for (Node n: mediaLayer.getChildren()) {
+                if (!n.getBoundsInParent().intersects(visibleBounds)) {
+                    nodesToRemove.add(n);
+                }
+            }
+
+            mediaLayer.getChildren().removeAll(nodesToRemove);
+
+            // Then, load any newly visible nodes
+            Set<Long> visibleIDs = c.getIDsWithin(
+                    visibleBounds.getMinX(), visibleBounds.getMinY(),
+                    visibleBounds.getWidth(), visibleBounds.getHeight());
+
+            for (long id: visibleIDs) {
+                if (!contents.containsKey(id)) {
+                    // Only add Media which is not already on the page.
+                    Media media = c.getMedia(id);
+                    addGUIMediaFor(media);
+                }
+            }
+        }
+    }
+
+    // Return whether or not the media falls within the current visible bounds
+    private boolean isMediaVisible(Media media) {
+        return media.isWithin(
+                prevVisibleBounds.getMinX(), prevVisibleBounds.getMinY(),
+                prevVisibleBounds.getWidth(), prevVisibleBounds.getHeight());
+    }
+
+    private void addGUIMediaFor(Media media) throws Exception {
+        GUIMedia guiMedia = GUIMediaFactory.getFor(media);
+        contents.put(guiMedia.getID(), guiMedia);
+        addMedia(guiMedia);
+    }
+
+    @Override
+    public void mediaDeleted(long id) {
+        if (contents.containsKey(id)) {
+            removeMedia(contents.get(id));
+        }
+    }
+
+    @Override
+    public void mediaUpdated(Media media) {
+        long id = media.getID();
+
+        if (contents.containsKey(id)) {
+            // If GUIMedia with the given ID is already on the page, give that
+            // GUIMedia the updated Media object.
+            contents.get(id).mediaUpdated(media);
+        } else if (isMediaVisible(media)) {
+            // Otherwise, if the Media object lies within the currently visible
+            // region of the page, add a new GUIMedia object for it.
+            try {
+                addGUIMediaFor(media);
+            } catch (Exception e) {
+                new ErrorWindow(
+                        this, null, "Couldn't add GUIMedia for `" + media + "`.", e)
+                    .show();
+            }
+        }
     }
 }
