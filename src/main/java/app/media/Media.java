@@ -191,8 +191,8 @@ public class Media implements Serializable {
      */
     public final boolean isWithin(double x, double y, double w, double h) {
         return
-            (getX() >= x - getWidth() && getX() <= x + w)
-            && (getY() >= y - getHeight() && getY() <= y + h);
+            (getX() >= x - getWidth() && getX() <= x + w + getWidth())
+            && (getY() >= y - getHeight() && getY() <= y + h + getHeight());
     }
 
     @Override

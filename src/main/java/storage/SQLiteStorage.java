@@ -152,8 +152,8 @@ public class SQLiteStorage implements MediaStorage {
     {
         PreparedStatement s = connection.prepareStatement("""
             SELECT id FROM media WHERE
-            x BETWEEN ? - width AND ?
-            AND y BETWEEN ? - height AND ?
+            x BETWEEN ? - width AND ? + width
+            AND y BETWEEN ? - height AND ? + height
             """);
         s.setDouble(1, x);
         s.setDouble(2, x + w);
