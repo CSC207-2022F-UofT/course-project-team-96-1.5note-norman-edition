@@ -8,7 +8,6 @@ import javafx.scene.paint.*;
 import javafx.geometry.*;
 import javafx.beans.property.*;
 
-import app.MediaCommunicator;
 import gui.page.PageEventHandler.*;
 import gui.page.Page;
 import gui.media.GUIPenStroke;
@@ -16,7 +15,6 @@ import gui.media.GUIPenStroke;
 
 public class PenTool implements Tool {
 
-    private MediaCommunicator c;
     private HandlerMethod[] handlers;
     private Page page;
     private PenSettings settings;
@@ -37,11 +35,6 @@ public class PenTool implements Tool {
     }
 
     @Override
-    public void setCommunicator(MediaCommunicator c) {
-        this.c = c;
-    }
-
-    @Override
     public String getName() {
         return "Pen";
     }
@@ -58,8 +51,8 @@ public class PenTool implements Tool {
 
     @Override
     public void disabledFor(Page page) {
-        this.page = null;
         finishStroke();
+        this.page = null;
     }
 
     @Override
