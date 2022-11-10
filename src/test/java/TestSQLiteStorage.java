@@ -27,6 +27,7 @@ public class TestSQLiteStorage {
         // Test saving a Media object to a file-backed SQLite db and restoring it.
 
         File dbFile = File.createTempFile("test", ".sqlite");
+        dbFile.deleteOnExit();
         assertTrue(dbFile.exists());
 
         SQLiteStorage s = new SQLiteStorage(dbFile);
