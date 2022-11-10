@@ -1,8 +1,7 @@
 package gui.tool;
 
 import javafx.scene.*;
-import javafx.scene.layout.*;
-import javafx.scene.text.*;
+import javafx.scene.control.*;
 
 import gui.page.PageEventHandler;
 import app.MediaCommunicator;
@@ -22,14 +21,14 @@ import app.MediaCommunicator;
 public interface Tool extends PageEventHandler {
 
     default Node getGraphic() {
-        return new Text(getName());
+        return new Label(getName());
     }
 
     default String getName() {
         return getClass().getName();
     }
 
-    default FlowPane getSettingsGUI() {
+    default Node getSettingsGUI() {
         return null;
     }
 

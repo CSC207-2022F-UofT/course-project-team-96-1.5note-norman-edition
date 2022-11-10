@@ -1,5 +1,7 @@
 package gui.page_screen;
 
+import java.util.List;
+
 import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
@@ -28,7 +30,7 @@ class ToolPane extends BorderPane {
     private VBox toolPane;
     private ToolPaneTitleBar titleBar;
     private ScrollPane settingsPane;
-    private FlowPane toolSettingsGUI;
+    private Node toolSettingsGUI;
     private ToggleButton showHideButton;
 
     public ToolPane(ObservableValue<Tool> selectedTool) {
@@ -80,19 +82,28 @@ class ToolPane extends BorderPane {
     }
 
     private void setOrientation(Orientation o) {
-        toolPane.getStyleClass().removeAll(
-                VERTICAL_STYLE_CLASS, HORIZONTAL_STYLE_CLASS);
+        List<String> styleClass = toolPane.getStyleClass();
 
         switch (o) {
             case HORIZONTAL:
                 setLeft(null);
                 setBottom(toolPane);
-                toolPane.getStyleClass().add(HORIZONTAL_STYLE_CLASS);
+
+                styleClass.remove(VERTICAL_STYLE_CLASS);
+                if (!styleClass.contains(HORIZONTAL_STYLE_CLASS)) {
+                    styleClass.add(HORIZONTAL_STYLE_CLASS);
+                }
+
                 break;
             case VERTICAL:
                 setBottom(null);
                 setLeft(toolPane);
-                toolPane.getStyleClass().add(VERTICAL_STYLE_CLASS);
+
+                styleClass.remove(HORIZONTAL_STYLE_CLASS);
+                if (!styleClass.contains(VERTICAL_STYLE_CLASS)) {
+                    styleClass.add(VERTICAL_STYLE_CLASS);
+                }
+
                 break;
         }
     }
@@ -105,9 +116,6 @@ class ToolPane extends BorderPane {
 
         if (toolSettingsGUI != null) {
             settingsPane.setContent(toolSettingsGUI);
-            toolSettingsGUI.paddingProperty().setValue(new Insets(PADDING));
-            toolSettingsGUI.setHgap(PADDING);
-            toolSettingsGUI.setVgap(PADDING);
         }
     }
 
