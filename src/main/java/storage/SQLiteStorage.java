@@ -181,6 +181,10 @@ public class SQLiteStorage implements MediaStorage {
         return r.next();
     }
 
+    public void close() throws Exception {
+        connection.close();
+    }
+
 
     @Override
     public void deleteMedia(long id) throws Exception {

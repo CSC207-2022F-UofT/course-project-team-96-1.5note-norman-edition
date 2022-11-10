@@ -72,7 +72,10 @@ public class StartScreen extends VBox {
     }
 
     private void newPageForFile(File file) {
+        System.gc();
+
         try {
+            closeStorage();
             storage = new SQLiteStorage(file);
             c = new MediaCommunicator(storage);
 
@@ -86,7 +89,7 @@ public class StartScreen extends VBox {
             new ErrorWindow(
                     this, "Couldn't load page from file.",
                     "Make sure the file selected is a valid page file.", e)
-                .showAndWait();
+                .show();
         }
     }
 
@@ -106,9 +109,20 @@ public class StartScreen extends VBox {
 
     private void closePage() {
         pageScreen = null;
-        storage = null;
+        closeStorage();
         c = null;
         parent.swapBack();
+    }
+
+    private void closeStorage() {
+        if (storage != null) {
+            try {
+                storage.close();
+                storage = null;
+            } catch (Exception e) {
+                new ErrorWindow(this, "Couln't close storage", null, e).show();
+            }
+        }
     }
 
     private void savePage() {
@@ -122,7 +136,7 @@ public class StartScreen extends VBox {
                     new ErrorWindow(
                             this, "The page could not be saved.",
                             "Make sure the page file exists and is writable.", e)
-                        .showAndWait();
+                        .show();
                 }
             }
         }
@@ -143,7 +157,7 @@ public class StartScreen extends VBox {
                     new ErrorWindow(
                             this, "The page could not be saved as the selected file.",
                             "Make sure the selected page file is writable.", e)
-                        .showAndWait();
+                        .show();
                 }
             }
         }
