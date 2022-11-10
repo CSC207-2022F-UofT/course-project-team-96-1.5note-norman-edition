@@ -1,8 +1,14 @@
 import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 public class AudioModifier implements MediaManager {
 
     private String TimeStamp;
+
+    @Override
+    public void createObject() {
+
+    }
 
     @Override
     public void addMedia() {
@@ -10,15 +16,20 @@ public class AudioModifier implements MediaManager {
 
         //Allowing user to select a file then saving the data
         MediaCommunicator communicator = new MediaCommunicator();
-        String path = communicator.findFile();
-        byte[] rawData = communicator.readFile(path);
+        byte[] rawData = communicator.readFile("");
+
+        // Creating a temp file which can be used by the MediaPlayer
+        communicator.writeFile("temp/", rawData);
 
         //Creating related MediaAudio object
-        Media audioUI = new Media("");
-        MediaAudio audio = new MediaAudio(new double[]{0, 0}, new double[]{0, 0}, 0, 0, "", "",
-                audioUI, rawData, new MediaText[]{});
+        Media audioUI = new Media("temp/");
+        MediaPlayer mediaPlayer = new MediaPlayer(audioUI);
 
-        communicator.addToPage(audio);
+        MediaAudio audio = new MediaAudio(new double[]{0, 0}, new double[]{0, 0}, 0, 0, "", "",
+                mediaPlayer, rawData, new MediaText[]{});
+
+        Page page = communicator.getPage();
+        page.getElements().add(audio);
     }
 
     @Override

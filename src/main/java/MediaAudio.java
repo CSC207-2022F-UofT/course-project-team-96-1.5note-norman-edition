@@ -1,17 +1,17 @@
-import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
 public class MediaAudio extends PageMedia{
-    private Media audio;
-    private MediaText[] timestamps; // TODO: Temp object type, feel free to change as needed.
+    private MediaPlayer audio;
+    private MediaText[] timestamps;
 
     public MediaAudio(double[] position, double[] dimensions, double angle, int zIndex, String name, String tag,
-                      Media audio, byte[] rawData, MediaText[] timestamps) {
+                      MediaPlayer audio, byte[] rawData, MediaText[] timestamps) {
         super(position, dimensions, angle, zIndex, name, tag, rawData);
         this.audio = audio;
         this.timestamps = timestamps;
     }
 
-    public Media getAudio() {
+    public MediaPlayer getAudio() {
         return audio;
     }
 
@@ -19,7 +19,7 @@ public class MediaAudio extends PageMedia{
         return timestamps;
     }
 
-    public void setAudio(Media audio) {
+    public void setAudio(MediaPlayer audio) {
         this.audio = audio;
     }
 
