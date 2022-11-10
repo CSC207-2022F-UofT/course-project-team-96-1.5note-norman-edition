@@ -37,9 +37,9 @@ public class GUIMedia<M extends Media> extends Pane {
 
         // Only start listening for visible bounds changes when the GUIMedia
         // is actually being displayed in another node.
-        parentProperty().addListener(o -> {
+        parentProperty().addListener((o, oldVal, newVal) -> {
             boundsInParentProperty().removeListener(this::setDimensions);
-            if (o != null) {
+            if (newVal != null) {
                 boundsInParentProperty().addListener(this::setDimensions);
             }
         });
