@@ -4,7 +4,7 @@ public class SearchBarController {
     // media, file, or subsection of text in a text box???
     // I have started adjusting the CRC cards so that they only implies returning the text media,
     // But tags are still an issue.
-    public Media search(String input) {
+    public PageMedia search(String input) {
         return Searcher.search();
     }
 }

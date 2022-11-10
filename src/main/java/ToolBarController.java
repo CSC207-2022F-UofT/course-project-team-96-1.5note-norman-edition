@@ -21,8 +21,10 @@ public class ToolBarController {
         ShapeCreator.useTwoPositions();
     }
 
-    public void select() {
-        SelectionTool.useTwoPositions();
+    // TODO have to figure out how UI stuff works
+    public void select(double[] first, double[] second) {
+        SelectionTool selectionTool = new SelectionTool();
+        selectionTool.useTwoPositions(first, second);
     }
 
     public void tag(String input) {
