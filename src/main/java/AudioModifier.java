@@ -5,11 +5,6 @@ public class AudioModifier implements MediaManager {
     private String TimeStamp;
 
     @Override
-    public void createObject() {
-
-    }
-
-    @Override
     public void addMedia() {
         // Creates a new MediaAudio object based on user selection then adds it to the Page
 
@@ -37,6 +32,7 @@ public class AudioModifier implements MediaManager {
     }
 
     public void addTimeStamp(String givenTimeStamp){
+
         this.TimeStamp = givenTimeStamp;
     }
 
