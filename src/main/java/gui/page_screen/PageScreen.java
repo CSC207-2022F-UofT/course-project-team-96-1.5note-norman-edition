@@ -58,10 +58,6 @@ public class PageScreen extends VBox {
             layers.getChildren().remove(page);
         }
 
-        for (Tool tool: tools) {
-            tool.setCommunicator(c);
-        }
-
         page = new Page(c);
         page.setEventHandler(toolBar.selectedTool().getValue());
         toolBar.selectedTool().addListener((o, oldVal, newVal) -> {

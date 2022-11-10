@@ -65,6 +65,13 @@ public class Page extends StackPane implements MediaObserver {
     }
 
     /**
+     * Return the MediaCommunicator used by this Page.
+     */
+    public MediaCommunicator getCommunicator() {
+        return c;
+    }
+
+    /**
      * Set the handler of input events.
      * <p>
      * The previous handler will be removed.

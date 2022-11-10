@@ -20,17 +20,27 @@ import app.MediaCommunicator;
  */
 public interface Tool extends PageEventHandler {
 
+    /**
+     * Return the "graphic" to show in the toolbar for this tool.
+     */
     default Node getGraphic() {
         return new Label(getName());
     }
 
+    /**
+     * Return the name of this tool.
+     */
     default String getName() {
         return getClass().getName();
     }
 
+    /**
+     * Return the GUI element which configures the settings for this tool.
+     * <p>
+     * The returned Node will be shown in the tool pane when this tool is
+     * selected.
+     */
     default Node getSettingsGUI() {
         return null;
     }
-
-    default void setCommunicator(MediaCommunicator c) {};
 }
