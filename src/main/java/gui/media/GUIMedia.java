@@ -4,6 +4,7 @@ import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.event.*;
 import javafx.beans.property.*;
+import javafx.beans.*;
 
 import app.media.Media;
 
@@ -14,8 +15,8 @@ import app.media.Media;
 public class GUIMedia<M extends Media> extends Pane {
 
     private M media;
-    private DoubleProperty layoutWidth;
-    private DoubleProperty layoutHeight;
+    private DoubleProperty width;
+    private DoubleProperty height;
 
     private GUIMedia() {
         // Consume events from child nodes and re-emit them with their target
@@ -31,13 +32,22 @@ public class GUIMedia<M extends Media> extends Pane {
         // Don't block mouse clicks/other input
         setPickOnBounds(false);
 
-        layoutWidth = new SimpleDoubleProperty();
-        layoutHeight = new SimpleDoubleProperty();
+        width = new SimpleDoubleProperty();
+        height = new SimpleDoubleProperty();
 
-        layoutBoundsProperty().addListener((o, oldVal, newVal) -> {
-            layoutWidth.setValue(newVal.getWidth());
-            layoutHeight.setValue(newVal.getHeight());
+        // Only start listening for visible bounds changes when the GUIMedia
+        // is actually being displayed in another node.
+        parentProperty().addListener(o -> {
+            boundsInParentProperty().removeListener(this::setDimensions);
+            if (o != null) {
+                boundsInParentProperty().addListener(this::setDimensions);
+            }
         });
+    }
+
+    private void setDimensions(Observable o) {
+        width.setValue(getBoundsInParent().getWidth());
+        height.setValue(getBoundsInParent().getHeight());
     }
 
     public GUIMedia(M media) {
@@ -61,8 +71,8 @@ public class GUIMedia<M extends Media> extends Pane {
         if (this.media != null) {
             translateXProperty().unbindBidirectional(this.media.xProperty());
             translateYProperty().unbindBidirectional(this.media.yProperty());
-            layoutWidth.unbindBidirectional(this.media.widthProperty());
-            layoutHeight.unbindBidirectional(this.media.heightProperty());
+            width.unbindBidirectional(this.media.widthProperty());
+            height.unbindBidirectional(this.media.heightProperty());
             rotateProperty().unbindBidirectional(this.media.angleProperty());
             viewOrderProperty().unbindBidirectional(this.media.zIndexProperty());
         }
@@ -71,11 +81,17 @@ public class GUIMedia<M extends Media> extends Pane {
 
         translateXProperty().bindBidirectional(media.xProperty());
         translateYProperty().bindBidirectional(media.yProperty());
-        layoutWidth.bindBidirectional(media.widthProperty());
-        layoutHeight.bindBidirectional(media.heightProperty());
+        width.bindBidirectional(media.widthProperty());
+        height.bindBidirectional(media.heightProperty());
         rotateProperty().bindBidirectional(media.angleProperty());
         viewOrderProperty().bindBidirectional(media.zIndexProperty());
     }
 
+    /**
+     * This method is called when the underlying Media object is updated.
+     * <p>
+     * After this method finishes the GUIMedia object on which it was called
+     * should properly represent the Media object which was passed in.
+     */
     public void mediaUpdated(Media media) {}
 }
