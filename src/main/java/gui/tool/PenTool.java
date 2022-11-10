@@ -74,7 +74,9 @@ public class PenTool implements Tool {
         if (e.getButton() == MouseButton.PRIMARY) {
             e.consume();
 
-            currentStroke.update(page.getMouseCoords(e), settings.getThickness(), e.isShiftDown());
+            if (currentStroke != null) {
+                currentStroke.update(page.getMouseCoords(e), settings.getThickness(), e.isShiftDown());
+            }
         }
     }
 
