@@ -30,8 +30,8 @@ public interface PageEventHandler {
             EventType<T> eventType, EventHandler<? super T> eventHandler)
     {
         // NOTE: the `addToPage` and `removeFromPage` methods are defined here
-        // instead of in the GUIPage class to avoid some of the rough edges of
-        // Java's type system w.r.t. generics.
+        // instead of in the GUIPage class to avoid some rough edges of Java's
+        // type system w.r.t. generics.
 
         void addToPage(Page page) {
             page.addEventHandler(eventType(), eventHandler());
@@ -58,6 +58,9 @@ public interface PageEventHandler {
     /**
      * Called when the handler is no longer set to receive events for the given
      * page.
+     * <p>
+     * Implementors should get rid of any references to the given page when
+     * this method is called.
      */
     default void disabledFor(Page page) {}
 }
