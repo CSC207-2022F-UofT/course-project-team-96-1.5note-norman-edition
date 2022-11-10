@@ -8,9 +8,12 @@ import java.io.Serializable;
 
 public class PenStroke extends Media {
 
+    /** Data for a single line segment in a stroke. */
     public static record Segment(double endX, double endY)
             implements Serializable {}
 
+    // A pen stroke is defined by a list of line segments and the
+    // colour + thickness for those line segments.
     private List<Segment> segments;
     private double thickness;
     private String colour;
