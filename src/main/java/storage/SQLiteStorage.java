@@ -8,6 +8,8 @@ import java.io.ObjectOutputStream;
 import java.io.ObjectInputStream;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 import app.MediaStorage;
 import app.media.Media;
@@ -84,8 +86,13 @@ public class SQLiteStorage implements MediaStorage {
         }
 
         ByteArrayOutputStream b = new ByteArrayOutputStream();
-        ObjectOutputStream o = new ObjectOutputStream(b);
-        o.writeObject(media);
+        GZIPOutputStream g = new GZIPOutputStream(b);
+        try (ObjectOutputStream o = new ObjectOutputStream(g)) {
+            o.writeObject(media);
+        } finally {
+            g.finish();
+            g.close();
+        }
 
         PreparedStatement s = connection.prepareStatement("""
                 INSERT OR REPLACE INTO media VALUES (
@@ -116,8 +123,12 @@ public class SQLiteStorage implements MediaStorage {
 
         if (r.next()) {
             ByteArrayInputStream b = new ByteArrayInputStream(r.getBytes(1));
-            ObjectInputStream i = new ObjectInputStream(b);
-            return (Media) i.readObject();
+            GZIPInputStream g = new GZIPInputStream(b);
+            try (ObjectInputStream i = new ObjectInputStream(g)) {
+                return (Media) i.readObject();
+            } finally {
+                g.close();
+            }
         } else {
             return null;
         }
