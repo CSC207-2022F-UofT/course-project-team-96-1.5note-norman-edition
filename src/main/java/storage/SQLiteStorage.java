@@ -102,7 +102,7 @@ public class SQLiteStorage implements MediaStorage {
 
         s.setLong(1, media.getID());
         s.setString(2, media.getName());
-        s.setString(3, String.join(",", media.getTags()));
+        s.setString(3, getStringFromTags(media.getTags()));
         s.setDouble(4, media.getX());
         s.setDouble(5, media.getY());
         s.setDouble(6, media.getWidth());
@@ -112,6 +112,64 @@ public class SQLiteStorage implements MediaStorage {
         s.setBytes(10, b.toByteArray());
 
         s.executeUpdate();
+    }
+
+    // Write a set of tag strings into a single string such that it can be
+    // losslessly restored back into a Set of String later.
+    //
+    // The reason for doing this is that SQLite doesn't have a "set" type, just
+    // "TEXT".
+    //
+    // The strategy used here is to store the set as a comma-separated list and
+    // then escape commas already in tags as "\,". Additionally, any
+    // back-slashes already in a tag get replaced with "\\". This allows the
+    // set to be restored by splitting the string over commas which are
+    // preceded by an even number of back-slashes.
+    private static String getStringFromTags(Set<String> tags) {
+        StringBuilder builder = new StringBuilder();
+
+        builder.append(",");
+
+        for (String tag: tags) {
+            builder.append(tag.replace("\\", "\\\\").replace(",", "\\,"));
+            builder.append(",");
+        }
+
+        return builder.toString();
+    }
+
+    // Restore a set of tag strings from a string produced by the
+    // `getStringFromTags` method.
+    private static Set<String> getTagsFromString(String tagString) {
+        Set<String> tags = new HashSet<>();
+
+        int consecutiveBackSlashes = 0;
+        int startIndex = 0;
+
+        for (int endIndex = 0; endIndex < tagString.length(); endIndex++) {
+            char c = tagString.charAt(endIndex);
+
+            if (c == '\\') {
+                consecutiveBackSlashes++;
+            } else {
+                // If we hit a comma, check that the number of consecutive back
+                // slashes is even to make sure the comma is not escaped.
+                if (c == ',' && consecutiveBackSlashes % 2 == 0) {
+                    String s = tagString.substring(startIndex, endIndex);
+
+                    // Exclude empty tag strings
+                    if (!s.isEmpty()) {
+                        tags.add(s.replace("\\\\", "\\"));
+                    }
+
+                    startIndex = endIndex + 1;
+                }
+
+                consecutiveBackSlashes = 0;
+            }
+        }
+
+        return tags;
     }
 
     public Media selectMediaByID(Long id) throws Exception {
