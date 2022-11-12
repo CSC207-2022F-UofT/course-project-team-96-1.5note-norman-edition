@@ -1,4 +1,11 @@
+import javafx.util.Duration;
+
 public class ToolBarController {
+    private InteractionManager interactionTool;
+    private MediaManager mediaTool;
+    private Drawable drawTool;
+
+
 
     /*
     A lot of these reference undefined methods and have unclear jobs. None make sense to return anything right now
@@ -6,26 +13,40 @@ public class ToolBarController {
      */
 
     public void insertText() {
-        TextModifier.addMedia();
+        mediaTool = new TextModifier();
+        mediaTool.addMedia();
     }
 
     public void insertImage() {
-        ImageModifier.addMedia();
+        mediaTool = new ImageModifier();
+        mediaTool.addMedia();
     }
 
     public void insertAudio() {
-        AudioModifier.addMedia();
+        mediaTool = new AudioModifier();
+        mediaTool.addMedia();
     }
 
+    public void createTimeStamp(MediaAudio audio, Duration timestamp)   {
+        AudioModifier audioTool = new AudioModifier();
+        audioTool.addTimeStamp(timestamp);
+        audioTool.addMedia(audio);
+        audioTool.modifyMedia();
+    }
+
+
     public void drawShape() {
-        ShapeCreator.useTwoPositions();
+        drawTool = new ShapeCreator();
+        drawTool.useTwoPositions(new double[]{}, new double[]{});
     }
 
     public void select() {
-        SelectionTool.useTwoPositions();
+        drawTool = new SelectionTool();
+        drawTool.useTwoPositions(new double[]{}, new double[]{});
     }
 
-    public void tag(String input) {
-        Tagger.interact(input);
+    public void tag() {
+        interactionTool = new Tagger();
+        interactionTool.interact();
     }
 }
