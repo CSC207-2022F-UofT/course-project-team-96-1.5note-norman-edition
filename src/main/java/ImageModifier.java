@@ -1,7 +1,6 @@
 public class ImageModifier implements MediaManager{
     private String caption;
-
-    @Override
+    
     public void createObject() {
 
     }
