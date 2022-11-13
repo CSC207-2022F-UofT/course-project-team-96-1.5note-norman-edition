@@ -25,7 +25,7 @@ public class TextTool implements Tool {
     public TextTool() {
         HandlerMethod[] handlers = {
                 new HandlerMethod<>(MouseEvent.MOUSE_CLICKED, this::startEdit),
-                new HandlerMethod<>(KeyEvent.KEY_RELEASED, this::updateEdit),
+                new HandlerMethod<>(KeyEvent.KEY_PRESSED, this::updateEdit),
                 new HandlerMethod<>(MouseEvent.MOUSE_EXITED_TARGET, this::endEdit)
         };
         this.handlers = handlers;
@@ -58,15 +58,18 @@ public class TextTool implements Tool {
             e.consume();
 
             currentText = new GUITextBox(
-                page.getMouseCoords(e)
+                page.getMouseCoords(e),
+                    settings.getText()
             );
             page.addMedia(currentText);
         }
     }
 
     private void updateEdit(KeyEvent e) {
-        e.consume();
-        currentText.update(settings.getText());
+        if (e.isShiftDown() && e.getCode() == KeyCode.ENTER) {
+            e.consume();
+            currentText.update(settings.getText());
+        }
     }
 
     private void endEdit(MouseEvent e) {

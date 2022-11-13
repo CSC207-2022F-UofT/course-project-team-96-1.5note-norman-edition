@@ -11,8 +11,8 @@ public class GUITextBox extends GUIMedia<TextBox> {
 
     private void setInitialValues() { this.text = ""; }
 
-    public GUITextBox(Point2D point) {
-        super(new TextBox(point.getX(), point.getY()));
+    public GUITextBox(Point2D point, String text) {
+        super(new TextBox(point.getX(), point.getY(), text));
 
         setInitialValues();
 
