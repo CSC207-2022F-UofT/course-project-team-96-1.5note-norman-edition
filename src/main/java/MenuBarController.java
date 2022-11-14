@@ -1,18 +1,11 @@
 public class MenuBarController {
-
-    public byte[] loadFile(String path) {
-        FileLoaderWriter.readFile(path);
+    public void zoom() {
+        Zoomer zoomer = new Zoomer();
+        zoomer.interact();
     }
 
-    public byte[] writeFile(String path, byte[] data) {
-        FileLoaderWriter.writeFile(path, data);
-    }
-
-    public void zoom(String input) {
-        Zoomer.interact(input);
-    }
-
-    public void destroy(String input) {
-        Destroyer.interact(input);
+    public void destroy() {
+        Destroyer destroyer = new Destroyer();
+        destroyer.interact();
     }
 }
