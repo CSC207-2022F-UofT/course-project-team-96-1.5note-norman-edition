@@ -5,34 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ea57fb3c-8b45-48bb-954d-8b968e498d39" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/EllipseCreator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/RectCreator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/app/media/Shape.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/gui/media/GUIShape.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/gui/tool/ShapeTool.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/AudioModifier.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Destroyer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Drawable.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FileLoaderWriter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ImageModifier.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/InteractionManager.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/MediaAudio.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/MediaCommunicator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/MediaImage.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/MediaManager.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/MediaText.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/MenuBarController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Page.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/PageController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/PageMedia.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/SearchBarController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Searcher.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/SelectionTool.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ShapeCreator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Storage.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Tagger.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/TextModifier.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ToolBarController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Zoomer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Drawable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Drawable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/SelectionTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SelectionTool.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ShapeCreator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ShapeCreator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gui/media/GUIMediaFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/media/GUIMediaFactory.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,10 +25,10 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="ExternalProjectsData">
-    <projectState path="$PROJECT_DIR$">
+    <projectState path="/mnt/03ded9a2-bd46-4b2a-9bb5-36cfaf01d2a3/projects/course-project-team-96-1.5note-norman-edition">
       <ProjectState />
     </projectState>
-    <projectState path="/mnt/03ded9a2-bd46-4b2a-9bb5-36cfaf01d2a3/projects/course-project-team-96-1.5note-norman-edition">
+    <projectState path="$PROJECT_DIR$">
       <ProjectState />
     </projectState>
   </component>
@@ -58,6 +43,13 @@
         </projects_view>
       </state>
     </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -76,6 +68,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
     "last_opened_file_path": "/home/dexter/Documents/projects/p",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.0",
@@ -91,8 +84,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1667927896511</updated>
+      <workItem from="1668384457482" duration="14982000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">

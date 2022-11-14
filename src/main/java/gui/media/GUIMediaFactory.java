@@ -22,6 +22,8 @@ public class GUIMediaFactory {
     public static GUIMedia getFor(Media media) throws Exception {
         if (media instanceof PenStroke) {
             return new GUIPenStroke((PenStroke) media);
+        } else if (media instanceof Shape) {
+            return new GUIShape((Shape) media);
         } else {
             throw new Exception("No appropriate GUIMedia class for `" + media + "`.");
         }
