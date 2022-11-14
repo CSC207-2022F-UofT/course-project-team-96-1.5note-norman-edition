@@ -108,6 +108,7 @@ public class StartScreen extends VBox {
     }
 
     private void closePage() {
+        pageScreen.closePage();
         pageScreen = null;
         closeStorage();
         c = null;
