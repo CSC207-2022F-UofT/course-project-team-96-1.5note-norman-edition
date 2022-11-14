@@ -8,7 +8,7 @@ public class FileLoaderWriter implements Storage {
         return new byte[1]; // TODO: Return a proper array of bytes
     }
 
-    public void writeFile(String path, Byte[] Data){
+    public void writeFile(String path, byte[] Data){
 
     }
 }
