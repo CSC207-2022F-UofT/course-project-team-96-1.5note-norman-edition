@@ -1,0 +1,9 @@
+@import "fonts.css";
+@import "page.css";
+@import "toolbar.css";
+@import "tool-pane.css";
+@import "error-window.css";
+
+.root {
+    -fx-font-family: 'Cantarell' sans-serif;
+}

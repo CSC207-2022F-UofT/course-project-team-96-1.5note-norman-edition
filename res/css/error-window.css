@@ -1,0 +1,15 @@
+.error-window .title {
+    -fx-font-size: 20pt;
+}
+
+.error-window .explanation {
+    -fx-font-size: 12pt;
+}
+
+.error-window .text-field {
+    -fx-background-color: transparent;
+}
+
+.error-window .scroll-pane {
+    -fx-background-color: transparent;
+}
