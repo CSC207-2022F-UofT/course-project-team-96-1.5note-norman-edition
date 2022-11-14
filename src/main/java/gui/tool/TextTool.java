@@ -1,14 +1,12 @@
 package gui.tool;
 
+import javafx.scene.Node;
 import javafx.scene.input.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.text.*;
-import javafx.scene.paint.*;
 import javafx.geometry.*;
-import javafx.beans.property.*;
+import javafx.scene.text.*;
 
-import gui.page.PageEventHandler.*;
 import gui.page.Page;
 import gui.media.GUITextBox;
 
@@ -18,19 +16,19 @@ public class TextTool implements Tool {
     private HandlerMethod[] handlers;
     private Page page;
 
-    private textSettings settings;
+    private TextSettings settings;
 
     private GUITextBox currentText;
 
     public TextTool() {
         HandlerMethod[] handlers = {
-                new HandlerMethod<>(MouseEvent.MOUSE_CLICKED, this::startEdit),
-                new HandlerMethod<>(KeyEvent.KEY_PRESSED, this::updateEdit),
-                new HandlerMethod<>(MouseEvent.MOUSE_EXITED_TARGET, this::endEdit)
+                new HandlerMethod<>(MouseEvent.MOUSE_CLICKED, this::makeText)//,
+                //new HandlerMethod<>(KeyEvent.KEY_PRESSED, this::updateEdit),
+                //new HandlerMethod<>(MouseEvent.MOUSE_EXITED_TARGET, this::endEdit)
         };
         this.handlers = handlers;
 
-        settings = new textSettings();
+        settings = new TextSettings();
     }
 
     @Override
@@ -53,19 +51,29 @@ public class TextTool implements Tool {
     @Override
     public FlowPane getSettingsGUI() { return settings; }
 
-    private void startEdit(MouseEvent e) {
+    private void makeText(MouseEvent e) {
         if (e.getButton() == MouseButton.PRIMARY) {
             e.consume();
 
-            currentText = new GUITextBox(
-                page.getMouseCoords(e),
-                    settings.getText()
-            );
-            page.addMedia(currentText);
+            Node pick = e.getPickResult().getIntersectedNode();
+            //System.out.println(pick.getClass());
+
+            // Edit existing TextBox
+            if (pick instanceof Text) { //TODO: Incorrectly returns Text, change to GUITextBox once Dexter fixes it!
+                ((Text) pick).setText(settings.getText());
+            }
+            // Create new TextBox in empty space
+            else{
+                currentText = new GUITextBox(
+                        page.getMouseCoords(e),
+                        settings.getText()
+                );
+                page.addMedia(currentText);
+            }
         }
     }
 
-    private void updateEdit(KeyEvent e) {
+    /*private void updateEdit(KeyEvent e) {
         if (e.isShiftDown() && e.getCode() == KeyCode.ENTER) {
             e.consume();
             currentText.update(settings.getText());
@@ -78,7 +86,7 @@ public class TextTool implements Tool {
 
             finishEdit();
         }
-    }
+    }*/
 
     private void finishEdit() {
         if (currentText != null) {
@@ -91,15 +99,15 @@ public class TextTool implements Tool {
 
 }
 
-class textSettings extends FlowPane {
+class TextSettings extends FlowPane {
 
     private static int PADDING = 5;
     private TextArea textBox;
 
-    public textSettings() {
+    public TextSettings() {
         textBox = new TextArea();
 
-        HBox textSettings = new HBox(
+        VBox textSettings = new VBox(
                 PADDING, new Label("Enter Text"), textBox);
         textSettings.setAlignment(Pos.CENTER_LEFT);
         HBox.setHgrow(textBox, Priority.ALWAYS);

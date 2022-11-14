@@ -1,26 +1,35 @@
 package gui.media;
 
-import javafx.geometry.Point2D;
+import javafx.scene.text.*;
+import javafx.scene.input.*;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import javafx.geometry.*;
 
 import app.media.TextBox;
 import app.media.Media;
 
 public class GUITextBox extends GUIMedia<TextBox> {
 
-    private String text;
+    private Text text;
 
-    private void setInitialValues() { this.text = ""; }
+    private void setInitialValues() {
+        this.text = new Text("");
+
+        getChildren().clear();
+        getChildren().addAll(this.text);
+    }
 
     public GUITextBox(Point2D point, String text) {
         super(new TextBox(point.getX(), point.getY(), text));
 
         setInitialValues();
-
+        setText(text);
     }
 
     public GUITextBox(TextBox media) {
         super(media);
-        setText(media);
+        mediaUpdated(media);
     }
 
     @Override
@@ -29,24 +38,21 @@ public class GUITextBox extends GUIMedia<TextBox> {
         TextBox currentText = getMedia();
 
         if (currentText != newText) {
+            setInitialValues();
             setMedia(newText);
-            setText(newText);
+            setText(newText.getText());
         }
     }
 
-    private void setText(TextBox text) {
-        setInitialValues();
+    private void setText(String textIn) { this.text.setText(textIn); }
 
-        this.text = text.getText();
-    }
-
-    public void update(String text) {
-        this.text = text;
+    public void update(String textIn) {
+        this.text.setText(textIn);
     }
 
     public void end() {
-        if (getMedia().getText().equals(this.text)) {
-            getMedia().setText(this.text);
+        if (getMedia().getText().equals(this.text.getText())) {
+            getMedia().setText(this.text.getText());
         }
     }
 }

@@ -1,6 +1,7 @@
 package gui.media;
 
 import app.media.*;
+import org.w3c.dom.Text;
 
 
 /**
@@ -22,8 +23,16 @@ public class GUIMediaFactory {
     public static GUIMedia getFor(Media media) throws Exception {
         if (media instanceof PenStroke) {
             return new GUIPenStroke((PenStroke) media);
-        } else {
+        }
+
+        else if (media instanceof TextBox) {
+            return new GUITextBox((TextBox) media);
+        }
+
+        else {
             throw new Exception("No appropriate GUIMedia class for `" + media + "`.");
         }
+
+
     }
 }
