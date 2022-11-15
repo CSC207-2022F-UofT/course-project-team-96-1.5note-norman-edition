@@ -40,7 +40,7 @@ public class StartScreen extends VBox {
         newPageButton = new NewPageButton();
         loadPageButton = new LoadPageButton();
 
-        pageMenu = new Menu("Page");
+        pageMenu = new Menu("app.media.Page");
         menuBar.getMenus().add(pageMenu);
 
         MenuItem newPageItem = new MenuItem("New");
@@ -99,7 +99,7 @@ public class StartScreen extends VBox {
 
     private void loadPage() {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Load Page");
+        fileChooser.setTitle("Load app.media.Page");
         File file = fileChooser.showOpenDialog(getScene().getWindow());
 
         if (file != null) {
@@ -145,7 +145,7 @@ public class StartScreen extends VBox {
     private void savePageAs() {
         if (storage != null) {
             FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Save Page");
+            fileChooser.setTitle("Save app.media.Page");
             fileChooser.setInitialFileName("new.page");
             File file = fileChooser.showSaveDialog(getScene().getWindow());
 
@@ -184,7 +184,7 @@ public class StartScreen extends VBox {
 class NewPageButton extends Button {
 
     public NewPageButton() {
-        super("New Page");
+        super("New app.media.Page");
     }
 }
 
@@ -192,6 +192,6 @@ class NewPageButton extends Button {
 class LoadPageButton extends Button {
 
     public LoadPageButton() {
-        super("Load Page");
+        super("Load app.media.Page");
     }
 }

@@ -1,4 +1,8 @@
-public class Searcher implements InteractionManager{
+package app.interaction_managers;
+
+import app.interaction_managers.InteractionManager;
+
+public class Searcher implements InteractionManager {
 
     private String userInput;
 

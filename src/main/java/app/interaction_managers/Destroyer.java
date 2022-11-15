@@ -1,3 +1,7 @@
+package app.interaction_managers;
+
+import app.interaction_managers.InteractionManager;
+
 public class Destroyer implements InteractionManager {
 
     private Object toRemove;
