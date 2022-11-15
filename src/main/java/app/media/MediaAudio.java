@@ -13,10 +13,9 @@ public class MediaAudio extends FileMedia{
 
 
 
-    public MediaAudio(long id, String name, Set<String> tags, double x, double y,
-                      double width, double height, double angle, int zIndex, byte[] rawData,
+    public MediaAudio(String name, double x, double y, double width, double height, byte[] rawData,
                       ArrayList<Duration>  timestamps, double defaultVolume) {
-        super(id, name, tags, x, y, width, height, angle, zIndex, rawData);
+        super(name, x, y, width, height, rawData);
         this.timestamps = timestamps;
         this.defaultVolume = defaultVolume;
     }

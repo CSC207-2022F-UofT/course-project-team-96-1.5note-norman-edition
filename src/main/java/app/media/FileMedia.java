@@ -8,9 +8,8 @@ public class FileMedia extends Media {
 
     private byte[] rawData;
 
-    public FileMedia(long id, String name, Set<String> tags, double x, double y,
-                         double width, double height, double angle, int zIndex, byte[] rawData) {
-        super(id, name, tags, x, y, width, height, angle, zIndex);
+    public FileMedia(String name, double x, double y, double width, double height, byte[] rawData) {
+        super(name, x, y, width, height);
         this.rawData = rawData;
     }
 
