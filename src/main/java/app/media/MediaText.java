@@ -1,4 +1,7 @@
 package app.media;
+import javafx.util.Duration;
+
+import java.util.ArrayList;
 import java.util.Set;
 
 public class MediaText extends Media {
@@ -7,9 +10,8 @@ public class MediaText extends Media {
     //  -text: Text held by this class
     private String text;
 
-    public MediaText(long id, String name, Set<String> tags, double x, double y,
-                     double width, double height, double angle, int zIndex, String text) {
-        super(id, name, tags, x, y , width, height, angle, zIndex);
+    public MediaText(String name, double x, double y, double width, double height, String text) {
+        super(name, x, y, width, height);
         this.text = text;
     }
 
