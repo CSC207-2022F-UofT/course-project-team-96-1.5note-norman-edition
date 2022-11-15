@@ -65,7 +65,7 @@ public class Page extends StackPane implements MediaObserver {
     }
 
     /**
-     * Return the MediaCommunicator used by this Page.
+     * Return the MediaCommunicator used by this app.media.Page.
      */
     public MediaCommunicator getCommunicator() {
         return c;
