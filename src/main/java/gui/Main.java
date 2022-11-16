@@ -1,5 +1,7 @@
 package gui;
 
+import java.net.URL;
+
 import javafx.application.*;
 import javafx.stage.*;
 import javafx.scene.*;
@@ -29,7 +31,10 @@ public class Main extends Application {
         // load it into the scene so that it gets applied to all the contents
         // of that scene.
         Scene scene = new Scene(gui);
-        scene.getStylesheets().add("file:res/css/base.css");
+
+        // Load the stylesheets
+        URL cssURL = ResourceLoader.getResourceURL("css/base.css");
+        scene.getStylesheets().add(cssURL.toString());
 
         // The stage is the main window for the application. To actually get
         // the GUI on the screen, we add the scene in which it is contained to

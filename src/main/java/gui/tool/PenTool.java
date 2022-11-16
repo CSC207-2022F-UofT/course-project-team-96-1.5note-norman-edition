@@ -1,5 +1,6 @@
 package gui.tool;
 
+import javafx.scene.*;
 import javafx.scene.input.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -8,6 +9,7 @@ import javafx.scene.paint.*;
 import javafx.geometry.*;
 import javafx.beans.property.*;
 
+import gui.ResourceLoader;
 import gui.page.PageEventHandler.*;
 import gui.page.Page;
 import gui.media.GUIPenStroke;
@@ -37,6 +39,12 @@ public class PenTool implements Tool {
     @Override
     public String getName() {
         return "Pen";
+    }
+
+    @Override
+    public Node getGraphic() {
+        return new Label(
+                getName(), ResourceLoader.loadSVGicon("icons/pen.svg", 15, 15));
     }
 
     @Override
