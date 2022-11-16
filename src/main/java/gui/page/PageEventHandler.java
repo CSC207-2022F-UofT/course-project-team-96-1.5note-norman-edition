@@ -6,7 +6,7 @@ import javafx.scene.input.InputEvent;
 
 /**
  * Implementors of this interface provide handler methods which accept events
- * from a Page.
+ * from a app.media.Page.
  * <p>
  * Implementors will also be notified when their handlers are added to or
  * removed from a page via the `enabledFor` and `disabledFor` methods.

@@ -1,4 +1,5 @@
-
+import app.media.Page;
+import storage.Storage;
 
 public class MediaCommunicator {
     private Page page;
