@@ -14,7 +14,8 @@ public final class ToolFactory {
 
         Tool[] tools = {
             colourTool,
-            new PenTool(colourTool.colourProperty())
+            new PenTool(colourTool.colourProperty()),
+            new AudioTool()
         };
 
         return tools;

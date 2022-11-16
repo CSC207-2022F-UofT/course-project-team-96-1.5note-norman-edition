@@ -3,15 +3,19 @@ package gui.media;
 import app.media.MediaAudio;
 import app.media.MediaHyperlink;
 import app.media_managers.TextModifier;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.geometry.Insets;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.*;
 import javafx.scene.control.Button;
-import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 import storage.FileLoaderWriter;
 import storage.Storage;
@@ -22,12 +26,19 @@ public class GUIAudio extends GUIMedia<MediaAudio>{
     private URI tempFile;
     private MediaPlayer audioPlayer;
     private VBox timestamps;
+    private Button playButton;
+    private Slider playbackSlider;
+
+    private Text playbackText;
+
 
     public GUIAudio(MediaAudio audio)   {
         super(audio);
+        this.getChildren().add(createInterface());
     }
 
     public void initializeMediaPlayer()  {
+        //Initializes the main MediaPlayer that parts of the interface will use
         String path = "temp\\id" + Double.toString(getMedia().getID());
 
         Storage fw = new FileLoaderWriter();
@@ -35,44 +46,93 @@ public class GUIAudio extends GUIMedia<MediaAudio>{
 
         Media audioMedia = new Media(this.tempFile.toString());
         this.audioPlayer = new MediaPlayer(audioMedia);
+
+        this.getMedia().setDefaultVolume(this.audioPlayer.getVolume()); //TODO: maybe change how this is done for CA
     }
 
     public HBox createInterface()   {
         //Creates the overall interface allowing for playing MediaAudio and manipulating it
         initializeMediaPlayer();
-        Button playButton = createPlayButton();
+
+        //Creating visual elements related to the play state of the mediaplayer
+        createPlayButton();
+        createPlaybackSlider();
+        HBox playBox = new HBox();
+        this.playbackText = new Text();
+        updatePlaybackText();
+        playBox.getChildren().addAll(playButton, playbackSlider, playbackText);
+        playBox.setSpacing(10); //temp
+
+        //Creating visual elements related to the settings for the mediaplayer
         ComboBox<String> playbackRate = createPlayRateOptions();
         Slider volumeSlider = createAudioSlider();
+        HBox settings = new HBox();
+        settings.getChildren().addAll(playbackRate, volumeSlider);
+        settings.setSpacing(10);
+
+        configurePlayer();
 
         HBox layout = new HBox();
-        layout.getChildren().addAll(playButton, playbackRate, volumeSlider);
+        layout.getChildren().addAll(playBox, settings);
+        layout.setSpacing(40);
+        layout.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+        layout.setPadding(new Insets(7, 7, 7, 7));
         return layout;
     }
 
-    public Button createPlayButton()    {
+    public void configurePlayer()  {
+        //Creates configuration for the audioplayer neccessary for various UI elements
+        this.audioPlayer.currentTimeProperty().addListener(new InvalidationListener() {
+            @Override
+            public void invalidated(Observable observable) {
+                double totalDuration = audioPlayer.getTotalDuration().toSeconds();
+                double percentElapsed = audioPlayer.getCurrentTime().toSeconds() / totalDuration;
+                playbackSlider.setDisable(true);
+                playbackSlider.setValue(percentElapsed);
+                playbackSlider.setDisable(false);
+
+                updatePlaybackText();
+            }
+        });
+
+        this.audioPlayer.setOnEndOfMedia(new Runnable() {
+            @Override
+            public void run() {
+                playButton.setText("Play");
+            }
+        });
+    }
+
+    public void createPlayButton()    {
         //Creates a button that allows pausing/playing the audio
         Button play = new Button("Play");
         play.setOnAction(e -> {
             if (play.getText().equals("Play"))  {
                 //Checking if the player is at the end of the audio
-                if(this.audioPlayer.getTotalDuration() == this.audioPlayer.getCurrentTime())    {
-                    this.audioPlayer.seek(new Duration(0));
+                if(audioPlayer.getCurrentTime().equals(audioPlayer.getTotalDuration())) {
+                    audioPlayer.seek(audioPlayer.getStartTime());
                 }
                 this.audioPlayer.play();
                 play.setText("Pause");
             }   else {
+                //If the player is playing, we can pause it instead
                 this.audioPlayer.pause();
                 play.setText("Play");
             }
         });
-        return play;
+        this.playButton = play;
     }
 
     public ComboBox<String> createPlayRateOptions() {
+        //Creates a combobox giving user options to change playrate of audio
+
         ComboBox<String> playRateOptions = new ComboBox<>();
         playRateOptions.getItems().addAll("0.5x", "1x", "1.5x", "2x");
+
+        //Setting the default selection to the current desired playback rate
         double rate = this.audioPlayer.getRate();
         playRateOptions.getSelectionModel().select((int) (rate / 0.5) - 1);
+
         playRateOptions.setOnAction(e ->{
             double selectedRate = (playRateOptions.getSelectionModel().getSelectedIndex() + 1) * 0.5;
             this.audioPlayer.setRate(selectedRate);
@@ -81,10 +141,14 @@ public class GUIAudio extends GUIMedia<MediaAudio>{
     }
 
     public Slider createAudioSlider()   {
+        //Creates a slider to adjust audio that can work as it's playing
+
         MediaPlayer audioPlayer = this.audioPlayer;
         double defaultVolume = super.getMedia().getDefaultVolume();
 
-        Slider audioSlider = new Slider(0, 1, 1);
+        Slider audioSlider = new Slider(0, 1, 1); //Due to MediaPlayer implementation, raising volume above default is impossible
+
+        //Allowing slider to update volume of the player in live time
         audioSlider.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
@@ -94,15 +158,39 @@ public class GUIAudio extends GUIMedia<MediaAudio>{
         return audioSlider;
     }
 
-    public Slider createPlaybackSlider()    {
+    public void createPlaybackSlider()    {
+        //Creates a slider that tracks current duration of the player and can change the time it's at
         MediaPlayer audioPlayer = this.audioPlayer;
-        double totalDuration = this.audioPlayer.getTotalDuration().toSeconds();
-        System.out.println(totalDuration);
-        Slider playbackSlider = new Slider(0, totalDuration, 0);
-        return playbackSlider;
+        Slider playbackSlider = new Slider(0, 1, 0);
+        playbackSlider.valueProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                if(playbackSlider.isPressed())    {
+                    double totalDuration = audioPlayer.getTotalDuration().toSeconds();
+                    audioPlayer.seek(Duration.seconds((double) newValue * totalDuration));
+                }
+            }
+        });
+        this.playbackSlider = playbackSlider;
+    }
+
+    public void updatePlaybackText()    {
+        int seconds = (int) audioPlayer.getCurrentTime().toSeconds() % 60;
+        int minutes = (int) audioPlayer.getCurrentTime().toMinutes() % 60;
+        int hours = (int) audioPlayer.getCurrentTime().toHours();
+        String[] timeProperties = {Integer.toString(seconds), Integer.toString(minutes), Integer.toString(hours)};
+        for (int i = 0; i < timeProperties.length; i++)   {
+            if (timeProperties[i].length() == 1) {
+                timeProperties[i] = "0" + timeProperties[i];
+            }
+        }
+
+        this.playbackText.setText(timeProperties[2] + ":" + timeProperties[1] + ":" + timeProperties[0]);
     }
 
     public void createTimestamps()  {
+        //Creates a vertical "list" of timestamps that can be clicked to move where the player is playing
+
         VBox alignment = new VBox();
         TextModifier hyperlinkFactory = new TextModifier();
         for(Duration timestamp: this.getMedia().getTimestamps())   {

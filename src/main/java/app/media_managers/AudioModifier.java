@@ -29,7 +29,7 @@ public class AudioModifier implements MediaManager {
         byte[] rawData = fileManager.readFile(new String[]{"*.mp3","*.wav"}, "Audio");
 
         try {
-            MediaAudio audio = new MediaAudio("", 0, 0, 0, 0, rawData, new ArrayList<Duration>(),
+            MediaAudio audio = new MediaAudio("", 200, 200, 200, 200, rawData, new ArrayList<Duration>(),
                     0); //Temp Constructor
             GUIAudio audioGUI = new GUIAudio(audio);
 
