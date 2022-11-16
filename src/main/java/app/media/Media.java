@@ -1,7 +1,5 @@
 package app.media;
 
-import javafx.beans.*;
-import javafx.beans.value.*;
 import javafx.beans.property.*;
 import javafx.collections.*;
 
@@ -12,8 +10,6 @@ import java.io.ObjectStreamException;
 import java.io.IOException;
 import java.util.Set;
 import java.util.HashSet;
-import java.util.List;
-import java.util.ArrayList;
 
 
 /**
@@ -55,7 +51,7 @@ public class Media implements Serializable {
         throws IOException, ClassNotFoundException
     {
         Data d = (Data) in.readObject();
-        setFields(
+        initializeProperties(
                 d.id(), d.name(), d.tags(), d.x(), d.y(),
                 d.width(), d.height(), d.angle(), d.zIndex());
     }
@@ -73,7 +69,7 @@ public class Media implements Serializable {
             long id, String name, Set<String> tags, double x, double y,
             double width, double height, double angle, int zIndex)
     {
-        setFields(id, name, tags, x, y, width, height, angle, zIndex);
+        initializeProperties(id, name, tags, x, y, width, height, angle, zIndex);
     }
 
     public Media(
@@ -84,7 +80,7 @@ public class Media implements Serializable {
     }
 
 
-    private void setFields(
+    private void initializeProperties (
             long id, String name, Set<String> tags, double x, double y,
             double width, double height, double angle, int zIndex)
     {
@@ -114,14 +110,6 @@ public class Media implements Serializable {
 
     public final long getID() {
         return id;
-    }
-
-    public final void setID(long id) throws Exception {
-        if (this.id == EMPTY_ID) {
-            this.id = id;
-        } else {
-            throw new Exception("Cannot assign ID to Media twice.");
-        }
     }
 
     public final StringProperty nameProperty() {
@@ -184,6 +172,46 @@ public class Media implements Serializable {
         return zIndex.getValue();
     }
 
+    public final void setID(long id) throws Exception {
+        if (this.id == EMPTY_ID) {
+            this.id = id;
+        } else {
+            throw new Exception("Cannot assign ID to Media twice.");
+        }
+    }
+
+    public void setName(String name) {
+        this.name = new SimpleStringProperty(name);
+    }
+
+    public void setTags(Set<String> tags) {
+        this.tags.clear();
+        this.tags.addAll(tags);
+    }
+
+    public void setX(double x) {
+        this.x.set(x);
+    }
+
+    public void setY(double y) {
+        this.y.set(y);
+    }
+
+    public void setWidth(double width) {
+        this.width.set(width);
+    }
+
+    public void setHeight(double height) {
+        this.height.set(height);
+    }
+
+    public void setAngle(double angle) {
+        this.angle.set(angle);
+    }
+
+    public void setzIndex(int zIndex) {
+        this.zIndex.set(zIndex);
+    }
 
     /**
      * Return whether or not the Media object is within the rectangle with

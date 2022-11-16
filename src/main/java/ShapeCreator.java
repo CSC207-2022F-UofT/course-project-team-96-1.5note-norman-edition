@@ -8,7 +8,9 @@ public class ShapeCreator implements Drawable {
      * call JavaFX shape thingy
      */
     @Override
+
     public void useTwoPositions(Point2D first, Point2D second, String shape){
+
 
     }
 }
