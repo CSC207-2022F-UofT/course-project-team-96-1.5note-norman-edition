@@ -9,7 +9,6 @@ public class GUIEllipse extends GUIShape {
     private Ellipse ellipse;
 
     public GUIEllipse(Point2D p1, Point2D p2, Color colour) {
-        // TODO: Find out why colour isn't applied, and why nonzero positions leads to an offset ellipse
         super(new GenericShape((p1.getX() + p2.getX()) / 2,(p1.getY() + p2.getY()) / 2,0,0, colour.toString()));
         double x1 = p1.getX();
         double y1 = p1.getY();

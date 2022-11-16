@@ -9,7 +9,6 @@ public class GUIRectangle extends GUIShape {
     private Rectangle rectangle;
 
     public GUIRectangle(Point2D p1, Point2D p2, Color colour) {
-        // TODO: Find out why colour isn't applied, and why nonzero positions leads to an offset rectangle
         super(new GenericShape(Math.min(p1.getX(), p2.getX()),Math.min(p1.getY(), p2.getY()),0,0, colour.toString()));
         double x1 = p1.getX();
         double y1 = p1.getY();

@@ -4,7 +4,6 @@ import app.media.GenericShape;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
-import javafx.scene.shape.Rectangle;
 
 public class GUIPolygon extends GUIShape {
     private Polygon polygon;
