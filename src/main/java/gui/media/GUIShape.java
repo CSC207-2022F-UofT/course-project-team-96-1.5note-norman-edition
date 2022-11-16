@@ -1,17 +1,19 @@
 package gui.media;
 
-import app.media.PenStroke;
-import app.media.Shape;
+import app.media.GenericShape;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Ellipse;
+import javafx.scene.shape.Rectangle;
 
-public class GUIShape extends GUIMedia<Shape> {
-    public GUIShape(Point2D p1, Point2D p2, Color colour){
-        super(new Shape(p1.getX(), p1.getY(), p2.getX() - p1.getX(), p2.getY() - p1.getY(), colour.toString()));
-    }
-    public GUIShape(Shape media) {
+public class GUIShape extends GUIMedia<GenericShape> {
+    private GUIShape shape;
+
+    public GUIShape(GenericShape media) {
         super(media);
-        //setStroke(media);
     }
 
+    public void update(Point2D p1, Point2D p2, boolean sameSideLengths){}
 }
+
