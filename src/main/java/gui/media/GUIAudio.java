@@ -1,32 +1,45 @@
 package gui.media;
 
 import app.media.MediaAudio;
+import app.media.MediaHyperlink;
+import app.media_managers.TextModifier;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
 import javafx.scene.control.Button;
+import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
+import storage.FileLoaderWriter;
+import storage.Storage;
+import java.net.*;
 
 public class GUIAudio extends GUIMedia<MediaAudio>{
-    //TODO: A bit of a temp class
 
-    private String tempFile;
+    private URI tempFile;
     private MediaPlayer audioPlayer;
+    private VBox timestamps;
 
-    public GUIAudio(MediaAudio audio, String tempFile)   {
+    public GUIAudio(MediaAudio audio)   {
         super(audio);
-        this.tempFile = tempFile;
+    }
 
-        Media audioMedia = new Media(tempFile);
+    public void initializeMediaPlayer()  {
+        String path = "temp\\id" + Double.toString(getMedia().getID());
+
+        Storage fw = new FileLoaderWriter();
+        this.tempFile = fw.writeFile(path, getMedia().getRawData()); //Creating temp file for use by javafx.Media Class
+
+        Media audioMedia = new Media(this.tempFile.toString());
         this.audioPlayer = new MediaPlayer(audioMedia);
-
     }
 
     public HBox createInterface()   {
+        //Creates the overall interface allowing for playing MediaAudio and manipulating it
+        initializeMediaPlayer();
         Button playButton = createPlayButton();
         ComboBox<String> playbackRate = createPlayRateOptions();
         Slider volumeSlider = createAudioSlider();
@@ -37,9 +50,14 @@ public class GUIAudio extends GUIMedia<MediaAudio>{
     }
 
     public Button createPlayButton()    {
+        //Creates a button that allows pausing/playing the audio
         Button play = new Button("Play");
         play.setOnAction(e -> {
             if (play.getText().equals("Play"))  {
+                //Checking if the player is at the end of the audio
+                if(this.audioPlayer.getTotalDuration() == this.audioPlayer.getCurrentTime())    {
+                    this.audioPlayer.seek(new Duration(0));
+                }
                 this.audioPlayer.play();
                 play.setText("Pause");
             }   else {
@@ -84,5 +102,25 @@ public class GUIAudio extends GUIMedia<MediaAudio>{
         return playbackSlider;
     }
 
+    public void createTimestamps()  {
+        VBox alignment = new VBox();
+        TextModifier hyperlinkFactory = new TextModifier();
+        for(Duration timestamp: this.getMedia().getTimestamps())   {
+            MediaHyperlink hyperlink = hyperlinkFactory.createHyperlink(timestamp.toString(),
+                    Double.toString(timestamp.toMillis()));
+            GUIHyperlink hyperlinkGUI = new GUIHyperlink(hyperlink);
+            hyperlinkGUI.createTimestampLink(audioPlayer);
+            alignment.getChildren().add(hyperlinkGUI);
+        }
+        this.timestamps = alignment;
+    }
 
+    @Override
+    public void mediaUpdated(app.media.Media media) {
+
+    }
+
+    public MediaPlayer getAudioPlayer() {
+        return audioPlayer;
+    }
 }
