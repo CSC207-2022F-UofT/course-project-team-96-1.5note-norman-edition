@@ -1,5 +1,6 @@
 package gui.tool;
 
+import javafx.event.*;
 import javafx.scene.Node;
 import javafx.scene.input.*;
 import javafx.scene.control.*;
@@ -7,6 +8,8 @@ import javafx.scene.layout.*;
 import javafx.geometry.*;
 import javafx.scene.text.*;
 
+import app.media.*;
+import gui.media.*;
 import gui.page.Page;
 import gui.media.GUITextBox;
 
@@ -55,12 +58,12 @@ public class TextTool implements Tool {
         if (e.getButton() == MouseButton.PRIMARY) {
             e.consume();
 
-            Node pick = e.getPickResult().getIntersectedNode();
+            EventTarget pick = e.getTarget(); // e.getTarget() return type EventTarget so I have to check what it is
             //System.out.println(pick.getClass());
 
             // Edit existing TextBox
-            if (pick instanceof Text) { //TODO: Incorrectly returns Text, change to GUITextBox once Dexter fixes it!
-                ((Text) pick).setText(settings.getText());
+            if (pick instanceof GUITextBox) { //TODO: Incorrectly returns Text, change to GUITextBox once Dexter fixes it!
+                ((GUITextBox) pick).update(settings.getText());
             }
             // Create new TextBox in empty space
             else{
