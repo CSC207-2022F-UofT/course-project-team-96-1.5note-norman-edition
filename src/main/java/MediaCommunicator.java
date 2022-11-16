@@ -11,7 +11,7 @@ public class MediaCommunicator {
         return this.storage.readFile(path);
     }
 
-    public void writeFile(String path, Byte[] Data){
+    public void writeFile(String path, byte[] Data){
         this.storage.writeFile(path, Data);
     }
 }
