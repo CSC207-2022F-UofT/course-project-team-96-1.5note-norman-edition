@@ -3,7 +3,7 @@ public class Destroyer implements InteractionManager {
     private Object toRemove;
 
     @Override
-    public void interact() {
+    public void interact(javafx.scene.Node userInput) {
 
     }
 

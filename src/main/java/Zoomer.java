@@ -1,32 +1,29 @@
 public class Zoomer implements InteractionManager{
 
-    private Page toZoom;
-    private double target;
+    private final Page TOZOOM;
 
-    // 1. user types in a percentage
-    // 2. user presses buttons increase by 10%
-    // i have 1, how to distinguish between the 2? could maybe pass a string that is either % or # of button clicks,
-    // where pos is zoom in and neg is zoom out
-    // 3, find a way to take in the area
+    public Zoomer(Page page) {
+        this.TOZOOM = page;
+    }
+
+    //TODO don't know what format userInput will be in yet... (assuming percentage is in 50%, 75%, etc. format)
     @Override
     public void interact(javafx.scene.Node userInput) {
-        double currentSize = this.toZoom.getViewSize();
-        //1.
-        double percentage = Double.parseDouble(userInput.toString()); //TODO don't know what format input will be in
-        // yet... (assuming percentage is in 50%, 75%, etc. format
-        this.target = percentage /100 * (currentSize);
-        this.zoom(target);
-
-        /*
-        2.
-        double change = Double.parseDouble(userInput.toString()) * 0.1;
-        this.target = currentSize + (change * currentSize);
-        this.zoom(target)
-        */
+        double currentSize = this.TOZOOM.getViewSize();
+        // userInput represents either pressing the zoom in (+1) or zoom out (-1) button
+        if (Integer.parseInt(userInput.toString()) == 1 || Integer.parseInt(userInput.toString()) == -1) {
+            int inOrOut = Integer.parseInt(userInput.toString());
+            double targetPercentage = currentSize + inOrOut * .1;
+            this.zoom(targetPercentage);
+        } else {
+            // userInput represents a percentage selection from the drop down menu
+            double percentage = Double.parseDouble(userInput.toString());
+            this.zoom(percentage/100);
+        }
     }
 
     public void zoom(double viewSize){
-        this.toZoom.setViewSize(viewSize);
+        this.TOZOOM.setViewSize(viewSize);
     }
-    // TODO probably have to do something in Page or PageGUI with viewSize
+    // TODO probably have to do something in Page or PageGUI with viewSize, rn only changing backend
 }

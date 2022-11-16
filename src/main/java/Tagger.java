@@ -3,7 +3,7 @@ public class Tagger implements InteractionManager{
     private String tag;
 
     @Override
-    public void interact() {
+    public void interact(javafx.scene.Node userInput) {
 
     }
 

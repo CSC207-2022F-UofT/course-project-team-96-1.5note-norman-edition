@@ -1,17 +1,22 @@
-public class MediaText extends PageMedia {
-    private String text; // TODO: Temp object type, feel free to change as needed.
+import javafx.scene.text.*;
 
-    public MediaText(double[] position, double[] dimensions, double angle, int zIndex, String name, String tag,
-                     byte[] rawData, String text) {
-        super(position, dimensions, angle, zIndex, name, tag, rawData);
+public class MediaText extends PageMedia {
+    //A subclass of PageMedia, defining a text that exists on the page
+    //Instance Attributes:
+    //  -text: The GUI representation of the text in question
+    private Text text;
+
+    public MediaText(double[] position, double[] dimensions, double angle, int zIndex, long id, String tag,
+                     Text text) {
+        super(position, dimensions, angle, zIndex, id, tag);
         this.text = text;
     }
 
-    public String getText() {
+    public Text getText() {
         return text;
     }
 
-    public void setText(String text) {
+    public void setText(Text text) {
         this.text = text;
     }
 }
