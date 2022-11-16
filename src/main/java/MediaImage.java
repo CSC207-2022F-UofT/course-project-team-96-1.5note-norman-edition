@@ -1,11 +1,14 @@
 import javafx.scene.image.Image;
 
-public class MediaImage extends PageMedia{
-    private Image image; // TODO: Temp object type, feel free to change as needed.
+public class MediaImage extends PageFileMedia{
+    //A subclass of PageFileMedia, defining an Image that exists on the page
+    //Instance Attributes:
+    //  -image: The GUI representation of the image in question
+    private Image image;
 
-    public MediaImage(double[] position, double[] dimensions, double angle, int zIndex, String name, String tag,
+    public MediaImage(double[] position, double[] dimensions, double angle, int zIndex, long id, String tag,
                       byte[] rawData, Image image) {
-        super(position, dimensions, angle, zIndex, name, tag, rawData);
+        super(position, dimensions, angle, zIndex, id, tag, rawData);
         this.image = image;
     }
 

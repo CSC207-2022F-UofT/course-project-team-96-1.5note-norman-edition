@@ -1,3 +1,7 @@
+import javafx.geometry.Point2D;
+
+import java.awt.*;
+
 public class ToolBarController {
 
     /*
@@ -6,26 +10,35 @@ public class ToolBarController {
      */
 
     public void insertText() {
-        TextModifier.addMedia();
+        TextModifier textModifier = new TextModifier();
+        textModifier.addMedia();
     }
 
     public void insertImage() {
-        ImageModifier.addMedia();
+        ImageModifier imageModifier = new ImageModifier();
+        imageModifier.addMedia();
     }
 
     public void insertAudio() {
-        AudioModifier.addMedia();
+        AudioModifier audioModifier = new AudioModifier();
+        audioModifier.addMedia();
     }
 
-    public void drawShape() {
-        ShapeCreator.useTwoPositions();
+    public void drawShape(Point2D point1, Point2D point2, String shape) {
+        ShapeCreator shapeCreator = new ShapeCreator();
+
+        shapeCreator.useTwoPositions(point1, point2, shape);
     }
 
-    public void select() {
-        SelectionTool.useTwoPositions();
+    public void select(Point2D point1, Point2D point2, String shape)
+    {
+        SelectionTool selectionTool = new SelectionTool();
+        selectionTool.useTwoPositions(point1, point2, shape);
     }
 
-    public void tag(String input) {
-        Tagger.interact(input);
+    public void tag() //TODO: add neccessary input
+    {
+        Tagger tagger = new Tagger();
+        tagger.interact();
     }
 }
