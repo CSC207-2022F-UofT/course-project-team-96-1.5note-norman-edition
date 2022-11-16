@@ -12,9 +12,8 @@ public class MediaHyperlink extends Media{
     private String text;
     private String link;
 
-    public MediaHyperlink(long id, String name, Set<String> tags, double x, double y,
-                          double width, double height, double angle, int zIndex, String text, String link) {
-        super(id, name, tags, x, y, width, height, angle, zIndex);
+    public MediaHyperlink(String name, double x, double y, double width, double height, String text, String link) {
+        super(name, x, y, width, height);
         this.text = text;
         this.link = link;
     }
