@@ -4,19 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="282823d0-2796-4ddb-8ba2-3377c34b9835" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/media/HyperlinkBox.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/media/TextBox.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/gui/media/GUIHyperlinkBox.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/gui/media/GUITextBox.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/gui/tool/HyperlinkTool.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/gui/tool/TextTool.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ImageModifier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ImageModifier.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gui/tool/ToolFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/tool/ToolFactory.java" afterDir="false" />
+    <list default="true" id="282823d0-2796-4ddb-8ba2-3377c34b9835" name="Changes" comment="link insertion; added the associated hyperlink classes to the GUI, Tool, and media folder">
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/media/HyperlinkBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/media/HyperlinkBox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/media/TextBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/media/TextBox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gui/media/GUIHyperlinkBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/media/GUIHyperlinkBox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gui/media/GUITextBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/media/GUITextBox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gui/tool/HyperlinkTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/tool/HyperlinkTool.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gui/tool/TextTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/tool/TextTool.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,6 +162,14 @@
       <option name="presentableId" value="Default" />
       <updated>1667927896511</updated>
     </task>
+    <task id="LOCAL-00001" summary="link insertion; added the associated hyperlink classes to the GUI, Tool, and media folder">
+      <created>1668690646837</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1668690646837</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -180,5 +182,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="link insertion; added the associated hyperlink classes to the GUI, Tool, and media folder" />
+    <option name="LAST_COMMIT_MESSAGE" value="link insertion; added the associated hyperlink classes to the GUI, Tool, and media folder" />
   </component>
 </project>

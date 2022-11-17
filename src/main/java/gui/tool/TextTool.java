@@ -61,7 +61,7 @@ public class TextTool implements Tool {
 
             // Edit existing TextBox
             if (pick instanceof Text) { //TODO: Incorrectly returns Text, change to GUITextBox once Dexter fixes it!
-                ((Text) pick).setText(settings.getText());
+                ((GUITextBox) pick).update(settings.getText());
             }
             // Create new TextBox in empty space
             else{
@@ -118,4 +118,6 @@ class TextSettings extends FlowPane {
 
     public String getText() { return textBox.getText(); }
     public TextArea getTextBox() { return this.textBox; }
+
+    public void setText(String textIn) { this.textBox.setText(textIn); }
 }

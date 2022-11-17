@@ -8,6 +8,7 @@ import javafx.scene.input.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.geometry.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 
 import gui.media.GUIHyperlinkBox;
@@ -18,6 +19,7 @@ public class HyperlinkTool implements Tool {
     private Page page;
     private HandlerMethod[] handlers;
     private HyperlinkSettings settings;
+    private Color c = Color.BLUE;
 
     private GUIHyperlinkBox currentText;
 
@@ -68,7 +70,7 @@ public class HyperlinkTool implements Tool {
                         settings.getText(), settings.getLink()
                 );
 
-                //currentText.setColour("blue");
+                //currentText.getText().setFill(c);
                 page.addMedia(currentText);
 
 

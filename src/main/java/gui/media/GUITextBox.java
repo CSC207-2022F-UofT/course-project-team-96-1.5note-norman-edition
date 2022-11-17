@@ -23,6 +23,7 @@ public class GUITextBox extends GUIMedia<TextBox> {
     }
 
     public GUITextBox(Point2D point, String text) {
+
         super(new TextBox(point.getX(), point.getY(), text));
 
         setInitialValues();
