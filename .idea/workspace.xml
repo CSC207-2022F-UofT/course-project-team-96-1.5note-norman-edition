@@ -4,35 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ea57fb3c-8b45-48bb-954d-8b968e498d39" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+    <list default="true" id="282823d0-2796-4ddb-8ba2-3377c34b9835" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/app/media/HyperlinkBox.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/app/media/TextBox.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/gui/media/GUIHyperlinkBox.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/gui/media/GUITextBox.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/gui/tool/HyperlinkTool.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/gui/tool/TextTool.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/AudioModifier.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Destroyer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Drawable.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FileLoaderWriter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ImageModifier.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/InteractionManager.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/MediaAudio.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/MediaCommunicator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/MediaImage.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/MediaManager.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/MediaText.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/MenuBarController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Page.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/PageController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/PageMedia.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/SearchBarController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Searcher.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/SelectionTool.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ShapeCreator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Storage.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Tagger.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/TextModifier.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ToolBarController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Zoomer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ImageModifier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ImageModifier.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gui/tool/ToolFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/tool/ToolFactory.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,10 +24,10 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="ExternalProjectsData">
-    <projectState path="$PROJECT_DIR$">
+    <projectState path="/mnt/03ded9a2-bd46-4b2a-9bb5-36cfaf01d2a3/projects/course-project-team-96-1.5note-norman-edition">
       <ProjectState />
     </projectState>
-    <projectState path="/mnt/03ded9a2-bd46-4b2a-9bb5-36cfaf01d2a3/projects/course-project-team-96-1.5note-norman-edition">
+    <projectState path="$PROJECT_DIR$">
       <ProjectState />
     </projectState>
   </component>
@@ -59,8 +43,27 @@
       </state>
     </system>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="feature-6.0-trial" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GithubProjectSettings">
+    <option name="branchProtectionPatterns">
+      <list>
+        <option value="main" />
+      </list>
+    </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -73,16 +76,89 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Downloaded.Files.Path.Enabled": "false",
+    "Git.Branch.Popup.ShowAllRemotes": "true",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "last_opened_file_path": "/home/dexter/Documents/projects/p",
     "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
+    "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle"
   }
 }]]></component>
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="course-project-team-96-1.5note-norman-edition.main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="gui.Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="gui.Main" />
+      <module name="course-project-team-96-1.5note-norman-edition.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="gui.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="course-project-team-96-1.5note-norman-edition" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list />
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="gui in course-project-team-96-1.5note-norman-edition.main" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="course-project-team-96-1.5note-norman-edition.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="gui.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="gui" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="gradle-wrapper.jar" type="JarApplication" temporary="true">
+      <option name="JAR_PATH" value="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.gui in course-project-team-96-1.5note-norman-edition.main" />
+        <item itemvalue="JAR Application.gradle-wrapper.jar" />
+        <item itemvalue="Gradle.course-project-team-96-1.5note-norman-edition" />
+        <item itemvalue="Application.Main" />
+        <item itemvalue="Application.gui.Main" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
