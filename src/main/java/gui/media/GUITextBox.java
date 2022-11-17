@@ -46,6 +46,8 @@ public class GUITextBox extends GUIMedia<TextBox> {
 
     private void setText(String textIn) { this.text.setText(textIn); }
 
+    public String getText() { return this.text.getText(); }
+
     public void update(String textIn) {
         this.text.setText(textIn);
     }

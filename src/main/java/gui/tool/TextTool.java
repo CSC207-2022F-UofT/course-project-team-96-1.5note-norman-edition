@@ -25,8 +25,8 @@ public class TextTool implements Tool {
 
     public TextTool() {
         HandlerMethod[] handlers = {
-                new HandlerMethod<>(MouseEvent.MOUSE_CLICKED, this::makeText)//,
-                //new HandlerMethod<>(KeyEvent.KEY_PRESSED, this::updateEdit),
+                new HandlerMethod<>(MouseEvent.MOUSE_CLICKED, this::makeText),
+                new HandlerMethod<>(KeyEvent.KEY_TYPED, this::updateEdit)
                 //new HandlerMethod<>(MouseEvent.MOUSE_EXITED_TARGET, this::endEdit)
         };
         this.handlers = handlers;
@@ -58,13 +58,14 @@ public class TextTool implements Tool {
         if (e.getButton() == MouseButton.PRIMARY) {
             e.consume();
 
-            EventTarget pick = e.getTarget(); // e.getTarget() return type EventTarget so I have to check what it is
-            //System.out.println(pick.getClass());
+            EventTarget pick = e.getTarget(); // e.getTarget() returns type EventTarget, so I have to check what it is
 
             // Edit existing TextBox
-            if (pick instanceof GUITextBox) {
-                settings.setText(((GUITextBox) pick).getText());
-                ((GUITextBox) pick).update(settings.getText());
+            if (pick instanceof GUITextBox castpick) { // I have to use castpick here to make it work properly
+                settings.setText(castpick.getText());
+                currentText = castpick;
+                //currentText.addEventHandler(KeyEvent.KEY_TYPED, this::updateEdit);
+                //(castpick).update(settings.getText());
             }
             // Create new TextBox in empty space
             else{
@@ -77,14 +78,15 @@ public class TextTool implements Tool {
         }
     }
 
-    /*private void updateEdit(KeyEvent e) {
-        if (e.isShiftDown() && e.getCode() == KeyCode.ENTER) {
+    private void updateEdit(KeyEvent e) {
+        if (e.getEventType() == KeyEvent.KEY_TYPED) {
             e.consume();
+
             currentText.update(settings.getText());
         }
     }
 
-    private void endEdit(MouseEvent e) {
+    /*private void endEdit(MouseEvent e) {
         if (e.getTarget() != settings.getTextBox()) {
             e.consume();
 
