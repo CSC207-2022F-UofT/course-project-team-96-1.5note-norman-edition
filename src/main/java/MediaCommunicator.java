@@ -8,8 +8,8 @@ public class MediaCommunicator {
         return this.page;
     }
 
-    public byte[] readFile(String path){
-        return this.storage.readFile(path);
+    public byte[] readFile(String[] extensions){
+        return this.storage.readFile(extensions, "");
     }
 
     public void writeFile(String path, byte[] Data){

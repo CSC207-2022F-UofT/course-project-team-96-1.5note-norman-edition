@@ -1,5 +1,6 @@
 package app.media_managers;
 
+import app.media.MediaHyperlink;
 import app.media_managers.MediaManager;
 
 public class TextModifier implements MediaManager {
@@ -17,6 +18,10 @@ public class TextModifier implements MediaManager {
     @Override
     public void searchMedia() {
 
+    }
+
+    public MediaHyperlink createHyperlink(String text, String source) {   //temp method
+        return new MediaHyperlink("", 0, 0, 0, 0, text, source);
     }
 
     public void addLink(String givenLink){

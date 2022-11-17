@@ -1,6 +1,8 @@
 package storage;
 
+import java.net.URI;
+
 public interface Storage {
-    public byte[] readFile(String path);
-    public void writeFile(String path, byte[] Data);
+    public byte[] readFile(String[] extensions, String description);
+    public URI writeFile(String path, byte[] Data);
 }
