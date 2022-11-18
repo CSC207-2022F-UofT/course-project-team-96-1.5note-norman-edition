@@ -23,7 +23,7 @@ public class GUIMediaFactory {
         if (media instanceof PenStroke) {
             return new GUIPenStroke((PenStroke) media);
         } else if (media instanceof GenericShape) {
-            return new GUIShape((GenericShape) media);
+            return GUIShapeFactory.getFor((GenericShape) media);
         } else {
             throw new Exception("No appropriate GUIMedia class for `" + media + "`.");
         }

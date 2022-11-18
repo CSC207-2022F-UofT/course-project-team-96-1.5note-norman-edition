@@ -2,10 +2,10 @@ package app.media;
 
 import java.util.ArrayList;
 
-public class GenericShape extends Media {
+public abstract class GenericShape extends Media {
     protected String colour;
-    public GenericShape(double x, double y, double width, double height, String colour) {
-        super("shape", x, y, width, height);
+    public GenericShape(String type, double x, double y, double width, double height, String colour) {
+        super(type, x, y, 0, 0);
         this.colour = colour;
     }
 
@@ -15,3 +15,4 @@ public class GenericShape extends Media {
 
 
 }
+

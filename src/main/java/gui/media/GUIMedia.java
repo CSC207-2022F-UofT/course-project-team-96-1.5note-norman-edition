@@ -93,5 +93,7 @@ public class GUIMedia<M extends Media> extends Pane {
      * After this method finishes the GUIMedia object on which it was called
      * should properly represent the Media object which was passed in.
      */
-    public void mediaUpdated(Media media) {}
+    public void mediaUpdated(Media media) {
+
+    }
 }

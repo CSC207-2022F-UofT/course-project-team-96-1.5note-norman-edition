@@ -4,13 +4,46 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ea57fb3c-8b45-48bb-954d-8b968e498d39" name="Changes" comment="Add Polygon functionality to ShapeTool, add update methods to GUI Rect, Ellipse, Poly, Shape">
+    <list default="true" id="ea57fb3c-8b45-48bb-954d-8b968e498d39" name="Changes" comment="Remove TODOs which have been completed in the previous commit, Remove redundant imports in the GUIShape Classes">
+      <change afterPath="$PROJECT_DIR$/src/main/java/app/media/EllipseShape.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/app/media/PolygonShape.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/app/media/RectangleShape.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/gui/media/GUIShapeFactory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/AudioModifier.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Destroyer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Drawable.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/EllipseCreator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/FileLoaderWriter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ImageModifier.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/InteractionManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/MediaAudio.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/MediaCommunicator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/MediaImage.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/MediaManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/MediaText.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/MenuBarController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Page.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/PageController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/PageMedia.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/RectCreator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/SearchBarController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Searcher.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/SelectionTool.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ShapeCreator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Storage.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Tagger.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/TextModifier.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ToolBarController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Zoomer.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/media/GenericShape.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/media/GenericShape.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gui/media/GUIEllipse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/media/GUIEllipse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gui/media/GUIMedia.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/media/GUIMedia.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gui/media/GUIMediaFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/media/GUIMediaFactory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gui/media/GUIPolygon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/media/GUIPolygon.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gui/media/GUIRectangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/media/GUIRectangle.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gui/media/GUIShape.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/media/GUIShape.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gui/tool/ShapeTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/tool/ShapeTool.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,7 +114,10 @@
       <workItem from="1668449787900" duration="544000" />
       <workItem from="1668456432611" duration="18434000" />
       <workItem from="1668549588417" duration="1243000" />
-      <workItem from="1668551536532" duration="11044000" />
+      <workItem from="1668551536532" duration="11496000" />
+      <workItem from="1668629723341" duration="9686000" />
+      <workItem from="1668660780899" duration="5169000" />
+      <workItem from="1668726831594" duration="10075000" />
     </task>
     <task id="LOCAL-00001" summary="Add ShapeTool, GUIShape, Shape classes">
       <created>1668411649988</created>
@@ -97,7 +133,14 @@
       <option name="project" value="LOCAL" />
       <updated>1668561705906</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Remove TODOs which have been completed in the previous commit, Remove redundant imports in the GUIShape Classes">
+      <created>1668562676865</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1668562676865</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -117,6 +160,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Add ShapeTool, GUIShape, Shape classes" />
     <MESSAGE value="Add Polygon functionality to ShapeTool, add update methods to GUI Rect, Ellipse, Poly, Shape" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add Polygon functionality to ShapeTool, add update methods to GUI Rect, Ellipse, Poly, Shape" />
+    <MESSAGE value="Remove TODOs which have been completed in the previous commit, Remove redundant imports in the GUIShape Classes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove TODOs which have been completed in the previous commit, Remove redundant imports in the GUIShape Classes" />
   </component>
 </project>
