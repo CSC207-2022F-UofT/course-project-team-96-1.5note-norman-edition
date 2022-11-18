@@ -22,21 +22,10 @@ public class GUIPolygon extends GUIShape {
 
     public GUIPolygon(PolygonShape media) {
         super(media);
-        setPolygon(media);
+        setGenericShape(media);
     }
 
-    @Override
-    public void mediaUpdated(Media media) {
-        PolygonShape newPolygon = (PolygonShape) media;
-        PolygonShape currentPolygon = (PolygonShape) getMedia();
-
-        if (currentPolygon != newPolygon) {
-            setMedia(newPolygon);
-            setPolygon(newPolygon);
-        }
-    }
-
-    public void setPolygon(PolygonShape polygon) {
+    public void setGenericShape(PolygonShape polygon) {
         Color colour = Color.valueOf(polygon.getColour());
         this.polygon = new Polygon();
         this.polygon.getPoints().addAll(calcPointsFromRadiusAngle(polygon.getRadius(), polygon.getStartAngle(), polygon.getSideCount()));

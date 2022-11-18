@@ -1,6 +1,8 @@
 package gui.media;
 
 import app.media.GenericShape;
+import app.media.Media;
+import app.media.RectangleShape;
 import javafx.geometry.Point2D;
 
 public class GUIShape extends GUIMedia<GenericShape> {
@@ -10,6 +12,19 @@ public class GUIShape extends GUIMedia<GenericShape> {
     }
 
     public void update(Point2D p1, Point2D p2, boolean sameSideLengths){}
+
+    @Override
+    public void mediaUpdated(Media media) {
+        GenericShape newShape = (GenericShape)  media;
+        GenericShape currentShape = getMedia();
+
+        if (currentShape != newShape) {
+            setMedia(newShape);
+            setGenericShape(newShape);
+        }
+    }
+
+    public void setGenericShape(GenericShape shape) {}
 
     public double[] RestrictPoints (Point2D origin, Point2D current, boolean sameSideLengths) {
         // Accepts two points and returns the dimensions of a shape to fill the space as follows:
@@ -27,7 +42,7 @@ public class GUIShape extends GUIMedia<GenericShape> {
             height = width;
         }
 
-        System.out.println(width+" "+height);
+//        System.out.println(width+" "+height);
 
         x2 = clamp(x2, x1 - width, x1 + width);
         y2 = clamp(y2, y1 - height, y1 + height);

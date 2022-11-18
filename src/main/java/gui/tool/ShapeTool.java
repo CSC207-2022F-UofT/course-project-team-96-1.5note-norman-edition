@@ -115,8 +115,6 @@ public class ShapeTool implements Tool {
 
     private void finishShape() {
         if (currentShape != null) {
-            System.out.println(currentShape.getMedia());
-            System.out.println(point1+" "+point2);
             page.updateMedia(currentShape);
             currentShape = null;
         }

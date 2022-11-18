@@ -11,12 +11,18 @@ public class GUIEllipse extends GUIShape {
 
     public GUIEllipse(Point2D p1, Point2D p2, Color colour) {
         super(new EllipseShape(0, 0,0,0, colour.toString()));
-        double x1 = p1.getX();
-        double y1 = p1.getY();
-        double x2 = p2.getX();
-        double y2 = p2.getY();
-        double width = Math.abs(x2 - x1);
-        double height = Math.abs(y2 - y1);
+        double[] result = RestrictPoints(p1, p2, false);
+        double posX = result[0];
+        double posY = result[1];
+        double width = result[2];
+        double height = result[3];
+
+        // Updating dimensions of media
+        getMedia().setX(posX - width/2);
+        getMedia().setY(posY - height/2);
+        getMedia().setWidth(width);
+        getMedia().setHeight(height);
+
         ellipse = new Ellipse(0, 0, width / 2, height / 2);
         ellipse.setFill(colour);
         getChildren().add(ellipse);
@@ -24,21 +30,10 @@ public class GUIEllipse extends GUIShape {
 
     public GUIEllipse(EllipseShape media) {
         super(media);
-        setEllipse(media);
+        setGenericShape(media);
     }
 
-    @Override
-    public void mediaUpdated(Media media) {
-        EllipseShape newEllipse = (EllipseShape) media;
-        EllipseShape currentEllipse = (EllipseShape) getMedia();
-
-        if (currentEllipse != newEllipse) {
-            setMedia(newEllipse);
-            setEllipse(newEllipse);
-        }
-    }
-
-    public void setEllipse(EllipseShape ellipse) {
+    public void setGenericShape(EllipseShape ellipse) {
         Color colour = Color.valueOf(ellipse.getColour());
         this.ellipse = new Ellipse(0,0,ellipse.getWidth()/2,ellipse.getHeight()/2);
         this.ellipse.setFill(colour);
