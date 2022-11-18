@@ -10,8 +10,6 @@ public class MediaAudio extends FileMedia{
     //  defaultVolume: default volume of the audio as defined by the audio files
     private ArrayList<Duration> timestamps;
 
-
-
     public MediaAudio(String name, double x, double y, double width, double height, byte[] rawData,
                       ArrayList<Duration>  timestamps) {
         super(name, x, y, width, height, rawData);

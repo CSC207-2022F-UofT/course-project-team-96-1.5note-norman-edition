@@ -3,6 +3,7 @@ package gui.media;
 import app.media.MediaAudio;
 import app.media.MediaHyperlink;
 import app.media_managers.TextModifier;
+import gui.view_controllers.MediaPlayerController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
@@ -19,7 +20,7 @@ import storage.FileLoaderWriter;
 import storage.Storage;
 import java.net.*;
 
-public class GUIAudio extends GUIMedia<MediaAudio>{
+public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
 
     private URI tempFile;
     private MediaPlayer audioPlayer;
@@ -28,11 +29,24 @@ public class GUIAudio extends GUIMedia<MediaAudio>{
     private Slider playbackSlider;
 
     private Text playbackText;
+    private double defaultVolume;
+    private MediaPlayerController controller;
 
 
     public GUIAudio(MediaAudio audio)   {
         super(audio);
-        this.getChildren().add(createInterface());
+
+        initializeMediaPlayer();
+
+        //Waiting for mediaplayer to be ready to call neccessary methods
+        audioPlayer.setOnReady(new Runnable() {
+            @Override
+            public void run() {
+                createInterface();
+            }
+        });
+
+
     }
 
     public void initializeMediaPlayer()  {
@@ -45,19 +59,20 @@ public class GUIAudio extends GUIMedia<MediaAudio>{
         Media audioMedia = new Media(this.tempFile.toString());
         this.audioPlayer = new MediaPlayer(audioMedia);
 
-        this.getMedia().setDefaultVolume(this.audioPlayer.getVolume()); //TODO: maybe change how this is done for CA
+        this.defaultVolume = this.audioPlayer.getVolume();
     }
 
-    public HBox createInterface()   {
+    public void createInterface()   {
         //Creates the overall interface allowing for playing MediaAudio and manipulating it
-        initializeMediaPlayer();
+        controller = new MediaPlayerController(this, audioPlayer.getTotalDuration());
 
         //Creating visual elements related to the play state of the mediaplayer
         createPlayButton();
         createPlaybackSlider();
         HBox playBox = new HBox();
         this.playbackText = new Text();
-        updatePlaybackText(new Duration(0));
+        controller.changePlaybackText(new Duration(0));
+
         playBox.getChildren().addAll(playButton, playbackSlider, playbackText);
         playBox.setSpacing(10); //temp
 
@@ -75,22 +90,24 @@ public class GUIAudio extends GUIMedia<MediaAudio>{
         layout.setSpacing(40);
         layout.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
         layout.setPadding(new Insets(7, 7, 7, 7));
-        return layout;
+
+        this.getChildren().add(layout);
     }
 
     public void configurePlayer()  {
         //Creates configuration for the audioplayer neccessary for various UI elements
+
+        //Makes it so when the player is playing, playback slider and playback text update accordingly
         this.audioPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
             @Override
             public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
                 double percentElapsed = newValue.toMillis() / audioPlayer.getTotalDuration().toMillis();
-                playbackSlider.setDisable(true);
                 playbackSlider.setValue(percentElapsed);
-                playbackSlider.setDisable(false);
-
-                updatePlaybackText(newValue);
+                controller.changePlaybackText(newValue);
             }
         });
+
+        //Allow play button to restart player when it reaches the end
         this.audioPlayer.setOnEndOfMedia(new Runnable() {
             @Override
             public void run() {
@@ -99,23 +116,11 @@ public class GUIAudio extends GUIMedia<MediaAudio>{
         });
     }
 
-
     public void createPlayButton()    {
         //Creates a button that allows pausing/playing the audio
         Button play = new Button("Play");
         play.setOnAction(e -> {
-            if (play.getText().equals("Play"))  {
-                //Checking if the player is at the end of the audio
-                if(audioPlayer.getCurrentTime().equals(audioPlayer.getTotalDuration())) {
-                    audioPlayer.seek(audioPlayer.getStartTime());
-                }
-                this.audioPlayer.play();
-                play.setText("Pause");
-            }   else {
-                //If the player is playing, we can pause it instead
-                this.audioPlayer.pause();
-                play.setText("Play");
-            }
+            controller.firePlayButton(play.getText());
         });
         this.playButton = play;
     }
@@ -127,12 +132,11 @@ public class GUIAudio extends GUIMedia<MediaAudio>{
         playRateOptions.getItems().addAll("0.5x", "1x", "1.5x", "2x");
 
         //Setting the default selection to the current desired playback rate
-        double rate = this.audioPlayer.getRate();
+        double rate = audioPlayer.getRate();
         playRateOptions.getSelectionModel().select((int) (rate / 0.5) - 1);
 
         playRateOptions.setOnAction(e ->{
-            double selectedRate = (playRateOptions.getSelectionModel().getSelectedIndex() + 1) * 0.5;
-            this.audioPlayer.setRate(selectedRate);
+            controller.changePlayRate((playRateOptions.getSelectionModel().getSelectedIndex() + 1) * 0.5);
         });
         return playRateOptions;
     }
@@ -140,16 +144,14 @@ public class GUIAudio extends GUIMedia<MediaAudio>{
     public Slider createAudioSlider()   {
         //Creates a slider to adjust audio that can work as it's playing
 
-        MediaPlayer audioPlayer = this.audioPlayer;
-        double defaultVolume = super.getMedia().getDefaultVolume();
-
-        Slider audioSlider = new Slider(0, 1, 1); //Due to MediaPlayer implementation, raising volume above default is impossible
+        //Due to MediaPlayer implementation, raising volume above default is impossible
+        Slider audioSlider = new Slider(0, 1, 1);
 
         //Allowing slider to update volume of the player in live time
         audioSlider.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                audioPlayer.setVolume(defaultVolume * (double) newValue);
+                controller.changePlayVolume(defaultVolume * (double) newValue);
             }
         });
         return audioSlider;
@@ -159,36 +161,17 @@ public class GUIAudio extends GUIMedia<MediaAudio>{
         //Creates a slider that tracks current duration of the player and can change the time it's at
         MediaPlayer audioPlayer = this.audioPlayer;
         Slider playbackSlider = new Slider(0, 1, 0);
+
+        //Allowing slider to change where the player is playing from
         playbackSlider.valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 if(playbackSlider.isPressed())    {
-                    double totalDuration = audioPlayer.getTotalDuration().toSeconds();
-                    Duration newTime = Duration.seconds((double) newValue * totalDuration);
-                    audioPlayer.seek(newTime);
-                    //When status is ready, the audio player currentTime property does not update until the player plays
-                    if (audioPlayer.getStatus() == MediaPlayer.Status.READY)  {
-                        updatePlaybackText(newTime);
-                    }
-
+                    controller.changePlayback((Double) newValue, audioPlayer.getStatus());
                 }
             }
         });
         this.playbackSlider = playbackSlider;
-    }
-
-    public void updatePlaybackText(Duration newDuration)    {
-        int seconds = (int) newDuration.toSeconds() % 60;
-        int minutes = (int) newDuration.toMinutes() % 60;
-        int hours = (int) newDuration.toHours();
-        String[] timeProperties = {Integer.toString(seconds), Integer.toString(minutes), Integer.toString(hours)};
-        for (int i = 0; i < timeProperties.length; i++)   {
-            if (timeProperties[i].length() == 1) {
-                timeProperties[i] = "0" + timeProperties[i];
-            }
-        }
-
-        this.playbackText.setText(timeProperties[2] + ":" + timeProperties[1] + ":" + timeProperties[0]);
     }
 
     public void createTimestamps()  {
@@ -207,8 +190,45 @@ public class GUIAudio extends GUIMedia<MediaAudio>{
     }
 
     @Override
-    public void mediaUpdated(app.media.Media media) {
+    public void setPlayerDuration(Duration time) {
+        this.audioPlayer.seek(time);
+    }
 
+    @Override
+    public void play() {
+        this.audioPlayer.play();
+    }
+
+    @Override
+    public void pause() {
+        this.audioPlayer.pause();
+    }
+
+    @Override
+    public Duration getCurrentDuration() {
+        return this.audioPlayer.getTotalDuration();
+    }
+
+    @Override
+    public void setPlaybackText(String text) {
+        this.playbackText.setText(text);
+    }
+
+    @Override
+    public void setPlaybackRate(double value) {this.audioPlayer.setRate(value);}
+    @Override
+    public void setPlaybackSliderValue(double value) {
+        this.playbackSlider.setValue(value);
+    }
+
+    @Override
+    public void setPlayButtonText(String text) {
+        this.playButton.setText(text);
+    }
+
+    @Override
+    public void setPlayerVolume(double value) {
+        this.audioPlayer.setVolume(value);
     }
 
     public MediaPlayer getAudioPlayer() {
@@ -226,4 +246,6 @@ public class GUIAudio extends GUIMedia<MediaAudio>{
     public Text getPlaybackText() {
         return playbackText;
     }
+
+
 }
