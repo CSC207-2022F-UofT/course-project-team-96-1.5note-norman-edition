@@ -114,7 +114,6 @@ public class GUIAudio extends GUIMedia<MediaAudio>{
                 playbackSlider.setDisable(true);
                 playbackSlider.setValue(percentElapsed);
                 playbackSlider.setDisable(false);
-
                 updatePlaybackText();
             }
         });
@@ -237,5 +236,21 @@ public class GUIAudio extends GUIMedia<MediaAudio>{
 
     public MediaPlayer getAudioPlayer() {
         return audioPlayer;
+    }
+
+    public Button getPlayButton() {
+        return playButton;
+    }
+
+    public Slider getPlaybackSlider() {
+        return playbackSlider;
+    }
+
+    public VBox getTimestamps() {
+        return timestamps;
+    }
+
+    public Text getPlaybackText() {
+        return playbackText;
     }
 }
