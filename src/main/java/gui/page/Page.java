@@ -31,6 +31,7 @@ public class Page extends StackPane implements MediaObserver {
     private PageEventHandler.HandlerMethod<?>[] handlerMethods;
     private PageEventHandler handler;
     private Pane mediaLayer;
+    private Pane uiLayer;
 
     private Map<Long, GUIMedia> contents;
 
@@ -44,7 +45,11 @@ public class Page extends StackPane implements MediaObserver {
         contents = new HashMap<>();
         mediaLayer = new Pane();
         mediaLayer.setManaged(false);
-        getChildren().add(mediaLayer);
+
+        uiLayer = new Pane();
+        uiLayer.setPickOnBounds(false);
+
+        getChildren().addAll(mediaLayer, uiLayer);
 
         prevVisibleBounds = new BoundingBox(0, 0, 0, 0);
 
@@ -149,6 +154,13 @@ public class Page extends StackPane implements MediaObserver {
     }
 
     /**
+     * Get all the media currently displayed on this page which have assigned IDs.
+     */
+    public Set<GUIMedia> getAllMedia() {
+        return new HashSet<>(contents.values());
+    }
+
+    /**
      * Transform the given coordinates into the page's coordinate space.
      */
     public Point2D getCoords(Point2D coords) {
@@ -164,6 +176,17 @@ public class Page extends StackPane implements MediaObserver {
      */
     public Point2D getMouseCoords(MouseEvent e) {
         return getCoords(e.getX(), e.getY());
+    }
+
+    /**
+     * Transform the given out of the page's coordinate space.
+     */
+    public Point2D getCoordsInv(Point2D coords) {
+        return mediaLayer.localToParent(coords);
+    }
+
+    public Point2D getCoordsInv(double x, double y) {
+        return getCoordsInv(new Point2D(x, y));
     }
 
     /**
@@ -255,6 +278,25 @@ public class Page extends StackPane implements MediaObserver {
         GUIMedia guiMedia = GUIMediaFactory.getFor(media);
         contents.put(guiMedia.getID(), guiMedia);
         addMedia(guiMedia);
+    }
+
+    /**
+     * Set a node to display <i>on top</i> of the current page.
+     * <p>
+     * This can be used to display a GUI control "above" the current page
+     * contents, such as a popup or context menu.
+     * <p>
+     * Only one node can be set as the UI layer at a time. Calling this method
+     * will replace the previous contents of the UI layer (if any).
+     * <p>
+     * The UI layer can be cleared by passing `null` as the argument to this
+     * method.
+     */
+    public void setUIlayer(Node node) {
+        uiLayer.getChildren().clear();
+        if (node != null) {
+            uiLayer.getChildren().add(node);
+        }
     }
 
     @Override
