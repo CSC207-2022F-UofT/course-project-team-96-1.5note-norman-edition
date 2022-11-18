@@ -1,4 +1,5 @@
 package app.media_managers;
+import app.MediaObserver;
 import app.media.MediaAudio;
 import gui.media.GUIAudio;
 import gui.page.Page;
@@ -20,7 +21,7 @@ public class AudioModifier implements MediaManager {
 
     private Duration timestamp;
     private GUIAudio audio;
-    private Page page;
+    private MediaObserver page;
 
     @Override
     public void addMedia() {
@@ -31,11 +32,9 @@ public class AudioModifier implements MediaManager {
         try {
             MediaAudio audio = new MediaAudio("", 200, 200, 200, 200, rawData, new ArrayList<Duration>(),
                     0); //Temp Constructor
-            GUIAudio audioGUI = new GUIAudio(audio);
 
             //Giving the audio an ID then adding it to the page
-            this.page.updateMedia(audioGUI);
-            this.page.addMedia(audioGUI);
+            this.page.mediaUpdated(audio);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -44,7 +43,7 @@ public class AudioModifier implements MediaManager {
     @Override
     public void modifyMedia() {
         this.audio.getMedia().getTimestamps().add(timestamp);
-        this.page.updateMedia(this.audio);
+        this.page.mediaUpdated(this.audio.getMedia());
     }
 
     @Override
@@ -61,7 +60,7 @@ public class AudioModifier implements MediaManager {
         this.audio = audio;
     }
 
-    public void setPage(Page page) {
+    public void setPage(MediaObserver page) {
         this.page = page;
     }
 }
