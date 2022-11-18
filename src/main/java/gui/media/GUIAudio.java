@@ -39,10 +39,10 @@ public class GUIAudio extends GUIMedia<MediaAudio>{
 
     public void initializeMediaPlayer()  {
         //Initializes the main MediaPlayer that parts of the interface will use
-        String path = "temp\\id" + Double.toString(getMedia().getID());
+        String name = "id" + Double.toString(getMedia().getID());
 
         Storage fw = new FileLoaderWriter();
-        this.tempFile = fw.writeFile(path, getMedia().getRawData()); //Creating temp file for use by javafx.Media Class
+        this.tempFile = fw.writeFile(name, getMedia().getRawData()); //Creating temp file for use by javafx.Media Class
 
         Media audioMedia = new Media(this.tempFile.toString());
         this.audioPlayer = new MediaPlayer(audioMedia);
@@ -210,5 +210,17 @@ public class GUIAudio extends GUIMedia<MediaAudio>{
 
     public MediaPlayer getAudioPlayer() {
         return audioPlayer;
+    }
+
+    public Button getPlayButton() {
+        return playButton;
+    }
+
+    public Slider getPlaybackSlider() {
+        return playbackSlider;
+    }
+
+    public Text getPlaybackText() {
+        return playbackText;
     }
 }

@@ -28,9 +28,9 @@ public class FileLoaderWriter implements Storage {
         }
     }
 
-    public URI writeFile(String path, byte[] Data){
+    public URI writeFile(String name, byte[] Data){
         try {
-            File newFile = File.createTempFile(path, ".File");
+            File newFile = File.createTempFile(name, ".mp3");
             FileOutputStream writer = new FileOutputStream(newFile);
             writer.write(Data);
             writer.close();

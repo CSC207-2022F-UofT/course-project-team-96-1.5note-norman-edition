@@ -2,17 +2,14 @@ import app.MediaCommunicator;
 import app.media.MediaAudio;
 import gui.media.GUIAudio;
 import gui.page.Page;
-import javafx.scene.media.Media;
 import javafx.util.Duration;
 import org.junit.*;
-import storage.FileLoaderWriter;
 import storage.SQLiteStorage;
-import storage.Storage;
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import javafx.application.Platform;
 
 /** NOTE: because junit doesnt like working with javafx, this test class uses modified versions of methods
  * actually found in AudioModifier. The logic is more or less the exact same, just the methods of doing things have been altered.
@@ -24,22 +21,57 @@ public class TestAudioModifier {
     private Duration TimeStamp;
     private MediaAudio audio;
     private Page page;
+    private static Boolean init = false;
+
+
+    static void initJfxRuntime() {
+        if(!init)   {
+            Platform.startup(() -> {});
+            init = true;
+        }
+    }
 
     @Test
     public void testAddingAudio_mp3()  {
-        //Testing that an audioGUI can be made using a mp3 input, and that the javafx.Media can be initialized
+        //Testing that a MediaAudio can be made using a generic mp3 input, and that the javafx.Media can be initialized
+        initJfxRuntime();
         createPage();
         GUIAudio audioGUI = addMedia("src\\test\\java\\1.17 Axe to Grind.mp3");
-        initializeMediaPlayer(audioGUI.getMedia());
     }
 
     @Test
     public void testAddingAudio_wav()  {
-        //Testing that an audioGUI can be made using a wav input, and that the javafx.Media can be initialized
+        //Testing that a MediaAudio  can be made using a generic wav input, and that the javafx.Media can be initialized
+        initJfxRuntime();
         createPage();
         GUIAudio audioGUI = addMedia("src\\test\\java\\1.17 Axe to Grind.wav");
-        initializeMediaPlayer(audioGUI.getMedia());
     }
+
+    @Test
+    public void testAddingAudio_mp3_empty()  {
+        //Testing that a MediaAudio can be made using an "empty" mp3 input, and that the javafx.Media can be initialized
+        initJfxRuntime();
+        createPage();
+        GUIAudio audioGUI = addMedia("src\\test\\java\\empty.mp3");
+    }
+
+    @Test
+    public void testAddingAudio_wav_empty()  {
+        //Testing that a MediaAudio can be made using an "empty" wav input, and that the javafx.Media can be initialized
+        initJfxRuntime();
+        createPage();
+        GUIAudio audioGUI = addMedia("src\\test\\java\\empty_1c.wav");
+    }
+
+    @Test
+    public void testAddingAudio_mp3_long()  {
+        //Testing that a MediaAudio can be made using a long mp3 input, and that the javafx.Media can be initialized
+        initJfxRuntime();
+        createPage();
+        GUIAudio audioGUI = addMedia("src\\test\\java\\NieR Automata OST with Rain.mp3");
+    }
+
+    //No test for long WAVs because they're evidently not compressed and way too big for java to handle
 
     public void createPage()    {
         try {
@@ -77,12 +109,6 @@ public class TestAudioModifier {
         }
     }
 
-    public void initializeMediaPlayer(MediaAudio audio)  {
-        String path = "temp\\id" + Double.toString(audio.getID());
-        Storage fw = new FileLoaderWriter();
-        URI tempFile = fw.writeFile(path, audio.getRawData()); //Creating temp file for use by javafx.Media Class
-        Media audioMedia = new Media(tempFile.toString());
-    }
 
 
 
