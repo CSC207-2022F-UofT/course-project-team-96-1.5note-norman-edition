@@ -87,20 +87,27 @@ class ColourSettings extends FlowPane {
         hueSlider = new Slider(0, 360, 0);
         setHueSliderBackground();
         saturationSlider = new Slider(0, 1, 0);
+        saturationSlider.setBlockIncrement(0.1);
         valueSlider = new Slider(0, 1, 0);
+        valueSlider.setBlockIncrement(0.1);
         opacitySlider = new Slider(0, 1, 0);
+        opacitySlider.setBlockIncrement(0.1);
 
-        hueSlider.valueProperty().addListener(o -> setColourFromSliders());
-        saturationSlider.valueProperty().addListener(o -> setColourFromSliders());
-        valueSlider.valueProperty().addListener(o -> setColourFromSliders());
-        opacitySlider.valueProperty().addListener(o -> setColourFromSliders());
+        Slider[] sliders = new Slider[] {
+            hueSlider,
+            saturationSlider,
+            valueSlider,
+            opacitySlider
+        };
+
+        for (Slider slider: sliders) {
+            slider.valueProperty().addListener(o -> setColourFromSliders());
+            slider.setOnMouseReleased(e -> updateHistory(false));
+            slider.setOnKeyReleased(e -> updateHistory(false));
+        }
+
         colour.addListener(o -> setSlidersFromColour());
-
-        hueSlider.setOnMouseReleased(e -> updateHistory());
-        saturationSlider.setOnMouseReleased(e -> updateHistory());
-        valueSlider.setOnMouseReleased(e -> updateHistory());
-        opacitySlider.setOnMouseReleased(e -> updateHistory());
-        colour.addListener(o -> updateHistory());
+        colour.addListener(o -> updateHistory(true));
 
         HBox colourPickerRow = new HBox(new Label("Colour Picker:"), colourPicker);
         HBox hueRow = new HBox(new Label("Hue:"), hueSlider);
@@ -128,6 +135,14 @@ class ColourSettings extends FlowPane {
         setRowValignment(VPos.TOP);
     }
 
+    private boolean isSliderFocused() {
+        return
+            hueSlider.isFocused()
+            || saturationSlider.isFocused()
+            || valueSlider.isFocused()
+            || opacitySlider.isFocused();
+    }
+
     private boolean isSliderPressed() {
         return
             hueSlider.isPressed()
@@ -141,7 +156,7 @@ class ColourSettings extends FlowPane {
                 hueSlider.getValue(), saturationSlider.getValue(),
                 valueSlider.getValue(), opacitySlider.getValue());
 
-        if (isSliderPressed()) {
+        if (isSliderFocused()) {
             colour.setValue(sliderColour);
         }
     }
@@ -183,7 +198,7 @@ class ColourSettings extends FlowPane {
         double value = c.getBrightness();
         double opacity = c.getOpacity();
 
-        if (!isSliderPressed()) {
+        if (!isSliderFocused()) {
             hueSlider.setValue(c.getHue());
             saturationSlider.setValue(c.getSaturation());
             valueSlider.setValue(c.getBrightness());
@@ -198,7 +213,7 @@ class ColourSettings extends FlowPane {
                 Color.hsb(hue, saturation, value, 0), Color.hsb(hue, saturation, value, 1));
     }
 
-    private void updateHistory() {
+    private void updateHistory(boolean onlyIfNotFocused) {
         // If we update the colour on every change, even when the sliders are
         // being used, then the history will quickly fill up with very similar
         // colours.
@@ -207,7 +222,7 @@ class ColourSettings extends FlowPane {
         // updating the history. To make sure the history still gets updated
         // by the sliders, we call this method when they receive a "mouse
         // released" event, i.e. when a colour has been chosen decisively.
-        if (!isSliderPressed()) {
+        if (!onlyIfNotFocused || !isSliderFocused()) {
             history.update(colour.getValue());
         }
     }
