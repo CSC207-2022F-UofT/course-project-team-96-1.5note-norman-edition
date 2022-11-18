@@ -26,7 +26,7 @@ public class AudioModifier implements MediaManager {
     public void addMedia() {
         //Loading raw audio data based on user selection
         Storage fileManager = new FileLoaderWriter();
-        byte[] rawData = fileManager.readFile(new String[]{"*.mp3","*.wav"}, "Audio");
+        byte[] rawData = fileManager.readFile(new String[]{"*.mp3","*.wav"}, "Audio (.mp3, .wav)");
 
         try {
             MediaAudio audio = new MediaAudio("", 200, 200, 200, 200, rawData, new ArrayList<Duration>(),
