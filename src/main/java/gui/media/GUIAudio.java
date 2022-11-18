@@ -3,8 +3,6 @@ package gui.media;
 import app.media.MediaAudio;
 import app.media.MediaHyperlink;
 import app.media_managers.TextModifier;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
@@ -22,16 +20,8 @@ import storage.Storage;
 import java.net.*;
 
 public class GUIAudio extends GUIMedia<MediaAudio>{
-    /**
-     * Interface for audio imported by user
-     * Instance Attributes:
-     *  -audioPlayer: Manages all operations involving playing audio
-     *  -timestamps: A box of timestamps linked to audioPlayer
-     *  -playbackSlider: Slider displays the current time elapsed on the audio player, can also change current duration
-     *  -playbackText: Text displays current time elapsed on the audio player
-     *  -defaultVolume: The base volume as defined by the associated audio file
-     */
 
+    private URI tempFile;
     private MediaPlayer audioPlayer;
     private VBox timestamps;
     private Button playButton;
@@ -39,36 +29,26 @@ public class GUIAudio extends GUIMedia<MediaAudio>{
 
     private Text playbackText;
 
-    private double defaultVolume;
-
 
     public GUIAudio(MediaAudio audio)   {
         super(audio);
         this.getChildren().add(createInterface());
-
     }
 
     public void initializeMediaPlayer()  {
         //Initializes the main MediaPlayer that parts of the interface will use
-        String path = "temp\\id" + Double.toString(getMedia().getID());
+        String name = "id" + Double.toString(getMedia().getID());
 
         Storage fw = new FileLoaderWriter();
-        /**
-         * Manages creation/interactions on MediaAudio based on Menubars/Toolbars
-         * Instance Attributes:
-         * - timestamp: used to add a timestamp to an audio
-         * - audio: audio to be modified
-         * - page: The page where the audio exists/will exist on
-         */
-        URI tempFile = fw.writeFile(path, getMedia().getRawData()); //Creating temp file for use by javafx.Media Class
+        this.tempFile = fw.writeFile(name, getMedia().getRawData()); //Creating temp file for use by javafx.Media Class
 
-        Media audioMedia = new Media(tempFile.toString());
+        Media audioMedia = new Media(this.tempFile.toString());
         this.audioPlayer = new MediaPlayer(audioMedia);
 
-        this.defaultVolume = this.audioPlayer.getVolume();
+        this.getMedia().setDefaultVolume(this.audioPlayer.getVolume()); //TODO: maybe change how this is done for CA
     }
 
-    public VBox createInterface()   {
+    public HBox createInterface()   {
         //Creates the overall interface allowing for playing MediaAudio and manipulating it
         initializeMediaPlayer();
 
@@ -77,7 +57,7 @@ public class GUIAudio extends GUIMedia<MediaAudio>{
         createPlaybackSlider();
         HBox playBox = new HBox();
         this.playbackText = new Text();
-        updatePlaybackText();
+        updatePlaybackText(new Duration(0));
         playBox.getChildren().addAll(playButton, playbackSlider, playbackText);
         playBox.setSpacing(10); //temp
 
@@ -90,34 +70,27 @@ public class GUIAudio extends GUIMedia<MediaAudio>{
 
         configurePlayer();
 
-        HBox hLayout = new HBox();
-        hLayout.getChildren().addAll(playBox, settings);
-        hLayout.setSpacing(40);
-        hLayout.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
-        hLayout.setPadding(new Insets(7, 7, 7, 7));
-
-        createTimestamps();
-
-        VBox layout = new VBox();
-        layout.getChildren().addAll(hLayout, this.timestamps);
-        layout.setSpacing(20);
+        HBox layout = new HBox();
+        layout.getChildren().addAll(playBox, settings);
+        layout.setSpacing(40);
+        layout.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+        layout.setPadding(new Insets(7, 7, 7, 7));
         return layout;
     }
 
     public void configurePlayer()  {
         //Creates configuration for the audioplayer neccessary for various UI elements
-        this.audioPlayer.currentTimeProperty().addListener(new InvalidationListener() {
+        this.audioPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
             @Override
-            public void invalidated(Observable observable) {
-                double totalDuration = audioPlayer.getTotalDuration().toSeconds();
-                double percentElapsed = audioPlayer.getCurrentTime().toSeconds() / totalDuration;
+            public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
+                double percentElapsed = newValue.toMillis() / audioPlayer.getTotalDuration().toMillis();
                 playbackSlider.setDisable(true);
                 playbackSlider.setValue(percentElapsed);
                 playbackSlider.setDisable(false);
-                updatePlaybackText();
+
+                updatePlaybackText(newValue);
             }
         });
-
         this.audioPlayer.setOnEndOfMedia(new Runnable() {
             @Override
             public void run() {
@@ -125,6 +98,7 @@ public class GUIAudio extends GUIMedia<MediaAudio>{
             }
         });
     }
+
 
     public void createPlayButton()    {
         //Creates a button that allows pausing/playing the audio
@@ -167,7 +141,7 @@ public class GUIAudio extends GUIMedia<MediaAudio>{
         //Creates a slider to adjust audio that can work as it's playing
 
         MediaPlayer audioPlayer = this.audioPlayer;
-        double defaultVolume = this.defaultVolume;
+        double defaultVolume = super.getMedia().getDefaultVolume();
 
         Slider audioSlider = new Slider(0, 1, 1); //Due to MediaPlayer implementation, raising volume above default is impossible
 
@@ -190,22 +164,25 @@ public class GUIAudio extends GUIMedia<MediaAudio>{
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 if(playbackSlider.isPressed())    {
                     double totalDuration = audioPlayer.getTotalDuration().toSeconds();
-                    audioPlayer.seek(Duration.seconds((double) newValue * totalDuration));
-                    updatePlaybackText();
+                    Duration newTime = Duration.seconds((double) newValue * totalDuration);
+                    audioPlayer.seek(newTime);
+                    //When status is ready, the audio player currentTime property does not update until the player plays
+                    if (audioPlayer.getStatus() == MediaPlayer.Status.READY)  {
+                        updatePlaybackText(newTime);
+                    }
+
                 }
             }
         });
         this.playbackSlider = playbackSlider;
     }
 
-    public void updatePlaybackText()    {
-        //updates playback text to reflect the live state of the MediaPlayer
-
-        int seconds = (int) audioPlayer.getCurrentTime().toSeconds() % 60;
-        int minutes = (int) audioPlayer.getCurrentTime().toMinutes() % 60;
-        int hours = (int) audioPlayer.getCurrentTime().toHours();
+    public void updatePlaybackText(Duration newDuration)    {
+        int seconds = (int) newDuration.toSeconds() % 60;
+        int minutes = (int) newDuration.toMinutes() % 60;
+        int hours = (int) newDuration.toHours();
         String[] timeProperties = {Integer.toString(seconds), Integer.toString(minutes), Integer.toString(hours)};
-        for (int i = 0; i < timeProperties.length; i++)   { //Adding a zero in front of the digit for consistency with time formats
+        for (int i = 0; i < timeProperties.length; i++)   {
             if (timeProperties[i].length() == 1) {
                 timeProperties[i] = "0" + timeProperties[i];
             }
@@ -231,7 +208,7 @@ public class GUIAudio extends GUIMedia<MediaAudio>{
 
     @Override
     public void mediaUpdated(app.media.Media media) {
-        createTimestamps();
+
     }
 
     public MediaPlayer getAudioPlayer() {
@@ -244,10 +221,6 @@ public class GUIAudio extends GUIMedia<MediaAudio>{
 
     public Slider getPlaybackSlider() {
         return playbackSlider;
-    }
-
-    public VBox getTimestamps() {
-        return timestamps;
     }
 
     public Text getPlaybackText() {

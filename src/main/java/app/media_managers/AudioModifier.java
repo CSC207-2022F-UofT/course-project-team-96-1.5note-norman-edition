@@ -1,4 +1,5 @@
 package app.media_managers;
+import app.MediaObserver;
 import app.media.MediaAudio;
 import gui.media.GUIAudio;
 import gui.page.Page;
@@ -11,16 +12,16 @@ import java.util.ArrayList;
 
 public class AudioModifier implements MediaManager {
     /**
-     * Manages creation/interactions on MediaAudio based on Menubars/Toolbars
-     * Instance Attributes:
+    * Manages creation/interactions on MediaAudio based on Menubars/Toolbars
+    * Instance Attributes:
      * - timestamp: used to add a timestamp to an audio
      * - audio: audio to be modified
      * - page: The page where the audio exists/will exist on
-     */
+    */
 
     private Duration timestamp;
     private GUIAudio audio;
-    private Page page;
+    private MediaObserver page;
 
     @Override
     public void addMedia() {
@@ -29,12 +30,11 @@ public class AudioModifier implements MediaManager {
         byte[] rawData = fileManager.readFile(new String[]{"*.mp3","*.wav"}, "Audio (.mp3, .wav)");
 
         try {
-            MediaAudio audio = new MediaAudio("", 200, 200, 200, 200, rawData, new ArrayList<Duration>()); //Temp Constructor
-            GUIAudio audioGUI = new GUIAudio(audio);
+            MediaAudio audio = new MediaAudio("", 200, 200, 200, 200, rawData, new ArrayList<Duration>(),
+                    0); //Temp Constructor
 
             //Giving the audio an ID then adding it to the page
-            this.page.updateMedia(audioGUI);
-            this.page.addMedia(audioGUI);
+            this.page.mediaUpdated(audio);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -43,7 +43,7 @@ public class AudioModifier implements MediaManager {
     @Override
     public void modifyMedia() {
         this.audio.getMedia().getTimestamps().add(timestamp);
-        this.page.updateMedia(this.audio);
+        this.page.mediaUpdated(this.audio.getMedia());
     }
 
     @Override
@@ -60,7 +60,7 @@ public class AudioModifier implements MediaManager {
         this.audio = audio;
     }
 
-    public void setPage(Page page) {
+    public void setPage(MediaObserver page) {
         this.page = page;
     }
 }
