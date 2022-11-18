@@ -3,8 +3,6 @@ package gui.media;
 import app.media.MediaAudio;
 import app.media.MediaHyperlink;
 import app.media_managers.TextModifier;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
@@ -59,7 +57,7 @@ public class GUIAudio extends GUIMedia<MediaAudio>{
         createPlaybackSlider();
         HBox playBox = new HBox();
         this.playbackText = new Text();
-        updatePlaybackText();
+        updatePlaybackText(new Duration(0));
         playBox.getChildren().addAll(playButton, playbackSlider, playbackText);
         playBox.setSpacing(10); //temp
 
@@ -82,19 +80,17 @@ public class GUIAudio extends GUIMedia<MediaAudio>{
 
     public void configurePlayer()  {
         //Creates configuration for the audioplayer neccessary for various UI elements
-        this.audioPlayer.currentTimeProperty().addListener(new InvalidationListener() {
+        this.audioPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
             @Override
-            public void invalidated(Observable observable) {
-                double totalDuration = audioPlayer.getTotalDuration().toSeconds();
-                double percentElapsed = audioPlayer.getCurrentTime().toSeconds() / totalDuration;
+            public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
+                double percentElapsed = newValue.toMillis() / audioPlayer.getTotalDuration().toMillis();
                 playbackSlider.setDisable(true);
                 playbackSlider.setValue(percentElapsed);
                 playbackSlider.setDisable(false);
 
-                updatePlaybackText();
+                updatePlaybackText(newValue);
             }
         });
-
         this.audioPlayer.setOnEndOfMedia(new Runnable() {
             @Override
             public void run() {
@@ -102,6 +98,7 @@ public class GUIAudio extends GUIMedia<MediaAudio>{
             }
         });
     }
+
 
     public void createPlayButton()    {
         //Creates a button that allows pausing/playing the audio
@@ -167,17 +164,23 @@ public class GUIAudio extends GUIMedia<MediaAudio>{
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 if(playbackSlider.isPressed())    {
                     double totalDuration = audioPlayer.getTotalDuration().toSeconds();
-                    audioPlayer.seek(Duration.seconds((double) newValue * totalDuration));
+                    Duration newTime = Duration.seconds((double) newValue * totalDuration);
+                    audioPlayer.seek(newTime);
+                    //When status is ready, the audio player currentTime property does not update until the player plays
+                    if (audioPlayer.getStatus() == MediaPlayer.Status.READY)  {
+                        updatePlaybackText(newTime);
+                    }
+
                 }
             }
         });
         this.playbackSlider = playbackSlider;
     }
 
-    public void updatePlaybackText()    {
-        int seconds = (int) audioPlayer.getCurrentTime().toSeconds() % 60;
-        int minutes = (int) audioPlayer.getCurrentTime().toMinutes() % 60;
-        int hours = (int) audioPlayer.getCurrentTime().toHours();
+    public void updatePlaybackText(Duration newDuration)    {
+        int seconds = (int) newDuration.toSeconds() % 60;
+        int minutes = (int) newDuration.toMinutes() % 60;
+        int hours = (int) newDuration.toHours();
         String[] timeProperties = {Integer.toString(seconds), Integer.toString(minutes), Integer.toString(hours)};
         for (int i = 0; i < timeProperties.length; i++)   {
             if (timeProperties[i].length() == 1) {
