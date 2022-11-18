@@ -108,7 +108,7 @@ public class SQLiteStorage implements MediaStorage {
         s.setDouble(6, media.getWidth());
         s.setDouble(7, media.getHeight());
         s.setDouble(8, media.getAngle());
-        s.setInt(9, media.getZIndex());
+        s.setInt(9, media.getZindex());
         s.setBytes(10, b.toByteArray());
 
         s.executeUpdate();

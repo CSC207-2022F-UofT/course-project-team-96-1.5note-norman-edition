@@ -46,7 +46,7 @@ public class Media implements Serializable {
     private void writeObject(ObjectOutputStream out) throws IOException {
         Data d = new Data(
                 id, getName(), new HashSet<>(tags), getX(), getY(),
-                getWidth(), getHeight(), getAngle(), getZIndex());
+                getWidth(), getHeight(), getAngle(), getZindex());
 
         out.writeObject(d);
     }
@@ -180,10 +180,42 @@ public class Media implements Serializable {
         return zIndex;
     }
 
-    public final int getZIndex() {
+    public final int getZindex() {
         return zIndex.getValue();
     }
 
+    public void setName(String name) {
+        this.name = new SimpleStringProperty(name);
+    }
+
+    public void setTags(Set<String> tags) {
+        this.tags.clear();
+        this.tags.addAll(tags);
+    }
+
+    public void setX(double x) {
+        this.x.set(x);
+    }
+
+    public void setY(double y) {
+        this.y.set(y);
+    }
+
+    public void setWidth(double width) {
+        this.width.set(width);
+    }
+
+    public void setHeight(double height) {
+        this.height.set(height);
+    }
+
+    public void setAngle(double angle) {
+        this.angle.set(angle);
+    }
+
+    public void setZindex(int zIndex) {
+        this.zIndex.set(zIndex);
+    }
 
     /**
      * Return whether or not the Media object is within the rectangle with
