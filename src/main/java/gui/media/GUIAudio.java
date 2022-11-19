@@ -3,6 +3,7 @@ package gui.media;
 import app.media.MediaAudio;
 import app.media.MediaHyperlink;
 import app.media_managers.TextModifier;
+import gui.error_window.ErrorWindow;
 import gui.view_controllers.MediaPlayerController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -54,12 +55,19 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
         String name = "id" + Double.toString(getMedia().getID());
 
         Storage fw = new FileLoaderWriter();
-        this.tempFile = fw.writeFile(name, getMedia().getRawData()); //Creating temp file for use by javafx.Media Class
 
-        Media audioMedia = new Media(this.tempFile.toString());
-        this.audioPlayer = new MediaPlayer(audioMedia);
+        try {
+            this.tempFile = fw.writeFile(name, getMedia().getRawData()); //Creating temp file for use by javafx.Media Class
 
-        this.defaultVolume = this.audioPlayer.getVolume();
+            Media audioMedia = new Media(this.tempFile.toString());
+            this.audioPlayer = new MediaPlayer(audioMedia);
+
+            this.defaultVolume = this.audioPlayer.getVolume();
+        } catch (Exception e) {
+            new ErrorWindow(this, "Could not write temp file", "There was a runtime error while" +
+                    " loading your file", e).show();
+        }
+
     }
 
     public void createInterface()   {
@@ -247,5 +255,11 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
         return playbackText;
     }
 
+    public MediaPlayerController getController() {
+        return controller;
+    }
 
+    public void setController(MediaPlayerController controller) {
+        this.controller = controller;
+    }
 }
