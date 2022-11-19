@@ -1,5 +1,7 @@
 package gui.model;
 import gui.media.GUIAudio;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
@@ -67,6 +69,7 @@ public class GUIPlayerModel {
         return timeProperties[2] + ":" + timeProperties[1] + ":" + timeProperties[0];
     }
 
+    //Method exists for testing
     public void setTotalDuration(Duration totalDuration) {
         this.totalDuration = totalDuration;
     }

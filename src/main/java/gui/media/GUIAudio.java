@@ -4,13 +4,18 @@ import app.controllers.ToolBarController;
 import app.media.MediaAudio;
 import app.media.MediaHyperlink;
 import app.media_managers.TextModifier;
+import com.sun.media.jfxmedia.events.PlayerEvent;
 import gui.error_window.ErrorWindow;
 import gui.view_controllers.MediaPlayerController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.control.Button;
 import javafx.scene.media.Media;
@@ -21,6 +26,7 @@ import javafx.util.Duration;
 import storage.FileLoaderWriter;
 import storage.Storage;
 import java.net.*;
+import java.util.ArrayList;
 
 public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
 
@@ -33,6 +39,7 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
     private Text playbackText;
     private double defaultVolume;
     private MediaPlayerController controller;
+    private HBox playerLayout;
 
 
     public GUIAudio(MediaAudio audio)   {
@@ -51,8 +58,24 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
                 }
             }
         });
+    }
 
 
+    public void createInterface() throws Exception {
+        //Creates the overall interface allowing for playing MediaAudio and manipulating it
+        controller = new MediaPlayerController(this, audioPlayer.getTotalDuration());
+
+        //Ensures that player is only built once
+        if (playButton == null) {
+            initializePlayer();
+        }
+        createTimestamps();
+
+        VBox layout = new VBox();
+        layout.setSpacing(20);
+        layout.getChildren().addAll(playerLayout, timestamps);
+
+        this.getChildren().setAll(layout);
     }
 
     public void initializeMediaPlayer()  {
@@ -63,7 +86,6 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
 
         try {
             this.tempFile = fw.writeFile(name, getMedia().getRawData()); //Creating temp file for use by javafx.Media Class
-
             Media audioMedia = new Media(this.tempFile.toString());
             this.audioPlayer = new MediaPlayer(audioMedia);
 
@@ -72,45 +94,6 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
             new ErrorWindow(this, "Could not write temp file", "There was a runtime error while" +
                     " loading your file", e).show();
         }
-
-    }
-
-    public void createInterface() throws Exception {
-        //Creates the overall interface allowing for playing MediaAudio and manipulating it
-        controller = new MediaPlayerController(this, audioPlayer.getTotalDuration());
-
-        //Creating visual elements related to the play state of the mediaplayer
-        createPlayButton();
-        createPlaybackSlider();
-        HBox playBox = new HBox();
-        this.playbackText = new Text();
-        controller.changePlaybackText(new Duration(0));
-
-        playBox.getChildren().addAll(playButton, playbackSlider, playbackText);
-        playBox.setSpacing(10); //temp
-
-        //Creating visual elements related to the settings for the mediaplayer
-        ComboBox<String> playbackRate = createPlayRateOptions();
-        Slider volumeSlider = createAudioSlider();
-        HBox settings = new HBox();
-        settings.getChildren().addAll(playbackRate, volumeSlider);
-        settings.setSpacing(10);
-
-        configurePlayer();
-
-        createTimestamps();
-
-        HBox hLayout = new HBox();
-        hLayout.getChildren().addAll(playBox, settings);
-        hLayout.setSpacing(40);
-        hLayout.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
-        hLayout.setPadding(new Insets(7, 7, 7, 7));
-
-        VBox layout = new VBox();
-        layout.setSpacing(20);
-        layout.getChildren().addAll(hLayout, timestamps);
-
-        this.getChildren().add(layout);
     }
 
     public void configurePlayer()  {
@@ -135,11 +118,43 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
         });
     }
 
+    private void initializePlayer() {
+        //Initializes the player, which only occurs when GUIAudio is first made
+
+        //Creating visual elements related to the play state of the mediaplayer
+        createPlayButton();
+        createPlaybackSlider();
+        HBox playBox = new HBox();
+        this.playbackText = new Text();
+        controller.changePlaybackText(new Duration(0));
+
+        playBox.getChildren().addAll(playButton, playbackSlider, playbackText);
+        playBox.setSpacing(10); //temp
+
+        //Creating visual elements related to the settings for the mediaplayer
+        ComboBox<String> playbackRate = createPlayRateOptions();
+        Slider volumeSlider = createAudioSlider();
+        HBox settings = new HBox();
+        settings.getChildren().addAll(playbackRate, volumeSlider);
+        settings.setSpacing(10);
+
+        configurePlayer();
+
+        HBox hLayout = new HBox();
+        hLayout.getChildren().addAll(playBox, settings);
+        hLayout.setSpacing(40);
+        hLayout.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+        hLayout.setPadding(new Insets(7, 7, 7, 7));
+        playerLayout = hLayout;
+    }
+
+
     public void createPlayButton()    {
         //Creates a button that allows pausing/playing the audio
         Button play = new Button("Play");
         play.setOnAction(e -> {
             controller.firePlayButton(play.getText());
+            echoClick();
         });
         this.playButton = play;
     }
@@ -156,6 +171,7 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
 
         playRateOptions.setOnAction(e ->{
             controller.changePlayRate((playRateOptions.getSelectionModel().getSelectedIndex() + 1) * 0.5);
+            echoClick();
         });
         return playRateOptions;
     }
@@ -171,6 +187,7 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 controller.changePlayVolume(defaultVolume * (double) newValue);
+                echoClick();
             }
         });
         return audioSlider;
@@ -187,6 +204,7 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 if(playbackSlider.isPressed())    {
                     controller.changePlayback((Double) newValue, audioPlayer.getStatus());
+                    echoClick();
                 }
             }
         });
@@ -201,16 +219,28 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
 
         //Creating UI for each timestamp
         for(Duration timestamp: this.getMedia().getTimestamps())   {
-            MediaHyperlink newTimestamp = hyperlinkMaker.createTimestamp(controller.createFormattedTime(timestamp),
+            MediaHyperlink newTimestamp = hyperlinkMaker.createHyperlink(controller.createFormattedTime(timestamp),
                     timestamp.toString());
             //Although this throws an exception, it should never actually occur
             GUIHyperlink hyperlinkUI = (GUIHyperlink) GUIMediaFactory.getFor(newTimestamp);
             hyperlinkUI.getHyperlink().setOnAction(e -> {
-                controller.changePlayback(timestamp.toMillis(), getAudioPlayer().getStatus());
+                controller.changePlayback(timestamp.toMillis() / audioPlayer.getTotalDuration().toMillis(),
+                        getAudioPlayer().getStatus());
+                controller.firePlayButton("Play");
             });
             alignment.getChildren().add(hyperlinkUI);
         }
         this.timestamps = alignment;
+    }
+
+    public void echoClick() {
+        //Echoes the fact that the associated GUIAudio was clicked
+        //Since player controls seemingly consume the Mouse Click event, this method allows the click to be echoed
+
+        this.fireEvent(new MouseEvent(MouseEvent.MOUSE_CLICKED, 0,
+                0, 0, 0, MouseButton.PRIMARY, 1, true, true, true,
+                true, true, true, true, true,
+                true, true, null));
     }
 
     @Override
@@ -219,7 +249,7 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
 
         //Since timestamps can be both added and removed, we recreate the entire timestamp box
         try {
-            createTimestamps();
+            createInterface();
         } catch (Exception e) {
             throw new RuntimeException(e); //TODO: Error window
         }
@@ -242,7 +272,7 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
 
     @Override
     public Duration getCurrentDuration() {
-        return this.audioPlayer.getTotalDuration();
+        return this.audioPlayer.getCurrentTime();
     }
 
     @Override
@@ -285,6 +315,14 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
 
     public MediaPlayerController getController() {
         return controller;
+    }
+
+    public ArrayList<String> getTimestamps() {
+        ArrayList<String> hyperlinks = new ArrayList<>();
+        for (Node hyperlink: timestamps.getChildren()) {
+            hyperlinks.add(hyperlink.toString());
+        }
+        return hyperlinks;
     }
 
     public void setController(MediaPlayerController controller) {

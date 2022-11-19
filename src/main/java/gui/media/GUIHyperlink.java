@@ -15,9 +15,16 @@ public class GUIHyperlink extends GUIMedia<MediaHyperlink>{
     public GUIHyperlink(MediaHyperlink media) {
         super(media);
         this.hyperlink = new Hyperlink(media.getText());
+
+        this.getChildren().add(hyperlink);
     }
 
     public Hyperlink getHyperlink() {
         return hyperlink;
+    }
+
+    @Override
+    public String toString()    {
+        return this.getMedia().getText();
     }
 }
