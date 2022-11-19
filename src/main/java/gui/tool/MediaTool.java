@@ -2,6 +2,7 @@ package gui.tool;
 
 import java.util.Set;
 import java.util.HashSet;
+import java.util.Collections;
 
 import javafx.scene.*;
 import javafx.scene.input.*;
@@ -11,6 +12,7 @@ import javafx.scene.shape.*;
 import javafx.scene.paint.*;
 import javafx.scene.effect.*;
 import javafx.event.*;
+import javafx.beans.*;
 import javafx.geometry.*;
 
 import app.media.Media;
@@ -18,6 +20,7 @@ import gui.media.GUIMedia;
 import gui.page.Page;
 import gui.page.PageEventHandler;
 import gui.page.PageEventHandler.HandlerMethod;
+import gui.page.Selection;
 
 
 // Enum for the current action. Used for determining which strategy to use when
@@ -27,7 +30,6 @@ enum Action {
     SELECTING,
     NONE
 }
-
 
 /**
  * The Media tool allows selecting multiple media and modifying the properties
@@ -48,7 +50,7 @@ enum Action {
  */
 public class MediaTool implements Tool {
 
-    private Set<GUIMedia> selection;
+    private Selection selection;
     private Page page;
     private HandlerMethod[] handlers;
 
@@ -66,7 +68,6 @@ public class MediaTool implements Tool {
     private MediaSettings settings;
 
     public MediaTool() {
-        selection = new HashSet<>();
         boxSelectRectangle = new BoxSelectRectangle();
         selectedEffect = new DropShadow(
                 BlurType.ONE_PASS_BOX,
@@ -82,19 +83,22 @@ public class MediaTool implements Tool {
         };
 
         settings = new MediaSettings();
-        settings.update(selection, page);
     }
 
     @Override
     public void enabledFor(Page page) {
         this.page = page;
+        selection = new Selection(page, selectedEffect);
+        settings.setSelection(selection);
     }
 
     @Override
     public void disabledFor(Page page) {
         clearSelection();
         hideBoxSelectRectangle();
+        settings.setSelection(null);
 
+        selection = null;
         this.page = null;
     }
 
@@ -113,25 +117,16 @@ public class MediaTool implements Tool {
         return settings;
     }
 
-    private void selectMedia(GUIMedia media) {
-        selection.add(media);
-        media.setEffect(selectedEffect);
-        settings.update(getValidSelection(), page);
+    public void selectMedia(GUIMedia media) {
+        selection.addMedia(media);
     }
 
-    private void unSelectMedia(GUIMedia media) {
-        selection.remove(media);
-        media.setEffect(null);
-        settings.update(getValidSelection(), page);
+    public void unSelectMedia(GUIMedia media) {
+        selection.removeMedia(media);
     }
 
-    private void clearSelection() {
-        for (GUIMedia media: selection) {
-            media.setEffect(null);
-        }
-
-        selection.clear();
-        settings.update(getValidSelection(), page);
+    public void clearSelection() {
+        selection.removeAllMedia();
     }
 
     private void showBoxSelectRectangle() {
@@ -196,9 +191,7 @@ public class MediaTool implements Tool {
         if (e.getButton() == MouseButton.PRIMARY) {
             e.consume();
 
-            if (action == Action.DRAGGING) {
-                endDrag();
-            } else if (action == Action.SELECTING) {
+            if (action == Action.SELECTING) {
                 endBoxSelect(e);
             }
 
@@ -211,43 +204,28 @@ public class MediaTool implements Tool {
 
         if (e.getButton() == MouseButton.PRIMARY) {
             if (action == Action.DRAGGING) {
-                drag(e);
+                updateDrag(e);
             } else if (action == Action.SELECTING) {
-                boxSelect(e);
+                updateBoxSelect(e);
             }
         }
-    }
-
-    // Return the intersection of the selected GUIMedia with the GUIMedia that
-    // are currently in the page
-    private Set<GUIMedia> getValidSelection() {
-        Set<GUIMedia> validSelection = new HashSet<>(page.getAllMedia());
-        validSelection.retainAll(selection);
-
-        return validSelection;
     }
 
     private void beginDrag(MouseEvent e) {
         prevDragPosition = page.getMouseCoords(e);
     }
 
-    private void drag(MouseEvent e) {
+    private void updateDrag(MouseEvent e) {
         Point2D dragPosition = page.getMouseCoords(e);
         Point2D dragDisplacement = dragPosition.subtract(prevDragPosition);
 
-        for (GUIMedia selected: selection) {
-            Media media = selected.getMedia();
-            media.setX(media.getX() + dragDisplacement.getX());
-            media.setY(media.getY() + dragDisplacement.getY());
-        }
+        moveSelectedMedia(dragDisplacement);
 
         prevDragPosition = dragPosition;
     }
 
-    private void endDrag() {
-        for (GUIMedia media: getValidSelection()) {
-            page.updateMedia(media);
-        }
+    public void moveSelectedMedia(Point2D displacement) {
+        selection.move(displacement);
     }
 
     private void beginBoxSelect(MouseEvent e) {
@@ -257,12 +235,21 @@ public class MediaTool implements Tool {
         showBoxSelectRectangle();
     }
 
-    private void boxSelect(MouseEvent e) {
+    private void updateBoxSelect(MouseEvent e) {
         boxSelectEnd = page.getMouseCoords(e);
         updateBoxSelectRectangle();
     }
 
     private void endBoxSelect(MouseEvent e) {
+        boxSelect(boxSelectStart, boxSelectEnd, !e.isShiftDown());
+        hideBoxSelectRectangle();
+    }
+
+    private void boxSelect(
+            Point2D boxSelectStart,
+            Point2D boxSelectEnd,
+            boolean clearSelection)
+    {
         if (!boxSelectStart.equals(boxSelectEnd)) {
             double minX = Math.min(boxSelectEnd.getX(), boxSelectStart.getX());
             double minY = Math.min(boxSelectEnd.getY(), boxSelectStart.getY());
@@ -271,7 +258,7 @@ public class MediaTool implements Tool {
 
             Bounds selectBox = new BoundingBox(minX, minY, width, height);
 
-            if (!e.isShiftDown()) {
+            if (clearSelection) {
                 clearSelection();
             }
 
@@ -281,8 +268,6 @@ public class MediaTool implements Tool {
                 }
             }
         }
-
-        hideBoxSelectRectangle();
     }
 }
 
@@ -297,12 +282,9 @@ class MediaSettings extends FlowPane {
     private Spinner<Integer> zIndexSpinner;
     private Button deleteButton;
 
-    private Set<GUIMedia> selection;
-    private Page page;
+    private Selection selection;
 
     public MediaSettings() {
-        selection = new HashSet<>();
-
         VBox settingsBox = new VBox(PADDING);
 
         numSelectedLabel = new Label("0");
@@ -349,84 +331,44 @@ class MediaSettings extends FlowPane {
         zIndexSpinner.valueProperty().addListener(o -> setSelectionZindex());
     }
 
+    public void setSelection(Selection selection) {
+        this.selection = selection;
+
+        if (selection != null) {
+            ((Observable) selection.getMedia()).addListener(o -> update());
+            update();
+        }
+    }
+
     /*
      * When the selection changes, the settings GUI is updated according to the
      * selection.
-     *
-     * - The size of the selection is dislayed in the `numSelectedLabel`
-     *
-     * - If the selected media all have the same name, that name is shown in
-     *   the `nameField` text field. Otherwise, the field is empty.
-     *
-     * - The angle slider is set to the average angle of rotation of the
-     *   selected media.
-     *
-     * - The Z-Index spinner is set to the maximum Z-Index among the selected
-     *   media.
      */
-    public void update(Set<GUIMedia> selection, Page page) {
-        setDisable(selection.isEmpty());
-        this.selection = selection;
-        this.page = page;
-
-        numSelectedLabel.setText(Integer.valueOf(selection.size()).toString());
-
-        String name = null;
-        double angle = 0;
-        int zIndex = 0;
-
-        for (GUIMedia selected: selection) {
-            Media media = selected.getMedia();
-
-            if (name == null || media.getName().equals(name)) {
-                name = media.getName();
-            } else {
-                name = "";
-            }
-
-            if (media.getZindex() > zIndex) {
-                zIndex = media.getZindex();
-            }
-
-            angle += media.getAngle() / selection.size();
-        }
-
-        nameField.setText(name);
-        angleSlider.setValue(angle);
-        zIndexSpinner.getValueFactory().setValue(zIndex);
+    private void update() {
+        setDisable(selection.getMedia().isEmpty());
+        numSelectedLabel.setText(Integer.valueOf(selection.getMedia().size()).toString());
+        nameField.setText(selection.getName());
+        angleSlider.setValue(selection.getAngle());
+        zIndexSpinner.getValueFactory().setValue(selection.getZindex());
     }
 
     private void deleteSelection() {
-        for (GUIMedia media: selection) {
-            page.getCommunicator().deleteMedia(media.getID());
-        }
-
-        selection.clear();
-        update(selection, page);
+        selection.delete();
     }
 
     private void renameSelection() {
-        for (GUIMedia media: selection) {
-            media.getMedia().setName(nameField.getText());
-            page.updateMedia(media);
-        }
+        selection.rename(nameField.getText());
     }
 
     private void rotateSelection() {
         if (angleSlider.isFocused()) {
-            for (GUIMedia media: selection) {
-                media.getMedia().setAngle(angleSlider.getValue());
-                page.updateMedia(media);
-            }
+            selection.rotate(angleSlider.getValue());
         }
     }
 
     private void setSelectionZindex() {
         if (zIndexSpinner.isFocused()) {
-            for (GUIMedia media: selection) {
-                media.getMedia().setZindex(zIndexSpinner.getValue());
-                page.updateMedia(media);
-            }
+            selection.setZindex(zIndexSpinner.getValue());
         }
     }
 }

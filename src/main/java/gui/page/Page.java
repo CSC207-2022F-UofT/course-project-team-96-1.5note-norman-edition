@@ -117,16 +117,25 @@ public class Page extends StackPane implements MediaObserver {
     }
 
     /**
+     * Return whether or not the given GUIMedia object is within this page
+     */
+    public boolean contains(GUIMedia media) {
+        return contents.containsKey(media.getID());
+    }
+
+    /**
      * Indicate that the given GUIMedia object has been updated.
      */
     public void updateMedia(GUIMedia media) {
         try {
             if (media.getID() == Media.EMPTY_ID) {
                 media.getMedia().setID(c.getNewID());
+                contents.put(media.getID(), media);
             }
 
-            contents.put(media.getID(), media);
-            c.updateMedia(media.getMedia());
+            if (contains(media)) {
+                c.updateMedia(media.getMedia());
+            }
         } catch (Exception e) {
             new ErrorWindow(this, null, "Updating Media object failed.", e)
                 .show();
@@ -226,14 +235,19 @@ public class Page extends StackPane implements MediaObserver {
             Set<Long> initialIDs = new HashSet<>(contents.keySet());
 
             for (long id: initialIDs) {
-                if (!contents.get(id).getBoundsInParent().intersects(visibleBounds)) {
+                GUIMedia media = contents.get(id);
+
+                if (!media.getBoundsInParent().intersects(visibleBounds)) {
                     nodesToRemove.add(contents.get(id));
                     contents.remove(id);
                 }
             }
 
             for (Node n: mediaLayer.getChildren()) {
-                if (!n.getBoundsInParent().intersects(visibleBounds)) {
+                if (
+                    n instanceof GUIMedia &&
+                    !n.getBoundsInParent().intersects(visibleBounds))
+                {
                     nodesToRemove.add(n);
                 }
             }
