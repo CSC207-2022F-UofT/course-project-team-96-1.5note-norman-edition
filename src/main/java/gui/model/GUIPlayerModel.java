@@ -61,6 +61,7 @@ public class GUIPlayerModel {
         associatedPlayer.setPlaybackText(timeProperties[2] + ":" + timeProperties[1] + ":" + timeProperties[0]);
     }
 
-
-
+    public void setTotalDuration(Duration totalDuration) {
+        this.totalDuration = totalDuration;
+    }
 }

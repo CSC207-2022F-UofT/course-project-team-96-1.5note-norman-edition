@@ -32,4 +32,8 @@ public class MediaPlayerController {
     public void changePlaybackText(Duration newTime)    {
         associatedModel.updatePlaybackText(newTime);
     }
+
+    public GUIPlayerModel getAssociatedModel() {
+        return associatedModel;
+    }
 }

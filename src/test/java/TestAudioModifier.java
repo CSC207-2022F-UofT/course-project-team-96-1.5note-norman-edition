@@ -89,8 +89,7 @@ public class TestAudioModifier {
         byte[] rawData = readFile(source);
 
         try {
-            MediaAudio audio = new MediaAudio("", 0, 0, 0, 0, rawData, new ArrayList<Duration>(),
-                    0); //Temp Constructor
+            MediaAudio audio = new MediaAudio("", 0, 0, 0, 0, rawData, new ArrayList<Duration>()); //Temp Constructor
             GUIAudio audioGUI = new GUIAudio(audio);
             this.page.updateMedia(audioGUI);
             this.page.addMedia(audioGUI);
