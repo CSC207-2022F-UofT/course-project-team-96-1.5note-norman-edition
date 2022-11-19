@@ -36,7 +36,7 @@ public class ToolBarController {
         audioModifier.addMedia();
     }
 
-    public void addTimestamp(MediaAudio audioUI, Duration Timestamp, Page page)  {
+    public void modifyTimestamp(MediaAudio audioUI, Duration Timestamp, Page page)  {
         AudioModifier audioModifier = new AudioModifier();
         audioModifier.setAudio(audioUI);
         audioModifier.addTimeStamp(Timestamp);
@@ -44,7 +44,7 @@ public class ToolBarController {
         audioModifier.modifyMedia();
     }
 
-    public MediaHyperlink createTimestamp(String text, String source)   {
+    public MediaHyperlink createHyperlink(String text, String source)   {
         TextModifier textModifier = new TextModifier();
         return textModifier.createAudioTimestamp(text, source);
     }

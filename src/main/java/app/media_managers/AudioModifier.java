@@ -34,7 +34,7 @@ public class AudioModifier implements MediaManager {
                     new ArrayList<Duration>()); //Temp Constructor
 
             //Giving the audio an ID then adding it to the page
-            this.page.mediaUpdated(audio);
+            page.mediaUpdated(audio);
         } catch (Exception e) {
             new ErrorWindow((Page) page, "Error Loading Media", "There was a runtime error while loading" +
                     "your file", e).show();
@@ -43,8 +43,12 @@ public class AudioModifier implements MediaManager {
 
     @Override
     public void modifyMedia() {
-        this.audio.getTimestamps().add(timestamp);
-        this.page.mediaUpdated(this.audio);
+        if (audio.getTimestamps().contains(timestamp))  {
+            audio.getTimestamps().remove(timestamp);
+        } else {
+            audio.getTimestamps().add(timestamp);
+        }
+        page.mediaUpdated(audio);
     }
 
     @Override
