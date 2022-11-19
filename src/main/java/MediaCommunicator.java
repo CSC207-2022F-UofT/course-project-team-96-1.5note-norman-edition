@@ -1,6 +1,8 @@
 import app.media.Page;
 import storage.Storage;
 
+import java.util.HashMap;
+
 public class MediaCommunicator {
     private Page page;
     private Storage storage;
@@ -8,7 +10,7 @@ public class MediaCommunicator {
         return this.page;
     }
 
-    public byte[] readFile(String[] extensions) throws Exception{
+    public HashMap<String, byte[]> readFile(String[] extensions) throws Exception{
         return this.storage.readFile(extensions, "");
     }
 

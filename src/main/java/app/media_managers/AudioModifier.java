@@ -10,6 +10,7 @@ import storage.FileLoaderWriter;
 import storage.Storage;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class AudioModifier implements MediaManager {
@@ -30,10 +31,14 @@ public class AudioModifier implements MediaManager {
         //Loading raw audio data based on user selection
         Storage fileManager = new FileLoaderWriter();
         try {
-            byte[] rawData = fileManager.readFile(new String[]{"*.mp3","*.wav"}, "Audio (.mp3, .wav)");
-            if (rawData != null)    {
-                MediaAudio audio = new MediaAudio("", 200, 200, 200, 200, rawData,
-                        new ArrayList<Duration>()); //Temp Constructor
+            HashMap<String, byte[]> fileData = fileManager.readFile(new String[]{"*.mp3","*.wav"},
+                    "Audio (.mp3, .wav)");
+            if (fileData != null)    {
+                String fileName = (String) (fileData.keySet().toArray())[0];
+                MediaAudio audio = new MediaAudio(fileName, 200, 200, 200, 200,
+                        fileData.get(fileName), new ArrayList<Duration>()); //Temp Constructor
+
+                System.out.println(fileName);
 
                 //Giving the audio an ID then adding it to the page
                 this.page.mediaUpdated(audio);
