@@ -38,8 +38,6 @@ public class AudioModifier implements MediaManager {
                 MediaAudio audio = new MediaAudio(fileName, 200, 200, 200, 200,
                         fileData.get(fileName), new ArrayList<Duration>()); //Temp Constructor
 
-                System.out.println(fileName);
-
                 //Giving the audio an ID then adding it to the page
                 this.page.mediaUpdated(audio);
             }

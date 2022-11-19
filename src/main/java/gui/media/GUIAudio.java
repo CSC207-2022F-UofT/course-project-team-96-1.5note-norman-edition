@@ -11,6 +11,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
@@ -39,7 +40,7 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
     private Text playbackText;
     private double defaultVolume;
     private MediaPlayerController controller;
-    private HBox playerLayout;
+    private VBox playerLayout;
 
 
     public GUIAudio(MediaAudio audio)   {
@@ -54,7 +55,7 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
                 try {
                     createInterface();
                 } catch (Exception e) {
-                    throw new RuntimeException(e); //TODO: Error window
+                    throw new RuntimeException(e);
                 }
             }
         });
@@ -67,8 +68,9 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
 
         //Ensures that player is only built once
         if (playButton == null) {
-            initializePlayer();
+            initializePlayerUI();
         }
+
         createTimestamps();
 
         VBox layout = new VBox();
@@ -118,34 +120,71 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
         });
     }
 
-    private void initializePlayer() {
+    private void initializePlayerUI() {
         //Initializes the player, which only occurs when GUIAudio is first made
 
+        //Creating visual elements related to managing play state of the mediaplayer
+        createPlayButton(); //TODO: make these use assets
+        Button redo = new Button("Replay");
+        redo.setOnAction(e -> {
+            controller.changePlayback(0, audioPlayer.getStatus());
+            controller.firePlayButton("Play"); //Ensures the player plays
+        });
+
+        Button forward = new Button("Fast Forward"); //A bit useless but it's for visual effect
+        forward.setOnAction(e -> {
+            //For some reason, without the following line this method just doesn't work sometimes and there isn't any
+            //rhyme or reason as to why, though my readings indicate mediaPlayer.seek() can be inaccurate
+            controller.changePlayback(1, audioPlayer.getStatus());
+            playbackSlider.setValue(1);
+            controller.firePlayButton("Pause");
+        });
+
+        HBox playManager = new HBox();
+        playManager.getChildren().addAll(redo, playButton, forward);
+        playManager.setSpacing(10);
+        playManager.setAlignment(Pos.CENTER);
+
         //Creating visual elements related to the play state of the mediaplayer
-        createPlayButton();
         createPlaybackSlider();
-        HBox playBox = new HBox();
+        playbackSlider.setPrefWidth(360);
         this.playbackText = new Text();
         controller.changePlaybackText(new Duration(0));
 
-        playBox.getChildren().addAll(playButton, playbackSlider, playbackText);
-        playBox.setSpacing(10); //temp
+        HBox playSettingsBox = new HBox();
+        playSettingsBox.getChildren().addAll(playbackSlider, playbackText);
+        playSettingsBox.setSpacing(10);
+        playSettingsBox.setAlignment(Pos.CENTER);
+
+        VBox play = new VBox();
+        play.getChildren().addAll(playManager, playSettingsBox);
+        play.setSpacing(20);
 
         //Creating visual elements related to the settings for the mediaplayer
         ComboBox<String> playbackRate = createPlayRateOptions();
+        playbackRate.setPrefWidth(70);
+
         Slider volumeSlider = createAudioSlider();
-        HBox settings = new HBox();
-        settings.getChildren().addAll(playbackRate, volumeSlider);
-        settings.setSpacing(10);
+        volumeSlider.setPrefWidth(80);
+
+        Text audioLabel = new Text(getMedia().getName());
+
+        HBox bottomBox = new HBox();
+        bottomBox.getChildren().addAll(playbackRate, audioLabel, volumeSlider);
+        bottomBox.setSpacing(80);
+        bottomBox.setAlignment(Pos.CENTER);
+
+        //Overall layout of the player
+
+        VBox layout = new VBox();
+        layout.getChildren().addAll(play, bottomBox);
+        layout.setSpacing(7.5);
+        layout.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+        layout.setPadding(new Insets(7, 7, 7, 7));
+
+        playerLayout = layout;
 
         configurePlayer();
-
-        HBox hLayout = new HBox();
-        hLayout.getChildren().addAll(playBox, settings);
-        hLayout.setSpacing(40);
-        hLayout.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
-        hLayout.setPadding(new Insets(7, 7, 7, 7));
-        playerLayout = hLayout;
     }
 
 
@@ -224,9 +263,10 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
             //Although this throws an exception, it should never actually occur
             GUIHyperlink hyperlinkUI = (GUIHyperlink) GUIMediaFactory.getFor(newTimestamp);
             hyperlinkUI.getHyperlink().setOnAction(e -> {
+                //Play first because of an odd bug with clicking after player ends
+                controller.firePlayButton("Play");
                 controller.changePlayback(timestamp.toMillis() / audioPlayer.getTotalDuration().toMillis(),
                         getAudioPlayer().getStatus());
-                controller.firePlayButton("Play");
             });
             alignment.getChildren().add(hyperlinkUI);
         }

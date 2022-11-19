@@ -2,19 +2,16 @@ package gui.tool;
 
 import app.controllers.ToolBarController;
 import gui.media.GUIAudio;
-import gui.media.GUIMedia;
 import gui.page.Page;
-import gui.page.PageEventHandler;
-import javafx.beans.InvalidationListener;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Slider;
-import javafx.scene.input.MouseButton;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
-import org.w3c.dom.events.EventTarget;
 
 import java.util.ArrayList;
 
@@ -23,9 +20,11 @@ public class AudioTool implements Tool{
     private HandlerMethod[] handlers;
 
     private GUIAudio selectedPlayer;
-    private Button timestampButton, deleteButton;
+    private Button timestampButton, deleteButton, add;
 
     private ComboBox<String> timestamps;
+
+    private Text audioLabel;
 
     public AudioTool()  {
         this.handlers = new HandlerMethod[]{new HandlerMethod<>(MouseEvent.MOUSE_CLICKED, this::setSelectedAudio)};
@@ -34,11 +33,15 @@ public class AudioTool implements Tool{
     public void setSelectedAudio(MouseEvent e) {
         e.consume();
         javafx.event.EventTarget target = e.getTarget();
+
+        //Checking if the player clicked something related to a GUIAudio
         if (target instanceof  GUIAudio || ((Node) target).getParent() instanceof GUIAudio) {
 
             selectedPlayer = (GUIAudio) target;
 
             ArrayList<String> playerTimestamps = selectedPlayer.getTimestamps();
+
+            audioLabel.setText("Managing " + selectedPlayer.getMedia().getName());
 
             timestamps.getItems().setAll(timestamps.getItems().get(0));
             timestamps.getItems().addAll(playerTimestamps);
@@ -48,6 +51,8 @@ public class AudioTool implements Tool{
 
             deleteButton.setDisable(true);
         }   else {
+            audioLabel.setText("Please Select an Audio Player");
+
             selectedPlayer = null;
             timestampButton.setDisable(true);
             deleteButton.setDisable(true);
@@ -61,24 +66,48 @@ public class AudioTool implements Tool{
     }
 
     @Override
-    public String getName() {return "Import Audio";}
+    public String getName() {return "Manage Audio";}
 
     @Override
     public Node getSettingsGUI()    {
+        //Creates the tool pane the user interacts with
+        initializeControls();
+
+        HBox deletionBox = new HBox();
+        deletionBox.setSpacing(20);
+        deletionBox.getChildren().addAll(timestamps, deleteButton);
+
+        VBox timestampLayout = new VBox();
+        timestampLayout.setSpacing(20);
+        timestampLayout.getChildren().addAll(audioLabel, timestampButton, deletionBox);
+
+        VBox layout = new VBox();
+        layout.setSpacing(30);
+
+        layout.getChildren().addAll(add, timestampLayout);
+        return layout;
+    }
+
+    public void initializeControls()    {
+        //Initializes UI controls contained in this tool
 
         ToolBarController tbc = new ToolBarController();
 
-        Button add = new Button("Add");
+        add = new Button("Add new Audio");
         add.setOnAction(e ->    {
             tbc.insertAudio(this.page);
         });
+
+        //Controls pertaining to creating timestamps
+
+        audioLabel = new Text("Please Select an Audio Player");
 
         timestampButton = new Button("Create timestamp");
         timestampButton.setDisable(true);
 
         timestampButton.setOnAction(e ->    {
             tbc.modifyTimestamp(selectedPlayer.getMedia(), selectedPlayer.getCurrentDuration(), page);
-            simulateCLick();
+            selectedPlayer.echoClick();
         });
 
         timestamps = new ComboBox<>();
@@ -90,26 +119,14 @@ public class AudioTool implements Tool{
             deleteButton.setDisable(timestamps.getSelectionModel().getSelectedIndex() == 0);
         });
 
-        deleteButton = new Button("Delete Selected Timestamp");
+        deleteButton = new Button("Delete");
         deleteButton.setDisable(true);
         deleteButton.setOnAction(e ->   {
             int selectedTime = timestamps.getSelectionModel().getSelectedIndex() - 1;
             Duration selectedDuration = selectedPlayer.getMedia().getTimestamps().get(selectedTime);
             tbc.modifyTimestamp(selectedPlayer.getMedia(), selectedDuration, page);
-            simulateCLick();
+            selectedPlayer.echoClick();
         });
-
-        VBox layout = new VBox();
-        layout.getChildren().addAll(add, timestampButton, timestamps, deleteButton);
-        return layout;
-    }
-
-    public void simulateCLick() {
-        selectedPlayer.fireEvent(new MouseEvent(MouseEvent.MOUSE_CLICKED,
-                0, 0, 0, 0, MouseButton.PRIMARY, 1,
-                true, true, true, true, true,
-                true, true, true, true, true,
-                null));
     }
 
     @Override

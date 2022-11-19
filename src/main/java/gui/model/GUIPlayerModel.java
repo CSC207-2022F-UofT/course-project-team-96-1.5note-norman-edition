@@ -44,10 +44,14 @@ public class GUIPlayerModel {
         //Defines what occurs when the playback slider is pressed by the user
         //Precondition: 0 <= value <= 1
         Duration newTime = new Duration(value * totalDuration.toMillis());
-        associatedPlayer.setPlayerDuration(newTime);
         //When status is ready, the audio player currentTime property does not update until the player plays
         if (mediaStatus == MediaPlayer.Status.READY)  {
             updatePlaybackText(newTime);
+            associatedPlayer.play();
+            associatedPlayer.setPlayerDuration(newTime);
+            associatedPlayer.pause();
+        }   else {
+            associatedPlayer.setPlayerDuration(newTime);
         }
     }
 
