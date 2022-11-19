@@ -24,7 +24,6 @@ public class TestGUIAudio{
      * They also assume the UI controls work and send the correct "signals", and that aspect unfortunately cannot really
      * be tested. That being said, from more visual testing it can be verified that it's correct
      *
-     * Again, these specific tests would only pass on my PC just because of mp3 files I use to test.
      * Some modified methods are used as FileChooser and junit do not mesh well (or at all)
      *
      */
@@ -40,7 +39,7 @@ public class TestGUIAudio{
     public static void initJfxRuntime() throws Exception {
         Platform.startup(() -> {});
         tam.createPage();
-        audioGUI = tam.addMedia("src\\test\\java\\1.17 Axe to Grind.mp3");
+        audioGUI = tam.addMedia("src\\test\\java\\test_files\\1.17 Axe to Grind.mp3");
         audioGUI.getAudioPlayer().setMute(true); //Preventing audio jumpscares
 
         //Because the setOnReady call gets skipped, these need to be manually initialized

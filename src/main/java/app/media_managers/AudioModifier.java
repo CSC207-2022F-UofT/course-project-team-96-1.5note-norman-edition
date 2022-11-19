@@ -1,5 +1,6 @@
 package app.media_managers;
 import app.MediaObserver;
+import app.media.Media;
 import app.media.MediaAudio;
 import gui.error_window.ErrorWindow;
 import gui.media.GUIAudio;
@@ -30,11 +31,13 @@ public class AudioModifier implements MediaManager {
         Storage fileManager = new FileLoaderWriter();
         try {
             byte[] rawData = fileManager.readFile(new String[]{"*.mp3","*.wav"}, "Audio (.mp3, .wav)");
-            MediaAudio audio = new MediaAudio("", 200, 200, 200, 200, rawData,
-                    new ArrayList<Duration>()); //Temp Constructor
+            if (rawData != null)    {
+                MediaAudio audio = new MediaAudio("", 200, 200, 200, 200, rawData,
+                        new ArrayList<Duration>()); //Temp Constructor
 
-            //Giving the audio an ID then adding it to the page
-            page.mediaUpdated(audio);
+                //Giving the audio an ID then adding it to the page
+                this.page.mediaUpdated(audio);
+            }
         } catch (Exception e) {
             new ErrorWindow((Page) page, "Error Loading Media", "There was a runtime error while loading" +
                     "your file", e).show();

@@ -134,6 +134,18 @@ public class Page extends StackPane implements MediaObserver {
     public void removeMedia(GUIMedia media) {
         contents.remove(media.getID());
         mediaLayer.getChildren().remove(media);
+        media.removed();
+    }
+
+    /**
+     * Remove ALL GUIMedia objects from this page.
+     */
+    public void removeAllMedia() {
+        Set<GUIMedia> mediaToRemove = new HashSet<>(contents.values());
+
+        for (GUIMedia media: mediaToRemove) {
+            removeMedia(media);
+        }
     }
 
     /**
