@@ -198,6 +198,11 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
     }
 
     @Override
+    public void removed()   {
+        controller.firePlayButton("Pause");
+    }
+
+    @Override
     public void setPlayerDuration(Duration time) {
         this.audioPlayer.seek(time);
     }
@@ -214,7 +219,7 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
 
     @Override
     public Duration getCurrentDuration() {
-        return this.audioPlayer.getTotalDuration();
+        return this.audioPlayer.getCurrentTime();
     }
 
     @Override

@@ -22,7 +22,11 @@ public class FileLoaderWriter implements Storage{
         }
 
         File chosenFile = fileManager.showOpenDialog(null);
-        return Files.readAllBytes(chosenFile.toPath());
+        if (chosenFile == null) {
+            return null;
+        }   else {
+            return Files.readAllBytes(chosenFile.toPath());
+        }
     }
 
     public URI writeFile(String name, byte[] Data) throws Exception{
