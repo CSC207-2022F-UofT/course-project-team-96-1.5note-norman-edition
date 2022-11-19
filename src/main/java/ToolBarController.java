@@ -4,7 +4,7 @@ public class ToolBarController {
     A lot of these reference undefined methods and have unclear jobs. None make sense to return anything right now
     though maybe later they will return booleans to signify if they completed their job or failed.
      */
-
+/*
     public void insertText() {
         TextModifier.addMedia();
     }
@@ -27,5 +27,5 @@ public class ToolBarController {
 
     public void tag(String input) {
         Tagger.interact(input);
-    }
+    }*/
 }

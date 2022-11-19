@@ -1,5 +1,5 @@
 public class MenuBarController {
-
+/*
     public byte[] loadFile(String path) {
         FileLoaderWriter.readFile(path);
     }
@@ -14,5 +14,5 @@ public class MenuBarController {
 
     public void destroy(String input) {
         Destroyer.interact(input);
-    }
+    }*/
 }
