@@ -3,6 +3,8 @@ package app.controllers;
 import app.draweables.SelectionTool;
 import app.draweables.ShapeCreator;
 import app.interaction_managers.Tagger;
+import app.media.MediaAudio;
+import app.media.MediaHyperlink;
 import app.media_managers.AudioModifier;
 import app.media_managers.ImageModifier;
 import app.media_managers.TextModifier;
@@ -34,12 +36,17 @@ public class ToolBarController {
         audioModifier.addMedia();
     }
 
-    public void addTimestamp(GUIAudio audioUI, Duration Timestamp, Page page)  {
+    public void addTimestamp(MediaAudio audioUI, Duration Timestamp, Page page)  {
         AudioModifier audioModifier = new AudioModifier();
         audioModifier.setAudio(audioUI);
         audioModifier.addTimeStamp(Timestamp);
         audioModifier.setPage(page);
         audioModifier.modifyMedia();
+    }
+
+    public MediaHyperlink createTimestamp(String text, String source)   {
+        TextModifier textModifier = new TextModifier();
+        return textModifier.createAudioTimestamp(text, source);
     }
 
     public void drawShape(Point2D point1, Point2D point2, String shape) {

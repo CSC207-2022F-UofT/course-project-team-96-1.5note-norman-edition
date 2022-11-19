@@ -21,7 +21,7 @@ public class AudioModifier implements MediaManager {
     */
 
     private Duration timestamp;
-    private GUIAudio audio;
+    private MediaAudio audio;
     private MediaObserver page;
 
     @Override
@@ -43,8 +43,8 @@ public class AudioModifier implements MediaManager {
 
     @Override
     public void modifyMedia() {
-        this.audio.getMedia().getTimestamps().add(timestamp);
-        this.page.mediaUpdated(this.audio.getMedia());
+        this.audio.getTimestamps().add(timestamp);
+        this.page.mediaUpdated(this.audio);
     }
 
     @Override
@@ -57,7 +57,7 @@ public class AudioModifier implements MediaManager {
         this.timestamp = givenTimeStamp;
     }
 
-    public void setAudio(GUIAudio audio) {
+    public void setAudio(MediaAudio audio) {
         this.audio = audio;
     }
 

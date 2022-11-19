@@ -1,5 +1,6 @@
 package gui.media;
 
+import app.controllers.ToolBarController;
 import app.media.MediaAudio;
 import app.media.MediaHyperlink;
 import app.media_managers.TextModifier;
@@ -43,7 +44,11 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
         audioPlayer.setOnReady(new Runnable() {
             @Override
             public void run() {
-                createInterface();
+                try {
+                    createInterface();
+                } catch (Exception e) {
+                    throw new RuntimeException(e); //TODO: Error window
+                }
             }
         });
 
@@ -70,7 +75,7 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
 
     }
 
-    public void createInterface()   {
+    public void createInterface() throws Exception {
         //Creates the overall interface allowing for playing MediaAudio and manipulating it
         controller = new MediaPlayerController(this, audioPlayer.getTotalDuration());
 
@@ -93,11 +98,17 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
 
         configurePlayer();
 
-        HBox layout = new HBox();
-        layout.getChildren().addAll(playBox, settings);
-        layout.setSpacing(40);
-        layout.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
-        layout.setPadding(new Insets(7, 7, 7, 7));
+        createTimestamps();
+
+        HBox hLayout = new HBox();
+        hLayout.getChildren().addAll(playBox, settings);
+        hLayout.setSpacing(40);
+        hLayout.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+        hLayout.setPadding(new Insets(7, 7, 7, 7));
+
+        VBox layout = new VBox();
+        layout.setSpacing(20);
+        layout.getChildren().addAll(hLayout, timestamps);
 
         this.getChildren().add(layout);
     }
@@ -182,19 +193,36 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
         this.playbackSlider = playbackSlider;
     }
 
-    public void createTimestamps()  {
+    public void createTimestamps() throws Exception {
         //Creates a vertical "list" of timestamps that can be clicked to move where the player is playing
-
         VBox alignment = new VBox();
-        TextModifier hyperlinkFactory = new TextModifier();
+        alignment.setSpacing(10);
+        ToolBarController hyperlinkMaker = new ToolBarController();
+
+        //Creating UI for each timestamp
         for(Duration timestamp: this.getMedia().getTimestamps())   {
-            MediaHyperlink hyperlink = hyperlinkFactory.createHyperlink(timestamp.toString(),
-                    Double.toString(timestamp.toMillis()));
-            GUIHyperlink hyperlinkGUI = new GUIHyperlink(hyperlink);
-            hyperlinkGUI.createTimestampLink(audioPlayer);
-            alignment.getChildren().add(hyperlinkGUI);
+            MediaHyperlink newTimestamp = hyperlinkMaker.createTimestamp(controller.createFormattedTime(timestamp),
+                    timestamp.toString());
+            //Although this throws an exception, it should never actually occur
+            GUIHyperlink hyperlinkUI = (GUIHyperlink) GUIMediaFactory.getFor(newTimestamp);
+            hyperlinkUI.getHyperlink().setOnAction(e -> {
+                controller.changePlayback(timestamp.toMillis(), getAudioPlayer().getStatus());
+            });
+            alignment.getChildren().add(hyperlinkUI);
         }
         this.timestamps = alignment;
+    }
+
+    @Override
+    public void mediaUpdated(app.media.Media media)   {
+        //Preconditions: media is the same media represented by this GUIAudio
+
+        //Since timestamps can be both added and removed, we recreate the entire timestamp box
+        try {
+            createTimestamps();
+        } catch (Exception e) {
+            throw new RuntimeException(e); //TODO: Error window
+        }
     }
 
     @Override

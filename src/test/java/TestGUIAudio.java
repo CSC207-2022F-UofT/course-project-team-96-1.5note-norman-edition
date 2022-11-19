@@ -37,7 +37,7 @@ public class TestGUIAudio{
     private static MediaPlayerController controller;
 
     @BeforeClass
-    public static void initJfxRuntime() throws InterruptedException {
+    public static void initJfxRuntime() throws Exception {
         Platform.startup(() -> {});
         tam.createPage();
         audioGUI = tam.addMedia("src\\test\\java\\1.17 Axe to Grind.mp3");

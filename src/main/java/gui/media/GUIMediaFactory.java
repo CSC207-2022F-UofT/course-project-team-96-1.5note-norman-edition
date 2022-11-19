@@ -24,7 +24,9 @@ public class GUIMediaFactory {
             return new GUIPenStroke((PenStroke) media);
         } if (media instanceof MediaAudio) {
             return new GUIAudio((MediaAudio) media);
-        }   else {
+        } if (media instanceof  MediaHyperlink) {
+            return new GUIHyperlink((MediaHyperlink) media);
+        } else {
             throw new Exception("No appropriate GUIMedia class for `" + media + "`.");
         }
     }

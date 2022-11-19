@@ -31,7 +31,6 @@ public class GUIPlayerModel {
 
     //These 2 methods seem roundabout, but they allow for actually testing the GUIAudio
     public void changePlayRate(double value)    {
-
         associatedPlayer.setPlaybackRate(value);
     }
 
@@ -40,6 +39,7 @@ public class GUIPlayerModel {
     }
 
     public void playbackSliderAdjusted(double value, MediaPlayer.Status mediaStatus)    {
+        //Defines what occurs when the playback slider is pressed by the user
         //Precondition: 0 <= value <= 1
         Duration newTime = new Duration(value * totalDuration.toMillis());
         associatedPlayer.setPlayerDuration(newTime);
@@ -50,15 +50,21 @@ public class GUIPlayerModel {
     }
 
     public void updatePlaybackText(Duration newDuration)    {
-        int seconds = (int) newDuration.toSeconds() % 60;
-        int minutes = (int) newDuration.toMinutes() % 60;
-        int hours = (int) newDuration.toHours();
+        //Changes what the current playback text reads
+        associatedPlayer.setPlaybackText(formatTime(newDuration));
+    }
+
+    public String formatTime(Duration time) {
+        //Formats a duration into a readable format
+        int seconds = (int) time.toSeconds() % 60;
+        int minutes = (int) time.toMinutes() % 60;
+        int hours = (int) time.toHours();
         String[] timeProperties = {Integer.toString(seconds), Integer.toString(minutes), Integer.toString(hours)};
         for (int i = 0; i < timeProperties.length; i++)   {
             if (timeProperties[i].length() == 1) {
                 timeProperties[i] = "0" + timeProperties[i];
             }}
-        associatedPlayer.setPlaybackText(timeProperties[2] + ":" + timeProperties[1] + ":" + timeProperties[0]);
+        return timeProperties[2] + ":" + timeProperties[1] + ":" + timeProperties[0];
     }
 
     public void setTotalDuration(Duration totalDuration) {

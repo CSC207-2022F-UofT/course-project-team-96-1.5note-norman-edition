@@ -33,6 +33,8 @@ public class MediaPlayerController {
         associatedModel.updatePlaybackText(newTime);
     }
 
+    public String createFormattedTime(Duration time)    {return associatedModel.formatTime(time);}
+
     public GUIPlayerModel getAssociatedModel() {
         return associatedModel;
     }
