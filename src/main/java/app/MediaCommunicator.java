@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.Random;
+import java.util.function.Consumer;
 
 import app.media.Media;
 
@@ -46,7 +47,7 @@ public class MediaCommunicator {
      * The ID is not guarateed to <i>remain</i> unique unless it is used by a
      * Media object which gets passed to the `updateMedia` method.
      */
-    public long getNewID() throws Exception {
+    private long getNewID() throws Exception {
         long id = Media.EMPTY_ID;
 
         while (
@@ -61,14 +62,31 @@ public class MediaCommunicator {
 
     /**
      * Update (or add, if it doesn't already exist) the given Media object.
+     * <p>
+     * If the given Media does not yet have an assigned ID, an ID will be
+     * generated and the method passed as `idCallback` will be called with the
+     * generated ID as its argument <i>before</i> any MediaObservers are
+     * notified of the new Media.
      */
-    public void updateMedia(Media media) throws Exception {
+    public void updateMedia(Media media, Consumer<Long> idCallback) throws Exception {
+        if (media.getID() == Media.EMPTY_ID) {
+            media.setID(getNewID());
+        }
+
         unsavedRemovals.remove(media.getID());
         unsavedUpdates.put(media.getID(), media);
+
+        if (idCallback != null) {
+            idCallback.accept(media.getID());
+        }
 
         for (MediaObserver o: observers) {
             o.mediaUpdated(media);
         }
+    }
+
+    public void updateMedia(Media media) throws Exception {
+        updateMedia(media, null);
     }
 
     /**
