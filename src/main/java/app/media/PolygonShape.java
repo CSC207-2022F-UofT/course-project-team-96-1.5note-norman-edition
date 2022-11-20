@@ -1,10 +1,37 @@
 package app.media;
 
+/**
+ * An implementation of GenericShape representing a polygon
+ * <p>
+ * We assume the polygon is a regular shape, i.e. that each interior angle and each side length are the same.
+ */
 public class PolygonShape extends GenericShape {
+    /**
+     * Represents the number of sides of the polygon
+     */
     private int sideCount;
+
+    /**
+     * Represents the starting angular offset of the polygon after creation
+     */
     private double startAngle;
+
+    /**
+     * Represents the distance from the center of the polygon to any vertex
+     */
     private double radius;
 
+    /**
+     * Initializes a polygon with the following settings
+     * @param x The shape's x position (Top left corner of bounding box)
+     * @param y The shape's y position (Top left corner of bounding box)
+     * @param width The shape's width
+     * @param height The shape's height
+     * @param colour The shape's color
+     * @param radius The shape's radius
+     * @param startAngle The shape's starting angle
+     * @param sideCount The number of sides the shape has
+     */
     public PolygonShape(double x, double y, double width, double height, String colour, double radius, double startAngle, int sideCount) {
         super("Polygon", x, y, 0, 0, colour);
         this.radius = radius;
@@ -68,6 +95,12 @@ public class PolygonShape extends GenericShape {
         this.sideCount = sideCount;
     }
 
+    /**
+     * Returns the shape's type, position, dimensions and color
+     * <p>
+     * Additionally, returns the starting angular offset and side count (unique to polygon)
+     * @return the shape's type, position, dimensions and color
+     */
     @Override
     public String toString() {
         return "Polygon: x["+super.getX()+"] y["+super.getY()+"] r["+this.getRadius()+"] a["+this.getStartAngle()+"] s["+this.getSideCount()+"] c["+super.getColour()+"]";

@@ -1,5 +1,6 @@
 package gui.media;
 
+import app.media.GenericShape;
 import app.media.PolygonShape;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
@@ -10,7 +11,19 @@ import javafx.scene.shape.Polygon;
  * */
 public class GUIPolygon extends GUIShape {
     private Polygon polygon;
+
+    /**
+     * The number of sides of the polygon
+     */
     private int sideCount;
+
+    /**
+     * Initializes and draws GUIPolygon with the following settings
+     * @param p1 The position of the polygon's center
+     * @param p2 The position which determine's the polygon's radius and starting angle
+     * @param colour The polygon's color
+     * @param sideCount The number of sides of the polygon
+     */
     public GUIPolygon(Point2D p1, Point2D p2, Color colour, int sideCount) {
         super(new PolygonShape(Math.min(p1.getX(), p2.getX()),Math.min(p1.getY(), p2.getY()),0,0, colour.toString(), 0, 0, sideCount));
         this.sideCount = sideCount;
@@ -20,19 +33,37 @@ public class GUIPolygon extends GUIShape {
         getChildren().add(polygon);
     }
 
+    /**
+     * Constructs a GUIEllipse from a EllipseShape
+     * @param media The EllipseShape to base a new GUIEllipse off of
+     */
     public GUIPolygon(PolygonShape media) {
         super(media);
         setGenericShape(media);
     }
 
-    public void setGenericShape(PolygonShape polygon) {
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Must contain a generic PolygonShape for proper operation
+     */
+    @Override
+    public void setGenericShape(GenericShape polygon) {
+        PolygonShape poly = (PolygonShape) polygon;
         Color colour = Color.valueOf(polygon.getColour());
         this.polygon = new Polygon();
-        this.polygon.getPoints().addAll(calcPointsFromRadiusAngle(polygon.getRadius(), polygon.getStartAngle(), polygon.getSideCount()));
+        this.polygon.getPoints().addAll(calcPointsFromRadiusAngle(poly.getRadius(), poly.getStartAngle(), poly.getSideCount()));
         this.polygon.setFill(colour);
         getChildren().add(this.polygon);
     }
 
+    /**
+     * {@inheritDoc}
+     * @param p1 The position of the polygon's center
+     * @param p2 The position which determines the polygon's radius and starting angle
+     */
+    @Override
     public void update(Point2D p1, Point2D p2, boolean sameSideLengths){
         polygon.getPoints().clear();
         polygon.getPoints().addAll(calcPointsFromPoints(p1, p2, sideCount));

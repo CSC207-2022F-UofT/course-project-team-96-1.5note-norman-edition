@@ -7,7 +7,7 @@ import javafx.geometry.Point2D;
 /**
  * A sub-class of GUIMedia representing an arbitrary shape
  */
-public class GUIShape extends GUIMedia<GenericShape> {
+public abstract class GUIShape extends GUIMedia<GenericShape> {
 
     public GUIShape(GenericShape media) {
         super(media);
@@ -17,10 +17,13 @@ public class GUIShape extends GUIMedia<GenericShape> {
      * Called when changing the position or dimensions of a shape
      * @param p1 The first point used to define the shape
      * @param p2 The second point used to define the shape
-     * @param sameSideLengths Whether the side lengths should be made equal (e.x. force drawing a square)
+     * @param sameSideLengths Whether the side lengths should be made equal (The bounding box will be shortened so that this is possible)
      */
-    public void update(Point2D p1, Point2D p2, boolean sameSideLengths){}
+    public abstract void update(Point2D p1, Point2D p2, boolean sameSideLengths);
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void mediaUpdated(Media media) {
         GenericShape newShape = (GenericShape)  media;
@@ -36,7 +39,7 @@ public class GUIShape extends GUIMedia<GenericShape> {
      * Creates a GUIShape from its corresponding GenericShape
      * @param shape A GenericShape to be represented as a new GUIShape
      */
-    public void setGenericShape(GenericShape shape) {}
+    public abstract void setGenericShape(GenericShape shape);
 
     /**
      * Returns the center and dimensions of a shape's bounding box, given two points
@@ -61,6 +64,7 @@ public class GUIShape extends GUIMedia<GenericShape> {
             height = width;
         }
 
+        // Gives us the current point clamped within (width, height) of the origin
         x2 = clamp(x2, x1 - width, x1 + width);
         y2 = clamp(y2, y1 - height, y1 + height);
 

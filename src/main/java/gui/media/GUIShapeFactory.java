@@ -3,7 +3,7 @@ package gui.media;
 import app.media.*;
 
 /**
- * Instatiate the correct GUIMedia sub-class for the given GenericShape object.
+ * Instantiate the correct GUIMedia sub-class for a given GenericShape object.
  * <p>
  * Determines the appropriate GenericShape subclass to create, given a GenericShape
  * Used as a helper class for the GUIMediaFactory
@@ -16,7 +16,6 @@ public class GUIShapeFactory {
      * @throws Exception Thrown if shape is not a valid type of GenericShape
      */
     public static GUIShape getFor(GenericShape shape) throws Exception {
-        //System.out.println(shape);
         if (shape instanceof RectangleShape) {
             return new GUIRectangle((RectangleShape) shape);
         }

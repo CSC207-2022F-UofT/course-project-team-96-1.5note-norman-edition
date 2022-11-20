@@ -1,6 +1,5 @@
 package gui.tool;
 
-import app.media.EllipseShape;
 import gui.media.GUIEllipse;
 import gui.media.GUIPolygon;
 import gui.media.GUIRectangle;
@@ -19,20 +18,33 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
-import java.awt.*;
-
+/**
+ * An implementation of Tool that allows the user to create various shapes
+ */
 public class ShapeTool implements Tool {
     private HandlerMethod[] handlers;
     private Page page;
 
     private ShapeSettings settings;
 
+    /**
+     * The currently selected color
+     */
     private ObjectProperty<Color> colour;
 
+    /**
+     * The currently selected hape
+     */
     private GUIShape currentShape;
 
+    /**
+     * The point which the shape will be anchored to while drawn
+     */
     private Point2D point1;
 
+    /**
+     * The point which defines the shape's dimensions
+     */
     private Point2D point2;
 
     public ShapeTool(ObjectProperty<Color> colour) {
@@ -76,6 +88,9 @@ public class ShapeTool implements Tool {
         return currentShape;
     }
 
+    /**
+     * JavaFX mouse event wrapper that calls {@link #startShape(Point2D, Point2D, Color, ShapeType)}
+     */
     private void startShapeMouse(MouseEvent e) {
         if (e.getButton() == MouseButton.PRIMARY) {
             e.consume();
@@ -85,6 +100,9 @@ public class ShapeTool implements Tool {
         }
     }
 
+    /**
+     * JavaFX mouse event wrapper that calls {@link #updateShape(Point2D, Point2D, boolean)}
+     */
     private void updateShapeMouse(MouseEvent e) {
         if (e.getButton() == MouseButton.PRIMARY) {
             e.consume();
@@ -93,6 +111,9 @@ public class ShapeTool implements Tool {
         }
     }
 
+    /**
+     * JavaFX mouse event wrapper that calls {@link #endShape()}
+     */
     private void endShapeMouse(MouseEvent e) {
         if (e.getButton() == MouseButton.PRIMARY) {
             e.consume();
@@ -100,6 +121,13 @@ public class ShapeTool implements Tool {
         }
     }
 
+    /**
+     * Initializes a shape given two positions, its color and its type.
+     * @param p1 The point to create the shape
+     * @param p2 The first point that defines the shape
+     * @param c1 The second point that defines the shape
+     * @param type The enum representing the shape's type
+     */
     public void startShape(Point2D p1, Point2D p2, Color c1, ShapeType type) {
         if (settings.getShapeType() != null) {
             switch (type) {
@@ -116,11 +144,22 @@ public class ShapeTool implements Tool {
             page.addMedia(currentShape);
         }
     }
+
+    /**
+     * Modifies and updates a shape to fit within the bounding box defined by two points.
+     * @param p1 The first point that defines the shape
+     * @param p2 The second point that defines the shape
+     * @param sameSides Whether the shape should have the same width and height (e.x. making a square)
+     */
     public void updateShape(Point2D p1, Point2D p2, boolean sameSides) {
         if (currentShape != null) {
             currentShape.update(p1, p2, sameSides);
         }
     }
+
+    /**
+     * Updates the page with the currently drawn shape
+     */
     public void endShape() {
         if (currentShape != null) {
             page.updateMedia(currentShape);
