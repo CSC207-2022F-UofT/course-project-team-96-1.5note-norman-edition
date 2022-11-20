@@ -74,7 +74,7 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
         createTimestamps();
 
         VBox layout = new VBox();
-        layout.setSpacing(20);
+        layout.setSpacing(5);
         layout.getChildren().addAll(playerLayout, timestamps);
 
         this.getChildren().setAll(layout);
@@ -129,6 +129,7 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
         redo.setOnAction(e -> {
             controller.changePlayback(0, audioPlayer.getStatus());
             controller.firePlayButton("Play"); //Ensures the player plays
+            echoClick();
         });
 
         Button forward = new Button("Fast Forward"); //A bit useless but it's for visual effect
@@ -138,6 +139,7 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
             controller.changePlayback(1, audioPlayer.getStatus());
             playbackSlider.setValue(1);
             controller.firePlayButton("Pause");
+            echoClick();
         });
 
         HBox playManager = new HBox();
@@ -253,7 +255,7 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
     public void createTimestamps() throws Exception {
         //Creates a vertical "list" of timestamps that can be clicked to move where the player is playing
         VBox alignment = new VBox();
-        alignment.setSpacing(10);
+        alignment.setSpacing(5);
         ToolBarController hyperlinkMaker = new ToolBarController();
 
         //Creating UI for each timestamp
@@ -267,6 +269,11 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
                 controller.firePlayButton("Play");
                 controller.changePlayback(timestamp.toMillis() / audioPlayer.getTotalDuration().toMillis(),
                         getAudioPlayer().getStatus());
+                //Doing it twice because the player being in READY status causes some really bizarre bugs for no reason
+                if(audioPlayer.getStatus() == MediaPlayer.Status.READY) {
+                    controller.firePlayButton("Play");
+                }
+
             });
             alignment.getChildren().add(hyperlinkUI);
         }
@@ -291,7 +298,8 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
         try {
             createInterface();
         } catch (Exception e) {
-            throw new RuntimeException(e); //TODO: Error window
+            new ErrorWindow(this, "There was an error updating timestamps",
+                    "The updates to this audio's timestamps could not be made", e);
         }
     }
 

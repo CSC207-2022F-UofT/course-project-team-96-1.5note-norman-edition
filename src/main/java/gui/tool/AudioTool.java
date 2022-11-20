@@ -1,12 +1,12 @@
 package gui.tool;
 
 import app.controllers.ToolBarController;
+import gui.error_window.ErrorWindow;
 import gui.media.GUIAudio;
 import gui.page.Page;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -95,7 +95,12 @@ public class AudioTool implements Tool{
 
         add = new Button("Add new Audio");
         add.setOnAction(e ->    {
-            tbc.insertAudio(this.page);
+            try {
+                tbc.insertAudio(this.page.getCommunicator());
+            } catch (Exception ex) {
+                new ErrorWindow(this.page, "There was an error loading you file", "An exception occured" +
+                        "in the process of loading your file", ex);
+            }
         });
 
         //Controls pertaining to creating timestamps
@@ -106,7 +111,12 @@ public class AudioTool implements Tool{
         timestampButton.setDisable(true);
 
         timestampButton.setOnAction(e ->    {
-            tbc.modifyTimestamp(selectedPlayer.getMedia(), selectedPlayer.getCurrentDuration(), page);
+            try {
+                tbc.modifyTimestamp(selectedPlayer.getMedia(), selectedPlayer.getCurrentDuration(), page.getCommunicator());
+            } catch (Exception ex) {
+                new ErrorWindow(this.page, "There was an error creating the timestamp",
+                        "Your media was unable to be updated", ex);
+            }
             selectedPlayer.echoClick();
         });
 
@@ -124,7 +134,12 @@ public class AudioTool implements Tool{
         deleteButton.setOnAction(e ->   {
             int selectedTime = timestamps.getSelectionModel().getSelectedIndex() - 1;
             Duration selectedDuration = selectedPlayer.getMedia().getTimestamps().get(selectedTime);
-            tbc.modifyTimestamp(selectedPlayer.getMedia(), selectedDuration, page);
+            try {
+                tbc.modifyTimestamp(selectedPlayer.getMedia(), selectedDuration, page.getCommunicator());
+            } catch (Exception ex) {
+                new ErrorWindow(this.page, "There was an error creating the timestamp",
+                        "Your media was unable to be updated", ex);
+            }
             selectedPlayer.echoClick();
         });
     }
