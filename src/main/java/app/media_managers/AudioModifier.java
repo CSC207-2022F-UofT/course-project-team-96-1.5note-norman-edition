@@ -7,12 +7,12 @@ public class AudioModifier implements MediaManager {
     private String TimeStamp;
 
     @Override
-    public void addMedia() {
+    public void addMedia() throws Exception {
 
     }
 
     @Override
-    public void modifyMedia() {
+    public void modifyMedia() throws Exception{
 
     }
 

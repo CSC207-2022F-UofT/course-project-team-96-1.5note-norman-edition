@@ -5,12 +5,12 @@ import app.media_managers.MediaManager;
 public class TextModifier implements MediaManager {
     private String link;
     @Override
-    public void addMedia() {
+    public void addMedia() throws Exception{
 
     }
 
     @Override
-    public void modifyMedia() {
+    public void modifyMedia() throws Exception{
 
     }
 
