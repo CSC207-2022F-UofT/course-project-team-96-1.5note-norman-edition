@@ -1,6 +1,7 @@
-import javafx.geometry.Point2D;
+package app.draweables;
 
-import java.util.ArrayList;
+import app.draweables.Drawable;
+import javafx.geometry.Point2D;
 
 public class ShapeCreator implements Drawable {
 

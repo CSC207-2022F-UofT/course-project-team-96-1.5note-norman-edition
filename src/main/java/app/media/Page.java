@@ -1,3 +1,5 @@
+package app.media;
+
 import java.util.ArrayList;
 
 public class Page {

@@ -1,3 +1,5 @@
+package app.media_managers;
+
 public class AudioModifier implements MediaManager {
 
     private String TimeStamp;

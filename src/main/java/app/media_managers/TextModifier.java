@@ -1,4 +1,8 @@
-public class TextModifier implements MediaManager{
+package app.media_managers;
+
+import app.media_managers.MediaManager;
+
+public class TextModifier implements MediaManager {
     private String link;
     @Override
     public void addMedia() {

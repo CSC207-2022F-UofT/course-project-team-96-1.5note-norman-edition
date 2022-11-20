@@ -1,3 +1,5 @@
+package app.media;
+
 import javafx.scene.control.Hyperlink;
 
 public class MediaHyperlink extends PageMedia {

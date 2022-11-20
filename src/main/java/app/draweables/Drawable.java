@@ -1,3 +1,5 @@
+package app.draweables;
+
 import javafx.geometry.Point2D;
 
 import java.awt.*;

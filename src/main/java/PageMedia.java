@@ -1,7 +1,7 @@
 public class PageMedia {
     //Superclass of different types of Media that will exist on the page
     //Instance Attributes:
-    //  position: Position of the object with coordinates relative to the Page it's on
+    //  position: Position of the object with coordinates relative to the app.media.Page it's on
     //  dimension: Size dimensions the GUI element representation will have
     //  zIndex: The Z-index the Media will have on the page (determining how it stacks on other Media)
     //  id: A unique identifier for each PageMedia

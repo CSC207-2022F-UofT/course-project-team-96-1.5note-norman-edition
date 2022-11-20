@@ -1,6 +1,8 @@
+package app.media;
+
 import javafx.scene.image.Image;
 
-public class MediaImage extends PageFileMedia{
+public class MediaImage extends PageFileMedia {
     //A subclass of PageFileMedia, defining an Image that exists on the page
     //Instance Attributes:
     //  -image: The GUI representation of the image in question

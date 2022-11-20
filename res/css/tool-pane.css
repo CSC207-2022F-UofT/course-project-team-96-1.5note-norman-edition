@@ -1,0 +1,22 @@
+.tool-pane {
+    -fx-background-color: -fx-background;
+    -fx-border-color: -fx-box-border;
+}
+
+.tool-pane.horizontal {
+    -fx-border-width: 1 0 0 0;
+}
+
+.tool-pane.vertical {
+    -fx-border-width: 0 1 1 0;
+}
+
+.tool-pane > .scroll-pane {
+    -fx-padding: 5;
+    -fx-background-insets: 0;
+}
+
+.tool-pane > .scroll-pane:disabled {
+    -fx-hbar-policy: never;
+    -fx-vbar-policy: never;
+}

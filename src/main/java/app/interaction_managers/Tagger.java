@@ -1,4 +1,8 @@
-public class Tagger implements InteractionManager{
+package app.interaction_managers;
+
+import app.interaction_managers.InteractionManager;
+
+public class Tagger implements InteractionManager {
 
     private String tag;
 

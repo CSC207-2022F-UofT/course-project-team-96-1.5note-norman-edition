@@ -1,3 +1,5 @@
+package app.media;
+
 import javafx.scene.text.*;
 
 public class MediaText extends PageMedia {

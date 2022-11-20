@@ -1,7 +1,9 @@
+package app.media;
+
 import javafx.scene.media.MediaPlayer;
 import java.util.ArrayList;
 
-public class MediaAudio extends PageFileMedia{
+public class MediaAudio extends PageFileMedia {
     //A subclass of PageFileMedia, defining Audio that exists on the page
     //Instance Attributes:
     //  audio: The GUI representation of the audio in question
