@@ -9,6 +9,9 @@ import javafx.geometry.*;
 import app.media.TextBox;
 import app.media.Media;
 
+/**
+ * Visually draws the TextBoxes in the canvas area. Interfaces with TextTool and TextBox to accomplish this.
+ */
 public class GUITextBox extends GUIMedia<TextBox> {
 
     private Text text;

@@ -11,7 +11,12 @@ import javafx.geometry.*;
 import gui.page.Page;
 import gui.media.GUITextBox;
 
-
+/**
+ * Allows the user to create and edit textboxes. Click on an existing box to edit its content in real-time, or
+ * type into the side panel box and drop the text down wherever you choose.
+ *
+ * Utilizes the GUITextBox class to visually display and edit the text, and TextBox to store the information itself.
+ */
 public class TextTool implements Tool {
 
     private HandlerMethod[] handlers;
@@ -100,6 +105,10 @@ public class TextTool implements Tool {
 
 }
 
+/**
+ * Defines the "settings control panel" on the left so that the text boxes can be managed with ease. Used for setting
+ * up the typeable area and controling the current target text the user is manipulating.
+ */
 class TextSettings extends FlowPane {
 
     private static int PADDING = 5;
