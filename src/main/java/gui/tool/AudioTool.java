@@ -39,7 +39,7 @@ public class AudioTool implements Tool{
 
             selectedPlayer = (GUIAudio) target;
 
-            ArrayList<String> playerTimestamps = selectedPlayer.getTimestamps();
+            ArrayList<String> playerTimestamps = selectedPlayer.getTimestampsText();
 
             audioLabel.setText("Managing " + selectedPlayer.getMedia().getName());
 

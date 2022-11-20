@@ -362,7 +362,7 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
         return controller;
     }
 
-    public ArrayList<String> getTimestamps() {
+    public ArrayList<String> getTimestampsText() {
         ArrayList<String> hyperlinks = new ArrayList<>();
         for (Node hyperlink: timestamps.getChildren()) {
             hyperlinks.add(hyperlink.toString());
@@ -372,5 +372,9 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
 
     public void setController(MediaPlayerController controller) {
         this.controller = controller;
+    }
+
+    public VBox getTimestamps() {
+        return timestamps;
     }
 }

@@ -19,7 +19,7 @@ import javafx.application.Platform;
 public class TestAudioModifier {
     private Duration TimeStamp;
     private MediaAudio audio;
-    private Page page;
+    public Page page;
     private static Boolean init = false;
 
 
