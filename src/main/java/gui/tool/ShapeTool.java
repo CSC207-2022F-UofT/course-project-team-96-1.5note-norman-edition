@@ -19,6 +19,8 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
+import java.awt.*;
+
 public class ShapeTool implements Tool {
     private HandlerMethod[] handlers;
     private Page page;
@@ -35,9 +37,9 @@ public class ShapeTool implements Tool {
 
     public ShapeTool(ObjectProperty<Color> colour) {
         HandlerMethod[] handlers = {
-                new HandlerMethod<>(MouseEvent.MOUSE_PRESSED, this::startShape),
-                new HandlerMethod<>(MouseEvent.MOUSE_RELEASED, this::endShape),
-                new HandlerMethod<>(MouseEvent.MOUSE_DRAGGED, this::updateShape)
+                new HandlerMethod<>(MouseEvent.MOUSE_PRESSED, this::startShapeMouse),
+                new HandlerMethod<>(MouseEvent.MOUSE_RELEASED, this::endShapeMouse),
+                new HandlerMethod<>(MouseEvent.MOUSE_DRAGGED, this::updateShapeMouse)
         };
         this.handlers = handlers;
 
@@ -70,61 +72,61 @@ public class ShapeTool implements Tool {
         return settings;
     }
 
-    private void startShape(MouseEvent e) {
+    public GUIShape getCurrentShape() {
+        return currentShape;
+    }
+
+    private void startShapeMouse(MouseEvent e) {
         if (e.getButton() == MouseButton.PRIMARY) {
             e.consume();
             point1 = page.getMouseCoords(e);
 
-            if (settings.getShapeType() != null) {
-                ShapeType shapeType = settings.getShapeType();
-                switch (shapeType) {
-                    case RECTANGLE -> {
-                        System.out.println("GUI Rectangle");
-                        currentShape = new GUIRectangle(point1, point1, colour.getValue());
-                    }
-                    case ELLIPSE -> {
-                        System.out.println("GUI Ellipse");
-                        currentShape = new GUIEllipse(point1, point1, colour.getValue());
-                    }
-                    case POLYGON -> {
-                        System.out.println("GUI Polygon");
-                        currentShape = new GUIPolygon(point1, point1, colour.getValue(), settings.getPolySideCount());
-                    }
+            startShape(point1, point1, colour.getValue(), settings.getShapeType());
+        }
+    }
+
+    private void updateShapeMouse(MouseEvent e) {
+        if (e.getButton() == MouseButton.PRIMARY) {
+            e.consume();
+            point2 = page.getMouseCoords(e);
+            updateShape(point1, point2, e.isShiftDown());
+        }
+    }
+
+    private void endShapeMouse(MouseEvent e) {
+        if (e.getButton() == MouseButton.PRIMARY) {
+            e.consume();
+            endShape();
+        }
+    }
+
+    public void startShape(Point2D p1, Point2D p2, Color c1, ShapeType type) {
+        if (settings.getShapeType() != null) {
+            switch (type) {
+                case RECTANGLE -> {
+                    currentShape = new GUIRectangle(p1, p2, c1);
                 }
-                page.addMedia(currentShape);
+                case ELLIPSE -> {
+                    currentShape = new GUIEllipse(p1, p2, c1);
+                }
+                case POLYGON -> {
+                    currentShape = new GUIPolygon(p1, p2, c1, settings.getPolySideCount());
+                }
             }
+            page.addMedia(currentShape);
         }
     }
-
-    private void updateShape(MouseEvent e) {
-        if (e.getButton() == MouseButton.PRIMARY) {
-            e.consume();
-            if (currentShape != null) {
-                point2 = page.getMouseCoords(e);
-                currentShape.update(point1, point2, e.isShiftDown());
-            }
+    public void updateShape(Point2D p1, Point2D p2, boolean sameSides) {
+        if (currentShape != null) {
+            currentShape.update(p1, p2, sameSides);
         }
     }
-
-    private void endShape(MouseEvent e) {
-        if (e.getButton() == MouseButton.PRIMARY) {
-            e.consume();
-            finishShape();
-        }
-    }
-
-    private void finishShape() {
+    public void endShape() {
         if (currentShape != null) {
             page.updateMedia(currentShape);
             currentShape = null;
         }
     }
-}
-
-enum ShapeType{
-    RECTANGLE,
-    ELLIPSE,
-    POLYGON
 }
 
 class ShapeSettings extends FlowPane {

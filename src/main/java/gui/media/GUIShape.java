@@ -2,15 +2,23 @@ package gui.media;
 
 import app.media.GenericShape;
 import app.media.Media;
-import app.media.RectangleShape;
 import javafx.geometry.Point2D;
 
+/**
+ * A sub-class of GUIMedia representing an arbitrary shape
+ */
 public class GUIShape extends GUIMedia<GenericShape> {
 
     public GUIShape(GenericShape media) {
         super(media);
     }
 
+    /**
+     * Called when changing the position or dimensions of a shape
+     * @param p1 The first point used to define the shape
+     * @param p2 The second point used to define the shape
+     * @param sameSideLengths Whether the side lengths should be made equal (e.x. force drawing a square)
+     */
     public void update(Point2D p1, Point2D p2, boolean sameSideLengths){}
 
     @Override
@@ -24,11 +32,22 @@ public class GUIShape extends GUIMedia<GenericShape> {
         }
     }
 
+    /**
+     * Creates a GUIShape from its corresponding GenericShape
+     * @param shape A GenericShape to be represented as a new GUIShape
+     */
     public void setGenericShape(GenericShape shape) {}
 
+    /**
+     * Returns the center and dimensions of a shape's bounding box, given two points
+     * <p>
+     * Used to define the area a shape should occupy, given two points
+     * @param origin The origin of the bounding box (should be the "anchored" corner)
+     * @param current The other corner of the bounding box (should be the "moveable" corner)
+     * @param sameSideLengths Whether to return a bounding box with equal side lengths (square) as opposed to the default (rectangle)
+     * @return An array of doubles containing the horizontal and vertical midpoints and the width and height of the bouding box
+     */
     public double[] RestrictPoints (Point2D origin, Point2D current, boolean sameSideLengths) {
-        // Accepts two points and returns the dimensions of a shape to fill the space as follows:
-        // horizontal midpoint, vertical midpoint, width, height
         double x1 = origin.getX();
         double y1 = origin.getY();
         double x2 = current.getX();
@@ -42,16 +61,30 @@ public class GUIShape extends GUIMedia<GenericShape> {
             height = width;
         }
 
-//        System.out.println(width+" "+height);
-
         x2 = clamp(x2, x1 - width, x1 + width);
         y2 = clamp(y2, y1 - height, y1 + height);
 
         return new double[]{(x1+x2)/2, (y1+y2)/2, width, height};
     }
 
+    /**
+     * A Helper method which clamps a value between a minimum and a maximum
+     * @param value The value to be clamped
+     * @param minimum The minimum boundary
+     * @param maximum The maximum boundary
+     * @return The clamped value
+     */
     public double clamp(double value, double minimum, double maximum) {
         return Math.min(Math.max(value, minimum), maximum);
+    }
+
+    /**
+     * Returns the string representation of the GUIShape's GenericShape class
+     * @return The string representation of the GUIShape's GenericShape class
+     */
+    @Override
+    public String toString() {
+        return getMedia().toString();
     }
 }
 

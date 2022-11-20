@@ -1,13 +1,13 @@
 package gui.media;
 
-import app.media.GenericShape;
-import app.media.Media;
-import app.media.PenStroke;
 import app.media.PolygonShape;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
+/**
+ * An implementation of the GUIShape class representing a polygon
+ * */
 public class GUIPolygon extends GUIShape {
     private Polygon polygon;
     private int sideCount;
@@ -43,6 +43,15 @@ public class GUIPolygon extends GUIShape {
         polygonshape.setStartAngle(calcAngle(p1, p2));
     }
 
+    /**
+     * Generates a list of points representing the vertices of a polygon with an arbitrary orientation and dimensions.
+     * <p>
+     * This always creates a Regular Shape, which is a shape with equal side lengths.
+     * @param radius The distance from the
+     * @param angle The rotational offset of the polygon
+     * @param sideCount The number of sides of the polygon
+     * @return A list of points representing the polygon's vertices
+     */
     public Double[] calcPointsFromRadiusAngle(double radius, double angle, int sideCount) {
         Double[] points = new Double[2*sideCount];
         double angleStep = 360.0 / sideCount;
@@ -53,12 +62,27 @@ public class GUIPolygon extends GUIShape {
         }
         return points;
     }
+    /**
+     * Generates a list of points representing the vertices of a polygon with an arbitrary orientation and dimensions.
+     * <p>
+     * This always creates a Regular Shape, which is a shape with equal side lengths.
+     * @param p1 The location of the center of the polygon
+     * @param p2 The location of the top most vertex of the polygon (used for determining direction)
+     * @param sideCount The number of sides of the polygon
+     * @return A list of points representing the polygon's vertices
+     */
     public Double[] calcPointsFromPoints(Point2D p1, Point2D p2, int sideCount) {
         double radius = p1.distance(p2);
         double angle = calcAngle(p1, p2);
         return calcPointsFromRadiusAngle(radius, angle, sideCount);
     }
 
+    /**
+     * Returns the angle of the vector connecting two points
+     * @param p1 The tail of the vector
+     * @param p2 The head of the vector
+     * @return The angle of the vector connecting two points
+     */
     public static double calcAngle(Point2D p1, Point2D p2) {
         // Calculates the angle of the vector drawn from point 1 to point 2
         double deltaX = p2.getX() - p1.getX();
