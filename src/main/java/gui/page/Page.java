@@ -281,9 +281,6 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
         this.setScaleX(factor);
         this.setScaleY(factor);
         this.setScaleZ(factor);
-        this.mediaLayer.setScaleX(factor);
-        this.mediaLayer.setScaleY(factor);
-        this.mediaLayer.setScaleZ(factor);
     }
 
     public void zoomInOrOut(String inOrOut){

@@ -58,6 +58,7 @@ public class StartScreen extends VBox {
         Menu zoomToSubMenu = new Menu("Zoom To");
         MenuItem zoomInItem = new MenuItem("Zoom In");
         MenuItem zoomOutItem = new MenuItem("Zoom Out");
+        MenuItem resetItem = new MenuItem("Reset Zoom");
         //drop down menu options
         MenuItem zoomPercent25 = new MenuItem("25%");
         MenuItem zoomPercent50 = new MenuItem("50%");
@@ -90,6 +91,7 @@ public class StartScreen extends VBox {
         zoomPercent400.setOnAction(e -> zoomTo(4.0));
         zoomInItem.setOnAction(e -> zoomInOrOut("In"));
         zoomOutItem.setOnAction(e -> zoomInOrOut("Out"));
+        resetItem.setOnAction(e -> zoomTo(1.0));
 
         HBox pageButtonsRow = new HBox(
                 PADDING, newPageButton, loadPageButton);
@@ -99,7 +101,7 @@ public class StartScreen extends VBox {
                 newPageItem, loadPageItem, closePageItem,
                 savePageItem, savePageAsItem);
         setPageOnlyMenuItems(closePageItem, savePageItem, savePageAsItem, zoomToSubMenu, zoomInItem, zoomOutItem);
-        zoomMenu.getItems().addAll(zoomToSubMenu, zoomInItem, zoomOutItem);
+        zoomMenu.getItems().addAll(zoomToSubMenu, zoomInItem, zoomOutItem, resetItem);
 
         getChildren().add(pageButtonsRow);
         getChildren().add(new Separator());
