@@ -38,18 +38,22 @@ public class GUITextBox extends GUIMedia<TextBox> {
         TextBox currentText = getMedia();
 
         if (currentText != newText) {
-            setInitialValues();
+            //setInitialValues();
             setMedia(newText);
             setText(newText.getText());
         }
     }
 
-    private void setText(String textIn) { this.text.setText(textIn); }
+    private void setText(String textIn) {
+        this.text.setText(textIn);
+        this.getMedia().setText(textIn);
+    }
 
     public String getText() { return this.text.getText(); }
 
     public void update(String textIn) {
         this.text.setText(textIn);
+        this.getMedia().setText(textIn);
     }
 
     public void end() {
