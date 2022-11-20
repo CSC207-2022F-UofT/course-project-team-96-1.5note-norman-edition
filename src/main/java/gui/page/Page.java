@@ -284,11 +284,30 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
     }
 
     public void zoomInOrOut(String inOrOut){
+        double[] zoomOptions = {0.1, 0.25, 1.0/3.0, 0.5, 2.0/3.0, 0.75, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0,
+                9.0, 10.0};
         double currentFactor = this.getScaleX();
+        if (currentFactor == 0.1 && inOrOut.equals("Out")) {
+            return;
+        } else if (currentFactor == 10.0 && inOrOut.equals("In")) {
+            return;
+        }
+        int i = 0;
+        while (i < zoomOptions.length && zoomOptions[i] <= currentFactor) {
+            i++;
+        }
+        // once the loop ends, we have the index of a factor that is greater than the current one
         if (inOrOut.equals("In")) {
-            this.zoomToFactor(currentFactor + 0.1);
+            this.zoomToFactor(zoomOptions[i]);
+            // if we zoom in we can then plug this factor right into our zoomToFactor function
         } else {
-            this.zoomToFactor(currentFactor - 0.1);
+            // if we are zooming out, check if the previous is smaller, and if not go back one
+            // could also just use another while loop indexing backwards
+            if (zoomOptions[i - 1] < currentFactor) {
+                this.zoomToFactor(zoomOptions[i - 1]);
+            } else {
+                this.zoomToFactor(zoomOptions[i - 2]);
+            }
         }
     }
 
