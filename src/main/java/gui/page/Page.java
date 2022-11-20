@@ -7,12 +7,7 @@ import javafx.scene.input.*;
 import javafx.beans.value.*;
 import javafx.geometry.*;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Set;
-import java.util.HashSet;
+import java.util.*;
 
 import app.media.Media;
 import app.MediaCommunicator;
@@ -134,6 +129,14 @@ public class Page extends StackPane implements MediaObserver {
     public void removeMedia(GUIMedia media) {
         contents.remove(media.getID());
         mediaLayer.getChildren().remove(media);
+    }
+
+    public ArrayList<Media> getMedia(){
+        ArrayList<Media> mediaOnPage = new ArrayList<>();
+        for (GUIMedia<?> value : contents.values()){
+            mediaOnPage.add(value.getMedia());
+        }
+        return mediaOnPage;
     }
 
     /**
