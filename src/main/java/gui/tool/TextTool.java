@@ -1,15 +1,13 @@
 package gui.tool;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.*;
-import javafx.scene.Node;
 import javafx.scene.input.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.geometry.*;
-import javafx.scene.text.*;
 
-import app.media.*;
-import gui.media.*;
 import gui.page.Page;
 import gui.media.GUITextBox;
 
@@ -25,8 +23,8 @@ public class TextTool implements Tool {
 
     public TextTool() {
         HandlerMethod[] handlers = {
-                new HandlerMethod<>(MouseEvent.MOUSE_CLICKED, this::makeText),
-                new HandlerMethod<>(KeyEvent.KEY_RELEASED, this::updateEdit)
+                new HandlerMethod<>(MouseEvent.MOUSE_CLICKED, this::makeText)//,
+                //new HandlerMethod<>(KeyEvent.KEY_RELEASED, this::updateEdit)
         };
         this.handlers = handlers;
 
@@ -42,7 +40,9 @@ public class TextTool implements Tool {
     }
 
     @Override
-    public void enabledFor(Page page) { this.page = page; }
+    public void enabledFor(Page page) {
+        this.page = page;
+    }
 
     @Override
     public void disabledFor(Page page) {
@@ -61,8 +61,8 @@ public class TextTool implements Tool {
 
             // Edit existing TextBox
             if (pick instanceof GUITextBox castpick) { // I have to use castpick here to make it work properly
-                settings.setText(castpick.getText());
                 currentText = castpick;
+                settings.setText(castpick.getText());
             }
             // Create new TextBox in empty space
             else{
@@ -71,13 +71,17 @@ public class TextTool implements Tool {
                         settings.getText()
                 );
                 page.addMedia(currentText);
-                page.updateMedia(currentText);
+
+                settings.getTextZone().textProperty().addListener((observable, oldValue, newValue) -> {
+                    currentText.update(settings.getText());
+                    page.updateMedia(currentText);
+                });
             }
         }
     }
 
     private void updateEdit(KeyEvent e) {
-        if (e.getEventType() == KeyEvent.KEY_RELEASED) {
+        if (e.getEventType() == KeyEvent.ANY) {
             e.consume();
 
             currentText.update(settings.getText());
@@ -99,21 +103,21 @@ public class TextTool implements Tool {
 class TextSettings extends FlowPane {
 
     private static int PADDING = 5;
-    private TextArea textBox;
+    private TextArea textZone;
 
     public TextSettings() {
-        textBox = new TextArea();
+        textZone = new TextArea();
 
         VBox textSettings = new VBox(
-                PADDING, new Label("Enter Text"), textBox);
+                PADDING, new Label("Enter Text"), textZone);
         textSettings.setAlignment(Pos.CENTER_LEFT);
-        HBox.setHgrow(textBox, Priority.ALWAYS);
+        HBox.setHgrow(textZone, Priority.ALWAYS);
 
         getChildren().addAll(textSettings);
     }
 
-    public String getText() { return textBox.getText(); }
-    public TextArea getTextBox() { return this.textBox; }
+    public String getText() { return textZone.getText(); }
+    public TextArea getTextZone() { return this.textZone; }
 
-    public void setText(String textIn) { this.textBox.setText(textIn); }
+    public void setText(String textIn) { this.textZone.setText(textIn); }
 }
