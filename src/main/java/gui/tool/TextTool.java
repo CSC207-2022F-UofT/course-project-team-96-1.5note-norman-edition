@@ -26,8 +26,7 @@ public class TextTool implements Tool {
     public TextTool() {
         HandlerMethod[] handlers = {
                 new HandlerMethod<>(MouseEvent.MOUSE_CLICKED, this::makeText),
-                new HandlerMethod<>(KeyEvent.KEY_TYPED, this::updateEdit)
-                //new HandlerMethod<>(MouseEvent.MOUSE_EXITED_TARGET, this::endEdit)
+                new HandlerMethod<>(KeyEvent.KEY_RELEASED, this::updateEdit)
         };
         this.handlers = handlers;
 
@@ -64,8 +63,6 @@ public class TextTool implements Tool {
             if (pick instanceof GUITextBox castpick) { // I have to use castpick here to make it work properly
                 settings.setText(castpick.getText());
                 currentText = castpick;
-                //currentText.addEventHandler(KeyEvent.KEY_TYPED, this::updateEdit);
-                //(castpick).update(settings.getText());
             }
             // Create new TextBox in empty space
             else{
@@ -74,25 +71,19 @@ public class TextTool implements Tool {
                         settings.getText()
                 );
                 page.addMedia(currentText);
+                page.updateMedia(currentText);
             }
         }
     }
 
     private void updateEdit(KeyEvent e) {
-        if (e.getEventType() == KeyEvent.KEY_TYPED) {
+        if (e.getEventType() == KeyEvent.KEY_RELEASED) {
             e.consume();
 
             currentText.update(settings.getText());
+            page.updateMedia(currentText);
         }
     }
-
-    /*private void endEdit(MouseEvent e) {
-        if (e.getTarget() != settings.getTextBox()) {
-            e.consume();
-
-            finishEdit();
-        }
-    }*/
 
     private void finishEdit() {
         if (currentText != null) {
