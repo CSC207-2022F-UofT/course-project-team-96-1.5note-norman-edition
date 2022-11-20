@@ -27,7 +27,7 @@ public class AudioModifier implements MediaManager {
     private MediaObserver page;
 
     @Override
-    public void addMedia() {
+    public void addMedia() throws Exception{
         //Loading raw audio data based on user selection
         Storage fileManager = new FileLoaderWriter();
         try {
@@ -48,7 +48,8 @@ public class AudioModifier implements MediaManager {
     }
 
     @Override
-    public void modifyMedia() {
+    public void modifyMedia() throws Exception{
+        //Either adds or removes timestamps from the audio
         if (audio.getTimestamps().contains(timestamp))  {
             audio.getTimestamps().remove(timestamp);
         } else {

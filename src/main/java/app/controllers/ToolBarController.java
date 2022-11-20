@@ -20,23 +20,23 @@ public class ToolBarController {
     though maybe later they will return booleans to signify if they completed their job or failed.
      */
 
-    public void insertText() {
+    public void insertText() throws Exception {
         TextModifier textModifier = new TextModifier();
         textModifier.addMedia();
     }
 
-    public void insertImage() {
+    public void insertImage() throws Exception {
         ImageModifier imageModifier = new ImageModifier();
         imageModifier.addMedia();
     }
 
-    public void insertAudio(Page page) {
+    public void insertAudio(Page page) throws Exception {
         AudioModifier audioModifier = new AudioModifier();
         audioModifier.setPage(page);
         audioModifier.addMedia();
     }
 
-    public void modifyTimestamp(MediaAudio audioUI, Duration Timestamp, Page page)  {
+    public void modifyTimestamp(MediaAudio audioUI, Duration Timestamp, Page page) throws Exception {
         AudioModifier audioModifier = new AudioModifier();
         audioModifier.setAudio(audioUI);
         audioModifier.addTimeStamp(Timestamp);
