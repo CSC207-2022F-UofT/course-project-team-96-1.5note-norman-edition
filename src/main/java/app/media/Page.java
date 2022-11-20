@@ -1,17 +1,16 @@
 package app.media;
-
 import java.util.ArrayList;
 
 public class Page {
-    private ArrayList<PageMedia> elements;
+    private ArrayList<Media> elements;
     private double viewSize;
 
-    public Page(ArrayList<PageMedia> elements, double viewSize) {
+    public Page(ArrayList<Media> elements, double viewSize) {
         this.elements = elements;
         this.viewSize = viewSize;
     }
 
-    public ArrayList<PageMedia> getElements() {
+    public ArrayList<Media> getElements() {
         return elements;
     }
 
@@ -19,7 +18,7 @@ public class Page {
         return viewSize;
     }
 
-    public void setElements(ArrayList<PageMedia> elements) {
+    public void setElements(ArrayList<Media> elements) {
         this.elements = elements;
     }
 

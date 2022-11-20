@@ -1,24 +1,25 @@
 package app.media;
+import javafx.util.Duration;
 
-import javafx.scene.text.*;
+import java.util.ArrayList;
+import java.util.Set;
 
-public class MediaText extends PageMedia {
+public class MediaText extends Media {
     //A subclass of PageMedia, defining a text that exists on the page
     //Instance Attributes:
-    //  -text: The GUI representation of the text in question
-    private Text text;
+    //  -text: Text held by this class
+    private String text;
 
-    public MediaText(double[] position, double[] dimensions, double angle, int zIndex, long id, String tag,
-                     Text text) {
-        super(position, dimensions, angle, zIndex, id, tag);
+    public MediaText(String name, double x, double y, double width, double height, String text) {
+        super(name, x, y, width, height);
         this.text = text;
     }
 
-    public Text getText() {
+    public String getText() {
         return text;
     }
 
-    public void setText(Text text) {
+    public void setText(String text) {
         this.text = text;
     }
 }

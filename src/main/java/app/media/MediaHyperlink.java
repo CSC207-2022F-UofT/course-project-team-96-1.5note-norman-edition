@@ -2,23 +2,35 @@ package app.media;
 
 import javafx.scene.control.Hyperlink;
 
-public class MediaHyperlink extends PageMedia {
+import java.util.Set;
+
+public class MediaHyperlink extends Media{
     //A subclass of PageMedia, defining a Hyperlink that exists on the page
     //Instance Attributes:
     //  text: The GUI representation of the hyperlink in question
-    private Hyperlink text;
+    //  link: Either a file path or a timestamp to be linked to
+    private String text;
+    private String link;
 
-    public MediaHyperlink(double[] position, double[] dimensions, double angle, int zIndex, long id, String tag,
-                          Hyperlink text) {
-        super(position, dimensions, angle, zIndex, id, tag);
+    public MediaHyperlink(String name, double x, double y, double width, double height, String text, String link) {
+        super(name, x, y, width, height);
         this.text = text;
+        this.link = link;
     }
 
-    public Hyperlink getText() {
+    public String getText() {
         return text;
     }
 
-    public void setText(Hyperlink text) {
+    public String getLink() {
+        return link;
+    }
+
+    public void setText(String text) {
         this.text = text;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
     }
 }
