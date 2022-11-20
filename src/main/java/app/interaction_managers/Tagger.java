@@ -1,17 +1,23 @@
 package app.interaction_managers;
 
-import app.interaction_managers.InteractionManager;
+import app.media.Media;
+import javafx.scene.control.TextField;
 
 public class Tagger implements InteractionManager {
 
     private String tag;
 
-    @Override
-    public void interact() {
+    public Tagger(){
 
     }
-
-    public void addTag(String tag){
+    @Override
+    public void interact(javafx.scene.Node node) {
+        if (node instanceof TextField) {
+            this.tag = ((TextField) node).getText();
+        }
+    }
+    public void addTag(Media media){
+        media.getTags().add(tag);
 
     }
 }
