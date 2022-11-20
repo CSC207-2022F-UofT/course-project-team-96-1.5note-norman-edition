@@ -1,4 +1,5 @@
 package app.media_managers;
+import app.MediaCommunicator;
 import app.MediaObserver;
 import app.media.Media;
 import app.media.MediaAudio;
@@ -24,27 +25,22 @@ public class AudioModifier implements MediaManager {
 
     private Duration timestamp;
     private MediaAudio audio;
-    private MediaObserver page;
+    private MediaCommunicator communicator;
 
     @Override
     public void addMedia() throws Exception{
         //Loading raw audio data based on user selection
         Storage fileManager = new FileLoaderWriter();
-        try {
-            HashMap<String, byte[]> fileData = fileManager.readFile(new String[]{"*.mp3","*.wav"},
-                    "Audio (.mp3, .wav)");
-            if (fileData != null)    {
-                String fileName = (String) (fileData.keySet().toArray())[0];
-                MediaAudio audio = new MediaAudio(fileName, 200, 200, 200, 200,
-                        fileData.get(fileName), new ArrayList<Duration>()); //Temp Constructor
+        HashMap<String, byte[]> fileData = fileManager.readFile(new String[]{"*.mp3","*.wav"},
+                "Audio (.mp3, .wav)");
+        if (fileData != null)    {
+            String fileName = (String) (fileData.keySet().toArray())[0];
+            MediaAudio audio = new MediaAudio(fileName, 200, 200, 200, 200,
+                    fileData.get(fileName), new ArrayList<Duration>()); //Temp Constructor
 
-                //Giving the audio an ID then adding it to the page
-                this.page.mediaUpdated(audio);
+            //Giving the audio an ID then adding it to the page
+            this.communicator.updateMedia(audio);
             }
-        } catch (Exception e) {
-            new ErrorWindow((Page) page, "Error Loading Media", "There was a runtime error while loading" +
-                    "your file", e).show();
-        }
     }
 
     @Override
@@ -55,7 +51,7 @@ public class AudioModifier implements MediaManager {
         } else {
             audio.getTimestamps().add(timestamp);
         }
-        page.mediaUpdated(audio);
+        communicator.updateMedia(audio);
     }
 
     @Override
@@ -72,7 +68,7 @@ public class AudioModifier implements MediaManager {
         this.audio = audio;
     }
 
-    public void setPage(MediaObserver page) {
-        this.page = page;
+    public void setCommunicator(MediaCommunicator communicator) {
+        this.communicator = communicator;
     }
 }

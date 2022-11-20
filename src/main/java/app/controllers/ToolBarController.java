@@ -1,5 +1,6 @@
 package app.controllers;
 
+import app.MediaCommunicator;
 import app.draweables.SelectionTool;
 import app.draweables.ShapeCreator;
 import app.interaction_managers.Tagger;
@@ -30,17 +31,17 @@ public class ToolBarController {
         imageModifier.addMedia();
     }
 
-    public void insertAudio(Page page) throws Exception {
+    public void insertAudio(MediaCommunicator communicator) throws Exception {
         AudioModifier audioModifier = new AudioModifier();
-        audioModifier.setPage(page);
+        audioModifier.setCommunicator(communicator);
         audioModifier.addMedia();
     }
 
-    public void modifyTimestamp(MediaAudio audioUI, Duration Timestamp, Page page) throws Exception {
+    public void modifyTimestamp(MediaAudio audioUI, Duration Timestamp, MediaCommunicator communicator) throws Exception {
         AudioModifier audioModifier = new AudioModifier();
         audioModifier.setAudio(audioUI);
         audioModifier.addTimeStamp(Timestamp);
-        audioModifier.setPage(page);
+        audioModifier.setCommunicator(communicator);
         audioModifier.modifyMedia();
     }
 

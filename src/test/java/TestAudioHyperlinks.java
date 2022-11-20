@@ -47,11 +47,11 @@ public class TestAudioHyperlinks {
         audioGUI.getAudioPlayer().seek(new Duration(0));
     }
 
-    public void addTimestamp(Duration duration)  {
+    public void addTimestamp(Duration duration) throws Exception {
         AudioModifier am = new AudioModifier();
         am.setAudio(audioGUI.getMedia());
         am.addTimeStamp(duration);
-        am.setPage(tam.page);
+        am.setCommunicator(tam.page.getCommunicator());
 
         am.modifyMedia();
     }
@@ -60,13 +60,13 @@ public class TestAudioHyperlinks {
         audioGUI.getMedia().getTimestamps().clear();
     }
 
-    public void setUpOne()  {
+    public void setUpOne() throws Exception {
         clearTimestamps();
 
         addTimestamp(new Duration(0));
     }
 
-    public void setUpMultiple() {
+    public void setUpMultiple() throws Exception {
         clearTimestamps();
 
         addTimestamp(new Duration(0));
@@ -78,7 +78,7 @@ public class TestAudioHyperlinks {
     //Testing addition/removal of timestamps at both the GUI and Core Data level
 
     @Test
-    public void testAddTimestampEmpty()  {
+    public void testAddTimestampEmpty() throws Exception {
         //Basic test that timestamps can be added to a MediaAudio with no timestamps
         clearTimestamps();
         addTimestamp(new Duration(0));
@@ -90,7 +90,7 @@ public class TestAudioHyperlinks {
     }
 
     @Test
-    public void testAddTimestampOne()  {
+    public void testAddTimestampOne() throws Exception {
         //Test that timestamps can be added to a MediaAudio with 1 timestamp
         setUpOne();
         addTimestamp(new Duration(1000));
@@ -101,7 +101,7 @@ public class TestAudioHyperlinks {
     }
 
     @Test
-    public void testAddTimestampMultiple()  {
+    public void testAddTimestampMultiple() throws Exception {
         //Test that timestamps can be added to a MediaAudio with multiple timestamps
         setUpMultiple();
 
@@ -112,7 +112,7 @@ public class TestAudioHyperlinks {
     }
 
     @Test
-    public void testRemoveTimestampOne()  {
+    public void testRemoveTimestampOne() throws Exception {
         //Basic test that timestamp can be removed when there is only one
         setUpOne();
 
@@ -122,7 +122,7 @@ public class TestAudioHyperlinks {
     }
 
     @Test
-    public void testRemoveTimestampMultiple_start()  {
+    public void testRemoveTimestampMultiple_start() throws Exception {
         //Basic test that timestamps at the start can be removed when there are multiple
         setUpMultiple();
 
@@ -133,7 +133,7 @@ public class TestAudioHyperlinks {
     }
 
     @Test
-    public void testRemoveTimestampMultiple_middle()  {
+    public void testRemoveTimestampMultiple_middle() throws Exception {
         //Basic test that timestamps at the middle can be removed when there are multiple
         setUpMultiple();
 
@@ -144,7 +144,7 @@ public class TestAudioHyperlinks {
     }
 
     @Test
-    public void testRemoveTimestampMultiple_end()  {
+    public void testRemoveTimestampMultiple_end() throws Exception {
         //Basic test that timestamps at the end can be removed when there are multiple
         setUpMultiple();
 
@@ -154,7 +154,7 @@ public class TestAudioHyperlinks {
     }
 
     @Test
-    public void testAddTimestamp_largeDuration()    {
+    public void testAddTimestamp_largeDuration() throws Exception {
         clearTimestamps();
         addTimestamp(new Duration(100000000));
         assertTrue(audioGUI.getMedia().getTimestamps().get(0).equals(new Duration(100000000)));
@@ -166,7 +166,7 @@ public class TestAudioHyperlinks {
     //It is assumed that timestamps will be for valid points in the associated audio
 
     @Test
-    public void testClickTimestamp_startClip() throws InterruptedException {
+    public void testClickTimestamp_startClip() throws Exception {
         //Test that a timestamp linked to the start of the player plays said part
         setUpOne();
         GUIHyperlink hyperlink = (GUIHyperlink) audioGUI.getTimestamps().getChildren().get(0);
@@ -177,7 +177,7 @@ public class TestAudioHyperlinks {
     }
 
     @Test
-    public void testClickTimestamp_middleClip() throws InterruptedException {
+    public void testClickTimestamp_middleClip() throws Exception {
         //Test that a timestamp linked to the middle of the player plays said part
         //This test is prone to randomly failing, threading issues
 
@@ -193,7 +193,7 @@ public class TestAudioHyperlinks {
     }
 
     @Test
-    public void testClickTimestamp_endClip() throws InterruptedException {
+    public void testClickTimestamp_endClip() throws Exception {
         //Test that a timestamp linked to the end of the player plays said part (or rather, doesnt)
 
         clearTimestamps();
@@ -208,7 +208,7 @@ public class TestAudioHyperlinks {
     }
 
     @Test
-    public void testClickTimestamp_first() throws InterruptedException {
+    public void testClickTimestamp_first() throws Exception {
         //Test that clicking the first of multiple timestamps works as expected
         setUpMultiple();
         GUIHyperlink hyperlink = (GUIHyperlink) audioGUI.getTimestamps().getChildren().get(0);
@@ -219,7 +219,7 @@ public class TestAudioHyperlinks {
     }
 
     @Test
-    public void testClickTimestamp_second() throws InterruptedException {
+    public void testClickTimestamp_second() throws Exception {
         //Test that clicking the second of multiple timestamps works as expected
         setUpMultiple();
         GUIHyperlink hyperlink = (GUIHyperlink) audioGUI.getTimestamps().getChildren().get(1);
@@ -230,7 +230,7 @@ public class TestAudioHyperlinks {
     }
 
     @Test
-    public void testClickTimestamp_last() throws InterruptedException {
+    public void testClickTimestamp_last() throws Exception {
         //Test that clicking the last of multiple timestamps works as expected
         setUpMultiple();
         GUIHyperlink hyperlink = (GUIHyperlink) audioGUI.getTimestamps().getChildren().get(3);

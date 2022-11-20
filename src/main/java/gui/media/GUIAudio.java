@@ -275,6 +275,7 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
                 }
 
             });
+            hyperlinkUI.setManaged(true);
             alignment.getChildren().add(hyperlinkUI);
         }
         this.timestamps = alignment;
