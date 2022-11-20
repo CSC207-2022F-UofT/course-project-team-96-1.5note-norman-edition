@@ -94,4 +94,14 @@ public class GUIMedia<M extends Media> extends Pane {
      * should properly represent the Media object which was passed in.
      */
     public void mediaUpdated(Media media) {}
+
+    /**
+     * This method is called when this GUIMedia object is "removed" and will
+     * no longer be displayed.
+     * <p>
+     * Implementations of this method can specify the procedure to "clean up"
+     * any resources used by an instance of GUIMedia when it is no longer
+     * visible.
+     */
+    public void removed() {}
 }

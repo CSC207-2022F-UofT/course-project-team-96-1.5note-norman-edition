@@ -1,3 +1,7 @@
+package storage;
+
+import storage.Storage;
+
 public class FileLoaderWriter implements Storage {
     // TODO: Implement a file cache, which stores recently opened files to prevent consecutive reopening
     private int cacheSize = 10; // Size of the internal file cache
@@ -8,7 +12,7 @@ public class FileLoaderWriter implements Storage {
         return new byte[1]; // TODO: Return a proper array of bytes
     }
 
-    public void writeFile(String path, Byte[] Data){
+    public void writeFile(String path, byte[] Data){
 
     }
 }

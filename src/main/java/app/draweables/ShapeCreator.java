@@ -1,4 +1,7 @@
-import java.util.ArrayList;
+package app.draweables;
+
+import app.draweables.Drawable;
+import javafx.geometry.Point2D;
 
 public class ShapeCreator implements Drawable {
 
@@ -6,7 +9,7 @@ public class ShapeCreator implements Drawable {
      * call JavaFX shape thingy
      */
     @Override
-    public void useTwoPositions(double[] first, double[] second){
+    public void useTwoPositions(Point2D first, Point2D second, String shape){
 
     }
 }
