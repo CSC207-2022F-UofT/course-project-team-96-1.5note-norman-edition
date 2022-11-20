@@ -90,7 +90,7 @@ public class Media implements Serializable {
     {
         this.id = id;
         this.name = new SimpleStringProperty(name);
-        this.tags = new SimpleSetProperty<String>();
+        this.tags = FXCollections.observableSet(new HashSet<>());
         this.tags.addAll(tags);
         this.x = new SimpleDoubleProperty(x);
         this.y = new SimpleDoubleProperty(y);
