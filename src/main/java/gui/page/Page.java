@@ -1,10 +1,11 @@
 package gui.page;
 
+import gui.Zoomable;
+import javafx.event.EventHandler;
 import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.transform.*;
 import javafx.scene.input.*;
-import javafx.beans.value.*;
 import javafx.geometry.*;
 
 import java.util.*;
@@ -16,8 +17,8 @@ import gui.media.GUIMedia;
 import gui.media.GUIMediaFactory;
 import gui.error_window.ErrorWindow;
 
-
-public class Page extends StackPane implements MediaObserver {
+// , gui.Zoomable
+public class Page extends StackPane implements MediaObserver, Zoomable {
 
     // Additional padding added to the visible region
     private static double VISIBLE_BOUNDS_MARGIN = 100;
@@ -30,6 +31,8 @@ public class Page extends StackPane implements MediaObserver {
     private Map<Long, GUIMedia> contents;
 
     private Bounds prevVisibleBounds;
+    private Scale scale;
+    private double scaleFactor = 1.0;
 
     public Page(MediaCommunicator c) {
         this.c = c;
@@ -47,6 +50,13 @@ public class Page extends StackPane implements MediaObserver {
 
         mediaLayer.boundsInParentProperty().addListener(o -> reloadMedia());
         layoutBoundsProperty().addListener(o -> reloadMedia());
+
+        scale = new Scale(scaleFactor, scaleFactor, getWidth()/2,
+                getHeight()/2);
+        mediaLayer.getTransforms().add(scale);
+
+        setOnScroll(new Page.ScrollHandler());
+
     }
 
     // Do necessary loading/unloading of Media for the currently visible region.
@@ -119,7 +129,7 @@ public class Page extends StackPane implements MediaObserver {
             c.updateMedia(media.getMedia());
         } catch (Exception e) {
             new ErrorWindow(this, null, "Updating Media object failed.", e)
-                .show();
+                    .show();
         }
     }
 
@@ -129,21 +139,6 @@ public class Page extends StackPane implements MediaObserver {
     public void removeMedia(GUIMedia media) {
         contents.remove(media.getID());
         mediaLayer.getChildren().remove(media);
-    }
-
-    public void jumpScene(double x, double y){
-        //TODO: make the page jump to a specific location
-    }
-
-    /**
-     * Return the media on the page as an ArrayList of Media
-     */
-    public ArrayList<Media> getMedia(){
-        ArrayList<Media> mediaOnPage = new ArrayList<>();
-        for (GUIMedia<?> value : contents.values()){
-            mediaOnPage.add(value.getMedia());
-        }
-        return mediaOnPage;
     }
 
     /**
@@ -188,19 +183,27 @@ public class Page extends StackPane implements MediaObserver {
      */
     private static double boundsDistance(Bounds b1, Bounds b2) {
         Double[] distances = {
-            // top left
-            new Point2D(b1.getMinX(), b1.getMinY()).distance(b2.getMinX(), b2.getMinY()),
-            // top right
-            new Point2D(b1.getMaxX(), b1.getMinY()).distance(b2.getMaxX(), b2.getMinY()),
-            // bottom left
-            new Point2D(b1.getMinX(), b1.getMaxY()).distance(b2.getMinX(), b2.getMaxY()),
-            // bottom right
-            new Point2D(b1.getMaxX(), b1.getMaxY()).distance(b2.getMaxX(), b2.getMaxY())
+                // top left
+                new Point2D(b1.getMinX(), b1.getMinY()).distance(b2.getMinX(), b2.getMinY()),
+                // top right
+                new Point2D(b1.getMaxX(), b1.getMinY()).distance(b2.getMaxX(), b2.getMinY()),
+                // bottom left
+                new Point2D(b1.getMinX(), b1.getMaxY()).distance(b2.getMinX(), b2.getMaxY()),
+                // bottom right
+                new Point2D(b1.getMaxX(), b1.getMaxY()).distance(b2.getMaxX(), b2.getMaxY())
         };
 
         return Collections.max(Arrays.asList(distances));
     }
 
+
+    public ArrayList<Media> getMedia(){
+        ArrayList<Media> mediaOnPage = new ArrayList<>();
+        for (GUIMedia<?> value : contents.values()){
+            mediaOnPage.add(value.getMedia());
+        }
+        return mediaOnPage;
+    }
     private void reloadMediaForVisibleBounds() throws Exception {
         Bounds visibleBounds = getVisibleBounds();
 
@@ -278,7 +281,136 @@ public class Page extends StackPane implements MediaObserver {
             } catch (Exception e) {
                 new ErrorWindow(
                         this, null, "Couldn't add GUIMedia for `" + media + "`.", e)
-                    .show();
+                        .show();
+            }
+        }
+    }
+
+    public Pane getMediaLayer() {
+        return mediaLayer;
+    }
+
+    //TODO zoom page or group
+
+    public double getScaleFactor() {
+        return scaleFactor;
+    }
+
+    /** Given a factor to scale the Page, scale in x and y directions by that factor. no pivot
+     *
+     * @param factor the factor by which to scale toZoom, > 0
+     */
+    @Override
+    public void zoomToFactor(double factor) {
+        scaleFactor = factor;
+
+        scale.setPivotX(getWidth()/2);
+        scale.setPivotY(getHeight()/2);
+        scale.setX(scaleFactor);
+        scale.setY(scaleFactor);
+
+        reloadMedia();
+    }
+
+    /** Scale toZoom by jumping to the next smallest/largest (depending on the value of inOrOut) double in zoomOptions
+     *
+     * @param inOrOut "In" to zoom in, "Out" to zoom out
+     */
+    @Override
+    public void zoomInOrOut(String inOrOut){
+        double[] zoomOptions = {0.1, 0.25, 1.0/3.0, 0.5, 2.0/3.0, 0.75, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0,
+                9.0, 10.0};
+        double currentFactor = getScaleFactor();
+        if (currentFactor == 0.1 && inOrOut.equals("Out")) {
+            return;
+        } else if (currentFactor == 10.0 && inOrOut.equals("In")) {
+            return;
+        }
+        int i;
+        if (inOrOut.equals("In")) {
+            // once the loop ends, we have the index of a factor that is greater than the current one
+            i = 0;
+            while (i < zoomOptions.length && zoomOptions[i] <= currentFactor) {
+                i++;
+            }
+            // if we zoom in we can then plug this factor right into our zoomToFactor function
+        } else {
+            i = zoomOptions.length - 1;
+            while (i >= 0 && zoomOptions[i] >= currentFactor) {
+                i--;
+            }
+            // once the loop ends, we have the index of a factor that is less than the current one
+            // if we zoom out we can then plug this factor right into our zoomToFactor function
+        }
+        this.zoomToFactor(zoomOptions[i]);
+    }
+
+    public void jumpToPoint(double x, double y) {
+        double translateX = x - getLayoutX();
+        double translateY = y - getLayoutY();
+        mediaLayer.setTranslateX(translateX);
+        mediaLayer.setLayoutX(x);
+        mediaLayer.setTranslateY(translateY);
+        mediaLayer.setLayoutY(y);
+    }
+
+    private class ScrollHandler implements EventHandler<ScrollEvent> {
+        @Override
+        public void handle(ScrollEvent scrollEvent) {
+            if (scrollEvent.isControlDown()) {
+                // zooming
+                zoomHandle(scrollEvent);
+                scrollEvent.consume();
+            } else if (scrollEvent.isShiftDown()) {
+                // scrolling horizontally
+                scrollHorizontallyHandle(scrollEvent);
+                scrollEvent.consume();
+            } else {
+                // scrolling vertically
+                scrollVerticallyHandle(scrollEvent);
+                scrollEvent.consume();
+            }
+        }
+        private void zoomHandle(ScrollEvent scrollEvent) {
+            if (scrollEvent.getDeltaY() < 0) {
+                // zooming out
+                if (scaleFactor == 0.1) {
+                    scrollEvent.consume();
+                    return;
+                }
+                zoomInOrOut("Out");
+            } else {
+                // zooming in
+                if (scaleFactor == 10.0) {
+                    scrollEvent.consume();
+                    return;
+                }
+                zoomInOrOut("In");
+            }
+        }
+        private void scrollVerticallyHandle(ScrollEvent scrollEvent) {
+            if (scrollEvent.getDeltaY() < 0) {
+                // scroll down, translate up
+                mediaLayer.setTranslateY(-50);
+                mediaLayer.setLayoutY(mediaLayer.getLayoutY()-50);
+            } else if (scrollEvent.getDeltaY() > 0) {
+                // scroll up, translate down
+                mediaLayer.setTranslateY(50);
+                mediaLayer.setLayoutY(mediaLayer.getLayoutY()+50);
+            }
+        }
+
+
+
+        private void scrollHorizontallyHandle(ScrollEvent scrollEvent) {
+            if (scrollEvent.getDeltaX() < 0) {
+                // scroll left, translate right
+                mediaLayer.setTranslateX(-50);
+                mediaLayer.setLayoutX(mediaLayer.getLayoutX() - 50);
+            } else if (scrollEvent.getDeltaX() > 0) {
+                // scroll left, translate right
+                mediaLayer.setTranslateX(50);
+                mediaLayer.setLayoutX(mediaLayer.getLayoutX() + 50);
             }
         }
     }

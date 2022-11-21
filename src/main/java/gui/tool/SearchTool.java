@@ -1,19 +1,17 @@
 package gui.tool;
 
 import app.controllers.SearchBarController;
-import app.controllers.ToolBarController;
-import gui.media.GUIMedia;
 import gui.page.Page;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
-import javafx.scene.input.MouseButton;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-
-import javafx.event.*;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+
+import java.util.ArrayList;
 
 public class SearchTool implements Tool{
 
@@ -45,26 +43,51 @@ public class SearchTool implements Tool{
     }
 
     class SearchSettings extends FlowPane{
+        private ArrayList<Double> xCoords;
+        private ArrayList<Double> yCoords;
+        private int currentIndex;
         public SearchSettings(){
-
+            // Creating the textfield for user input and button for searching
             Button searchButton = new Button("Search");
             String resultStatement = "Results Found:";
             Label results = new Label(resultStatement);
             TextField searchBar = new TextField();
 
+            Button findButton = new Button("Find");
+            findButton.setDisable(true);
 
+            // When the search button is pressed, the text within the textfield is searched by using the
+            // SearchBarController to call the searcher method
             searchButton.setOnAction(e->{
                 SearchBarController sb = new SearchBarController(page.getMedia(), searchBar);
                 results.setText(resultStatement + " " + sb.results);
-
+                if (sb.results != 0){
+                    findButton.setDisable(false);
+                    currentIndex = 0;
+                    xCoords = sb.xPos;
+                    yCoords = sb.yPos;
+                }
             });
+
+            findButton.setOnAction(e->{
+                page.jumpToPoint(xCoords.get(currentIndex), yCoords.get(currentIndex));
+                //test
+                System.out.println(page.getMediaLayer().getLayoutX() + " " + page.getMediaLayer().getLayoutY());
+                System.out.println(xCoords.get(currentIndex) + " " + yCoords.get(currentIndex));
+                currentIndex += 1;
+                if (currentIndex == xCoords.size()){
+                    currentIndex = 0;
+                }
+            });
+
 
 
             int PADDING = 5;
 
-            HBox searching = new HBox(PADDING, new Label(""), searchBar, searchButton);
+            // Visually placing the searchbar, button and result statement
+            HBox searching = new HBox(PADDING, new Label(""), searchBar, searchButton, findButton);
             HBox searchResult = new HBox(PADDING, new Label(""), results);
-            HBox rows[] = new HBox[]{searching, searchResult};
+            HBox[] rows = new HBox[]{searching, searchResult};
 
             for (HBox row: rows) {
                 ((Label) row.getChildren().get(0)).setMinWidth(0);
@@ -73,6 +96,7 @@ public class SearchTool implements Tool{
                 row.setAlignment(Pos.CENTER_LEFT);
                 row.setPrefWidth(270);
             }
+            // Adds to the GUI
             getChildren().addAll(new VBox(PADDING, rows));
 
         }

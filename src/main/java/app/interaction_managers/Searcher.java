@@ -1,10 +1,7 @@
 package app.interaction_managers;
 
-import app.MediaCommunicator;
-import app.interaction_managers.InteractionManager;
 import app.media.Media;
 import app.media.MediaText;
-import javafx.scene.Node;
 import javafx.scene.control.TextField;
 
 import java.util.ArrayList;
