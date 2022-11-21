@@ -274,7 +274,7 @@ public class Page extends StackPane implements MediaObserver {
         }
     }
 
-//    public Pane getMediaLayer() {
-//        return mediaLayer;
-//    }
+    public Pane getMediaLayer() {
+        return mediaLayer;
+    }
 }

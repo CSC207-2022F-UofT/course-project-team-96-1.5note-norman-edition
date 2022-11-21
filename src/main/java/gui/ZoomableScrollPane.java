@@ -18,10 +18,10 @@ public class ZoomableScrollPane extends ScrollPane implements Zoomable {
 
     public ZoomableScrollPane(Page content) {
         page = content;
-//        toZoom = new Group(contents);
         setContent(page);
-        scale = new Scale(scaleFactor, scaleFactor, page.getWidth()/2, page.getHeight()/2);
-        page.getTransforms().add(scale);
+        scale = new Scale(scaleFactor, scaleFactor, page.getWidth()/2,
+                page.getHeight()/2);
+        page.getMediaLayer().getTransforms().add(scale);
 
 //        setViewportBounds(page.getVisibleBounds());
 
