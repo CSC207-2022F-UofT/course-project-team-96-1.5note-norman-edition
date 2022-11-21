@@ -1,11 +1,6 @@
 package app.media_managers;
 import app.MediaCommunicator;
-import app.MediaObserver;
-import app.media.Media;
 import app.media.MediaAudio;
-import gui.error_window.ErrorWindow;
-import gui.media.GUIAudio;
-import gui.page.Page;
 import javafx.util.Duration;
 import storage.FileLoaderWriter;
 import storage.Storage;
@@ -16,17 +11,19 @@ import java.util.HashMap;
 
 public class AudioModifier implements MediaManager {
     /**
-    * Manages creation/interactions on MediaAudio based on Menubars/Toolbars
-    * Instance Attributes:
-     * - timestamp: used to add a timestamp to an audio
-     * - audio: audio to be modified
-     * - page: The page where the audio exists/will exist on
+    * Manages creation/interactions on MediaAudio
+     * <p>
+     * Class stores instances of a MediaAudio to modify, the MediaCommunicator of the page it is on, and may store
+     * a Duration that should be added or removed from instance MediaAudio
     */
 
     private Duration timestamp;
     private MediaAudio audio;
     private MediaCommunicator communicator;
 
+    /** Allows the user to select an audio file to add to the page
+     * @throws Exception when user selected file fails to load
+     */
     @Override
     public void addMedia() throws Exception{
         //Loading raw audio data based on user selection
@@ -43,6 +40,13 @@ public class AudioModifier implements MediaManager {
             }
     }
 
+    /**
+     * Allowing timestamps to either be added or removed from referenced parameter audio
+     * <p>
+     * If this class' timestamp attribute already exist in the audio attribute, it is removed from audio. Otherwise,
+     * it is added
+     * @throws Exception when MediaCommunicator fails to update referenced audio
+     */
     @Override
     public void modifyMedia() throws Exception{
         //Either adds or removes timestamps from the audio

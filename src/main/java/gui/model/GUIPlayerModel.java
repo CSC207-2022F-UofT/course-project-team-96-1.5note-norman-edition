@@ -1,13 +1,14 @@
 package gui.model;
 import gui.media.GUIAudio;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
+
+/**
+ * Use case class that changes the view of a GUIAudio based on how the user interacts with it
+ * */
 public class GUIPlayerModel {
-    //Defines controls for changing the view of a GUIAudio
-    private GUIAudio associatedPlayer;
+    private final GUIAudio associatedPlayer;
     private Duration totalDuration;
 
     public GUIPlayerModel(GUIAudio associatedPlayer, Duration totalDuration)    {
@@ -15,8 +16,13 @@ public class GUIPlayerModel {
         this.totalDuration = totalDuration;
     }
 
+    /** Defines what occurs when the play button is pressed.
+     * <p>
+     * If the button currently reads "Play", then it will play the associated player. If it reads "Pause", it will pause
+     * the associated player
+     * @param currentText the current text on the GUIAudio play button
+     */
     public void firedPlayButton(String currentText)   {
-        //Defines what occurs when the play button is pressed
         if (currentText.equals("Play"))  {
             //Checking if the player is at the end of the audio
             if(associatedPlayer.getCurrentDuration().equals(totalDuration)) {
@@ -40,10 +46,15 @@ public class GUIPlayerModel {
         associatedPlayer.setPlayerVolume(value);
     }
 
+    /** Adjusts where the associated GUIAudio will play from when the user interacts with the playback slider
+     * <p>
+     * Precondition: 0 <= value <= 1
+     * @param value what % of the full duration of associated audio to play from
+     * @param mediaStatus current status of the associated GUIAudio
+     */
     public void playbackSliderAdjusted(double value, MediaPlayer.Status mediaStatus)    {
-        //Defines what occurs when the playback slider is pressed by the user
-        //Precondition: 0 <= value <= 1
         Duration newTime = new Duration(value * totalDuration.toMillis());
+        System.out.println(newTime);
         //When status is ready, the audio player currentTime property does not update until the player plays
         if (mediaStatus == MediaPlayer.Status.READY)  {
             updatePlaybackText(newTime);
@@ -60,6 +71,10 @@ public class GUIPlayerModel {
         associatedPlayer.setPlaybackText(formatTime(newDuration));
     }
 
+    /** Formats a duration into a more readable time format
+     * @param time Duration value to convert to a time format
+     * @return A time format of Duration parameter time
+     */
     public String formatTime(Duration time) {
         //Formats a duration into a readable format
         int seconds = (int) time.toSeconds() % 60;

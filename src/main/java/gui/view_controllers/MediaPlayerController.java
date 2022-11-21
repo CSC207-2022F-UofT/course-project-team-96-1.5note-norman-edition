@@ -5,9 +5,11 @@ import gui.model.GUIPlayerModel;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
+/**
+ * Defines controls for different elements of a GUIAudio
+ */
 public class MediaPlayerController {
-    //Controller for Playable GUIMedia types
-    private GUIPlayerModel associatedModel;
+    private final GUIPlayerModel associatedModel;
 
     public MediaPlayerController(GUIAudio associatedPlayer, Duration totalDuration)  {
         this.associatedModel = new GUIPlayerModel(associatedPlayer, totalDuration);
