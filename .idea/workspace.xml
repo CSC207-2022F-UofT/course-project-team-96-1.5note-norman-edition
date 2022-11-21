@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="282823d0-2796-4ddb-8ba2-3377c34b9835" name="Changes" comment="revised code such that the hyperlinkbox media class is obsolete; added a constructor to the TextBox class to create text objects with links">
+    <list default="true" id="282823d0-2796-4ddb-8ba2-3377c34b9835" name="Changes" comment="link validation and alert message">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/media/HyperlinkBox.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/media/TextBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/media/TextBox.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gui/media/GUIHyperlinkBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/media/GUIHyperlinkBox.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gui/media/GUITextBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/media/GUITextBox.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gui/tool/HyperlinkTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/tool/HyperlinkTool.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -78,7 +77,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "last_opened_file_path": "/home/dexter/Documents/projects/p",
-    "project.structure.last.edited": "Project",
+    "project.structure.last.edited": "SDKs",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle"
@@ -175,7 +174,14 @@
       <option name="project" value="LOCAL" />
       <updated>1668728015855</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="creating and interacting with links works now">
+      <created>1669013649200</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1669013649200</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -192,6 +198,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="link insertion; added the associated hyperlink classes to the GUI, Tool, and media folder" />
     <MESSAGE value="revised code such that the hyperlinkbox media class is obsolete; added a constructor to the TextBox class to create text objects with links" />
-    <option name="LAST_COMMIT_MESSAGE" value="revised code such that the hyperlinkbox media class is obsolete; added a constructor to the TextBox class to create text objects with links" />
+    <MESSAGE value="creating and interacting with links works now" />
+    <MESSAGE value="link validation and alert message" />
+    <option name="LAST_COMMIT_MESSAGE" value="link validation and alert message" />
   </component>
 </project>
