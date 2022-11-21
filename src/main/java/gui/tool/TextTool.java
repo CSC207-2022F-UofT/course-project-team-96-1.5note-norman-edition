@@ -89,15 +89,6 @@ public class TextTool implements Tool {
         }
     }
 
-    private void updateEdit(KeyEvent e) {
-        if (e.getEventType() == KeyEvent.ANY) {
-            e.consume();
-
-            currentText.update(settings.getText());
-            page.updateMedia(currentText);
-        }
-    }
-
     private void finishEdit() {
         if (currentText != null) {
             currentText.end();

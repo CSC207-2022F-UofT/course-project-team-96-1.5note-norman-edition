@@ -42,7 +42,6 @@ public class GUITextBox extends GUIMedia<TextBox> {
         setInitialValues();
         setMedia(newText);
         setText(newText.getText());
-        System.out.println(newText.getText());
     }
 
     private void setText(String textIn) {
