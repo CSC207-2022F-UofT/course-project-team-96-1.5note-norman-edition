@@ -4,13 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="282823d0-2796-4ddb-8ba2-3377c34b9835" name="Changes" comment="link insertion; added the associated hyperlink classes to the GUI, Tool, and media folder">
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/media/HyperlinkBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/media/HyperlinkBox.java" afterDir="false" />
+    <list default="true" id="282823d0-2796-4ddb-8ba2-3377c34b9835" name="Changes" comment="revised code such that the hyperlinkbox media class is obsolete; added a constructor to the TextBox class to create text objects with links">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/media/HyperlinkBox.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/media/TextBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/media/TextBox.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gui/media/GUIHyperlinkBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/media/GUIHyperlinkBox.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gui/media/GUITextBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/media/GUITextBox.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gui/tool/HyperlinkTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/tool/HyperlinkTool.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gui/tool/TextTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/tool/TextTool.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -169,7 +168,14 @@
       <option name="project" value="LOCAL" />
       <updated>1668690646837</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="revised code such that the hyperlinkbox media class is obsolete; added a constructor to the TextBox class to create text objects with links">
+      <created>1668728015855</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1668728015855</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -185,6 +191,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="link insertion; added the associated hyperlink classes to the GUI, Tool, and media folder" />
-    <option name="LAST_COMMIT_MESSAGE" value="link insertion; added the associated hyperlink classes to the GUI, Tool, and media folder" />
+    <MESSAGE value="revised code such that the hyperlinkbox media class is obsolete; added a constructor to the TextBox class to create text objects with links" />
+    <option name="LAST_COMMIT_MESSAGE" value="revised code such that the hyperlinkbox media class is obsolete; added a constructor to the TextBox class to create text objects with links" />
   </component>
 </project>

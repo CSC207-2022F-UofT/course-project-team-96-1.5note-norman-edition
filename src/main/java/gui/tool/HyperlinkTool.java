@@ -4,6 +4,8 @@ import gui.page.Page;
 import javafx.collections.ObservableList;
 import javafx.event.EventTarget;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.input.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -12,6 +14,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 
 import gui.media.GUIHyperlinkBox;
+import javafx.stage.Stage;
+
+import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 
 public class HyperlinkTool implements Tool {
@@ -25,7 +33,7 @@ public class HyperlinkTool implements Tool {
 
     public HyperlinkTool() {
         HandlerMethod[] handlers = {
-                new HandlerMethod<>(MouseEvent.MOUSE_CLICKED, this::makeHyperlink)//,
+                new HandlerMethod<>(MouseEvent.MOUSE_CLICKED, this::interact)//,
                 //new HandlerMethod<>(KeyEvent.KEY_PRESSED, this::updateEdit),
                 //new HandlerMethod<>(MouseEvent.MOUSE_EXITED_TARGET, this::endEdit)
 
@@ -53,31 +61,80 @@ public class HyperlinkTool implements Tool {
     @Override
     public FlowPane getSettingsGUI() { return settings; }
 
-    public void makeHyperlink(MouseEvent e) {
+    public void interact(MouseEvent e) {
         if (e.getButton() == MouseButton.PRIMARY) {
+            e.consume();
+
+            makeHyperlink(e);
+
+        } else if (e.getButton() == MouseButton.SECONDARY) {
+            clickLink(e);
+        }
+    }
+
+    public void clickLink (MouseEvent e) {
+        if (e.getButton() == MouseButton.SECONDARY) {
+            System.out.print("clicked link");
+
             e.consume();
 
             EventTarget pick = e.getTarget();
 
-            /*if (pick instanceof GUIHyperlinkBox) {
-                settings.setText(((GUIHyperlinkBox) pick).getText());
-                ((GUIHyperlinkBox) pick).update(settings.getText());
+            if (pick instanceof GUIHyperlinkBox) {
+                try {
+                    GUIHyperlinkBox castpick = (GUIHyperlinkBox) pick; //casting to use the methods of GUIHyperlinkbox
+                    String clicked = castpick.getLink();
+                    System.out.println(clicked);
+
+                    //if (clicked )
+                    URI url = new URI(clicked);
+                    Desktop.getDesktop().browse(url);
+                }
+                catch (Exception l){
+                    System.out.println("invalid link");
+                }
             }
-            // Create new TextBox in empty space
-            */
-                currentText = new GUIHyperlinkBox(
-                        page.getMouseCoords(e),
-                        settings.getText(), settings.getLink()
-                );
-
-                //currentText.getText().setFill(c);
-                page.addMedia(currentText);
-
-
 
         }
-
     }
+    public void makeHyperlink(MouseEvent e){
+       /* if (e.getButton() == MouseButton.PRIMARY) {
+            e.consume();*/
+
+        EventTarget pick = e.getTarget();
+
+
+        // editing text and hyperlink doin funny stuff; TODO fix
+/*        if (pick instanceof GUIHyperlinkBox) {
+            GUIHyperlinkBox castpick = (GUIHyperlinkBox) pick; //casting to use the methods of GUIHyperlinkbox
+
+            settings.setText(castpick.getText()); // retrieve the text from the page and putting it in the tools box
+            settings.setText(castpick.getLink()); //retrieve link from page
+            //System.out.println(castpick.getText() + castpick.getLink());
+
+
+            // castpick.updateHyperLink(settings.getText(), settings.getLink()); // update text on the page
+            // why does this do weird things with the updating
+            //this.currentText = castpick;
+            //page.updateMedia();
+
+            // Create new TextBox in empty space
+        }*/
+        //else{
+            currentText = new GUIHyperlinkBox(
+                    page.getMouseCoords(e),
+                    settings.getText(), settings.getLink()
+            );
+
+            //currentText.getText().setFill(c);
+            page.addMedia(currentText);
+            // }
+            // }
+
+
+       // }
+    }
+
     private void finishEdit(){
         if (currentText != null){
             currentText.end();
@@ -104,12 +161,13 @@ class HyperlinkSettings extends FlowPane{
 
 
         getChildren().addAll(hyperlinkSettings);
-        System.out.println(getLink());
-
     }
 
-    // getText and getTextBox methods fine
+
     public String getText() { return textBox.getText(); }
+    public void setText(String textIn) {this.textBox.setText(textIn);}
     public String getLink() {return linkBox.getText();}
+
+    public void setLink(String givenLink) {this.linkBox.setText(givenLink);} // setText from TextArea class
     public TextArea getTextBox() { return this.textBox; }
 }

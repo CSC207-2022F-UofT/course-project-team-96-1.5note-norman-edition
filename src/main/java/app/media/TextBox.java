@@ -1,9 +1,13 @@
 package app.media;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.scene.paint.Color;
+
 public class TextBox extends Media {
 
     private String text;
     private String link = null;
+    private Color c;
 
     public TextBox(double x, double y, String text) {
         super("text-box", x, y, 0, 0);
@@ -19,7 +23,7 @@ public class TextBox extends Media {
         super("text-box", x, y, 0, 0);
         this.text = text;
         this.link = link;
-        System.out.println(this.link);
+        this.c = Color.BLUE;
     }
 
     public void setText(String text) {
