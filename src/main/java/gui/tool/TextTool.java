@@ -12,7 +12,6 @@ import javafx.scene.text.*;
 import gui.page.Page;
 import gui.media.GUITextBox;
 
-
 public class TextTool implements Tool {
 
     private HandlerMethod[] handlers;
@@ -31,8 +30,6 @@ public class TextTool implements Tool {
         this.colour = colour;
         settings = new TextSettings();
     }
-
-
     @Override
     public String getName() { return "Text"; }
 
@@ -97,8 +94,6 @@ public class TextTool implements Tool {
             currentText = null;
         }
     }
-
-
 }
 
 class TextSettings extends FlowPane {

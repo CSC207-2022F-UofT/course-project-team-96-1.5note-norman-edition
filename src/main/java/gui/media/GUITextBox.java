@@ -2,14 +2,10 @@ package gui.media;
 
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
-import javafx.scene.input.*;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
 import javafx.geometry.*;
 
 import app.media.TextBox;
 import app.media.Media;
-
 
 public class GUITextBox extends GUIMedia<TextBox> {
 
@@ -58,6 +54,7 @@ public class GUITextBox extends GUIMedia<TextBox> {
         if (getMedia().getText().equals(this.text.getText())) {
             getMedia().setText(this.text.getText());
         }
+
     }
 
 }

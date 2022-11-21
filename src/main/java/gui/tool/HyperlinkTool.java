@@ -94,6 +94,8 @@ public class HyperlinkTool implements Tool {
         if (settings.checkLink(settings.getLink())) {
             page.addMedia(currentText);
             page.updateMedia(currentText);
+/*            settings.setLink("");
+            settings.setText("");*/
         }
         // alert message if link isn't valid
         else {
@@ -108,7 +110,6 @@ public class HyperlinkTool implements Tool {
         if (currentText != null){
             currentText.end();
             page.updateMedia(currentText);
-            currentText = null;
         }
     }
 
