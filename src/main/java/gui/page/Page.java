@@ -65,7 +65,7 @@ public class Page extends StackPane implements MediaObserver {
     }
 
     /**
-     * Return the MediaCommunicator used by this Page.
+     * Return the MediaCommunicator used by this app.media.Page.
      */
     public MediaCommunicator getCommunicator() {
         return c;
@@ -116,12 +116,7 @@ public class Page extends StackPane implements MediaObserver {
      */
     public void updateMedia(GUIMedia media) {
         try {
-            if (media.getID() == Media.EMPTY_ID) {
-                media.getMedia().setID(c.getNewID());
-            }
-
-            contents.put(media.getID(), media);
-            c.updateMedia(media.getMedia());
+            c.updateMedia(media.getMedia(), id -> contents.put(id, media));
         } catch (Exception e) {
             new ErrorWindow(this, null, "Updating Media object failed.", e)
                 .show();
@@ -134,6 +129,18 @@ public class Page extends StackPane implements MediaObserver {
     public void removeMedia(GUIMedia media) {
         contents.remove(media.getID());
         mediaLayer.getChildren().remove(media);
+        media.removed();
+    }
+
+    /**
+     * Remove ALL GUIMedia objects from this page.
+     */
+    public void removeAllMedia() {
+        Set<GUIMedia> mediaToRemove = new HashSet<>(contents.values());
+
+        for (GUIMedia media: mediaToRemove) {
+            removeMedia(media);
+        }
     }
 
     /**

@@ -31,6 +31,9 @@ public class GUIMedia<M extends Media> extends Pane {
 
         // Don't block mouse clicks/other input
         setPickOnBounds(false);
+        // Don't use a managed layout, i.e. stop the page in which the GUIMedia
+        // is placed from influencing the layout bounds of the GUIMedia.
+        setManaged(false);
 
         width = new SimpleDoubleProperty();
         height = new SimpleDoubleProperty();
@@ -94,4 +97,14 @@ public class GUIMedia<M extends Media> extends Pane {
      * should properly represent the Media object which was passed in.
      */
     public void mediaUpdated(Media media) {}
+
+    /**
+     * This method is called when this GUIMedia object is "removed" and will
+     * no longer be displayed.
+     * <p>
+     * Implementations of this method can specify the procedure to "clean up"
+     * any resources used by an instance of GUIMedia when it is no longer
+     * visible.
+     */
+    public void removed() {}
 }

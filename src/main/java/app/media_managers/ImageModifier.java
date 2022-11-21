@@ -1,10 +1,7 @@
-public class ImageModifier implements MediaManager{
+package app.media_managers;
+
+public class ImageModifier implements MediaManager {
     private String caption;
-
-    public void createObject() {
-
-    }
-
     @Override
     public void addMedia() {
 
