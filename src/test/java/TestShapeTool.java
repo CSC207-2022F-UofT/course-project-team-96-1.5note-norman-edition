@@ -10,10 +10,7 @@ import gui.tool.ShapeTool;
 import gui.tool.ShapeType;
 import javafx.application.Platform;
 import javafx.geometry.Point2D;
-import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import org.junit.*;
 import static org.junit.Assert.*;
 import storage.SQLiteStorage;
@@ -28,7 +25,11 @@ public class TestShapeTool {
     static void initJfxRuntime() {
         // Necessary in order to run JavaFX in a JUnit test
         if (!init) {
-            Platform.startup(() -> {});
+            System.out.println("Init JFX");
+            Platform.startup(() ->
+            {
+                // This block will be executed on JavaFX Thread
+            });
             init = true;
         }
     }
@@ -115,6 +116,7 @@ public class TestShapeTool {
         initJfxRuntime();
 
         // Initialize relevant tools and classes to support them
+
         SQLiteStorage sqls = new SQLiteStorage(null);
         MediaCommunicator mc = new MediaCommunicator(sqls);
         Page page = new Page(mc);
@@ -129,20 +131,13 @@ public class TestShapeTool {
         st.startShape(p1, p2, color, ShapeType.ELLIPSE);
         GUIShape guishape = st.getCurrentShape();
 
-        Stage primaryStage = new Stage();
-        primaryStage.setTitle("Hello World!");
-        StackPane root = new StackPane();
-        root.getChildren().add(page);
-        primaryStage.setScene(new Scene(root, 300, 250));
-        primaryStage.show();
-
         double x = guishape.getMedia().getX();
         double y = guishape.getMedia().getY();
         double w = guishape.getMedia().getWidth();
         double h = guishape.getMedia().getHeight();
 
-        assertEquals(0, x, TOLERANCE);
-        assertEquals(0, y, TOLERANCE);
+        assertEquals(100, x, TOLERANCE);
+        assertEquals(50, y, TOLERANCE);
         assertEquals(200, w, TOLERANCE);
         assertEquals(100, h, TOLERANCE);
     }
