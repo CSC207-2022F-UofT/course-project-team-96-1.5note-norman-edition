@@ -6,10 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="ea57fb3c-8b45-48bb-954d-8b968e498d39" name="Changes" comment="- Add `testGUIPolygonShapeCreation` test to `TestShapeTool.java`&#10;- Add/update comment usage throughout GUI/Media files related to shapes&#10;- Modify positional code for rectangle so the position is now the center">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gui/media/GUIEllipse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/media/GUIEllipse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gui/media/GUIMedia.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/media/GUIMedia.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gui/media/GUIPolygon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/media/GUIPolygon.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gui/media/GUIRectangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/media/GUIRectangle.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/TestShapeTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/TestShapeTool.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -193,10 +190,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.TestShapeTool" />
+        <item itemvalue="Gradle.TestShapeTool.testGUIEllipseShapeCreation" />
         <item itemvalue="Gradle.TestShapeTool.testGUIRectangleShapeCreation" />
         <item itemvalue="Gradle.TestShapeTool.testShapeCreationFromTool" />
         <item itemvalue="Gradle.TestShapeTool.testGUIPolygonShapeCreation" />
-        <item itemvalue="Gradle.TestShapeTool.testGUIEllipseShapeCreation" />
       </list>
     </recent_temporary>
   </component>
@@ -219,7 +216,7 @@
       <workItem from="1668791436123" duration="13645000" />
       <workItem from="1668884655155" duration="32135000" />
       <workItem from="1668987555104" duration="3571000" />
-      <workItem from="1669050385423" duration="4460000" />
+      <workItem from="1669050385423" duration="5148000" />
     </task>
     <task id="LOCAL-00001" summary="Add ShapeTool, GUIShape, Shape classes">
       <created>1668411649988</created>
@@ -263,7 +260,14 @@
       <option name="project" value="LOCAL" />
       <updated>1668949168182</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="- Add `testGUIPolygonShapeCreation` test to `TestShapeTool.java`&#10;- Add/update comment usage throughout GUI/Media files related to shapes&#10;- Modify positional code for rectangle so the position is now the center">
+      <created>1669054968810</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1669054968811</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

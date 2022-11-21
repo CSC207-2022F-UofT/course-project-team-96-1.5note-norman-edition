@@ -77,15 +77,15 @@ public class TestShapeTool {
     public void testGUIEllipseShapeCreation() {
         // Test initialization of a rectangle with the proper position and dimensions
         Point2D p1 = new Point2D(0,0);
-        Point2D p2 = new Point2D(200,100);
+        Point2D p2 = new Point2D(-100,-200);
         Color color = Color.RED;
         GUIShape ellipse = new GUIEllipse(p1, p2, color);
 
         // Pseudo simulation of mouse being dragged
-        ellipse.update(randomPoint(-100, -100, 100, 100), randomPoint(-100, -100, 100, 100), false);
+        ellipse.update(randomPoint(-300, -300, 300, 300), randomPoint(-300, -300, 300, 300), false);
         ellipse.update(p1, p2, false);
 
-        testBounds(ellipse,100, 50, 200, 100);
+        testBounds(ellipse,-50, -100, 100, 200);
     }
 
     @Test
