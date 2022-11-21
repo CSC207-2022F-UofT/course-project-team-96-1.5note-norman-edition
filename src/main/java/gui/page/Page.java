@@ -21,8 +21,8 @@ import gui.media.GUIMedia;
 import gui.media.GUIMediaFactory;
 import gui.error_window.ErrorWindow;
 
-// , gui.page.Zoomable
-public class Page extends StackPane implements MediaObserver, Zoomable {
+// , gui.Zoomable
+public class Page extends StackPane implements MediaObserver {
 
     // Additional padding added to the visible region
     private static double VISIBLE_BOUNDS_MARGIN = 100;
@@ -274,46 +274,7 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
         }
     }
 
-    /** Given a factor to scale the Page (from 0-1), scale in all directions by that factor. also scale the Media
-     * on the Page
-     */
-    public void zoomToFactor(double factor) {
-        this.setScaleX(factor);
-        this.setScaleY(factor);
-        this.setScaleZ(factor);
-    }
-
-    public void zoomInOrOut(String inOrOut){
-        double[] zoomOptions = {0.1, 0.25, 1.0/3.0, 0.5, 2.0/3.0, 0.75, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0,
-                9.0, 10.0};
-        double currentFactor = this.getScaleX();
-        if (currentFactor == 0.1 && inOrOut.equals("Out")) {
-            return;
-        } else if (currentFactor == 10.0 && inOrOut.equals("In")) {
-            return;
-        }
-        int i = 0;
-        while (i < zoomOptions.length && zoomOptions[i] <= currentFactor) {
-            i++;
-        }
-        // once the loop ends, we have the index of a factor that is greater than the current one
-        if (inOrOut.equals("In")) {
-            this.zoomToFactor(zoomOptions[i]);
-            // if we zoom in we can then plug this factor right into our zoomToFactor function
-        } else {
-            // if we are zooming out, check if the previous is smaller, and if not go back one
-            // could also just use another while loop indexing backwards
-            if (zoomOptions[i - 1] < currentFactor) {
-                this.zoomToFactor(zoomOptions[i - 1]);
-            } else {
-                this.zoomToFactor(zoomOptions[i - 2]);
-            }
-        }
-    }
-
-//    /** Reset zoom to original size */ (not needed anymore)
-//    public void resetZoom() {
-//        zoomToFactor(1.0);
+//    public Pane getMediaLayer() {
+//        return mediaLayer;
 //    }
-
 }

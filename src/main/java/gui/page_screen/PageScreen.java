@@ -1,5 +1,6 @@
 package gui.page_screen;
 
+import javafx.geometry.Orientation;
 import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
@@ -14,6 +15,7 @@ import gui.tool.ToolFactory;
 import gui.tool.Tool;
 
 import app.MediaCommunicator;
+import gui.ZoomableScrollPane;
 
 
 /**
@@ -28,6 +30,7 @@ public class PageScreen extends VBox {
     private Toolbar toolBar;
     private ToolPane toolPane;
     private Page page;
+    private ScrollPane zoomableScrollPane;
 
     public PageScreen(MediaCommunicator c) {
         tools = ToolFactory.getTools();
@@ -43,7 +46,6 @@ public class PageScreen extends VBox {
 
         getChildren().add(layers);
 
-
         toolPane = new ToolPane(toolBar.selectedTool());
         addLayer(toolPane);
     }
@@ -55,7 +57,7 @@ public class PageScreen extends VBox {
     public void newPage(MediaCommunicator c) {
         if (page != null) {
             page.setEventHandler(null);
-            layers.getChildren().remove(page);
+            layers.getChildren().remove(zoomableScrollPane);
         }
 
         page = new Page(c);
@@ -65,11 +67,17 @@ public class PageScreen extends VBox {
             // page.
             page.setEventHandler(newVal);
         });
+        zoomableScrollPane = new ZoomableScrollPane(page);
+        zoomableScrollPane.setFitToHeight(true);
+        zoomableScrollPane.setFitToWidth(true);
+        zoomableScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        zoomableScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
 
-        layers.getChildren().add(0, page);
+        layers.getChildren().add(0, zoomableScrollPane);
     }
 
-    public Page getPage(){
-        return this.page;
-    }
+//    public Page getPage(){
+//        return this.page;
+//    }
+    public ScrollPane getZoomableScrollPane() {return zoomableScrollPane;}
 }
