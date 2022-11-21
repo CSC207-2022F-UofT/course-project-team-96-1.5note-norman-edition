@@ -346,11 +346,9 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
     }
 
     public void jumpToPoint(double x, double y) {
-        double translateX = x - getLayoutX();
-        double translateY = y - getLayoutY();
-        mediaLayer.setTranslateX(translateX);
-        mediaLayer.setTranslateY(translateY);
-        mediaLayer.relocate(x, y);
+        double translateX = x + getLayoutX();
+        double translateY = y + getLayoutY();
+        mediaLayer.relocate(translateX, translateY);
     }
 
     private class ScrollHandler implements EventHandler<ScrollEvent> {
