@@ -1,10 +1,11 @@
 package gui.page;
 
+import gui.Zoomable;
+import javafx.event.EventHandler;
 import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.transform.*;
 import javafx.scene.input.*;
-import javafx.beans.value.*;
 import javafx.geometry.*;
 
 import java.util.Arrays;
@@ -22,7 +23,7 @@ import gui.media.GUIMediaFactory;
 import gui.error_window.ErrorWindow;
 
 // , gui.Zoomable
-public class Page extends StackPane implements MediaObserver {
+public class Page extends StackPane implements MediaObserver, Zoomable {
 
     // Additional padding added to the visible region
     private static double VISIBLE_BOUNDS_MARGIN = 100;
@@ -35,6 +36,8 @@ public class Page extends StackPane implements MediaObserver {
     private Map<Long, GUIMedia> contents;
 
     private Bounds prevVisibleBounds;
+    private Scale scale;
+    private double scaleFactor = 1.0;
 
     public Page(MediaCommunicator c) {
         this.c = c;
@@ -52,6 +55,14 @@ public class Page extends StackPane implements MediaObserver {
 
         mediaLayer.boundsInParentProperty().addListener(o -> reloadMedia());
         layoutBoundsProperty().addListener(o -> reloadMedia());
+
+        scale = new Scale(scaleFactor, scaleFactor, getWidth()/2,
+                getHeight()/2);
+        mediaLayer.getTransforms().add(scale);
+
+//        setViewportBounds(page.getVisibleBounds());
+
+        setOnScroll(new Page.ZoomHandler());
 
     }
 
@@ -274,7 +285,88 @@ public class Page extends StackPane implements MediaObserver {
         }
     }
 
-    public Pane getMediaLayer() {
-        return mediaLayer;
+//    public Pane getMediaLayer() {
+//        return mediaLayer;
+//    }
+
+    public double getScaleFactor() {
+        return scaleFactor;
+    }
+
+    /** Given a factor to scale the Page, scale in x and y directions by that factor. no pivot
+     *
+     * @param factor the factor by which to scale toZoom, > 0
+     */
+    @Override
+    public void zoomToFactor(double factor) {
+        scaleFactor = factor;
+
+        scale.setPivotX(getWidth()/2);
+        scale.setPivotY(getHeight()/2);
+        scale.setX(scaleFactor);
+        scale.setY(scaleFactor);
+
+        reloadMedia();
+    }
+
+    /** Scale toZoom by jumping to the next smallest/largest (depending on the value of inOrOut) double in zoomOptions
+     *
+     * @param inOrOut "In" to zoom in, "Out" to zoom out
+     */
+    @Override
+    public void zoomInOrOut(String inOrOut){
+        double[] zoomOptions = {0.1, 0.25, 1.0/3.0, 0.5, 2.0/3.0, 0.75, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0,
+                9.0, 10.0};
+        double currentFactor = getScaleFactor();
+        if (currentFactor == 0.1 && inOrOut.equals("Out")) {
+            return;
+        } else if (currentFactor == 10.0 && inOrOut.equals("In")) {
+            return;
+        }
+        int i;
+        if (inOrOut.equals("In")) {
+            // once the loop ends, we have the index of a factor that is greater than the current one
+            i = 0;
+            while (i < zoomOptions.length && zoomOptions[i] <= currentFactor) {
+                i++;
+            }
+            // if we zoom in we can then plug this factor right into our zoomToFactor function
+        } else {
+            i = zoomOptions.length - 1;
+            while (i >= 0 && zoomOptions[i] >= currentFactor) {
+                i--;
+            }
+            // once the loop ends, we have the index of a factor that is less than the current one
+            // if we zoom out we can then plug this factor right into our zoomToFactor function
+        }
+        this.zoomToFactor(zoomOptions[i]);
+    }
+
+    private class ZoomHandler implements EventHandler<ScrollEvent> {
+
+        @Override
+        public void handle(ScrollEvent scrollEvent) {
+            if (scrollEvent.isControlDown())
+            {
+
+                if (scrollEvent.getDeltaY() < 0) {
+                    // zooming out
+                    if (scaleFactor == 0.1) {
+                        scrollEvent.consume();
+                        return;
+                    }
+                    zoomInOrOut("Out");
+                } else {
+                    // zooming in
+                    if (scaleFactor == 10.0) {
+                        scrollEvent.consume();
+                        return;
+                    }
+                    zoomInOrOut("In");
+                }
+
+                scrollEvent.consume();
+            }
+        }
     }
 }

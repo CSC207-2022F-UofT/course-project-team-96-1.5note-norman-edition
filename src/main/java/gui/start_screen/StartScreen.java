@@ -1,8 +1,8 @@
 package gui.start_screen;
 
-import gui.ZoomableScrollPane;
+import gui.Zoomable;
+import gui.page.Page;
 import javafx.scene.layout.*;
-import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.geometry.Insets;
 import javafx.stage.FileChooser;
@@ -201,13 +201,13 @@ public class StartScreen extends VBox {
     }
 
     private void zoomTo(double targetZoom) {
-        ZoomableScrollPane scrollPane = (ZoomableScrollPane) this.pageScreen.getZoomableScrollPane();
-        scrollPane.zoomToFactor(targetZoom);
+        Page page = pageScreen.getPage();
+        page.zoomToFactor(targetZoom);
     }
 
     private void zoomInOrOut(String inOrOut) {
-        ZoomableScrollPane scrollPane = (ZoomableScrollPane) this.pageScreen.getZoomableScrollPane();
-        scrollPane.zoomInOrOut(inOrOut);
+        Page page = pageScreen.getPage();
+        page.zoomInOrOut(inOrOut);
     }
 
     // Make the given MenuItems only usable when a page is open, i.e. when the

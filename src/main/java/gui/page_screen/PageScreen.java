@@ -15,7 +15,6 @@ import gui.tool.ToolFactory;
 import gui.tool.Tool;
 
 import app.MediaCommunicator;
-import gui.ZoomableScrollPane;
 
 
 /**
@@ -30,7 +29,7 @@ public class PageScreen extends VBox {
     private Toolbar toolBar;
     private ToolPane toolPane;
     private Page page;
-    private ScrollPane zoomableScrollPane;
+    private ScrollPane scrollPane;
 
     public PageScreen(MediaCommunicator c) {
         tools = ToolFactory.getTools();
@@ -57,7 +56,7 @@ public class PageScreen extends VBox {
     public void newPage(MediaCommunicator c) {
         if (page != null) {
             page.setEventHandler(null);
-            layers.getChildren().remove(zoomableScrollPane);
+            layers.getChildren().remove(scrollPane);
         }
 
         page = new Page(c);
@@ -67,17 +66,26 @@ public class PageScreen extends VBox {
             // page.
             page.setEventHandler(newVal);
         });
-        zoomableScrollPane = new ZoomableScrollPane(page);
-        zoomableScrollPane.setFitToHeight(true);
-        zoomableScrollPane.setFitToWidth(true);
-        zoomableScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
-        zoomableScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+//        zoomableScrollPane = new ZoomableScrollPane(page);
+//        zoomableScrollPane.setFitToHeight(true);
+//        zoomableScrollPane.setFitToWidth(true);
+//        zoomableScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+//        zoomableScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+//
+//        layers.getChildren().add(0, zoomableScrollPane);
 
-        layers.getChildren().add(0, zoomableScrollPane);
+        scrollPane = new ScrollPane(page);
+        scrollPane.setFitToHeight(true);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+
+        layers.getChildren().add(0, scrollPane);
     }
 
-//    public Page getPage(){
-//        return this.page;
-//    }
-    public ScrollPane getZoomableScrollPane() {return zoomableScrollPane;}
+    public Page getPage() {
+        return this.page;
+    }
 }
+//    public ScrollPane getScrollPane() {return scrollPane;}
+//}

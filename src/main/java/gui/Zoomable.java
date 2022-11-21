@@ -4,6 +4,7 @@ package gui;
 // TODO change this comment
 
 public interface Zoomable {
+
     default void zoomToFactor(double zoomFactor){}
 
     default void zoomInOrOut(String inOrOut){}
