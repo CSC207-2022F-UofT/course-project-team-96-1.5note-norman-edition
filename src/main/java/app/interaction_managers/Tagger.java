@@ -11,13 +11,17 @@ public class Tagger implements InteractionManager {
 
     }
     @Override
-    public void interact(javafx.scene.Node node) {
-        if (node instanceof TextField) {
-            this.tag = ((TextField) node).getText();
-        }
+    public void interact(TextField node) {
+        this.tag = node.getText();
+
     }
     public void addTag(Media media){
         media.getTags().add(tag);
 
     }
+
+    public void setTag(String toTag){
+        this.tag = toTag;
+    }
+
 }

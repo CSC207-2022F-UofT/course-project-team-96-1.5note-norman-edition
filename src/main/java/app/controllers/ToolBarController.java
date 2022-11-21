@@ -9,6 +9,7 @@ import app.media_managers.TextModifier;
 import gui.media.GUIMedia;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
+import javafx.scene.control.TextField;
 
 public class ToolBarController {
 
@@ -44,7 +45,7 @@ public class ToolBarController {
         selectionTool.useTwoPositions(point1, point2, shape);
     }
 
-    public void tag(Node node, GUIMedia<?> guiMedia)
+    public void tag(TextField node, GUIMedia<?> guiMedia)
     {
         Tagger tagger = new Tagger();
         tagger.interact(node);

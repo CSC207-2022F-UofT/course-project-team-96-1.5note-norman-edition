@@ -48,9 +48,8 @@ public class Searcher implements InteractionManager {
     }
 
     @Override
-    public void interact(Node node) {
-        if (node instanceof TextField) {
-            this.userSearch = ((TextField) node).getText();
-        }
+    public void interact(TextField node) {
+        this.userSearch = node.getText();
+
     }
 }
