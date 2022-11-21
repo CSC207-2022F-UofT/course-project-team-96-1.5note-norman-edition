@@ -5,6 +5,7 @@ import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.geometry.Pos;
+import javafx.geometry.BoundingBox;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class PageScreen extends VBox {
     private Toolbar toolBar;
     private ToolPane toolPane;
     private Page page;
-    private ScrollPane scrollPane;
+//    private ScrollPane scrollPane;
 
     public PageScreen(MediaCommunicator c) {
         tools = ToolFactory.getTools();
@@ -56,7 +57,7 @@ public class PageScreen extends VBox {
     public void newPage(MediaCommunicator c) {
         if (page != null) {
             page.setEventHandler(null);
-            layers.getChildren().remove(scrollPane);
+            layers.getChildren().remove(page);
         }
 
         page = new Page(c);
@@ -73,14 +74,15 @@ public class PageScreen extends VBox {
 //        zoomableScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
 //
 //        layers.getChildren().add(0, zoomableScrollPane);
+//        scrollPane = new ScrollPane(page);
+//        scrollPane.setFitToHeight(true);
+//        scrollPane.setFitToWidth(true);
+//        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+//        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+//        BoundingBox viewport = new BoundingBox(0, 0, page.getWidth(), page.getHeight());
+//        scrollPane.setViewportBounds(viewport);
 
-        scrollPane = new ScrollPane(page);
-        scrollPane.setFitToHeight(true);
-        scrollPane.setFitToWidth(true);
-        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
-        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
-
-        layers.getChildren().add(0, scrollPane);
+        layers.getChildren().add(0, page);
     }
 
     public Page getPage() {

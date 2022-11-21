@@ -60,9 +60,7 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
                 getHeight()/2);
         mediaLayer.getTransforms().add(scale);
 
-//        setViewportBounds(page.getVisibleBounds());
-
-        setOnScroll(new Page.ZoomHandler());
+        setOnScroll(new Page.ScrollHandler());
 
     }
 
@@ -285,9 +283,11 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
         }
     }
 
-//    public Pane getMediaLayer() {
-//        return mediaLayer;
-//    }
+    public Pane getMediaLayer() {
+        return mediaLayer;
+    }
+
+    //TODO zoom page or group
 
     public double getScaleFactor() {
         return scaleFactor;
@@ -342,31 +342,72 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
         this.zoomToFactor(zoomOptions[i]);
     }
 
-    private class ZoomHandler implements EventHandler<ScrollEvent> {
+    public void jumpToPoint(double x, double y) {
+        double translateX = x - getLayoutX();
+        double translateY = y - getLayoutY();
+        mediaLayer.setTranslateX(translateX);
+        mediaLayer.setLayoutX(x);
+        mediaLayer.setTranslateY(translateY);
+        mediaLayer.setLayoutY(y);
+    }
 
+    private class ScrollHandler implements EventHandler<ScrollEvent> {
         @Override
         public void handle(ScrollEvent scrollEvent) {
-            if (scrollEvent.isControlDown())
-            {
-
-                if (scrollEvent.getDeltaY() < 0) {
-                    // zooming out
-                    if (scaleFactor == 0.1) {
-                        scrollEvent.consume();
-                        return;
-                    }
-                    zoomInOrOut("Out");
-                } else {
-                    // zooming in
-                    if (scaleFactor == 10.0) {
-                        scrollEvent.consume();
-                        return;
-                    }
-                    zoomInOrOut("In");
-                }
-
+            if (scrollEvent.isControlDown()) {
+                // zooming
+                zoomHandle(scrollEvent);
                 scrollEvent.consume();
+            } else if (scrollEvent.isShiftDown()) {
+                // scrolling horizontally
+                scrollHorizontallyHandle(scrollEvent);
+                scrollEvent.consume();
+            } else {
+                // scrolling vertically
+                scrollVerticallyHandle(scrollEvent);
+                scrollEvent.consume();
+            }
+        }
+        private void zoomHandle(ScrollEvent scrollEvent) {
+            if (scrollEvent.getDeltaY() < 0) {
+                // zooming out
+                if (scaleFactor == 0.1) {
+                    scrollEvent.consume();
+                    return;
+                }
+                zoomInOrOut("Out");
+            } else {
+                // zooming in
+                if (scaleFactor == 10.0) {
+                    scrollEvent.consume();
+                    return;
+                }
+                zoomInOrOut("In");
+            }
+        }
+        private void scrollVerticallyHandle(ScrollEvent scrollEvent) {
+            if (scrollEvent.getDeltaY() < 0) {
+                // scroll down, translate up
+                mediaLayer.setTranslateY(-50);
+                mediaLayer.setLayoutY(mediaLayer.getLayoutY()-50);
+            } else if (scrollEvent.getDeltaY() > 0) {
+                // scroll up, translate down
+                mediaLayer.setTranslateY(50);
+                mediaLayer.setLayoutY(mediaLayer.getLayoutY()+50);
+            }
+        }
+
+        private void scrollHorizontallyHandle(ScrollEvent scrollEvent) {
+            if (scrollEvent.getDeltaX() < 0) {
+                // scroll left, translate right
+                mediaLayer.setTranslateX(-50);
+                mediaLayer.setLayoutX(mediaLayer.getLayoutX() - 50);
+            } else if (scrollEvent.getDeltaX() > 0) {
+                // scroll left, translate right
+                mediaLayer.setTranslateX(50);
+                mediaLayer.setLayoutX(mediaLayer.getLayoutX() + 50);
             }
         }
     }
 }
+

@@ -1,6 +1,5 @@
 package gui.start_screen;
 
-import gui.Zoomable;
 import gui.page.Page;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
@@ -27,7 +26,7 @@ public class StartScreen extends VBox {
     private SwapPane parent;
     private MenuBar menuBar;
     private Menu pageMenu;
-    private Menu zoomMenu;
+    private Menu viewMenu;
     private Button newPageButton;
     private Button loadPageButton;
     private PageScreen pageScreen;
@@ -42,9 +41,9 @@ public class StartScreen extends VBox {
         loadPageButton = new LoadPageButton();
 
         pageMenu = new Menu("Page");
-        zoomMenu = new Menu("Zoom");
+        viewMenu = new Menu("View");
         menuBar.getMenus().add(pageMenu);
-        menuBar.getMenus().add(zoomMenu);
+        menuBar.getMenus().add(viewMenu);
 
         // page menu
         MenuItem newPageItem = new MenuItem("New");
@@ -58,6 +57,7 @@ public class StartScreen extends VBox {
         MenuItem zoomInItem = new MenuItem("Zoom In");
         MenuItem zoomOutItem = new MenuItem("Zoom Out");
         MenuItem resetItem = new MenuItem("Reset Zoom");
+        MenuItem centerItem = new MenuItem("Center Page");
 
         //drop down menu options
         MenuItem zoomPercent25 = new MenuItem("25%");
@@ -91,6 +91,7 @@ public class StartScreen extends VBox {
         zoomInItem.setOnAction(e -> zoomInOrOut("In"));
         zoomOutItem.setOnAction(e -> zoomInOrOut("Out"));
         resetItem.setOnAction(e -> zoomTo(1.0));
+        centerItem.setOnAction(e -> centerPage());
 
         HBox pageButtonsRow = new HBox(
                 PADDING, newPageButton, loadPageButton);
@@ -101,8 +102,8 @@ public class StartScreen extends VBox {
                 savePageItem, savePageAsItem);
         setPageOnlyMenuItems(closePageItem, savePageItem, savePageAsItem, zoomToSubMenu, zoomInItem, zoomOutItem,
                 resetItem);
-        setPageOnlyMenu(zoomMenu);
-        zoomMenu.getItems().addAll(zoomToSubMenu, zoomInItem, zoomOutItem, resetItem);
+        setPageOnlyMenu(viewMenu);
+        viewMenu.getItems().addAll(zoomToSubMenu, zoomInItem, zoomOutItem, resetItem, centerItem);
 
         getChildren().add(pageButtonsRow);
         getChildren().add(new Separator());
@@ -200,6 +201,7 @@ public class StartScreen extends VBox {
         }
     }
 
+    //TODO zoom page or group
     private void zoomTo(double targetZoom) {
         Page page = pageScreen.getPage();
         page.zoomToFactor(targetZoom);
@@ -208,6 +210,11 @@ public class StartScreen extends VBox {
     private void zoomInOrOut(String inOrOut) {
         Page page = pageScreen.getPage();
         page.zoomInOrOut(inOrOut);
+    }
+
+    private void centerPage() {
+        Page page = pageScreen.getPage();
+        page.jumpToPoint(0, 0);
     }
 
     // Make the given MenuItems only usable when a page is open, i.e. when the
