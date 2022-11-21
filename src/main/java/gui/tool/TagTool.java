@@ -17,6 +17,7 @@ public class TagTool implements Tool{
     private final TagSettings settings;
     private final HandlerMethod<?>[] handlers;
     public Button tagButton = new Button("Tag");
+    public GUIMedia<?> media;
     public TagTool(){
         settings = new TagSettings();
         this.handlers = new HandlerMethod<?>[]{new HandlerMethod<>(MouseEvent.MOUSE_CLICKED, this::getMedia)};
@@ -41,29 +42,29 @@ public class TagTool implements Tool{
             e.consume();
             EventTarget clicked = e.getTarget();
             if (clicked instanceof GUIMedia) {
+                media = (GUIMedia<?>) clicked;
                 tagButton.setDisable(false);
+            }
+            else{
+                tagButton.setDisable(true);
             }
         }
     }
 
     class TagSettings extends FlowPane{
-        private GUIMedia<?> media;
         public TagSettings(){
 
             TextField createTag = new TextField();
             tagButton.setDisable(true);
 
-            tagButton.setOnMouseClicked(event -> {
-                    if(event.getButton() == MouseButton.PRIMARY){
-                        if(event.getTarget() instanceof GUIMedia){
-                            ToolBarController tb = new ToolBarController();
-                            tagButton.setDisable(false);
-                            media = ((GUIMedia<?>) event.getTarget());
-                            tb.tag(createTag, media);
-                        }
-                        createTag.clear();
-                    }
+            tagButton.setOnMouseClicked(TagTool.this::getMedia);
+
+            tagButton.setOnAction(e->{
+                ToolBarController tb = new ToolBarController();
+                tb.tag(createTag, media);
+
             });
+
             int PADDING = 5;
             HBox tagging = new HBox(PADDING, new Label("Tag Name"), createTag, tagButton);
             tagging.setAlignment(Pos.CENTER_LEFT);
