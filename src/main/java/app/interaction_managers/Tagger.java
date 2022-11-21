@@ -16,9 +16,7 @@ public class Tagger implements InteractionManager {
 
     }
     public void addTag(Media media){
-        System.out.println(media.getTags().size());
         media.getTags().add(tag);
-
     }
 
     public void setTag(String toTag){
