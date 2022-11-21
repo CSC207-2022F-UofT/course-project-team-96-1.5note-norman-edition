@@ -25,8 +25,16 @@ public class GUIPolygon extends GUIShape {
      * @param sideCount The number of sides of the polygon
      */
     public GUIPolygon(Point2D p1, Point2D p2, Color colour, int sideCount) {
-        super(new PolygonShape(Math.min(p1.getX(), p2.getX()),Math.min(p1.getY(), p2.getY()),0,0, colour.toString(), 0, 0, sideCount));
+        super(new PolygonShape(0, 0,0,0, colour.toString(), 0, 0, sideCount));
+
+        getMedia().setX(p1.getX());
+        getMedia().setY(p1.getY());
+        ((PolygonShape) getMedia()).setRadius(p1.distance(p2));
+        ((PolygonShape) getMedia()).setStartAngle(calcAngle(p1, p2));
+
         this.sideCount = sideCount;
+
+        // Drawing Code
         polygon = new Polygon();
         polygon.getPoints().addAll(calcPointsFromPoints(p1, p2, sideCount));
         polygon.setFill(colour);
@@ -52,6 +60,8 @@ public class GUIPolygon extends GUIShape {
     public void setGenericShape(GenericShape polygon) {
         PolygonShape poly = (PolygonShape) polygon;
         Color colour = Color.valueOf(polygon.getColour());
+
+        // Drawing Code
         this.polygon = new Polygon();
         this.polygon.getPoints().addAll(calcPointsFromRadiusAngle(poly.getRadius(), poly.getStartAngle(), poly.getSideCount()));
         this.polygon.setFill(colour);
@@ -62,6 +72,7 @@ public class GUIPolygon extends GUIShape {
      * {@inheritDoc}
      * @param p1 The position of the polygon's center
      * @param p2 The position which determines the polygon's radius and starting angle
+     * @param sameSideLengths Has no effect for a polygon
      */
     @Override
     public void update(Point2D p1, Point2D p2, boolean sameSideLengths){
@@ -86,8 +97,10 @@ public class GUIPolygon extends GUIShape {
     public Double[] calcPointsFromRadiusAngle(double radius, double angle, int sideCount) {
         Double[] points = new Double[2*sideCount];
         double angleStep = 360.0 / sideCount;
+        // Iterate through every angle and create a vertex for each
         for (int i = 0; i < sideCount; i++) {
-            double currentAngle = Math.toRadians(i*angleStep + angle);
+            double currentAngle = Math.toRadians(i * angleStep + angle);
+            // JavaFX accepts an array of (x,y) pairs e.x. [x0,y0,x1,y1,...xn,yn]
             points[i*2] = radius * Math.cos(currentAngle);
             points[i*2+1] = radius * Math.sin(currentAngle);
         }
@@ -116,8 +129,8 @@ public class GUIPolygon extends GUIShape {
      */
     public static double calcAngle(Point2D p1, Point2D p2) {
         // Calculates the angle of the vector drawn from point 1 to point 2
-        double deltaX = p2.getX() - p1.getX();
-        double deltaY = p2.getY() - p1.getY();
-        return Math.toDegrees(Math.atan2(deltaY, deltaX));
+        double deltaX = p2.getX() - p1.getX(); // Horizontal difference
+        double deltaY = p2.getY() - p1.getY(); // Vertical difference
+        return Math.toDegrees(Math.atan2(deltaY, deltaX)); // Angle opposite from Vertical side of right triangle
     }
 }

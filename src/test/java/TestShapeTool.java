@@ -1,6 +1,7 @@
 import app.MediaCommunicator;
-import app.media.GenericShape;
+import app.media.PolygonShape;
 import gui.media.GUIEllipse;
+import gui.media.GUIPolygon;
 import gui.media.GUIRectangle;
 import gui.media.GUIShape;
 import gui.page.Page;
@@ -9,10 +10,14 @@ import gui.tool.ShapeTool;
 import gui.tool.ShapeType;
 import javafx.application.Platform;
 import javafx.geometry.Point2D;
+import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import org.junit.*;
 import static org.junit.Assert.*;
 import storage.SQLiteStorage;
+
 
 public class TestShapeTool {
     static double TOLERANCE = 0.00001;
@@ -41,6 +46,16 @@ public class TestShapeTool {
         assertEquals(height, h, TOLERANCE);
     }
 
+    static double randomBounded(double min, double max) {
+        // Returns a random double bounded between two doubles
+        return ((Math.random() * (max - min)) + min);
+    }
+    static Point2D randomPoint(double xMin, double yMin, double xMax, double yMax) {
+        double px = randomBounded(xMin, xMax);
+        double py = randomBounded(yMin, yMax);
+        return new Point2D(px, py);
+    }
+
     // Beginning of tests
     // TODO: Find how to trigger autocalculation of shape dimensions
     @Test
@@ -51,7 +66,11 @@ public class TestShapeTool {
         Color color = Color.RED;
         GUIShape rect = new GUIRectangle(p1, p2, color);
 
-        testBounds(rect,0, 0, 200, 100);
+        // Pseudo simulation of mouse being dragged
+        rect.update(randomPoint(-100, -100, 100, 100), randomPoint(-100, -100, 100, 100), false);
+        rect.update(p1, p2, false);
+
+        testBounds(rect,100, 50, 200, 100);
     }
 
     @Test
@@ -60,9 +79,33 @@ public class TestShapeTool {
         Point2D p1 = new Point2D(0,0);
         Point2D p2 = new Point2D(200,100);
         Color color = Color.RED;
-        GUIShape rect = new GUIEllipse(p1, p2, color);
+        GUIShape ellipse = new GUIEllipse(p1, p2, color);
 
-        testBounds(rect,0, 0, 200, 100);
+        // Pseudo simulation of mouse being dragged
+        ellipse.update(randomPoint(-100, -100, 100, 100), randomPoint(-100, -100, 100, 100), false);
+        ellipse.update(p1, p2, false);
+
+        testBounds(ellipse,100, 50, 200, 100);
+    }
+
+    @Test
+    public void testGUIPolygonShapeCreation() {
+        // Test initialization of a rectangle with the proper position and dimensions
+        Point2D p1 = new Point2D(100,50);
+        Point2D p2 = new Point2D(100,55);
+        Color color = Color.RED;
+        GUIShape poly = new GUIPolygon(p1, p2, color, 4);
+
+        // Pseudo simulation of mouse being dragged
+        poly.update(randomPoint(-100, -100, 100, 100), randomPoint(-100, -100, 100, 100), false);
+        poly.update(p1, p2, false);
+
+        assertEquals(100, poly.getMedia().getX(), TOLERANCE);
+        assertEquals(50, poly.getMedia().getY(), TOLERANCE);
+        assertEquals(5, ((PolygonShape) poly.getMedia()).getRadius(), TOLERANCE);
+        assertEquals(4, ((PolygonShape) poly.getMedia()).getSideCount(), TOLERANCE);
+        // With how atan2 is defined, providing a perfectly vertical displacement will give you 90.
+        assertEquals(90, ((PolygonShape) poly.getMedia()).getStartAngle(), TOLERANCE);
     }
 
     @Test
@@ -86,6 +129,13 @@ public class TestShapeTool {
         st.startShape(p1, p2, color, ShapeType.ELLIPSE);
         GUIShape guishape = st.getCurrentShape();
 
+        Stage primaryStage = new Stage();
+        primaryStage.setTitle("Hello World!");
+        StackPane root = new StackPane();
+        root.getChildren().add(page);
+        primaryStage.setScene(new Scene(root, 300, 250));
+        primaryStage.show();
+
         double x = guishape.getMedia().getX();
         double y = guishape.getMedia().getY();
         double w = guishape.getMedia().getWidth();
@@ -96,5 +146,4 @@ public class TestShapeTool {
         assertEquals(200, w, TOLERANCE);
         assertEquals(100, h, TOLERANCE);
     }
-
 }

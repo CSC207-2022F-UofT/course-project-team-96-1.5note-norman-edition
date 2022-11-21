@@ -28,19 +28,20 @@ public class GUIRectangle extends GUIShape {
         double height = result[3];
 
         // Updating dimensions of GenericShape
-        getMedia().setX(posX - width/2);
-        getMedia().setY(posY - height/2);
+        getMedia().setX(posX);
+        getMedia().setY(posY);
         getMedia().setWidth(width);
         getMedia().setHeight(height);
 
-        rectangle = new Rectangle(0, 0, width, height);
+        // Drawing Code
+        rectangle = new Rectangle(-width/2, -height/2, width/2, height/2);
         rectangle.setFill(colour);
         getChildren().add(rectangle);
     }
 
     /**
-     *
-     * @param media
+     * Constructs a GUIRectangle from a RectangleShape
+     * @param media The RectangleShape to base a new GUIRectangle off of
      */
     public GUIRectangle(RectangleShape media) {
         super(media);
@@ -55,7 +56,11 @@ public class GUIRectangle extends GUIShape {
     @Override
     public void setGenericShape(GenericShape rectangle) {
         Color colour = Color.valueOf(rectangle.getColour());
-        this.rectangle = new Rectangle(0,0, rectangle.getWidth(), rectangle.getHeight());
+
+        // Drawing Code
+        double w = rectangle.getWidth();
+        double h = rectangle.getHeight();
+        this.rectangle = new Rectangle(-w/2,-h/2, w, h);
         this.rectangle.setFill(colour);
         getChildren().add(this.rectangle);
     }
@@ -75,8 +80,10 @@ public class GUIRectangle extends GUIShape {
         double height = result[3];
 
         // Updating the graphics of our shape
-        getMedia().setX(centerX - width/2);
-        getMedia().setY(centerY - height/2);
+        getMedia().setX(centerX);
+        getMedia().setY(centerY);
+        rectangle.setX(-width/2);
+        rectangle.setY(-height/2);
         rectangle.setWidth(width);
         rectangle.setHeight(height);
     }

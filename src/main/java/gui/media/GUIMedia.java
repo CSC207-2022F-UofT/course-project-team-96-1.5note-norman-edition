@@ -1,6 +1,5 @@
 package gui.media;
 
-import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.event.*;
 import javafx.beans.property.*;

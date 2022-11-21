@@ -4,18 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ea57fb3c-8b45-48bb-954d-8b968e498d39" name="Changes" comment="Add JavaDocs to the following classes and their relevant methods:&#10;- GUIMediaFactory&#10;- GUIShapeFactory&#10;- GUIPolygon&#10;- GenericShape&#10;&#10;Move the ShapeType Enum out of the ShapeTool class into its own file&#10;&#10;Add string representations of RectangleShape, EllipseShape and PolygonShape&#10;&#10;Add A JUnit test simulating shape creation and modification via an example ellipse">
+    <list default="true" id="ea57fb3c-8b45-48bb-954d-8b968e498d39" name="Changes" comment="- Add `testGUIPolygonShapeCreation` test to `TestShapeTool.java`&#10;- Add/update comment usage throughout GUI/Media files related to shapes&#10;- Modify positional code for rectangle so the position is now the center">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/media/EllipseShape.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/media/EllipseShape.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/media/GenericShape.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/media/GenericShape.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/media/PolygonShape.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/media/PolygonShape.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/media/RectangleShape.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/media/RectangleShape.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gui/media/GUIEllipse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/media/GUIEllipse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gui/media/GUIMedia.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/media/GUIMedia.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gui/media/GUIPolygon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/media/GUIPolygon.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gui/media/GUIRectangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/media/GUIRectangle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gui/media/GUIShape.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/media/GUIShape.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gui/media/GUIShapeFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/media/GUIShapeFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gui/tool/ShapeTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/tool/ShapeTool.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/TestShapeTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/TestShapeTool.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -81,13 +75,6 @@
     </key>
   </component>
   <component name="RunManager" selected="Gradle.TestShapeTool">
-    <configuration name="TestMouseStuff" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="TestMouseStuff" />
-      <module name="course-project-team-96-1.5note-norman-edition.main" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="TestShapeTool" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -111,7 +98,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="TestShapeTool.testShapeCreationFromDimensions" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="TestShapeTool.testGUIEllipseShapeCreation" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -124,7 +111,53 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;TestShapeTool.testShapeCreationFromDimensions&quot;" />
+            <option value="&quot;TestShapeTool.testGUIEllipseShapeCreation&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="TestShapeTool.testGUIPolygonShapeCreation" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;TestShapeTool.testGUIPolygonShapeCreation&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="TestShapeTool.testGUIRectangleShapeCreation" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;TestShapeTool.testGUIRectangleShapeCreation&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -157,36 +190,13 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="TestShapeTool.testShapeCreationFromTool2" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;TestShapeTool.testShapeCreationFromTool2&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.TestShapeTool" />
-        <item itemvalue="Gradle.TestShapeTool.testShapeCreationFromDimensions" />
-        <item itemvalue="Gradle.TestShapeTool.testShapeCreationFromTool2" />
+        <item itemvalue="Gradle.TestShapeTool.testGUIRectangleShapeCreation" />
         <item itemvalue="Gradle.TestShapeTool.testShapeCreationFromTool" />
-        <item itemvalue="Application.TestMouseStuff" />
+        <item itemvalue="Gradle.TestShapeTool.testGUIPolygonShapeCreation" />
+        <item itemvalue="Gradle.TestShapeTool.testGUIEllipseShapeCreation" />
       </list>
     </recent_temporary>
   </component>
@@ -207,7 +217,9 @@
       <workItem from="1668660780899" duration="5169000" />
       <workItem from="1668726831594" duration="10075000" />
       <workItem from="1668791436123" duration="13645000" />
-      <workItem from="1668884655155" duration="32015000" />
+      <workItem from="1668884655155" duration="32135000" />
+      <workItem from="1668987555104" duration="3571000" />
+      <workItem from="1669050385423" duration="4460000" />
     </task>
     <task id="LOCAL-00001" summary="Add ShapeTool, GUIShape, Shape classes">
       <created>1668411649988</created>
@@ -244,7 +256,14 @@
       <option name="project" value="LOCAL" />
       <updated>1668933657374</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="- Change GUIShape's update and setGenericShape methods to abstract, with overrides&#10;&#10;- Add new tests to `TestShapeTool.java`&#10;&#10;Add/Update JavaDocs to the following classes and their relevant methods:&#10;- `ShapeTool`&#10;- `GUIMediaFactory`&#10;- `GUIShapeFactory`&#10;- `GUIPolygon`&#10;- `GUIRectangle`&#10;- `GUIEllipse`&#10;- `GenericShape`&#10;- `RectangleShape`&#10;- `EllipseShape`&#10;- `PolygonShape`">
+      <created>1668949168182</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1668949168182</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -268,6 +287,8 @@
     <MESSAGE value="- Move mediaUpdated from subclasses of GUIShape to GUIShape.java (Not necessary to have in each subclass)&#10;- Renamed setRectangle, setEllipse, setPolygon methods to setGenericShape, with @override&#10;- Added two test cases relavant to shape creation" />
     <MESSAGE value="Added JavaDocs to the following classes and their relevant methods:&#10;- GUIMediaFactory&#10;- GUIShapeFactory&#10;- GUIPolygon&#10;- GenericShape&#10;&#10;Moved the ShapeType Enum out of the ShapeTool class into its own file&#10;&#10;Added string representations of RectangleShape, EllipseShape and PolygonShape" />
     <MESSAGE value="Add JavaDocs to the following classes and their relevant methods:&#10;- GUIMediaFactory&#10;- GUIShapeFactory&#10;- GUIPolygon&#10;- GenericShape&#10;&#10;Move the ShapeType Enum out of the ShapeTool class into its own file&#10;&#10;Add string representations of RectangleShape, EllipseShape and PolygonShape&#10;&#10;Add A JUnit test simulating shape creation and modification via an example ellipse" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add JavaDocs to the following classes and their relevant methods:&#10;- GUIMediaFactory&#10;- GUIShapeFactory&#10;- GUIPolygon&#10;- GenericShape&#10;&#10;Move the ShapeType Enum out of the ShapeTool class into its own file&#10;&#10;Add string representations of RectangleShape, EllipseShape and PolygonShape&#10;&#10;Add A JUnit test simulating shape creation and modification via an example ellipse" />
+    <MESSAGE value="- Change GUIShape's update and setGenericShape methods to abstract, with overrides&#10;&#10;- Add new tests to `TestShapeTool.java`&#10;&#10;Add/Update JavaDocs to the following classes and their relevant methods:&#10;- `ShapeTool`&#10;- `GUIMediaFactory`&#10;- `GUIShapeFactory`&#10;- `GUIPolygon`&#10;- `GUIRectangle`&#10;- `GUIEllipse`&#10;- `GenericShape`&#10;- `RectangleShape`&#10;- `EllipseShape`&#10;- `PolygonShape`" />
+    <MESSAGE value="- Add `testGUIPolygonShapeCreation` test to `TestShapeTool.java`&#10;- Add/update comment usage throughout GUI/Media files related to shapes&#10;- Modify positional code for rectangle so the position is now the center" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Add `testGUIPolygonShapeCreation` test to `TestShapeTool.java`&#10;- Add/update comment usage throughout GUI/Media files related to shapes&#10;- Modify positional code for rectangle so the position is now the center" />
   </component>
 </project>

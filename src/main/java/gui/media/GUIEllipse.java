@@ -2,7 +2,6 @@ package gui.media;
 
 import app.media.EllipseShape;
 import app.media.GenericShape;
-import app.media.Media;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
@@ -28,11 +27,12 @@ public class GUIEllipse extends GUIShape {
         double height = result[3];
 
         // Updating dimensions of media
-        getMedia().setX(posX - width/2);
-        getMedia().setY(posY - height/2);
+        getMedia().setX(posX);
+        getMedia().setY(posY);
         getMedia().setWidth(width);
         getMedia().setHeight(height);
 
+        // Drawing Code
         ellipse = new Ellipse(0, 0, width / 2, height / 2);
         ellipse.setFill(colour);
         getChildren().add(ellipse);
@@ -55,6 +55,8 @@ public class GUIEllipse extends GUIShape {
     @Override
     public void setGenericShape(GenericShape ellipse) {
         Color colour = Color.valueOf(ellipse.getColour());
+
+        // Drawing Code
         this.ellipse = new Ellipse(0,0,ellipse.getWidth()/2,ellipse.getHeight()/2);
         this.ellipse.setFill(colour);
         getChildren().add(this.ellipse);
@@ -75,8 +77,8 @@ public class GUIEllipse extends GUIShape {
         double height = result[3];
 
         // Updating the graphics of our shape
-        getMedia().setX(centerX);
-        getMedia().setY(centerY);
+        getMedia().setX(centerX); // RestrictPoints returns center position by default
+        getMedia().setY(centerY); // RestrictPoints returns center position by default
         ellipse.setRadiusX(width/2);
         ellipse.setRadiusY(height/2);
     }
