@@ -22,15 +22,15 @@ import javafx.scene.paint.Color;
  * An implementation of Tool that allows the user to create various shapes
  */
 public class ShapeTool implements Tool {
-    private HandlerMethod[] handlers;
+    private final HandlerMethod[] handlers;
     private Page page;
 
-    private ShapeSettings settings;
+    private final ShapeSettings settings;
 
     /**
      * The currently selected color
      */
-    private ObjectProperty<Color> colour;
+    private final ObjectProperty<Color> colour;
 
     /**
      * The currently selected hape
@@ -131,15 +131,9 @@ public class ShapeTool implements Tool {
     public void startShape(Point2D p1, Point2D p2, Color c1, ShapeType type) {
         if (settings.getShapeType() != null) {
             switch (type) {
-                case RECTANGLE -> {
-                    currentShape = new GUIRectangle(p1, p2, c1);
-                }
-                case ELLIPSE -> {
-                    currentShape = new GUIEllipse(p1, p2, c1);
-                }
-                case POLYGON -> {
-                    currentShape = new GUIPolygon(p1, p2, c1, settings.getPolySideCount());
-                }
+                case RECTANGLE -> currentShape = new GUIRectangle(p1, p2, c1);
+                case ELLIPSE -> currentShape = new GUIEllipse(p1, p2, c1);
+                case POLYGON -> currentShape = new GUIPolygon(p1, p2, c1, settings.getPolySideCount());
             }
             page.addMedia(currentShape);
         }
@@ -179,9 +173,7 @@ class ShapeSettings extends FlowPane {
 
     private static ShapeType selectedShapeType = ShapeType.RECTANGLE;
 
-    private Slider sideCountSlider;
-    private Spinner<Double> sideCountSpinner;
-    private ObjectProperty<Double> sideCountProperty;
+    private final ObjectProperty<Double> sideCountProperty;
 
     public ShapeSettings(){
         // Draws the GUI for the settings panel
@@ -204,13 +196,13 @@ class ShapeSettings extends FlowPane {
         shapeSelector.getSelectionModel().selectFirst();
 
         // Slider and Spinner for polygon side count
-        sideCountSlider = new Slider(MIN_SIDE_COUNT, MAX_SIDE_COUNT, DEFAULT_SIDE_COUNT);
+        Slider sideCountSlider = new Slider(MIN_SIDE_COUNT, MAX_SIDE_COUNT, DEFAULT_SIDE_COUNT);
         sideCountSlider.setBlockIncrement(1);
         sideCountSlider.setMajorTickUnit(1);
         sideCountSlider.setMinorTickCount(0);
         sideCountSlider.setSnapToTicks(true);
 
-        sideCountSpinner = new Spinner<>();
+        Spinner<Double> sideCountSpinner = new Spinner<>();
         sideCountSpinner.setPrefWidth(75);
         sideCountSpinner.setEditable(true);
 

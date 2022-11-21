@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ea57fb3c-8b45-48bb-954d-8b968e498d39" name="Changes" comment="- Add `testGUIPolygonShapeCreation` test to `TestShapeTool.java`&#10;- Add/update comment usage throughout GUI/Media files related to shapes&#10;- Modify positional code for rectangle so the position is now the center">
+    <list default="true" id="ea57fb3c-8b45-48bb-954d-8b968e498d39" name="Changes" comment="- Clear intellij warnings (again)">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gui/media/GUIMedia.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/media/GUIMedia.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/TestShapeTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/TestShapeTool.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gui/tool/ShapeTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/tool/ShapeTool.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +26,9 @@
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
             <expand />
@@ -40,6 +44,9 @@
         <option value="Class" />
       </list>
     </option>
+  </component>
+  <component name="Git.Rebase.Settings">
+    <option name="NEW_BASE" value="main" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -71,7 +78,7 @@
       <recent name="C:\Users\bloor\Desktop\uoftmain\2022\fall2022\CSC207\Course Project\ClassExport\course-project-team-96-1.5note-norman-edition\src\main\java" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.TestShapeTool">
+  <component name="RunManager" selected="Gradle.gradle [run]">
     <configuration name="TestShapeTool" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -293,6 +300,7 @@
     <MESSAGE value="Add JavaDocs to the following classes and their relevant methods:&#10;- GUIMediaFactory&#10;- GUIShapeFactory&#10;- GUIPolygon&#10;- GenericShape&#10;&#10;Move the ShapeType Enum out of the ShapeTool class into its own file&#10;&#10;Add string representations of RectangleShape, EllipseShape and PolygonShape&#10;&#10;Add A JUnit test simulating shape creation and modification via an example ellipse" />
     <MESSAGE value="- Change GUIShape's update and setGenericShape methods to abstract, with overrides&#10;&#10;- Add new tests to `TestShapeTool.java`&#10;&#10;Add/Update JavaDocs to the following classes and their relevant methods:&#10;- `ShapeTool`&#10;- `GUIMediaFactory`&#10;- `GUIShapeFactory`&#10;- `GUIPolygon`&#10;- `GUIRectangle`&#10;- `GUIEllipse`&#10;- `GenericShape`&#10;- `RectangleShape`&#10;- `EllipseShape`&#10;- `PolygonShape`" />
     <MESSAGE value="- Add `testGUIPolygonShapeCreation` test to `TestShapeTool.java`&#10;- Add/update comment usage throughout GUI/Media files related to shapes&#10;- Modify positional code for rectangle so the position is now the center" />
-    <option name="LAST_COMMIT_MESSAGE" value="- Add `testGUIPolygonShapeCreation` test to `TestShapeTool.java`&#10;- Add/update comment usage throughout GUI/Media files related to shapes&#10;- Modify positional code for rectangle so the position is now the center" />
+    <MESSAGE value="- Clear intellij warnings (again)" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Clear intellij warnings (again)" />
   </component>
 </project>
