@@ -12,6 +12,12 @@ import app.media.PenStroke;
 import app.media.Media;
 
 
+/**
+ * GUI representation of a pen stroke on a page.
+ *
+ * The pen stroke is made from consecutive line segments. A new segment is
+ * added when the direction of the mouse movement changes significantly.
+ */
 public class GUIPenStroke extends GUIMedia<PenStroke> {
 
     private List<Segment> segments;
@@ -74,6 +80,7 @@ public class GUIPenStroke extends GUIMedia<PenStroke> {
         }
     }
 
+    // display the given PenStroke entity, adding all its segments all at once.
     private void setStroke(PenStroke stroke) {
         setInitialValues();
 
@@ -102,25 +109,49 @@ public class GUIPenStroke extends GUIMedia<PenStroke> {
         s.update(x - startX, y - startY);
         path.setStrokeWidth(thickness);
 
+        // Distance between the cursor and the end of the last segment
         double dist = Math.sqrt(
             Math.pow((x - startX) - s.startX, 2)
             + Math.pow((y - startY) - s.startY, 2));
 
+        // Direction of the last segment
         Point2D dir = s.getDirection();
+
+        // Dot product between the direction of the current segment and the
+        // direction of the previous segment
         double prevSegmentDot = dir.dotProduct(prevSegmentDir);
+
+        // Dot product between the direction of the current segment and the
+        // "average direction"
         double avgDot = dir.dotProduct(avgDir);
+
+        // Mean average of prevSegmentDot and avgDot
         double dirDot = (prevSegmentDot + avgDot) / 2;
 
-        if (!straight && 5 * dirDot / dist < 1 || avgDot < 0.2) {
+        /*
+         * If dirDot / dist or avgDot fall below the given thresholds, end
+         * the current segment at the current cursor position and start the
+         * next segment.
+         *
+         * Additionally, a new segment will *not* be added if `straight` is set
+         * to true.
+         */
+        if (!straight && (5 * dirDot / dist < 1 || avgDot < 0.2)) {
             prevSegmentDir = dir;
             avgDir = dir;
             commitSegment(s);
             addSegment(new Segment(x - startX, y - startY));
         }
 
+        // Update avgDir to equal the mean average of its current value and
+        // the value of `dir`.
         avgDir = dir.add(avgDir).multiply(0.5);
     }
 
+    /**
+     * "End" the stroke. This commits the last segment to the underlying Media
+     * object, if it hasn't been committed already.
+     */
     public void end() {
         if (getMedia().getSegments().size() < segments.size()) {
             commitSegment(getLastSegment());
@@ -143,6 +174,8 @@ public class GUIPenStroke extends GUIMedia<PenStroke> {
     }
 }
 
+
+// Individual segment in the line.
 class Segment extends LineTo {
 
     double startX;
