@@ -61,6 +61,7 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
         mediaLayer.getTransforms().add(scale);
 
         setOnScroll(new Page.ScrollHandler());
+//        setOnKeyPressed(new Page.KeyHandler());
 
     }
 
@@ -301,8 +302,8 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
     public void zoomToFactor(double factor) {
         scaleFactor = factor;
 
-        scale.setPivotX(getWidth()/2);
-        scale.setPivotY(getHeight()/2);
+        scale.setPivotX(getLayoutX() + getWidth()/2);
+        scale.setPivotY(getLayoutY() + getHeight()/2);
         scale.setX(scaleFactor);
         scale.setY(scaleFactor);
 
@@ -342,13 +343,16 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
         this.zoomToFactor(zoomOptions[i]);
     }
 
+    /** given the x and y coords of a point, make that point the top left point of the visible box
+     *
+     * @param x x coordinate of point you want to jump to
+     * @param y y coordinate of point you want to jump to
+     */
     public void jumpToPoint(double x, double y) {
-        double translateX = x - getLayoutX();
-        double translateY = y - getLayoutY();
+        double translateX = x - getTranslateX();
+        double translateY = y - getTranslateY();
         mediaLayer.setTranslateX(translateX);
-        mediaLayer.setLayoutX(x);
         mediaLayer.setTranslateY(translateY);
-        mediaLayer.setLayoutY(y);
     }
 
     private class ScrollHandler implements EventHandler<ScrollEvent> {
@@ -386,27 +390,13 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
             }
         }
         private void scrollVerticallyHandle(ScrollEvent scrollEvent) {
-            if (scrollEvent.getDeltaY() < 0) {
-                // scroll down, translate up
-                mediaLayer.setTranslateY(-50);
-                mediaLayer.setLayoutY(mediaLayer.getLayoutY()-50);
-            } else if (scrollEvent.getDeltaY() > 0) {
-                // scroll up, translate down
-                mediaLayer.setTranslateY(50);
-                mediaLayer.setLayoutY(mediaLayer.getLayoutY()+50);
-            }
+            double currentTranslation = mediaLayer.getTranslateY();
+            mediaLayer.setTranslateY(currentTranslation + scrollEvent.getDeltaY());
         }
 
         private void scrollHorizontallyHandle(ScrollEvent scrollEvent) {
-            if (scrollEvent.getDeltaX() < 0) {
-                // scroll left, translate right
-                mediaLayer.setTranslateX(-50);
-                mediaLayer.setLayoutX(mediaLayer.getLayoutX() - 50);
-            } else if (scrollEvent.getDeltaX() > 0) {
-                // scroll left, translate right
-                mediaLayer.setTranslateX(50);
-                mediaLayer.setLayoutX(mediaLayer.getLayoutX() + 50);
-            }
+            double currentTranslation = mediaLayer.getTranslateX();
+            mediaLayer.setTranslateX(currentTranslation + scrollEvent.getDeltaX());
         }
     }
 }
