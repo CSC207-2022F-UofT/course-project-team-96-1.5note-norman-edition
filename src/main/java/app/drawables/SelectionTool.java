@@ -1,6 +1,5 @@
-package app.draweables;
+package app.drawables;
 
-import app.draweables.Drawable;
 import javafx.geometry.Point2D;
 
 public class SelectionTool implements Drawable {

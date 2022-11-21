@@ -16,10 +16,11 @@ import javafx.scene.input.MouseEvent;
 public class TagTool implements Tool{
     private final TagSettings settings;
     private final HandlerMethod<?>[] handlers;
-    public Button tagButton = new Button("Tag");
-    public GUIMedia<?> media;
+    private final Button tagButton = new Button("Tag");
+    private GUIMedia<?> media;
     public TagTool(){
         settings = new TagSettings();
+        // Handler methods for when the user clicks on something on the page
         this.handlers = new HandlerMethod<?>[]{new HandlerMethod<>(MouseEvent.MOUSE_CLICKED, this::getMedia)};
     }
 
@@ -37,6 +38,8 @@ public class TagTool implements Tool{
         return settings;
     }
 
+    // Method to get the media that the user clicks on the page
+    // Enables/Disables the Tag button depending on what they click on
     public void getMedia(MouseEvent e){
         if (e.getButton() == MouseButton.PRIMARY){
             e.consume();
@@ -50,26 +53,30 @@ public class TagTool implements Tool{
             }
         }
     }
-
     class TagSettings extends FlowPane{
         public TagSettings(){
-
+            // Creates a textfield for the tag and tag button to assign the tag to media
             TextField createTag = new TextField();
             tagButton.setDisable(true);
 
+            // The behaviour of the tag button depending on the user click
             tagButton.setOnMouseClicked(TagTool.this::getMedia);
 
+            // Tagging the media
             tagButton.setOnAction(e->{
                 ToolBarController tb = new ToolBarController();
                 tb.tag(createTag, media);
+                createTag.clear();
 
             });
 
+            // Visually setting the textfield and button
             int PADDING = 5;
             HBox tagging = new HBox(PADDING, new Label("Tag Name"), createTag, tagButton);
             tagging.setAlignment(Pos.CENTER_LEFT);
             HBox.setHgrow(tagging, Priority.ALWAYS);
 
+            //Adding it to the GUI
             getChildren().addAll(tagging);
 
         }

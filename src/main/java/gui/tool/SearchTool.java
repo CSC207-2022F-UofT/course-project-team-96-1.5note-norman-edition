@@ -81,7 +81,6 @@ public class SearchTool implements Tool{
             });
 
 
-
             int PADDING = 5;
 
             // Visually placing the searchbar, button and result statement
