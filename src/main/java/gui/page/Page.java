@@ -131,6 +131,13 @@ public class Page extends StackPane implements MediaObserver {
         mediaLayer.getChildren().remove(media);
     }
 
+    public void jumpScene(double x, double y){
+        //TODO: make the page jump to a specific location
+    }
+
+    /**
+     * Return the media on the page as an ArrayList of Media
+     */
     public ArrayList<Media> getMedia(){
         ArrayList<Media> mediaOnPage = new ArrayList<>();
         for (GUIMedia<?> value : contents.values()){

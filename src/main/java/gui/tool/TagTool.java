@@ -47,17 +47,16 @@ public class TagTool implements Tool{
     }
 
     class TagSettings extends FlowPane{
-        private final TextField createTag;
         private GUIMedia<?> media;
-        private final ToolBarController tb = new ToolBarController();
         public TagSettings(){
 
-            createTag = new TextField();
+            TextField createTag = new TextField();
             tagButton.setDisable(true);
 
             tagButton.setOnMouseClicked(event -> {
                     if(event.getButton() == MouseButton.PRIMARY){
                         if(event.getTarget() instanceof GUIMedia){
+                            ToolBarController tb = new ToolBarController();
                             tagButton.setDisable(false);
                             media = ((GUIMedia<?>) event.getTarget());
                             tb.tag(createTag, media);

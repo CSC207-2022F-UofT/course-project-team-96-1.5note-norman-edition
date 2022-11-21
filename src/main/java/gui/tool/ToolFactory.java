@@ -11,10 +11,13 @@ public final class ToolFactory {
     public static Tool[] getTools() {
 
         ColourTool colourTool = new ColourTool();
+        TagTool tagTool = new TagTool();
+        SearchTool searchTool = new SearchTool();
 
         Tool[] tools = {
             colourTool,
-            new PenTool(colourTool.colourProperty())
+            new PenTool(colourTool.colourProperty()),
+                tagTool, searchTool
         };
 
         return tools;

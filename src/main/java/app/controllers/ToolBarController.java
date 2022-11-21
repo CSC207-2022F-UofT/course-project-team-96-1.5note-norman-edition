@@ -1,12 +1,14 @@
 package app.controllers;
 
-import app.draweables.SelectionTool;
-import app.draweables.ShapeCreator;
+import app.drawables.SelectionTool;
+import app.drawables.ShapeCreator;
 import app.interaction_managers.Tagger;
 import app.media_managers.AudioModifier;
 import app.media_managers.ImageModifier;
 import app.media_managers.TextModifier;
+import gui.media.GUIMedia;
 import javafx.geometry.Point2D;
+import javafx.scene.Node;
 
 public class ToolBarController {
 
@@ -42,9 +44,10 @@ public class ToolBarController {
         selectionTool.useTwoPositions(point1, point2, shape);
     }
 
-    public void tag() //TODO: add neccessary input
+    public void tag(Node node, GUIMedia<?> guiMedia)
     {
         Tagger tagger = new Tagger();
-        tagger.interact();
+        tagger.interact(node);
+        tagger.addTag(guiMedia.getMedia());
     }
 }
