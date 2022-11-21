@@ -34,6 +34,13 @@ public class TextTool implements Tool {
         this.handlers = handlers;
 
         settings = new TextSettings();
+
+        settings.getTextZone().textProperty().addListener(observable -> {
+            if (currentText != null) {
+                currentText.update(settings.getText());
+                page.updateMedia(currentText);
+            }
+        });
     }
 
     @Override
@@ -53,6 +60,7 @@ public class TextTool implements Tool {
     public void disabledFor(Page page) {
         finishEdit();
         this.page = null;
+        settings.setText("");
     }
 
     @Override
@@ -76,11 +84,7 @@ public class TextTool implements Tool {
                         settings.getText()
                 );
                 page.addMedia(currentText);
-
-                settings.getTextZone().textProperty().addListener((observable, oldValue, newValue) -> {
-                    currentText.update(settings.getText());
-                    page.updateMedia(currentText);
-                });
+                page.updateMedia(currentText);
             }
         }
     }
@@ -122,11 +126,15 @@ class TextSettings extends FlowPane {
         textSettings.setAlignment(Pos.CENTER_LEFT);
         HBox.setHgrow(textZone, Priority.ALWAYS);
 
+        textZone.setPrefWidth(280);
+
         getChildren().addAll(textSettings);
     }
 
     public String getText() { return textZone.getText(); }
     public TextArea getTextZone() { return this.textZone; }
 
-    public void setText(String textIn) { this.textZone.setText(textIn); }
+    public void setText(String textIn) {
+        this.textZone.setText(textIn);
+    }
 }
