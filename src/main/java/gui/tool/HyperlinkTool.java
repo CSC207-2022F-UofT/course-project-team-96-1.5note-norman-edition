@@ -1,5 +1,6 @@
 package gui.tool;
 import gui.page.Page;
+import javafx.beans.property.ObjectProperty;
 import javafx.event.EventTarget;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -8,7 +9,8 @@ import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.geometry.*;
 import gui.media.GUIHyperlinkBox;
-import java.awt.*;
+import javafx.scene.paint.*;
+import java.awt.Desktop;
 import java.net.URI;
 import java.net.URL;
 
@@ -18,8 +20,9 @@ public class HyperlinkTool implements Tool {
     private HandlerMethod[] handlers;
     private HyperlinkSettings settings;
     private GUIHyperlinkBox currentText;
+    private ObjectProperty<Color> colour;
 
-    public HyperlinkTool() {
+    public HyperlinkTool(ObjectProperty<Color> colour) {
         HandlerMethod[] handlers = {
                 new HandlerMethod<>(MouseEvent.MOUSE_CLICKED, this::interact)//,
                 //new HandlerMethod<>(KeyEvent.KEY_PRESSED, this::updateEdit),
@@ -28,6 +31,7 @@ public class HyperlinkTool implements Tool {
         };
         this.handlers = handlers;
         settings = new HyperlinkSettings();
+        this.colour = colour;
     }
     public void interact(MouseEvent e) {
         if (e.getButton() == MouseButton.PRIMARY) {
@@ -83,7 +87,7 @@ public class HyperlinkTool implements Tool {
         //else{
             currentText = new GUIHyperlinkBox(
                     page.getMouseCoords(e),
-                    settings.getText(), settings.getLink()
+                    settings.getText(), settings.getLink(), colour.getValue()
             );
 
         // adds link to page if it is valid

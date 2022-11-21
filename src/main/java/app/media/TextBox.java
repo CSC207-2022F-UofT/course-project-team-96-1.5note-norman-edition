@@ -1,17 +1,23 @@
 package app.media;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.scene.paint.Color;
+import java.io.Serializable;
 
 public class TextBox extends Media {
 
-    private String text;
-    private String link = null;
-    private Color c;
 
-    public TextBox(double x, double y, String text) {
+    public static record Box (double leftCorner, double rightCorner)
+        implements Serializable {}
+
+    // textbox defined by the text in the box, font colour and occasionally a link
+    private String text;
+    private String colour;
+    private String link = null;
+
+
+    public TextBox(double x, double y, String text, String colour) {
         super("text-box", x, y, 0, 0);
         this.text = text;
+        this.colour = colour;
     }
 
     public TextBox(double x, double y) {
@@ -19,11 +25,11 @@ public class TextBox extends Media {
         this.text = "";
     }
 
-    public TextBox(double x, double y, String text, String link){
+    public TextBox(double x, double y, String text, String link, String colour){
         super("text-box", x, y, 0, 0);
         this.text = text;
         this.link = link;
-        this.c = Color.BLUE;
+        this.colour = colour;
     }
 
     public void setText(String text) {
@@ -41,6 +47,10 @@ public class TextBox extends Media {
 
     public String getLink(){
         return this.link;
+    }
+
+    public String getColour(){
+        return colour;
     }
 
 }

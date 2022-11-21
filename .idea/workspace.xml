@@ -4,11 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="282823d0-2796-4ddb-8ba2-3377c34b9835" name="Changes" comment="link validation and alert message">
+    <list default="true" id="282823d0-2796-4ddb-8ba2-3377c34b9835" name="Changes" comment="cleaning up the code, deleted some unecessary lines">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/media/TextBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/media/TextBox.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gui/media/GUIHyperlinkBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/media/GUIHyperlinkBox.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gui/media/GUITextBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/media/GUITextBox.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gui/tool/HyperlinkTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/tool/HyperlinkTool.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gui/tool/TextTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/tool/TextTool.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gui/tool/ToolFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/tool/ToolFactory.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -181,7 +184,14 @@
       <option name="project" value="LOCAL" />
       <updated>1669013649200</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="cleaning up the code, deleted some unecessary lines">
+      <created>1669051921178</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1669051921178</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -200,6 +210,7 @@
     <MESSAGE value="revised code such that the hyperlinkbox media class is obsolete; added a constructor to the TextBox class to create text objects with links" />
     <MESSAGE value="creating and interacting with links works now" />
     <MESSAGE value="link validation and alert message" />
-    <option name="LAST_COMMIT_MESSAGE" value="link validation and alert message" />
+    <MESSAGE value="cleaning up the code, deleted some unecessary lines" />
+    <option name="LAST_COMMIT_MESSAGE" value="cleaning up the code, deleted some unecessary lines" />
   </component>
 </project>

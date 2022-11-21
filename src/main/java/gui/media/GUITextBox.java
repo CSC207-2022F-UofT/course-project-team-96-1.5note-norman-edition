@@ -22,12 +22,13 @@ public class GUITextBox extends GUIMedia<TextBox> {
         getChildren().addAll(this.text);
     }
 
-    public GUITextBox(Point2D point, String text) {
+    public GUITextBox(Point2D point, String text, Color colour) {
 
-        super(new TextBox(point.getX(), point.getY(), text));
+        super(new TextBox(point.getX(), point.getY(), text, colour.toString()));
 
         setInitialValues();
         setText(text);
+        this.text.setFill(colour);
     }
 
     public GUITextBox(TextBox media) {
@@ -58,14 +59,5 @@ public class GUITextBox extends GUIMedia<TextBox> {
             getMedia().setText(this.text.getText());
         }
     }
-    /*
-    public void setColour (Color c){
-        // TODO add a condition to check for a valid colour
 
-        this.text.setFill(Color.BLUE);
-
-
-    }
-
-     */
 }

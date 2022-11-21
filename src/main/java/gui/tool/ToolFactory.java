@@ -15,8 +15,8 @@ public final class ToolFactory {
         Tool[] tools = {
             colourTool,
             new PenTool(colourTool.colourProperty()),
-                new HyperlinkTool(),
-                new TextTool()
+                new HyperlinkTool(colourTool.colourProperty()),
+                new TextTool(colourTool.colourProperty())
         };
 
         return tools;
