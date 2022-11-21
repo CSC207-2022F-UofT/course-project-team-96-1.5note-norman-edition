@@ -1,4 +1,4 @@
-package gui.page;
+package gui;
 
 /** interface between controller level and app.gui.page.Page (in GUI level) */
 // TODO change this comment
