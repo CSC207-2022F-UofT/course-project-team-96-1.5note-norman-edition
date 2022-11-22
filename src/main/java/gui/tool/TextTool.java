@@ -1,7 +1,5 @@
 package gui.tool;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.*;
 import javafx.scene.input.*;
 import javafx.scene.control.*;
@@ -28,8 +26,7 @@ public class TextTool implements Tool {
 
     public TextTool() {
         HandlerMethod[] handlers = {
-                new HandlerMethod<>(MouseEvent.MOUSE_CLICKED, this::makeText)//,
-                //new HandlerMethod<>(KeyEvent.KEY_RELEASED, this::updateEdit)
+                new HandlerMethod<>(MouseEvent.MOUSE_CLICKED, this::manipulateText)
         };
         this.handlers = handlers;
 
@@ -66,7 +63,12 @@ public class TextTool implements Tool {
     @Override
     public FlowPane getSettingsGUI() { return settings; }
 
-    private void makeText(MouseEvent e) {
+    /**
+     * Makes a new textbox or edits an existing one, using the side "settings" panel as text input.
+     *
+     * @param e MouseEvent triggered by the clicking of the mouse to create a new textbox or edit an existing one.
+     */
+    private void manipulateText(MouseEvent e) {
         if (e.getButton() == MouseButton.PRIMARY) {
             e.consume();
 
@@ -89,6 +91,9 @@ public class TextTool implements Tool {
         }
     }
 
+    /**
+     * Finishes editing when the tool is "switched off" - makes sure everything is synced and deactivated.
+     */
     private void finishEdit() {
         if (currentText != null) {
             currentText.end();

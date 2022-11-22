@@ -56,6 +56,10 @@ public class GUITextBox extends GUIMedia<TextBox> {
         this.getMedia().setText(textIn);
     }
 
+    /**
+     * Keeps the Text and Textbox in sync, and caps of calls during ending procedures when the tool is being
+     * "switched off"
+     */
     public void end() {
         if (getMedia().getText().equals(this.text.getText())) {
             getMedia().setText(this.text.getText());
