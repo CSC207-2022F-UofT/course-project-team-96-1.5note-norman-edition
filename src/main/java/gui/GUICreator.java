@@ -5,7 +5,6 @@ import javafx.scene.layout.*;
 import javafx.scene.control.*;
 
 import gui.start_screen.StartScreen;
-import gui.SwapPane;
 
 
 /**

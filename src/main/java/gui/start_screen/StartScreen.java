@@ -24,11 +24,11 @@ public class StartScreen extends VBox {
     private static final int PADDING = 5;
 
     private SwapPane parent;
-    private MenuBar menuBar;
-    private Menu pageMenu;
-    private Menu viewMenu;
-    private Button newPageButton;
-    private Button loadPageButton;
+    private final MenuBar menuBar;
+    private final Menu pageMenu;
+    private final Menu viewMenu;
+    private final Button newPageButton;
+    private final Button loadPageButton;
     private PageScreen pageScreen;
     private SQLiteStorage storage;
     private MediaCommunicator c;
@@ -45,21 +45,21 @@ public class StartScreen extends VBox {
         menuBar.getMenus().add(pageMenu);
         menuBar.getMenus().add(viewMenu);
 
-        // page menu
+        // options in page menu
         MenuItem newPageItem = new MenuItem("New");
         MenuItem loadPageItem = new MenuItem("Load");
         MenuItem closePageItem = new MenuItem("Close");
         MenuItem savePageItem = new MenuItem("Save");
         MenuItem savePageAsItem = new MenuItem("Save As");
 
-        // zoom menu
+        // options in view menu
         Menu zoomToSubMenu = new Menu("Zoom To");
         MenuItem zoomInItem = new MenuItem("Zoom In");
         MenuItem zoomOutItem = new MenuItem("Zoom Out");
         MenuItem resetItem = new MenuItem("Reset Zoom");
         MenuItem centerItem = new MenuItem("Center Page");
 
-        //drop down menu options
+        //zoom to drop down menu options
         MenuItem zoomPercent25 = new MenuItem("25%");
         MenuItem zoomPercent50 = new MenuItem("50%");
         MenuItem zoomPercent75 = new MenuItem("75%");
@@ -80,6 +80,7 @@ public class StartScreen extends VBox {
         savePageItem.setOnAction(e -> savePage());
         savePageAsItem.setOnAction(e -> savePageAs());
 
+        // setting view menu actions
         zoomPercent25.setOnAction(e -> zoomTo(.25));
         zoomPercent50.setOnAction(e -> zoomTo(.5));
         zoomPercent75.setOnAction(e -> zoomTo(.75));
@@ -201,20 +202,31 @@ public class StartScreen extends VBox {
         }
     }
 
-    //TODO zoom page or group
+    /** scale the page's contents by the given targetZoom
+     *
+     * @param targetZoom factor to scale by
+     */
     private void zoomTo(double targetZoom) {
         Page page = pageScreen.getPage();
         page.zoomToFactor(targetZoom);
     }
 
+    /** scale the page larger if zooming in, smaller if zooming out
+     *
+     * @param inOrOut String specifying whether to zoom "In" or "Out"
+     */
     private void zoomInOrOut(String inOrOut) {
         Page page = pageScreen.getPage();
         page.zoomInOrOut(inOrOut);
     }
 
+    /** bring the page back to the original starting position
+     *
+     */
     private void centerPage() {
         Page page = pageScreen.getPage();
-        page.jumpToPoint(0, 0);
+        page.jumpToTopLeft(0, 0);
+//        page.jumpToTopLeft(0, 0);
     }
 
     // Make the given MenuItems only usable when a page is open, i.e. when the
@@ -232,6 +244,11 @@ public class StartScreen extends VBox {
             }
         });
     }
+
+    /** hide given menus when there is no Page
+     *
+     * @param menus options to hide when there is no Page
+     */
     private void setPageOnlyMenu(Menu... menus) {
         for (Menu menu: menus) {
             menu.setDisable(!isDisabled());

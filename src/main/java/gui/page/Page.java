@@ -22,7 +22,6 @@ import gui.media.GUIMedia;
 import gui.media.GUIMediaFactory;
 import gui.error_window.ErrorWindow;
 
-// , gui.Zoomable
 public class Page extends StackPane implements MediaObserver, Zoomable {
 
     // Additional padding added to the visible region
@@ -36,7 +35,7 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
     private Map<Long, GUIMedia> contents;
 
     private Bounds prevVisibleBounds;
-    private Scale scale;
+    private final Scale scale;
     private double scaleFactor = 1.0;
 
     public Page(MediaCommunicator c) {
@@ -61,7 +60,6 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
         mediaLayer.getTransforms().add(scale);
 
         setOnScroll(new Page.ScrollHandler());
-//        setOnKeyPressed(new Page.KeyHandler());
 
     }
 
@@ -288,8 +286,6 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
         return mediaLayer;
     }
 
-    //TODO zoom page or group
-
     public double getScaleFactor() {
         return scaleFactor;
     }
@@ -331,30 +327,49 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
             while (i < zoomOptions.length && zoomOptions[i] <= currentFactor) {
                 i++;
             }
-            // if we zoom in we can then plug this factor right into our zoomToFactor function
         } else {
             i = zoomOptions.length - 1;
             while (i >= 0 && zoomOptions[i] >= currentFactor) {
                 i--;
             }
             // once the loop ends, we have the index of a factor that is less than the current one
-            // if we zoom out we can then plug this factor right into our zoomToFactor function
         }
         this.zoomToFactor(zoomOptions[i]);
     }
 
-    /** given the x and y coords of a point, make that point the top left point of the visible box
+    // commented out for future use
+//    /** given the x and y coords of a point, make that point the center of the visible box
+//     *
+//     * @param x x coordinate of point you want to jump to
+//     * @param y y coordinate of point you want to jump to
+//     */
+//    public void jumpToPoint(double x, double y) {
+//        double translateX = x - getTranslateX();
+//        double translateY = y - getTranslateY();
+//        Bounds boundsInParent = mediaLayer.getBoundsInParent();
+//        Bounds boundsInSelf = mediaLayer.parentToLocal(boundsInParent);
+//        double centerX = boundsInSelf.getWidth()/2;
+//        double centerY = boundsInSelf.getHeight()/2;
+//        mediaLayer.setTranslateX(translateX - centerX);
+//        mediaLayer.setTranslateY(translateY - centerY);
+//    }
+
+    /** given the x and y coords of a point, make that point the top left of the visible box
      *
      * @param x x coordinate of point you want to jump to
      * @param y y coordinate of point you want to jump to
      */
-    public void jumpToPoint(double x, double y) {
+    public void jumpToTopLeft(double x, double y) {
         double translateX = x - getTranslateX();
         double translateY = y - getTranslateY();
         mediaLayer.setTranslateX(translateX);
         mediaLayer.setTranslateY(translateY);
     }
 
+    /** handles scrolling inputs, zooming when control is pressed, horizontal scrolling when shift is pressed, and
+     * vertical scrolling otherwise
+     *
+     */
     private class ScrollHandler implements EventHandler<ScrollEvent> {
         @Override
         public void handle(ScrollEvent scrollEvent) {
