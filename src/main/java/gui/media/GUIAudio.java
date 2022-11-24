@@ -80,7 +80,7 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
     /**
      * Configures all the controls for UI elements of the associated PlayerInterface
      */
-    private void configureUI()  {
+    protected void configureUI()  {
         playerManipulator = new GUIPlayerModel(this, audioPlayer.getTotalDuration());
 
         configurePlayButtons();
@@ -102,12 +102,13 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
         this.audioPlayer.setOnEndOfMedia(new Runnable() {
             @Override
             public void run() {
+                playerUI.getPlaybackSlider().setValue(1); //For some reason the listener won't update properly on short files
                 playerUI.getPlay().setText("Play");
             }
         });
     }
 
-    private void createInterface() throws Exception {
+    protected void createInterface() throws Exception {
         //Creates the overall interface allowing for playing MediaAudio and manipulating it
         createTimestamps();
 
@@ -297,6 +298,10 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
         return audioPlayer;
     }
 
+    public void setPlayerUI(PlayerInterface playerUI) {
+        this.playerUI = playerUI;
+    }
+
     public ArrayList<String> getTimestampsText() {
         ArrayList<String> hyperlinks = new ArrayList<>();
         for (Node hyperlink: timestamps.getChildren()) {
@@ -315,6 +320,10 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
 
     public Text getPlaybackText() {
         return playerUI.getPlaybackText();
+    }
+
+    public PlayerInterface getPlayerUI() {
+        return playerUI;
     }
 }
 
@@ -350,7 +359,7 @@ class PlayerInterface extends VBox {
         this.audioSlider = new Slider(0, 1, 1);
         audioSlider.setPrefWidth(80);
 
-        this.audioLabel = new Text(name);
+        this.audioLabel = new Text(name.substring(0, name.length() - 4));
         compileLayout();
     }
 
@@ -378,10 +387,12 @@ class PlayerInterface extends VBox {
         bottomBox.setAlignment(Pos.CENTER);
 
         //Overall layout of the player
-        getChildren().addAll(playBox, bottomBox);
-        setSpacing(7.5);
-        setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
-        setPadding(new Insets(7, 12, 7, 12));
+        VBox playerLayout = new VBox();
+        playerLayout.getChildren().addAll(playBox, bottomBox);
+        playerLayout.setSpacing(7.5);
+        playerLayout.setBackground(new Background(new BackgroundFill(Color.LIGHTGRAY, CornerRadii.EMPTY, Insets.EMPTY)));
+        playerLayout.setPadding(new Insets(7, 12, 7, 12));
+        getChildren().add(playerLayout);
     }
 
     public Text getPlaybackText() {
