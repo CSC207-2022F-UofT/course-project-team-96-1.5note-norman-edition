@@ -33,7 +33,7 @@ public class FileLoaderWriter implements Storage{
             return null;
         }   else {
             HashMap<String, byte[]> file = new HashMap<>();
-            file.put(chosenFile.getName().substring(0, chosenFile.getName().length() - 4),
+            file.put(chosenFile.getName(),
                     Files.readAllBytes(chosenFile.toPath()));
             return file;
         }
@@ -47,7 +47,7 @@ public class FileLoaderWriter implements Storage{
      * @throws Exception when writing fails for any reason
      */
     public URI writeFile(String name, byte[] Data) throws Exception{
-        File newFile = File.createTempFile(name, ".mp3");
+        File newFile = File.createTempFile(name, ".File");
         FileOutputStream writer = new FileOutputStream(newFile);
         writer.write(Data);
         writer.close();
