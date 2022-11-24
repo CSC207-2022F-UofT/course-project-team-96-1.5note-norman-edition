@@ -1,6 +1,7 @@
 package gui.media;
 
 import app.media.*;
+import javafx.scene.media.MediaView;
 
 
 /**
@@ -23,7 +24,12 @@ public class GUIMediaFactory {
         if (media instanceof PenStroke) {
             return new GUIPenStroke((PenStroke) media);
         } if (media instanceof MediaAudio) {
-            return new GUIAudio((MediaAudio) media);
+            System.out.println(media.getName());
+            if (media.getName().substring(media.getName().length() - 4).equals(".mp4"))   {
+                return new GUIVideo((MediaAudio) media);
+            }   else {
+                return new GUIAudio((MediaAudio) media);
+            }
         } if (media instanceof  MediaHyperlink) {
             return new GUIHyperlink((MediaHyperlink) media);
         } else {
