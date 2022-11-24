@@ -54,7 +54,6 @@ public class GUIPlayerModel {
      */
     public void playbackSliderAdjusted(double value, MediaPlayer.Status mediaStatus)    {
         Duration newTime = new Duration(value * totalDuration.toMillis());
-        System.out.println(newTime);
         //When status is ready, the audio player currentTime property does not update until the player plays
         if (mediaStatus == MediaPlayer.Status.READY)  {
             updatePlaybackText(newTime);

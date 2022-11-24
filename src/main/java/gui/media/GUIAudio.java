@@ -4,7 +4,7 @@ import app.controllers.ToolBarController;
 import app.media.MediaAudio;
 import app.media.MediaHyperlink;
 import gui.error_window.ErrorWindow;
-import gui.view_controllers.MediaPlayerController;
+import gui.model.GUIPlayerModel;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
@@ -38,7 +38,7 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
 
     private PlayerInterface playerUI;
     private double defaultVolume;
-    private MediaPlayerController controller;
+    private GUIPlayerModel playerManipulator;
 
     public GUIAudio(MediaAudio audio)   {
         super(audio);
@@ -81,7 +81,7 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
      * Configures all the controls for UI elements of the associated PlayerInterface
      */
     private void configureUI()  {
-        controller = new MediaPlayerController(this, audioPlayer.getTotalDuration());
+        playerManipulator = new GUIPlayerModel(this, audioPlayer.getTotalDuration());
 
         configurePlayButtons();
         configureAudioSlider();
@@ -94,7 +94,7 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
             public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
                 double percentElapsed = newValue.toMillis() / audioPlayer.getTotalDuration().toMillis();
                 playerUI.getPlaybackSlider().setValue(percentElapsed);
-                controller.changePlaybackText(newValue);
+                playerManipulator.updatePlaybackText(newValue);
             }
         });
 
@@ -119,25 +119,25 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
     }
 
     /**
-     * Defines actions when the rewind, play, and fast forward buttons are played
+     * Defines actions when the rewind, play, and fast-forward buttons are played
      */
     private void configurePlayButtons()    {
         playerUI.getPlay().setOnAction(e -> {
-            controller.firePlayButton(playerUI.getPlay().getText());
+            playerManipulator.firedPlayButton(playerUI.getPlay().getText());
             echoClick();
         });
         playerUI.getForward().setOnAction(e -> {
             //For some reason, without the following line this method just doesn't work sometimes and there isn't any
             //rhyme or reason as to why, though my readings indicate mediaPlayer.seek() can be inaccurate
-            controller.changePlayback(1, audioPlayer.getStatus());
+            playerManipulator.playbackSliderAdjusted(1, audioPlayer.getStatus());
             playerUI.getPlaybackSlider().setValue(1);
-            controller.firePlayButton("Pause");
+            playerManipulator.firedPlayButton("Pause");
             echoClick();
         });
 
         playerUI.getRedo().setOnAction(e -> {
-            controller.changePlayback(0, audioPlayer.getStatus());
-            controller.firePlayButton("Play"); //Ensures the player plays
+            playerManipulator.playbackSliderAdjusted(0, audioPlayer.getStatus());
+            playerManipulator.firedPlayButton("Play"); //Ensures the player plays
             echoClick();
         });
     }
@@ -147,8 +147,8 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
      */
     private void configurePlayRateOptions() {
         playerUI.getPlayRateOptions().setOnAction(e ->{
-            controller.changePlayRate((playerUI.getPlayRateOptions().getSelectionModel().getSelectedIndex() + 1)
-                    * 0.5);
+            playerManipulator.changePlayRate((playerUI.getPlayRateOptions().getSelectionModel().
+                    getSelectedIndex() + 1) * 0.5);
             echoClick();
         });
     }
@@ -160,7 +160,7 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
         playerUI.getAudioSlider().valueProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                controller.changePlayVolume(defaultVolume * (double) newValue);
+                playerManipulator.changeVolume(defaultVolume * (double) newValue);
                 echoClick();
             }
         });
@@ -174,7 +174,7 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 if(playerUI.getPlaybackSlider().isPressed())    {
-                    controller.changePlayback((Double) newValue, audioPlayer.getStatus());
+                    playerManipulator.playbackSliderAdjusted((Double) newValue, audioPlayer.getStatus());
                     echoClick();
                 }
             }
@@ -192,18 +192,19 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
 
         //Creating UI for each timestamp
         for(Duration timestamp: this.getMedia().getTimestamps())   {
-            MediaHyperlink newTimestamp = hyperlinkMaker.createHyperlink(controller.createFormattedTime(timestamp),
+            MediaHyperlink newTimestamp = hyperlinkMaker.createHyperlink(playerManipulator.formatTime(timestamp),
                     timestamp.toString());
             //Although this throws an exception, it should never actually occur
             GUIHyperlink hyperlinkUI = (GUIHyperlink) GUIMediaFactory.getFor(newTimestamp);
             hyperlinkUI.getHyperlink().setOnAction(e -> {
                 //Play first because of an odd bug with clicking after player ends
-                controller.firePlayButton("Play");
-                controller.changePlayback(timestamp.toMillis() / audioPlayer.getTotalDuration().toMillis(),
+                playerManipulator.firedPlayButton("Play");
+                playerManipulator.playbackSliderAdjusted(timestamp.toMillis() /
+                                audioPlayer.getTotalDuration().toMillis(),
                         getAudioPlayer().getStatus());
                 //Doing it twice because the player being in READY status causes some really bizarre bugs for no reason
                 if (audioPlayer.getStatus() == MediaPlayer.Status.READY) {
-                    controller.firePlayButton("Play");
+                    playerManipulator.firedPlayButton("Play");
                 }});
             hyperlinkUI.setManaged(true);
             alignment.getChildren().add(hyperlinkUI);
@@ -244,7 +245,7 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
 
     @Override
     public void removed()   {
-        controller.firePlayButton("Pause");
+        playerManipulator.firedPlayButton("Pause");
     }
 
     @Override
@@ -304,8 +305,8 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
         return hyperlinks;
     }
 
-    public void setController(MediaPlayerController controller) {
-        this.controller = controller;
+    public void setPlayerManipulator(GUIPlayerModel playerManipulator) {
+        this.playerManipulator = playerManipulator;
     }
 
     public VBox getTimestamps() {
