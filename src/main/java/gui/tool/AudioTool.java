@@ -115,7 +115,7 @@ public class AudioTool implements Tool{
         configureDeleteTimestamp(tbc);
     }
 
-    private void configureAddAudio(ToolBarController tbc)   {
+    protected void configureAddAudio(ToolBarController tbc)   {
         //When the addAudio button is clicked, initiate MediaAudio creation process
         settings.getAddMedia().setOnAction(e ->    {
             try {
@@ -171,6 +171,14 @@ public class AudioTool implements Tool{
     @Override
     public HandlerMethod<MouseEvent>[] getHandlerMethods() {
         return handlers;
+    }
+
+    public GUIAudio getSelectedPlayer() {
+        return selectedPlayer;
+    }
+
+    public Page getPage() {
+        return page;
     }
 }
 

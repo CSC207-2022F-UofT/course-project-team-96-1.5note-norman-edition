@@ -20,6 +20,8 @@ public class AudioModifier implements MediaManager {
     private Duration timestamp;
     private MediaAudio audio;
     private MediaCommunicator communicator;
+    private String[] types;
+    private String fileType;
 
     /** Allows the user to select an audio file to add to the page
      * @throws Exception when user selected file fails to load
@@ -28,13 +30,18 @@ public class AudioModifier implements MediaManager {
     public void addMedia() throws Exception{
         //Loading raw audio data based on user selection
         Storage fileManager = new FileLoaderWriter();
-        HashMap<String, byte[]> fileData = fileManager.readFile(new String[]{"*.mp3","*.wav"},
-                "Audio (.mp3, .wav)");
+        StringBuilder acceptedExtensions = new StringBuilder("(" + types[0]);
+        for(int i = 1; i < types.length; i++)    {
+            acceptedExtensions.append(", ").append(types[i]);
+        }
+        acceptedExtensions.append(")");
+
+        HashMap<String, byte[]> fileData = fileManager.readFile(types, fileType + acceptedExtensions);
         if (fileData != null)    {
             String fileName = (String) (fileData.keySet().toArray())[0];
-            MediaAudio audio = new MediaAudio(fileName, 200, 200, 200, 200,
-                    fileData.get(fileName), new ArrayList<Duration>()); //Temp Constructor
-
+            MediaAudio audio = new MediaAudio(fileName.substring(0, fileName.length() - 4)
+                    , 200, 200, 200, 200, fileData.get(fileName), new ArrayList<Duration>(),
+                    fileType);
             //Giving the audio an ID then adding it to the page
             this.communicator.updateMedia(audio);
             }
@@ -74,5 +81,13 @@ public class AudioModifier implements MediaManager {
 
     public void setCommunicator(MediaCommunicator communicator) {
         this.communicator = communicator;
+    }
+
+    public void setFileType(String fileType) {
+        this.fileType = fileType;
+    }
+
+    public void setTypes(String[] types) {
+        this.types = types;
     }
 }

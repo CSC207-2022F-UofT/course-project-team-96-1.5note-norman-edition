@@ -24,8 +24,7 @@ public class GUIMediaFactory {
         if (media instanceof PenStroke) {
             return new GUIPenStroke((PenStroke) media);
         } if (media instanceof MediaAudio) {
-            System.out.println(media.getName());
-            if (media.getName().substring(media.getName().length() - 4).equals(".mp4"))   {
+            if (((MediaAudio) media).getType().equals("Video"))   {
                 return new GUIVideo((MediaAudio) media);
             }   else {
                 return new GUIAudio((MediaAudio) media);

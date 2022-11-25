@@ -34,6 +34,16 @@ public class ToolBarController {
     public void insertAudio(MediaCommunicator communicator) throws Exception {
         AudioModifier audioModifier = new AudioModifier();
         audioModifier.setCommunicator(communicator);
+        audioModifier.setTypes(new String[]{"*.mp3", "*.wav"});
+        audioModifier.setFileType("Audio");
+        audioModifier.addMedia();
+    }
+
+    public void insertVideo(MediaCommunicator communicator) throws Exception {
+        AudioModifier audioModifier = new AudioModifier();
+        audioModifier.setCommunicator(communicator);
+        audioModifier.setTypes(new String[]{"*.mp4"});
+        audioModifier.setFileType("Video");
         audioModifier.addMedia();
     }
 
