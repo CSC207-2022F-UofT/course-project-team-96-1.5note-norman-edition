@@ -6,9 +6,11 @@ import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.scene.text.*;
+import javafx.scene.paint.*;
 import javafx.geometry.*;
 import javafx.beans.value.*;
 
+import gui.ResourceLoader;
 import gui.tool.Tool;
 
 
@@ -139,7 +141,7 @@ class ToolPaneTitleBar extends HBox {
     private Text titleText;
 
     public ToolPaneTitleBar(Node... contents) {
-        super(PADDING);
+        super(PADDING * 2);
 
         titleText = new Text();
 
@@ -149,7 +151,9 @@ class ToolPaneTitleBar extends HBox {
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
-        getChildren().addAll(titleText, spacer);
+        Node icon = ResourceLoader.loadSVGicon("icons/wrench.svg", 12, 12, Color.GRAY);
+
+        getChildren().addAll(icon, titleText, spacer);
         getChildren().addAll(contents);
     }
 
