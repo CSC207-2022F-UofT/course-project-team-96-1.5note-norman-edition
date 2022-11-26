@@ -1,6 +1,5 @@
 package gui.media;
 
-import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.event.*;
 import javafx.beans.property.*;
@@ -15,8 +14,8 @@ import app.media.Media;
 public class GUIMedia<M extends Media> extends Pane {
 
     private M media;
-    private DoubleProperty width;
-    private DoubleProperty height;
+    private final DoubleProperty width;
+    private final DoubleProperty height;
 
     private GUIMedia() {
         // Consume events from child nodes and re-emit them with their target
