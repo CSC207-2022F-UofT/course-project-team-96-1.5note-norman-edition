@@ -47,9 +47,10 @@ public class SQLiteStorage implements MediaStorage {
      */
     public void saveTo(File file) throws Exception {
         if (this.file == null || !file.getPath().equals(this.file.getPath())) {
-            Statement s = connection.createStatement();
-            s.executeUpdate("BACKUP TO " + file.getPath());
-            setFile(file);
+            try (Statement s = connection.createStatement()) {
+                s.executeUpdate("BACKUP TO " + file.toURI().toURL());
+                setFile(file);
+            }
         }
     }
 
@@ -58,19 +59,20 @@ public class SQLiteStorage implements MediaStorage {
     }
 
     private void setupMediaTable() throws Exception {
-        Statement s = connection.createStatement();
-        s.executeUpdate("""
-                CREATE TABLE IF NOT EXISTS media(
-                    id BIGINT PRIMARY KEY,
-                    name TEXT,
-                    tags TEXT,
-                    x REAL, y REAL,
-                    width REAL, height REAL,
-                    angle REAL,
-                    z_index INTEGER,
-                    data BLOB
-                )
-                """);
+        try (Statement s = connection.createStatement()) {
+            s.executeUpdate("""
+                    CREATE TABLE IF NOT EXISTS media(
+                        id BIGINT PRIMARY KEY,
+                        name TEXT,
+                        tags TEXT,
+                        x REAL, y REAL,
+                        width REAL, height REAL,
+                        angle REAL,
+                        z_index INTEGER,
+                        data BLOB
+                    )
+                    """);
+        }
     }
 
     /**
@@ -94,24 +96,26 @@ public class SQLiteStorage implements MediaStorage {
             g.close();
         }
 
-        PreparedStatement s = connection.prepareStatement("""
-                INSERT OR REPLACE INTO media VALUES (
-                    ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
-                )
-                """);
+        final String query = """
+            INSERT OR REPLACE INTO media VALUES (
+                ?, ?, ?, ?, ?, ?, ?, ?, ?, ?
+            )
+            """;
 
-        s.setLong(1, media.getID());
-        s.setString(2, media.getName());
-        s.setString(3, getStringFromTags(media.getTags()));
-        s.setDouble(4, media.getX());
-        s.setDouble(5, media.getY());
-        s.setDouble(6, media.getWidth());
-        s.setDouble(7, media.getHeight());
-        s.setDouble(8, media.getAngle());
-        s.setInt(9, media.getZIndex());
-        s.setBytes(10, b.toByteArray());
+        try (PreparedStatement s = connection.prepareStatement(query)) {
+            s.setLong(1, media.getID());
+            s.setString(2, media.getName());
+            s.setString(3, getStringFromTags(media.getTags()));
+            s.setDouble(4, media.getX());
+            s.setDouble(5, media.getY());
+            s.setDouble(6, media.getWidth());
+            s.setDouble(7, media.getHeight());
+            s.setDouble(8, media.getAngle());
+            s.setInt(9, media.getZIndex());
+            s.setBytes(10, b.toByteArray());
 
-        s.executeUpdate();
+            s.executeUpdate();
+        }
     }
 
     // Write a set of tag strings into a single string such that it can be
@@ -128,9 +132,8 @@ public class SQLiteStorage implements MediaStorage {
     private static String getStringFromTags(Set<String> tags) {
         StringBuilder builder = new StringBuilder();
 
-        builder.append(",");
-
         for (String tag: tags) {
+            // Escape back-slashes and commas
             builder.append(tag.replace("\\", "\\\\").replace(",", "\\,"));
             builder.append(",");
         }
@@ -157,10 +160,9 @@ public class SQLiteStorage implements MediaStorage {
                 if (c == ',' && consecutiveBackSlashes % 2 == 0) {
                     String s = tagString.substring(startIndex, endIndex);
 
-                    // Exclude empty tag strings
-                    if (!s.isEmpty()) {
-                        tags.add(s.replace("\\\\", "\\"));
-                    }
+                    // replace escaped back-slashes and commas back to their
+                    // original values.
+                    tags.add(s.replace("\\\\", "\\").replace("\\,", ","));
 
                     startIndex = endIndex + 1;
                 }
@@ -173,81 +175,131 @@ public class SQLiteStorage implements MediaStorage {
     }
 
     public Media selectMediaByID(Long id) throws Exception {
-        PreparedStatement s = connection.prepareStatement("""
-                SELECT data FROM media WHERE id = ?
-                """);
-        s.setLong(1, id);
-        ResultSet r = s.executeQuery();
+        final String query = """
+            SELECT data FROM media WHERE id = ?
+            """;
 
-        if (r.next()) {
-            ByteArrayInputStream b = new ByteArrayInputStream(r.getBytes(1));
-            GZIPInputStream g = new GZIPInputStream(b);
-            try (ObjectInputStream i = new ObjectInputStream(g)) {
-                return (Media) i.readObject();
-            } finally {
-                g.close();
+        try (PreparedStatement s = connection.prepareStatement(query)) {
+            s.setLong(1, id);
+            ResultSet r = s.executeQuery();
+
+            if (r.next()) {
+                ByteArrayInputStream b = new ByteArrayInputStream(r.getBytes(1));
+                GZIPInputStream g = new GZIPInputStream(b);
+                try (ObjectInputStream i = new ObjectInputStream(g)) {
+                    return (Media) i.readObject();
+                } finally {
+                    g.close();
+                }
+            } else {
+                return null;
             }
-        } else {
-            return null;
+        }
+    }
+
+    /**
+     * Load the Media with the given unique identifier.
+     * <p>
+     * Unlike `selectMediaByID`, this method does not deserialize the object
+     * and instead instantiates the base Media class from the properties
+     * common to all media types. This is useful for inspecting the position,
+     * etc. of a stored Media object without having to deserialize the whole
+     * object (which might be costly for some potentially large Media types
+     * such as audio).
+     */
+    public Media selectBaseMediaByID(Long id) throws Exception {
+        final String query = """
+            SELECT name, tags, x, y, width, height, angle, z_index
+            FROM media WHERE id = ?
+            """;
+
+        try (PreparedStatement s = connection.prepareStatement(query)) {
+            s.setLong(1, id);
+            ResultSet r = s.executeQuery();
+
+            if (r.next()) {
+                String name = r.getString(1);
+                Set<String> tags = getTagsFromString(r.getString(2));
+                double x = r.getDouble(3);
+                double y = r.getDouble(4);
+                double width = r.getDouble(5);
+                double height = r.getDouble(6);
+                double angle = r.getDouble(7);
+                int zIndex = r.getInt(8);
+
+                return new Media(
+                        id, name, tags, x, y, width, height, angle, zIndex);
+            } else {
+                return null;
+            }
         }
     }
 
     public void deleteMediaByID(Long id) throws Exception {
-        PreparedStatement s = connection.prepareStatement("""
-                DELETE FROM media WHERE id = ?
-                """);
-        s.setLong(1, id);
-        s.executeUpdate();
+        final String query = """
+            DELETE FROM media WHERE id = ?
+            """;
+
+        try (PreparedStatement s = connection.prepareStatement(query)) {
+            s.setLong(1, id);
+            s.executeUpdate();
+        }
     }
 
     public Set<Long> selectAllIDs() throws Exception {
-        Statement s = connection.createStatement();
+        try (Statement s = connection.createStatement()) {
+            ResultSet r = s.executeQuery("""
+                    SELECT id FROM media
+                    """);
 
-        ResultSet r = s.executeQuery("""
-                SELECT id FROM media
-                """);
+            Set<Long> ids = new HashSet<>();
 
-        Set<Long> ids = new HashSet<>();
+            while (r.next()) {
+                ids.add(r.getLong(1));
+            }
 
-        while (r.next()) {
-            ids.add(r.getLong(1));
+            return ids;
         }
-
-        return ids;
     }
 
     public Set<Long> selectIDsWithin(
             double x, double y, double w, double h) throws Exception
     {
-        PreparedStatement s = connection.prepareStatement("""
+        final String query = """
             SELECT id FROM media WHERE
             x BETWEEN ? - width AND ? + width
             AND y BETWEEN ? - height AND ? + height
-            """);
-        s.setDouble(1, x);
-        s.setDouble(2, x + w);
-        s.setDouble(3, y);
-        s.setDouble(4, y + h);
+            """;
 
-        ResultSet r = s.executeQuery();
+        try (PreparedStatement s = connection.prepareStatement(query)) {
+            s.setDouble(1, x);
+            s.setDouble(2, x + w);
+            s.setDouble(3, y);
+            s.setDouble(4, y + h);
 
-        Set<Long> ids = new HashSet<>();
+            ResultSet r = s.executeQuery();
 
-        while (r.next()) {
-            ids.add(r.getLong(1));
+            Set<Long> ids = new HashSet<>();
+
+            while (r.next()) {
+                ids.add(r.getLong(1));
+            }
+
+            return ids;
         }
-
-        return ids;
     }
 
     public boolean contains(Long id) throws Exception {
-        PreparedStatement s = connection.prepareStatement("""
-                SELECT id FROM media WHERE id = ?
-                """);
-        s.setLong(1, id);
-        ResultSet r = s.executeQuery();
+        final String query = """
+            SELECT id FROM media WHERE id = ?
+            """;
 
-        return r.next();
+        try (PreparedStatement s = connection.prepareStatement(query)) {
+            s.setLong(1, id);
+            ResultSet r = s.executeQuery();
+
+            return r.next();
+        }
     }
 
     public void close() throws Exception {
