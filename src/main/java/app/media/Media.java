@@ -42,7 +42,7 @@ public class Media implements Serializable {
     private void writeObject(ObjectOutputStream out) throws IOException {
         Data d = new Data(
                 id, getName(), new HashSet<>(tags), getX(), getY(),
-                getWidth(), getHeight(), getAngle(), getZIndex());
+                getWidth(), getHeight(), getAngle(), getZindex());
 
         out.writeObject(d);
     }
@@ -168,7 +168,7 @@ public class Media implements Serializable {
         return zIndex;
     }
 
-    public final int getZIndex() {
+    public final int getZindex() {
         return zIndex.getValue();
     }
 
@@ -209,7 +209,7 @@ public class Media implements Serializable {
         this.angle.set(angle);
     }
 
-    public void setzIndex(int zIndex) {
+    public void setZindex(int zIndex) {
         this.zIndex.set(zIndex);
     }
 

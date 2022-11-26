@@ -102,6 +102,7 @@ public class SQLiteStorage implements MediaStorage {
             )
             """;
 
+<<<<<<< HEAD
         try (PreparedStatement s = connection.prepareStatement(query)) {
             s.setLong(1, media.getID());
             s.setString(2, media.getName());
@@ -113,6 +114,18 @@ public class SQLiteStorage implements MediaStorage {
             s.setDouble(8, media.getAngle());
             s.setInt(9, media.getZIndex());
             s.setBytes(10, b.toByteArray());
+=======
+        s.setLong(1, media.getID());
+        s.setString(2, media.getName());
+        s.setString(3, getStringFromTags(media.getTags()));
+        s.setDouble(4, media.getX());
+        s.setDouble(5, media.getY());
+        s.setDouble(6, media.getWidth());
+        s.setDouble(7, media.getHeight());
+        s.setDouble(8, media.getAngle());
+        s.setInt(9, media.getZindex());
+        s.setBytes(10, b.toByteArray());
+>>>>>>> media-tool
 
             s.executeUpdate();
         }
