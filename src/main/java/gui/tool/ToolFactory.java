@@ -19,7 +19,8 @@ public final class ToolFactory {
             colourTool,
             new PenTool(colourTool.colourProperty()),
             new ShapeTool(colourTool.colourProperty()),
-            new MediaTool()
+            new MediaTool(),
+            new TextTool()
         };
 
         return tools;

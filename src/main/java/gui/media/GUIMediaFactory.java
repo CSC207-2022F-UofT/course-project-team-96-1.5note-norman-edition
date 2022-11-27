@@ -24,6 +24,8 @@ public class GUIMediaFactory {
             return new GUIPenStroke((PenStroke) media);
         } else if (media instanceof GenericShape) {
             return GUIShapeFactory.getFor((GenericShape) media);
+        } else if (media instanceof TextBox) {
+            return new GUITextBox((TextBox) media);
         } else {
             throw new Exception("No appropriate GUIMedia class for `" + media + "`.");
         }
