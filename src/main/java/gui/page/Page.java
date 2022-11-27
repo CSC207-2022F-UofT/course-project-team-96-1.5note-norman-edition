@@ -4,6 +4,7 @@ import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.transform.*;
 import javafx.scene.input.*;
+import javafx.beans.*;
 import javafx.beans.value.*;
 import javafx.geometry.*;
 import javafx.event.EventHandler;
@@ -31,7 +32,7 @@ import gui.Zoomable;
 public class Page extends StackPane implements MediaObserver, Zoomable {
 
     // Additional padding added to the visible region
-    private static double VISIBLE_BOUNDS_MARGIN = 100;
+    private static double LOADABLE_BOUNDS_MARGIN = 1000;
 
     private MediaCommunicator c;
     private PageEventHandler.HandlerMethod<?>[] handlerMethods;
@@ -41,7 +42,7 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
 
     private Map<Long, GUIMedia> contents;
 
-    private Bounds prevVisibleBounds;
+    private Bounds prevLoadableBounds;
 
     private final Scale scale;
     private double scaleFactor = 1.0;
@@ -53,32 +54,42 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
 
         contents = new HashMap<>();
         mediaLayer = new Pane();
-        mediaLayer.setManaged(false);
+        // mediaLayer.setManaged(false);
 
         uiLayer = new Pane();
         uiLayer.setPickOnBounds(false);
 
         getChildren().addAll(mediaLayer, uiLayer);
 
-        prevVisibleBounds = new BoundingBox(0, 0, 0, 0);
+        prevLoadableBounds = new BoundingBox(0, 0, 0, 0);
 
         c.addObserver(this);
 
-        mediaLayer.boundsInParentProperty().addListener(o -> reloadMedia());
-        layoutBoundsProperty().addListener(o -> reloadMedia());
-
-        scale = new Scale(scaleFactor, scaleFactor, getWidth()/2,
-                getHeight()/2);
+        scale = new Scale(scaleFactor, scaleFactor);
         mediaLayer.getTransforms().add(scale);
 
         setOnScroll(new Page.ScrollHandler());
+
+        // Reload media when view changes
+        Observable[] reloadMediaOnChangesTo = new Observable[] {
+            layoutBoundsProperty(),
+            mediaLayer.boundsInParentProperty(),
+            mediaLayer.translateXProperty(),
+            mediaLayer.translateYProperty()
+        };
+
+        for (Observable obs: reloadMediaOnChangesTo) {
+            obs.addListener(o -> reloadMedia());
+        }
+
+        scale.setOnTransformChanged(e -> reloadMedia());
     }
 
     // Do necessary loading/unloading of Media for the currently visible region.
     // If an error occurs, catch it and report it to the user with ErrorWindow.
     private void reloadMedia() {
         try {
-            reloadMediaForVisibleBounds();
+            reloadMediaForLoadableBounds();
         } catch (Exception e) {
             new ErrorWindow(this, null, "Failed to load media", e).show();
         }
@@ -211,18 +222,26 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
     }
 
     /**
-     * Return a regions containing everything that is currently visible on the page.
+     * Returns the currently visible region.
      */
     private Bounds getVisibleBounds() {
-        Bounds b = mediaLayer.parentToLocal(getLayoutBounds());
-        // Add the VISIBLE_BOUNDS_MARGIN to each dimension to make sure we only
+        return mediaLayer.parentToLocal(getLayoutBounds());
+    }
+
+    /**
+     * Return a regions containing everything that should currently be loaded
+     * on the page.
+     */
+    private Bounds getLoadableBounds() {
+        Bounds b = getVisibleBounds();
+        // Add the LOADABLE_BOUNDS_MARGIN to each dimension to make sure we only
         // have to load in more media objects for large movements instead of for
         // every movement.
         return new BoundingBox(
-                b.getMinX() - VISIBLE_BOUNDS_MARGIN,
-                b.getMinY() - VISIBLE_BOUNDS_MARGIN,
-                b.getWidth() + VISIBLE_BOUNDS_MARGIN,
-                b.getHeight() + VISIBLE_BOUNDS_MARGIN);
+                b.getMinX() - LOADABLE_BOUNDS_MARGIN,
+                b.getMinY() - LOADABLE_BOUNDS_MARGIN,
+                b.getWidth() + 2 * LOADABLE_BOUNDS_MARGIN,
+                b.getHeight() + 2 * LOADABLE_BOUNDS_MARGIN);
     }
 
     /*
@@ -247,41 +266,17 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
         return Collections.max(Arrays.asList(distances));
     }
 
-    private void reloadMediaForVisibleBounds() throws Exception {
-        Bounds visibleBounds = getVisibleBounds();
+    private void reloadMediaForLoadableBounds() throws Exception {
+        Bounds loadableBounds = getLoadableBounds();
 
         // If the visible region moved far enough that we need to load/unload media
-        if (boundsDistance(visibleBounds, prevVisibleBounds) >= VISIBLE_BOUNDS_MARGIN) {
-            prevVisibleBounds = visibleBounds;
+        if (boundsDistance(loadableBounds, prevLoadableBounds) >= LOADABLE_BOUNDS_MARGIN) {
+            prevLoadableBounds = loadableBounds;
 
-            // First, remove nodes which are no longer visible
-            Set<Node> nodesToRemove = new HashSet<>();
-            Set<Long> initialIDs = new HashSet<>(contents.keySet());
-
-            for (long id: initialIDs) {
-                GUIMedia media = contents.get(id);
-
-                if (!media.getBoundsInParent().intersects(visibleBounds)) {
-                    nodesToRemove.add(contents.get(id));
-                    contents.remove(id);
-                }
-            }
-
-            for (Node n: mediaLayer.getChildren()) {
-                if (
-                    n instanceof GUIMedia &&
-                    !n.getBoundsInParent().intersects(visibleBounds))
-                {
-                    nodesToRemove.add(n);
-                }
-            }
-
-            mediaLayer.getChildren().removeAll(nodesToRemove);
-
-            // Then, load any newly visible nodes
+            // Load any newly visible nodes
             Set<Long> visibleIDs = c.getIDsWithin(
-                    visibleBounds.getMinX(), visibleBounds.getMinY(),
-                    visibleBounds.getWidth(), visibleBounds.getHeight());
+                    loadableBounds.getMinX(), loadableBounds.getMinY(),
+                    loadableBounds.getWidth(), loadableBounds.getHeight());
 
             for (long id: visibleIDs) {
                 if (!contents.containsKey(id)) {
@@ -290,14 +285,36 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
                     addGUIMediaFor(media);
                 }
             }
+
+            // Remove nodes which are no longer visible
+            Set<Long> initialIDs = new HashSet<>(contents.keySet());
+            for (long id: initialIDs) {
+                GUIMedia media = contents.get(id);
+
+                if (!media.getBoundsInParent().intersects(loadableBounds)) {
+                    removeMedia(media);
+                }
+            }
+
+            Set<Node> nodesToRemove = new HashSet<>();
+            for (Node n: mediaLayer.getChildren()) {
+                if (
+                    n instanceof GUIMedia &&
+                    !n.getBoundsInParent().intersects(loadableBounds))
+                {
+                    nodesToRemove.add(n);
+                }
+            }
+
+            mediaLayer.getChildren().removeAll(nodesToRemove);
         }
     }
 
-    // Return whether or not the media falls within the current visible bounds
-    private boolean isMediaVisible(Media media) {
+    // Return whether or not the media falls within the current loadable bounds
+    private boolean isMediaLoadable(Media media) {
         return media.isWithin(
-                prevVisibleBounds.getMinX(), prevVisibleBounds.getMinY(),
-                prevVisibleBounds.getWidth(), prevVisibleBounds.getHeight());
+                prevLoadableBounds.getMinX(), prevLoadableBounds.getMinY(),
+                prevLoadableBounds.getWidth(), prevLoadableBounds.getHeight());
     }
 
     // Instantiate a GUIMedia object for the given Media entity and add it
@@ -327,14 +344,6 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
         }
     }
 
-    public Pane getMediaLayer() {
-        return mediaLayer;
-    }
-
-    public double getScaleFactor() {
-        return scaleFactor;
-    }
-
 
     /*
      * Implementation of app.MediaObserver interface
@@ -355,7 +364,7 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
             // If GUIMedia with the given ID is already on the page, give that
             // GUIMedia the updated Media object.
             contents.get(id).mediaUpdated(media);
-        } else if (isMediaVisible(media)) {
+        } else if (isMediaLoadable(media)) {
             // Otherwise, if the Media object lies within the currently visible
             // region of the page, add a new GUIMedia object for it.
             try {
@@ -378,14 +387,31 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
      */
     @Override
     public void zoomToFactor(double factor) {
-        scaleFactor = factor;
+        // The scale transform stays rooted at the origin. Therefore, to keep
+        // the view centered on the same point, our approach is as follows:
+        //
+        // * Get the center of the view (in the mediaLayer's coordinate space)
+        // * Scale the mediaLayer
+        // * Get the center of the view again and compute the displacement
+        // * Translate the mediaLayer to un-do the displacement caused by the
+        //   scale.
+        //
+        // This guarantees that the center of the page stays fixed during
+        // zooming.
 
-        scale.setPivotX(getLayoutX() + getWidth()/2);
-        scale.setPivotY(getLayoutY() + getHeight()/2);
+        Bounds b = getVisibleBounds();
+        Point2D center = new Point2D(b.getCenterX(), b.getCenterY());
+
+        scaleFactor = factor;
         scale.setX(scaleFactor);
         scale.setY(scaleFactor);
 
-        reloadMedia();
+        b = getVisibleBounds();
+        Point2D scaledCenter = new Point2D(b.getCenterX(), b.getCenterY());
+        Point2D diff = scaledCenter.subtract(center);
+
+        mediaLayer.setTranslateX(mediaLayer.getTranslateX() + diff.getX() * factor);
+        mediaLayer.setTranslateY(mediaLayer.getTranslateY() + diff.getY() * factor);
     }
 
     /** Scale toZoom by jumping to the next smallest/largest (depending on the value of inOrOut) double in zoomOptions
@@ -396,7 +422,7 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
     public void zoomInOrOut(String inOrOut){
         double[] zoomOptions = {0.1, 0.25, 1.0/3.0, 0.5, 2.0/3.0, 0.75, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0,
                 9.0, 10.0};
-        double currentFactor = getScaleFactor();
+        double currentFactor = scaleFactor;
         if (currentFactor == 0.1 && inOrOut.equals("Out")) {
             return;
         } else if (currentFactor == 10.0 && inOrOut.equals("In")) {
