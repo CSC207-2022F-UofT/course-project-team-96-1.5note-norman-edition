@@ -1,10 +1,12 @@
 package app.media;
-import java.util.Set;
 
 public class FileMedia extends Media {
-    //A subclass of PageMedia defining Media that are associated with external files
-    //Instance Attributes:
-    //  rawData: The raw byte data of the media in question
+    /** Subclass of PageMedia defining Media that are associated with external files
+     * <p>
+     * Aside from regular Media parameters, defined by raw data stored by the referenced file stored as an
+     * array of bytes
+     */
+
 
     private byte[] rawData;
 

@@ -1,8 +1,9 @@
 package app.controllers;
 
-import app.drawables.SelectionTool;
-import app.drawables.ShapeCreator;
+import app.MediaCommunicator;
 import app.interaction_managers.Tagger;
+import app.media.MediaAudio;
+import app.media.MediaHyperlink;
 import app.media_managers.AudioModifier;
 import app.media_managers.ImageModifier;
 import app.media_managers.TextModifier;
@@ -11,7 +12,6 @@ import gui.media.GUIAudio;
 import gui.page.Page;
 import javafx.geometry.Point2D;
 import javafx.util.Duration;
-import javafx.scene.Node;
 import javafx.scene.control.TextField;
 
 public class ToolBarController {
@@ -31,30 +31,23 @@ public class ToolBarController {
         imageModifier.addMedia();
     }
 
-    public void insertAudio(Page page) throws Exception{
+    public void insertAudio(MediaCommunicator communicator) throws Exception {
         AudioModifier audioModifier = new AudioModifier();
-        audioModifier.setPage(page);
+        audioModifier.setCommunicator(communicator);
         audioModifier.addMedia();
     }
 
-    public void addTimestamp(GUIAudio audioUI, Duration Timestamp, Page page) throws Exception  {
+    public void modifyTimestamp(MediaAudio audioUI, Duration Timestamp, MediaCommunicator communicator) throws Exception {
         AudioModifier audioModifier = new AudioModifier();
         audioModifier.setAudio(audioUI);
         audioModifier.addTimeStamp(Timestamp);
-        audioModifier.setPage(page);
+        audioModifier.setCommunicator(communicator);
         audioModifier.modifyMedia();
     }
 
-    public void drawShape(Point2D point1, Point2D point2, String shape) {
-        ShapeCreator shapeCreator = new ShapeCreator();
-
-        shapeCreator.useTwoPositions(point1, point2, shape);
-    }
-
-    public void select(Point2D point1, Point2D point2, String shape)
-    {
-        SelectionTool selectionTool = new SelectionTool();
-        selectionTool.useTwoPositions(point1, point2, shape);
+    public MediaHyperlink createHyperlink(String text, String source)   {
+        TextModifier textModifier = new TextModifier();
+        return textModifier.createAudioTimestamp(text, source);
     }
 
     public void tag(TextField node, GUIMedia<?> guiMedia)

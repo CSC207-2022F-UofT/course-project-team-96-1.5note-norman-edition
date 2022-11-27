@@ -1,14 +1,17 @@
 package app.media;
 import javafx.util.Duration;
 import java.util.ArrayList;
-import java.util.Set;
 
 public class MediaAudio extends FileMedia{
-    //A subclass of PageFileMedia, defining Audio that exists on the page
-    //Instance Attributes:
-    //  timestamps: A set of timestamps associated with this audio
-    //  defaultVolume: default volume of the audio as defined by the audio files
-    private ArrayList<Duration> timestamps;
+    /** Entity class for storing playable types of media
+     * <p>
+     * Aside from regular Media and FileMedia parameters, defined by a list of Durations denoting points to be linked
+     * to within the associated playable type
+     * <p>
+     * Representation Invariant: All Durations in timestamps are valid points in the associated playable media
+     */
+
+    private final ArrayList<Duration> timestamps;
 
     public MediaAudio(String name, double x, double y, double width, double height, byte[] rawData,
                       ArrayList<Duration>  timestamps) {
@@ -19,9 +22,5 @@ public class MediaAudio extends FileMedia{
 
     public ArrayList<Duration>  getTimestamps() {
         return timestamps;
-    }
-
-    public void setTimestamps(ArrayList<Duration>  timestamps) {
-        this.timestamps = timestamps;
     }
 }

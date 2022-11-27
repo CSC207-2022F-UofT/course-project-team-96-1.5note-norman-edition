@@ -15,16 +15,16 @@ public class GUIHyperlink extends GUIMedia<MediaHyperlink>{
     public GUIHyperlink(MediaHyperlink media) {
         super(media);
         this.hyperlink = new Hyperlink(media.getText());
+
+        this.getChildren().add(hyperlink);
     }
 
-    public void createTimestampLink(MediaPlayer audioPlayer)  {
-        //Uses the media's source attribute to create a timestamp
-        //Precondition: media.link is a double representing the duration in milliseconds of the associated GUIAudio
-        Duration length = new Duration(Double.parseDouble(this.getMedia().getLink()));
-        this.hyperlink.setOnAction(e -> {
-            audioPlayer.seek(length);
-            audioPlayer.play();
-        });
+    public Hyperlink getHyperlink() {
+        return hyperlink;
+    }
 
+    @Override
+    public String toString()    {
+        return this.getMedia().getText();
     }
 }
