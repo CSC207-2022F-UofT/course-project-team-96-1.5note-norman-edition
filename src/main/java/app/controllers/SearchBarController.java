@@ -20,5 +20,4 @@ public class SearchBarController {
         this.yPos = searcher.getYResults();
         this.results = xPos.size();
     }
-
 }

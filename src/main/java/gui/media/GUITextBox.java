@@ -4,6 +4,7 @@ import javafx.scene.text.*;
 import javafx.scene.input.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.scene.paint.*;
 import javafx.geometry.*;
 
 import app.media.TextBox;
@@ -15,18 +16,21 @@ import app.media.Media;
 public class GUITextBox extends GUIMedia<TextBox> {
 
     private Text text;
+    private Color colour;
 
-    private void setInitialValues() {
+    protected void setInitialValues() {
         this.text = new Text("");
+        colour = Color.BLACK;
 
         getChildren().clear();
         getChildren().addAll(this.text);
     }
 
-    public GUITextBox(Point2D point, String text) {
-        super(new TextBox(point.getX(), point.getY(), text));
+    public GUITextBox(Point2D point, String text, Color colour) {
+        super(new TextBox(point.getX(), point.getY(), text, colour.toString()));
 
         setInitialValues();
+        this.colour = colour;
         setText(text);
     }
 
@@ -41,12 +45,18 @@ public class GUITextBox extends GUIMedia<TextBox> {
 
         setInitialValues();
         setMedia(newText);
+        colour = Color.valueOf(newText.getColour());
         setText(newText.getText());
     }
 
-    private void setText(String textIn) {
+    protected void setText(String textIn) {
+        this.text.setFill(colour);
         this.text.setText(textIn);
         this.getMedia().setText(textIn);
+    }
+
+    protected Text getTextNode() {
+        return text;
     }
 
     public String getText() { return this.text.getText(); }

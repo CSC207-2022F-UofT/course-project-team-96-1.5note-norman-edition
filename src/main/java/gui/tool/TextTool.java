@@ -4,6 +4,8 @@ import javafx.event.*;
 import javafx.scene.input.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.scene.paint.*;
+import javafx.beans.property.*;
 import javafx.geometry.*;
 
 import gui.page.Page;
@@ -24,11 +26,15 @@ public class TextTool implements Tool {
 
     private GUITextBox currentText;
 
-    public TextTool() {
+    private ObjectProperty<Color> colour;
+
+    public TextTool(ObjectProperty<Color> colour) {
         HandlerMethod[] handlers = {
                 new HandlerMethod<>(MouseEvent.MOUSE_CLICKED, this::manipulateText)
         };
         this.handlers = handlers;
+
+        this.colour = colour;
 
         settings = new TextSettings();
 
@@ -83,7 +89,8 @@ public class TextTool implements Tool {
             else{
                 currentText = new GUITextBox(
                         page.getMouseCoords(e),
-                        settings.getText()
+                        settings.getText(),
+                        colour.getValue()
                 );
                 page.addMedia(currentText);
                 page.updateMedia(currentText);
