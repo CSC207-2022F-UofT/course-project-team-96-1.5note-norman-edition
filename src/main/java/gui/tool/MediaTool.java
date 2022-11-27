@@ -69,10 +69,7 @@ public class MediaTool implements Tool {
 
     public MediaTool() {
         boxSelectRectangle = new BoxSelectRectangle();
-        selectedEffect = new DropShadow(
-                BlurType.ONE_PASS_BOX,
-                SELECTED_COLOUR,
-                20, 0.5, 0, 0);
+        selectedEffect = new DropShadow(20, SELECTED_COLOUR);
         action = Action.NONE;
 
         handlers = new HandlerMethod[] {
