@@ -2,6 +2,7 @@ package gui.tool;
 
 import app.controllers.ToolBarController;
 import gui.media.GUIMedia;
+import gui.page.Page;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
@@ -18,6 +19,8 @@ public class TagTool implements Tool{
     private final HandlerMethod<?>[] handlers;
     private final Button tagButton = new Button("Tag");
     private GUIMedia<?> media;
+    private Page page;
+
     public TagTool(){
         settings = new TagSettings();
         // Handler methods for when the user clicks on something on the page
@@ -36,6 +39,16 @@ public class TagTool implements Tool{
     @Override
     public FlowPane getSettingsGUI(){
         return settings;
+    }
+
+    @Override
+    public void enabledFor(Page page) {
+        this.page = page;
+    }
+
+    @Override
+    public void disabledFor(Page page) {
+        this.page = null;
     }
 
     // Method to get the media that the user clicks on the page
@@ -67,7 +80,7 @@ public class TagTool implements Tool{
                 ToolBarController tb = new ToolBarController();
                 tb.tag(createTag, media);
                 createTag.clear();
-
+                page.updateMedia(media);
             });
 
             // Visually setting the textfield and button
