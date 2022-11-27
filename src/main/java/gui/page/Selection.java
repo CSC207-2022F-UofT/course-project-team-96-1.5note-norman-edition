@@ -56,6 +56,7 @@ public class Selection {
 
         for (GUIMedia m: media) {
             addSelectedEffect(m);
+            m.use();
         }
     }
 
@@ -67,6 +68,7 @@ public class Selection {
 
         for (GUIMedia m: media) {
             removeSelectedEffect(m);
+            m.release();
         }
     }
 
@@ -110,7 +112,7 @@ public class Selection {
             page.getCommunicator().deleteMedia(media.getID());
         }
 
-        selection.clear();
+        removeAllMedia();
     }
 
     /**

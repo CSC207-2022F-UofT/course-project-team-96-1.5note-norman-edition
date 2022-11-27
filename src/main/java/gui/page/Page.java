@@ -293,23 +293,12 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
 
                 if (
                         media != null
+                        && !media.isInUse()
                         && !media.getBoundsInParent().intersects(loadableBounds))
                 {
                     removeMedia(media);
                 }
             }
-
-            Set<Node> nodesToRemove = new HashSet<>();
-            for (Node n: mediaLayer.getChildren()) {
-                if (
-                    n instanceof GUIMedia &&
-                    !n.getBoundsInParent().intersects(loadableBounds))
-                {
-                    nodesToRemove.add(n);
-                }
-            }
-
-            mediaLayer.getChildren().removeAll(nodesToRemove);
         }
     }
 

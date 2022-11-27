@@ -17,7 +17,7 @@ public class GUIMedia<M extends Media> extends Pane {
     private final DoubleProperty width;
     private final DoubleProperty height;
 
-    private boolean isSelected;
+    private int numUsers;
 
     private GUIMedia() {
         // Consume events from child nodes and re-emit them with their target
@@ -44,6 +44,8 @@ public class GUIMedia<M extends Media> extends Pane {
                 boundsInParentProperty().addListener(this::setDimensions);
             }
         });
+
+        numUsers = 0;
     }
 
     private void setDimensions(Observable o) {
@@ -66,6 +68,39 @@ public class GUIMedia<M extends Media> extends Pane {
 
     public M getMedia() {
         return media;
+    }
+
+    /**
+     * Indicate that the caller is using the GUIMedia instance and it should
+     * not be un-loaded.
+     * <p>
+     * The `release` method MUST be called when the GUIMedia is no longer
+     * needed. Each call to `use` MUST have a corresponding call to `release`.
+     */
+    public void use() {
+        numUsers++;
+    }
+
+    /**
+     * Indicate that the caller is no longer using the GUIMedia instance and
+     * it can be un-loaded.
+     */
+    public void release() {
+        numUsers--;
+        if (numUsers < 0) {
+            throw new RuntimeException(
+                    new IllegalStateException(
+                        "GUIMedia released more times than used."));
+        }
+    }
+
+    /**
+     * Return whether or not there are any users of this GUIMedia.
+     * If this method returns `false`, the Media should not be automatically
+     * removed from the page.
+     */
+    public boolean isInUse() {
+        return numUsers > 0;
     }
 
     public void setMedia(M media) {
