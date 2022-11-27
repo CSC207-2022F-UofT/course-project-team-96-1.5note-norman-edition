@@ -20,7 +20,9 @@ public final class ToolFactory {
             new PenTool(colourTool.colourProperty()),
             new ShapeTool(colourTool.colourProperty()),
             new MediaTool(),
-            new TextTool()
+            new TextTool(),
+            new TagTool(),
+            new SearchTool()
         };
 
         return tools;
