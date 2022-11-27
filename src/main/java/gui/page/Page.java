@@ -128,18 +128,13 @@ public class Page extends StackPane implements MediaObserver {
      */
     public void updateMedia(GUIMedia media) {
         try {
-<<<<<<< HEAD
-            c.updateMedia(media.getMedia(), id -> contents.put(id, media));
-=======
             if (media.getID() == Media.EMPTY_ID) {
-                media.getMedia().setID(c.getNewID());
                 contents.put(media.getID(), media);
             }
 
             if (contains(media)) {
                 c.updateMedia(media.getMedia());
             }
->>>>>>> media-tool
         } catch (Exception e) {
             new ErrorWindow(this, null, "Updating Media object failed.", e)
                 .show();

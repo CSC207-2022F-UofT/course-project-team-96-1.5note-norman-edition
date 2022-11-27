@@ -15,11 +15,8 @@ public final class ToolFactory {
         Tool[] tools = {
             colourTool,
             new PenTool(colourTool.colourProperty()),
-<<<<<<< HEAD
-                new ShapeTool(colourTool.colourProperty())
-=======
+            new ShapeTool(colourTool.colourProperty()),
             new MediaTool()
->>>>>>> media-tool
         };
 
         return tools;
