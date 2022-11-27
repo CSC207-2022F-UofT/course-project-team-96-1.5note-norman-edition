@@ -138,7 +138,7 @@ public class TestSQLiteStorage {
         assertEquals(m1.getWidth(), m2.getWidth(), 0.01);
         assertEquals(m1.getHeight(), m2.getHeight(), 0.01);
         assertEquals(m1.getAngle(), m2.getAngle(), 0.01);
-        assertEquals(m1.getZIndex(), m2.getZIndex());
+        assertEquals(m1.getZindex(), m2.getZindex());
         assertEquals(m1.getTags(), m2.getTags());
     }
 }
