@@ -10,6 +10,10 @@ import javafx.beans.property.*;
 import javafx.geometry.*;
 
 
+/**
+ * Provides a GUI for choosing a colour. The selected colour can be used by
+ * other tools.
+ */
 public class ColourTool implements Tool {
 
     private static final Color DEFAULT_COLOUR = Color.BLACK;
@@ -22,6 +26,9 @@ public class ColourTool implements Tool {
         colour = new SimpleObjectProperty<>();
         settings = new ColourSettings(colour);
 
+        // "indicator" circle which changes colour to match the currently
+        // selected colour. This way, the current colour can be seen without
+        // having to select the colour tool.
         colourIndicator = new Circle(7);
         colourIndicator.fillProperty().bind(colour);
         colourIndicator.setStrokeWidth(1);
@@ -36,6 +43,8 @@ public class ColourTool implements Tool {
 
         colour.setValue(DEFAULT_COLOUR);
     }
+
+    // Implementation of Tool interface:
 
     @Override
     public String getName() {
@@ -52,16 +61,25 @@ public class ColourTool implements Tool {
         return settings;
     }
 
+    /**
+     * Return the currently selected colour.
+     */
     public Color getColour() {
         return colour.getValue();
     }
 
+    /**
+     * Return an ObjectProperty wrapping the currently selected colour. This
+     * allows users of this class to listen for changes to the currently
+     * selected colour.
+     */
     public ObjectProperty<Color> colourProperty() {
         return colour;
     }
 }
 
 
+// Settings GUI for the colour tool
 class ColourSettings extends FlowPane {
 
     private static int PADDING = 5;
@@ -237,6 +255,7 @@ class ColourHistory extends FlowPane {
 
     private ObjectProperty<Color> colour;
 
+    // GUI compontent for individual entries in the colour history.
     private static class Entry extends Rectangle {
 
         private static final int SIZE = 20;
@@ -260,24 +279,19 @@ class ColourHistory extends FlowPane {
         setAlignment(Pos.TOP_CENTER);
     }
 
+    // Add a new colour to the history. If the colour is already in the history,
+    // it is removed to avoid duplicates. If the history length exceeds the
+    // maximum, the last colour is removed to make room for the new one.
     public void update(Color colour) {
         removeAll(colour);
 
-        Color firstColour = null;
-        if (!getChildren().isEmpty()) {
-            Entry firstEntry = (Entry) getChildren().get(0);
-            firstColour = firstEntry.getColour();
-        }
+        Entry entry = new Entry(colour);
+        getChildren().add(0, entry);
 
-        if (!colour.equals(firstColour)) {
-            Entry entry = new Entry(colour);
-            getChildren().add(0, entry);
+        entry.setOnMouseClicked(e -> this.colour.setValue(entry.getColour()));
 
-            entry.setOnMouseClicked(e -> this.colour.setValue(entry.getColour()));
-
-            if (getChildren().size() > MAX_HISTORY) {
-                getChildren().remove(getChildren().size() - 1);
-            }
+        if (getChildren().size() > MAX_HISTORY) {
+            getChildren().remove(getChildren().size() - 1);
         }
     }
 

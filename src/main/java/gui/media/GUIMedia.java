@@ -30,9 +30,6 @@ public class GUIMedia<M extends Media> extends Pane {
 
         // Don't block mouse clicks/other input
         setPickOnBounds(false);
-        // Don't use a managed layout, i.e. stop the page in which the GUIMedia
-        // is placed from influencing the layout bounds of the GUIMedia.
-        setManaged(false);
 
         width = new SimpleDoubleProperty();
         height = new SimpleDoubleProperty();
