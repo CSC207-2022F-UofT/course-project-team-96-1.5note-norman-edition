@@ -72,7 +72,7 @@ public class MediaTool implements Tool {
         selectedEffect = new DropShadow(
                 BlurType.ONE_PASS_BOX,
                 SELECTED_COLOUR,
-                10, 1, 0, 0);
+                20, 0.5, 0, 0);
         action = Action.NONE;
 
         handlers = new HandlerMethod[] {
