@@ -147,13 +147,7 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
      */
     public void updateMedia(GUIMedia media) {
         try {
-            if (media.getID() == Media.EMPTY_ID) {
-                contents.put(media.getID(), media);
-            }
-
-            if (contains(media)) {
-                c.updateMedia(media.getMedia());
-            }
+            c.updateMedia(media.getMedia(), id -> contents.put(id, media));
         } catch (Exception e) {
             new ErrorWindow(this, null, "Updating Media object failed.", e)
                 .show();
