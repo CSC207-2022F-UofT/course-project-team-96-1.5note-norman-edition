@@ -26,7 +26,9 @@ public class GUIMediaFactory {
             return GUIShapeFactory.getFor((GenericShape) media);
         } else if (media instanceof TextBox) {
             return new GUITextBox((TextBox) media);
-        } else {
+        } else if (media instanceof MediaAudio) {
+            return new GUIAudio((MediaAudio) media);
+        }   else {
             throw new Exception("No appropriate GUIMedia class for `" + media + "`.");
         }
     }

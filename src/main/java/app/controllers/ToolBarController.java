@@ -7,7 +7,10 @@ import app.media_managers.AudioModifier;
 import app.media_managers.ImageModifier;
 import app.media_managers.TextModifier;
 import gui.media.GUIMedia;
+import gui.media.GUIAudio;
+import gui.page.Page;
 import javafx.geometry.Point2D;
+import javafx.util.Duration;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
 
@@ -28,9 +31,18 @@ public class ToolBarController {
         imageModifier.addMedia();
     }
 
-    public void insertAudio() throws Exception {
+    public void insertAudio(Page page) throws Exception{
         AudioModifier audioModifier = new AudioModifier();
+        audioModifier.setPage(page);
         audioModifier.addMedia();
+    }
+
+    public void addTimestamp(GUIAudio audioUI, Duration Timestamp, Page page) throws Exception  {
+        AudioModifier audioModifier = new AudioModifier();
+        audioModifier.setAudio(audioUI);
+        audioModifier.addTimeStamp(Timestamp);
+        audioModifier.setPage(page);
+        audioModifier.modifyMedia();
     }
 
     public void drawShape(Point2D point1, Point2D point2, String shape) {

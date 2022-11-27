@@ -291,7 +291,10 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
             for (long id: initialIDs) {
                 GUIMedia media = contents.get(id);
 
-                if (!media.getBoundsInParent().intersects(loadableBounds)) {
+                if (
+                        media != null
+                        && !media.getBoundsInParent().intersects(loadableBounds))
+                {
                     removeMedia(media);
                 }
             }

@@ -9,15 +9,11 @@ public class MediaAudio extends FileMedia{
     //  timestamps: A set of timestamps associated with this audio
     //  defaultVolume: default volume of the audio as defined by the audio files
     private ArrayList<Duration> timestamps;
-    private double defaultVolume;
-
-
 
     public MediaAudio(String name, double x, double y, double width, double height, byte[] rawData,
-                      ArrayList<Duration>  timestamps, double defaultVolume) {
+                      ArrayList<Duration>  timestamps) {
         super(name, x, y, width, height, rawData);
         this.timestamps = timestamps;
-        this.defaultVolume = defaultVolume;
     }
 
 
@@ -25,15 +21,7 @@ public class MediaAudio extends FileMedia{
         return timestamps;
     }
 
-    public double getDefaultVolume() {
-        return defaultVolume;
-    }
-
     public void setTimestamps(ArrayList<Duration>  timestamps) {
         this.timestamps = timestamps;
-    }
-
-    public void setDefaultVolume(double defaultVolume) {
-        this.defaultVolume = defaultVolume;
     }
 }

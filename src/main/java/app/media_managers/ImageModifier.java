@@ -3,12 +3,12 @@ package app.media_managers;
 public class ImageModifier implements MediaManager {
     private String caption;
     @Override
-    public void addMedia() throws Exception{
+    public void addMedia() {
 
     }
 
     @Override
-    public void modifyMedia() throws Exception{
+    public void modifyMedia() {
 
     }
 

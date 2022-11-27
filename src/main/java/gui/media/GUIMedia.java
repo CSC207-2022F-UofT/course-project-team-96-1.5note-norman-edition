@@ -17,6 +17,8 @@ public class GUIMedia<M extends Media> extends Pane {
     private final DoubleProperty width;
     private final DoubleProperty height;
 
+    private boolean isSelected;
+
     private GUIMedia() {
         // Consume events from child nodes and re-emit them with their target
         // set to the GUIMedia object.
