@@ -359,7 +359,7 @@ class PlayerInterface extends VBox {
         this.audioSlider = new Slider(0, 1, 1);
         audioSlider.setPrefWidth(80);
 
-        this.audioLabel = new Text(name.substring(0, name.length() - 4));
+        this.audioLabel = new Text(name);
         compileLayout();
     }
 
