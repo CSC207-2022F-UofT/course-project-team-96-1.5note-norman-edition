@@ -49,9 +49,11 @@ public class HyperlinkTool implements Tool {
         if (pick instanceof GUIHyperlinkBox) {
             GUIHyperlinkBox castpick = (GUIHyperlinkBox) pick; //casting to use the methods of GUIHyperlinkbox
             String clicked = castpick.getLink();
+            System.out.print(clicked + "link");
 
             try {
                 URI url = new URI(clicked);
+
 
                 // https://bugs.openjdk.org/browse/JDK-8267572
                 javax.swing.SwingUtilities.invokeLater(() -> {
@@ -97,7 +99,8 @@ public class HyperlinkTool implements Tool {
             );
 
         // adds link to page if it is valid
-        if (settings.checkLink(settings.getLink())) {
+        if (settings.checkLink(settings.getLink()) && currentText != null) {
+            currentText.updateHyperLink(settings.getText(), settings.getLink());
             page.addMedia(currentText);
             page.updateMedia(currentText);
 /*            settings.setLink("");
