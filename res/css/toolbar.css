@@ -3,3 +3,7 @@
     -fx-border-color: -fx-box-border;
     -fx-border-width: 0 0 1 0;
 }
+
+.toolbar .toggle-button {
+    -fx-color: white;
+}

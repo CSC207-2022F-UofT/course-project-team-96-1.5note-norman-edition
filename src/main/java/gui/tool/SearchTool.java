@@ -1,6 +1,7 @@
 package gui.tool;
 
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 
 import app.controllers.SearchBarController;
 import app.media.Media;
+import gui.ResourceLoader;
 import gui.page.Page;
 import gui.media.GUIMedia;
 
@@ -38,6 +40,12 @@ public class SearchTool implements Tool{
     @Override
     public String getName(){
         return "Search";
+    }
+
+    @Override
+    public Node getGraphic() {
+        return new Label(
+                getName(), ResourceLoader.loadSVGicon("icons/search.svg", 15, 15));
     }
 
     @Override

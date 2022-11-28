@@ -5,11 +5,12 @@ import gui.media.GUIPolygon;
 import gui.media.GUIRectangle;
 import gui.media.GUIShape;
 import gui.page.Page;
+import gui.ResourceLoader;
 import javafx.beans.property.ObjectProperty;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.control.Label;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
@@ -62,6 +63,12 @@ public class ShapeTool implements Tool {
     @Override
     public String getName() {
         return "Shape";
+    }
+
+    @Override
+    public Node getGraphic() {
+        return new Label(
+                getName(), ResourceLoader.loadSVGicon("icons/shape.svg", 15, 15));
     }
 
     @Override

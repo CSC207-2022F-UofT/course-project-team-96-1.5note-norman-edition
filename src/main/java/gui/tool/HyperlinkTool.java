@@ -2,7 +2,7 @@ package gui.tool;
 import gui.page.Page;
 import javafx.beans.property.ObjectProperty;
 import javafx.event.EventTarget;
-import javafx.scene.control.Alert;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.*;
@@ -10,6 +10,7 @@ import javafx.scene.layout.*;
 import javafx.geometry.*;
 import gui.media.GUIHyperlinkBox;
 import gui.error_window.ErrorWindow;
+import gui.ResourceLoader;
 import javafx.scene.paint.*;
 import java.awt.Desktop;
 import java.net.URI;
@@ -121,6 +122,12 @@ public class HyperlinkTool implements Tool {
     // getter methods
     @Override
     public String getName() {return "Hyperlink";}
+
+    @Override
+    public Node getGraphic() {
+        return new Label(
+                getName(), ResourceLoader.loadSVGicon("icons/hyperlink.svg", 15, 15));
+    }
 
     @Override
     public HandlerMethod[] getHandlerMethods() {

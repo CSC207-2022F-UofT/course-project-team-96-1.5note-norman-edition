@@ -3,7 +3,9 @@ package gui.tool;
 import app.controllers.ToolBarController;
 import gui.media.GUIMedia;
 import gui.page.Page;
+import gui.ResourceLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.FlowPane;
@@ -31,6 +33,13 @@ public class TagTool implements Tool{
     public String getName(){
         return "Tag";
     }
+
+    @Override
+    public Node getGraphic() {
+        return new Label(
+                getName(), ResourceLoader.loadSVGicon("icons/tag.svg", 15, 15));
+    }
+
     @Override
     public HandlerMethod<?>[] getHandlerMethods() {
         return handlers;

@@ -1,6 +1,7 @@
 package gui.tool;
 
 import javafx.event.*;
+import javafx.scene.*;
 import javafx.scene.input.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -8,6 +9,7 @@ import javafx.scene.paint.*;
 import javafx.beans.property.*;
 import javafx.geometry.*;
 
+import gui.ResourceLoader;
 import gui.page.Page;
 import gui.media.GUITextBox;
 
@@ -48,6 +50,12 @@ public class TextTool implements Tool {
 
     @Override
     public String getName() { return "Text"; }
+
+    @Override
+    public Node getGraphic() {
+        return new Label(
+                getName(), ResourceLoader.loadSVGicon("icons/text.svg", 15, 15));
+    }
 
     @Override
     public HandlerMethod[] getHandlerMethods() {

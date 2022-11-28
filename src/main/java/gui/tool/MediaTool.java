@@ -16,6 +16,7 @@ import javafx.beans.*;
 import javafx.geometry.*;
 
 import app.media.Media;
+import gui.ResourceLoader;
 import gui.media.GUIMedia;
 import gui.page.Page;
 import gui.page.PageEventHandler;
@@ -107,6 +108,12 @@ public class MediaTool implements Tool {
     @Override
     public String getName() {
         return "Media";
+    }
+
+    @Override
+    public Node getGraphic() {
+        return new Label(
+                getName(), ResourceLoader.loadSVGicon("icons/media.svg", 15, 15));
     }
 
     @Override
