@@ -128,8 +128,11 @@ public class GUIMedia<M extends Media> extends Pane {
      * <p>
      * After this method finishes the GUIMedia object on which it was called
      * should properly represent the Media object which was passed in.
+     *
+     * @throws ClassCastException if the Media object is not of the appropriate
+     * type for this GUIMedia.
      */
-    public void mediaUpdated(Media media) {}
+    public void mediaUpdated(Media media) throws ClassCastException {}
 
     /**
      * This method is called when this GUIMedia object is "removed" and will
