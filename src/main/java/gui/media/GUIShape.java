@@ -4,6 +4,8 @@ import app.media.GenericShape;
 import app.media.Media;
 import javafx.geometry.Point2D;
 
+import java.awt.*;
+
 /**
  * A sub-class of GUIMedia representing an arbitrary shape
  */
@@ -69,6 +71,14 @@ public abstract class GUIShape extends GUIMedia<GenericShape> {
         y2 = clamp(y2, y1 - height, y1 + height);
 
         return new double[]{(x1+x2)/2, (y1+y2)/2, width, height};
+    }
+
+    public Point2D CornerTL(double cx, double cy, double w, double h){
+        return new Point2D(cx - w/2, cy - h/2);
+    }
+
+    public Point2D CornerBR(double cx, double cy, double w, double h){
+        return new Point2D(cx + w/2, cy + h/2);
     }
 
     /**

@@ -1,5 +1,7 @@
 package app.media;
 
+import javafx.geometry.Point2D;
+
 /**
  * An implementation of GenericShape representing a rectangle
  */
@@ -12,8 +14,8 @@ public class RectangleShape extends GenericShape {
      * @param height The shape's height
      * @param colour The shape's color
      */
-    public RectangleShape(double x, double y, double width, double height, String colour) {
-        super("Rectangle", x, y, 0, 0, colour);
+    public RectangleShape(Point2D p1, Point2D p2, String colour) {
+        super("Rectangle", p1, p2, colour);
     }
 
     /**

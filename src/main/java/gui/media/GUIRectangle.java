@@ -20,22 +20,11 @@ public class GUIRectangle extends GUIShape {
      * @param colour The rectangle's color
      */
     public GUIRectangle(Point2D p1, Point2D p2, Color colour) {
-        super(new RectangleShape(0,0,0,0, colour.toString()));
-        double[] result = RestrictPoints(p1, p2, false);
-        double posX = result[0];
-        double posY = result[1];
-        double width = result[2];
-        double height = result[3];
+        super(new RectangleShape(p1, p2, colour.toString()));
 
-        // Updating dimensions of GenericShape
-        getMedia().setX(posX);
-        getMedia().setY(posY);
-        getMedia().setWidth(width);
-        getMedia().setHeight(height);
-
-        // Drawing Code
-        rectangle = new Rectangle(-width/2, -height/2, width/2, height/2);
+        rectangle = new Rectangle(0,0,0,0);
         rectangle.setFill(colour);
+        update(p1, p2, false);
         getChildren().add(rectangle);
     }
 
@@ -57,10 +46,8 @@ public class GUIRectangle extends GUIShape {
     public void setGenericShape(GenericShape rectangle) {
         Color colour = Color.valueOf(rectangle.getColour());
 
-        // Drawing Code
-        double w = rectangle.getWidth();
-        double h = rectangle.getHeight();
-        this.rectangle = new Rectangle(-w/2,-h/2, w, h);
+        this.rectangle = new Rectangle(0,0,0,0);
+        update(rectangle.getP1(), rectangle.getP2(), false);
         this.rectangle.setFill(colour);
         getChildren().add(this.rectangle);
     }
@@ -82,9 +69,11 @@ public class GUIRectangle extends GUIShape {
         // Updating the graphics of our shape
         getMedia().setX(centerX);
         getMedia().setY(centerY);
-        rectangle.setX(-width/2);
-        rectangle.setY(-height/2);
-        rectangle.setWidth(width);
-        rectangle.setHeight(height);
+        getMedia().setP1(CornerTL(centerX, centerY, width, height));
+        getMedia().setP2(CornerBR(centerX, centerY, width, height));
+        this.rectangle.setX(-width/2);
+        this.rectangle.setY(-height/2);
+        this.rectangle.setWidth(width);
+        this.rectangle.setHeight(height);
     }
 }
