@@ -437,22 +437,17 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
         this.zoomToFactor(zoomOptions[i]);
     }
 
-    // commented out for future use
-//    /** given the x and y coords of a point, make that point the center of the visible box
-//     *
-//     * @param x x coordinate of point you want to jump to
-//     * @param y y coordinate of point you want to jump to
-//     */
-//    public void jumpToPoint(double x, double y) {
-//        double translateX = x - getTranslateX();
-//        double translateY = y - getTranslateY();
-//        Bounds boundsInParent = mediaLayer.getBoundsInParent();
-//        Bounds boundsInSelf = mediaLayer.parentToLocal(boundsInParent);
-//        double centerX = boundsInSelf.getWidth()/2;
-//        double centerY = boundsInSelf.getHeight()/2;
-//        mediaLayer.setTranslateX(translateX - centerX);
-//        mediaLayer.setTranslateY(translateY - centerY);
-//    }
+    /** given the x and y coords of a point, make that point the center of the visible box
+     *
+     * @param x x coordinate of point you want to jump to
+     * @param y y coordinate of point you want to jump to
+     */
+    public void jumpToCenter(double x, double y) {
+        double currentZoom = scaleFactor;
+        this.zoomToFactor(1.0);
+        this.jumpToTopLeft(x, y);
+        this.zoomToFactor(currentZoom);
+    }
 
     /** given the x and y coords of a point, make that point the top left of the visible box
      *

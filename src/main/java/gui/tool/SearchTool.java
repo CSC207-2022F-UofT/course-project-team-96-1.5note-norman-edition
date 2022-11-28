@@ -57,9 +57,6 @@ public class SearchTool implements Tool{
         private ArrayList<Double> xCoords;
         private ArrayList<Double> yCoords;
         private int currentIndex;
-
-        private int offsetX = 800;
-        private int offsetY = 200;
         public SearchSettings(){
             // Creating the textfield for user input and button for searching
             Button searchButton = new Button("Search");
@@ -89,7 +86,7 @@ public class SearchTool implements Tool{
             });
 
             findButton.setOnAction(e->{
-                page.jumpToTopLeft(xCoords.get(currentIndex) - offsetX, yCoords.get(currentIndex) - offsetY);
+                page.jumpToTopLeft(xCoords.get(currentIndex) - 400, yCoords.get(currentIndex) - 300);
 
                 currentIndex += 1;
                 if (currentIndex == xCoords.size()){

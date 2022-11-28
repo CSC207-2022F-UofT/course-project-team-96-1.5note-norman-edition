@@ -9,15 +9,18 @@ import java.util.ArrayList;
 
 public class SearchBarController {
 
-    public ArrayList<Double> xPos;
-    public ArrayList<Double> yPos;
+    public ArrayList<Double> xPos = new ArrayList<>();
+    public ArrayList<Double> yPos = new ArrayList<>();
 
     public int results;
     public SearchBarController(ArrayList<Media> mediaArrayList, TextField searchPrompt){
         Searcher searcher = new Searcher(mediaArrayList);
         searcher.interact(searchPrompt);
-        this.xPos = searcher.getXResults();
-        this.yPos = searcher.getYResults();
+
+        for (Media media: searcher.getResults()){
+            this.xPos.add(media.getX());
+            this.yPos.add(media.getY());
+        }
         this.results = xPos.size();
     }
 }

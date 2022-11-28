@@ -24,11 +24,11 @@ public class GUIMediaFactory {
             return new GUIPenStroke((PenStroke) media);
         } else if (media instanceof GenericShape) {
             return GUIShapeFactory.getFor((GenericShape) media);
-        } else if (media instanceof TextBox) {
+        } else if (media instanceof MediaText) {
             if (media instanceof Hyperlink) {
                 return new GUIHyperlinkBox((Hyperlink) media);
             } else {
-                return new GUITextBox((TextBox) media);
+                return new GUITextBox((MediaText) media);
             }
         } else if (media instanceof MediaAudio) {
             return new GUIAudio((MediaAudio) media);

@@ -24,13 +24,12 @@ public class TestTag {
         Tagger tagger = new Tagger();
         tagger.setTag("TEST");
         tagger.addTag(media);
-
         assertTrue(media.getTags().contains("TEST"));
     }
 
     @Test
     public void testTagText(){
-        MediaText text = new MediaText("", 0, 0, 0, 0, "content");
+        MediaText text = new MediaText(0, 0, "","content");
 
         Tagger tagger = new Tagger();
         tagger.setTag("TEST");
@@ -44,7 +43,7 @@ public class TestTag {
         byte[] testByte = new byte[] {};
         ArrayList<Duration> testDuration = new ArrayList<>();
 
-        MediaAudio audio = new MediaAudio("", 0, 0, 0, 0, testByte, testDuration, 1.0);
+        MediaAudio audio = new MediaAudio("", 0, 0, 0, 0, testByte, testDuration);
 
         Tagger tagger = new Tagger();
         tagger.setTag("TEST");
