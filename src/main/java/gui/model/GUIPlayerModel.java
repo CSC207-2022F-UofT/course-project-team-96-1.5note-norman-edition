@@ -48,7 +48,7 @@ public class GUIPlayerModel {
 
     /** Adjusts where the associated GUIAudio will play from when the user interacts with the playback slider
      * <p>
-     * Precondition: 0 <= value <= 1
+     * Precondition: 0 &lt;= value &lt;= 1
      * @param value what % of the full duration of associated audio to play from
      * @param mediaStatus current status of the associated GUIAudio
      */
