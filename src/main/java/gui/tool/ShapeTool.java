@@ -178,7 +178,7 @@ class ShapeSettings extends FlowPane {
     private static final int DEFAULT_SIDE_COUNT = 3;
 
 
-    private static ShapeType selectedShapeType = ShapeType.RECTANGLE;
+    private ShapeType selectedShapeType = ShapeType.RECTANGLE;
 
     private final ObjectProperty<Double> sideCountProperty;
 
