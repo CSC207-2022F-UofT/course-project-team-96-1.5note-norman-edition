@@ -48,7 +48,7 @@ public class ToolBarController {
     public void tag(TextField node, GUIMedia<?> guiMedia)
     {
         Tagger tagger = new Tagger();
-        tagger.interact(node);
+        tagger.interact(node.getText());
         tagger.addTag(guiMedia.getMedia());
     }
 }

@@ -10,43 +10,35 @@ public class Searcher implements InteractionManager {
 
     private String userSearch;
     private final ArrayList<Media> mediaList;
+    public ArrayList<Double> xCoordinates;
+    public ArrayList<Double> yCoordinates;
     public Searcher(ArrayList<Media> mediaArrayList){
         this.mediaList = mediaArrayList;
     }
-    public ArrayList<Double> getXResults(){
+    public void getCoordinates(){
         ArrayList<Double> xResults = new ArrayList<>();
+        ArrayList<Double> yResults = new ArrayList<>();
         for (Media media : mediaList){
             if(media.getTags().contains(userSearch)){
                 xResults.add(media.getX());
+                yResults.add(media.getY());
+
             }
             else if(media instanceof MediaText){
                 if (((MediaText) media).getText().equals(userSearch)){
                     xResults.add(media.getX());
-                }
-            }
-
-        }
-        return xResults;
-    }
-    public ArrayList<Double> getYResults(){
-        ArrayList<Double> yResults = new ArrayList<>();
-        for (Media media : mediaList){
-            if(media.getTags().contains(userSearch)){
-                yResults.add(media.getY());
-            }
-            else if(media instanceof MediaText){
-                if (((MediaText) media).getText().equals(userSearch)){
                     yResults.add(media.getY());
                 }
             }
 
         }
-        return yResults;
+        this.xCoordinates = xResults;
+        this.yCoordinates = yResults;
     }
 
     @Override
-    public void interact(TextField node) {
-        this.userSearch = node.getText();
+    public void interact(String input) {
+        this.userSearch = input;
 
     }
 }

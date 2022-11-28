@@ -11,8 +11,8 @@ public class Tagger implements InteractionManager {
 
     }
     @Override
-    public void interact(TextField node) {
-        this.tag = node.getText();
+    public void interact(String input) {
+        this.tag = input;
 
     }
     public void addTag(Media media){

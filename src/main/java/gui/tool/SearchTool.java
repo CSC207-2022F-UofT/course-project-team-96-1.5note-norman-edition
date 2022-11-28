@@ -74,10 +74,6 @@ public class SearchTool implements Tool{
 
             findButton.setOnAction(e->{
                 page.jumpToPoint(xCoords.get(currentIndex) - offsetX, yCoords.get(currentIndex) - offsetY);
-
-                //test
-                System.out.println(page.getMediaLayer().getLayoutX() + " " + page.getMediaLayer().getLayoutY());
-                System.out.println(xCoords.get(currentIndex) + " " + yCoords.get(currentIndex));
                 currentIndex += 1;
                 if (currentIndex == xCoords.size()){
                     currentIndex = 0;

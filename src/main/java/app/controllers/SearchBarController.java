@@ -11,13 +11,13 @@ public class SearchBarController {
 
     public ArrayList<Double> xPos;
     public ArrayList<Double> yPos;
-
     public int results;
     public SearchBarController(ArrayList<Media> mediaArrayList, TextField searchPrompt){
         Searcher searcher = new Searcher(mediaArrayList);
-        searcher.interact(searchPrompt);
-        this.xPos = searcher.getXResults();
-        this.yPos = searcher.getYResults();
+        searcher.interact(searchPrompt.getText());
+        searcher.getCoordinates();
+        xPos = searcher.xCoordinates;
+        yPos = searcher.yCoordinates;
         this.results = xPos.size();
     }
 

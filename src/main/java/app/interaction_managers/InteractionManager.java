@@ -3,6 +3,6 @@ import javafx.scene.Node;
 import javafx.scene.control.TextField;
 
 public interface InteractionManager {
-    public void interact(TextField node);
+    public void interact(String input);
 
 }
