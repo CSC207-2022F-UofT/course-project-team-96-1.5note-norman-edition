@@ -1,5 +1,5 @@
-import app.interaction_managers.Tagger;
-import app.media.*;
+import gui.tool.app.interaction_managers.Tagger;
+import gui.tool.app.media.*;
 import javafx.util.Duration;
 import org.junit.*;
 

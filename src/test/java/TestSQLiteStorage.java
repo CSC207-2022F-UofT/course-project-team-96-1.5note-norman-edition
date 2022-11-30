@@ -3,7 +3,7 @@ import static org.junit.Assert.*;
 import java.io.File;
 import java.util.Set;
 
-import app.media.Media;
+import gui.tool.app.media.Media;
 import storage.SQLiteStorage;
 
 

@@ -1,7 +1,7 @@
 package gui.media;
 
-import app.media.GenericShape;
-import app.media.Media;
+import gui.tool.app.media.GenericShape;
+import gui.tool.app.media.Media;
 import javafx.geometry.Point2D;
 
 /**

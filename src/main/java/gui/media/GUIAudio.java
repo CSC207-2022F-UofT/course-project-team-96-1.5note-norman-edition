@@ -1,8 +1,8 @@
 package gui.media;
 
-import app.controllers.ToolBarController;
-import app.media.MediaAudio;
-import app.media.MediaHyperlink;
+import gui.tool.app.controllers.ToolBarController;
+import gui.tool.app.media.MediaAudio;
+import gui.tool.app.media.MediaHyperlink;
 import gui.error_window.ErrorWindow;
 import gui.model.GUIPlayerModel;
 import javafx.beans.value.ChangeListener;
@@ -231,7 +231,7 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
      * @param media Media object that was just updated
      */
     @Override
-    public void mediaUpdated(app.media.Media media)   {
+    public void mediaUpdated(gui.tool.app.media.Media media)   {
         //
 
         //Since timestamps can be both added and removed, we recreate the entire timestamp box

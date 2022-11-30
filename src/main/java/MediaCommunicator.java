@@ -1,4 +1,4 @@
-import app.media.Page;
+import gui.tool.app.media.Page;
 import storage.Storage;
 
 import java.util.HashMap;

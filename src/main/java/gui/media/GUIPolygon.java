@@ -1,7 +1,7 @@
 package gui.media;
 
-import app.media.GenericShape;
-import app.media.PolygonShape;
+import gui.tool.app.media.GenericShape;
+import gui.tool.app.media.PolygonShape;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;

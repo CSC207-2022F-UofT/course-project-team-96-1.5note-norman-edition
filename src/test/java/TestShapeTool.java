@@ -1,5 +1,5 @@
-import app.MediaCommunicator;
-import app.media.PolygonShape;
+import gui.tool.app.MediaCommunicator;
+import gui.tool.app.media.PolygonShape;
 import gui.media.GUIEllipse;
 import gui.media.GUIPolygon;
 import gui.media.GUIRectangle;

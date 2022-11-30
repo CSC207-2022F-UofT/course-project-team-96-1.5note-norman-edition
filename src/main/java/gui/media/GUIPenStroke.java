@@ -3,13 +3,12 @@ package gui.media;
 import java.util.List;
 import java.util.ArrayList;
 
-import javafx.scene.*;
 import javafx.scene.shape.*;
 import javafx.scene.paint.*;
 import javafx.geometry.Point2D;
 
-import app.media.PenStroke;
-import app.media.Media;
+import gui.tool.app.media.PenStroke;
+import gui.tool.app.media.Media;
 
 
 /**

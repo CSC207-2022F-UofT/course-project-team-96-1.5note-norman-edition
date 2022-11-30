@@ -11,8 +11,8 @@ import java.util.HashSet;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
-import app.MediaStorage;
-import app.media.Media;
+import gui.tool.app.MediaStorage;
+import gui.tool.app.media.Media;
 
 
 /**

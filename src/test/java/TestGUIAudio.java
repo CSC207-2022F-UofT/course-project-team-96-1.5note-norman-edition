@@ -1,16 +1,13 @@
-import app.media.MediaAudio;
+import gui.tool.app.media.MediaAudio;
 import gui.media.GUIAudio;
 import gui.page.Page;
 import gui.view_controllers.MediaPlayerController;
-import javafx.animation.PauseTransition;
 import javafx.application.Platform;
-import javafx.scene.control.Button;
+
 import static org.junit.Assert.*;
 
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Slider;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.text.Text;
 import javafx.util.Duration;
 import org.junit.BeforeClass;
 import org.junit.Test;

@@ -1,5 +1,5 @@
-import app.media.MediaAudio;
-import app.media_managers.AudioModifier;
+import gui.tool.app.media.MediaAudio;
+import gui.tool.app.media_managers.AudioModifier;
 import gui.media.GUIAudio;
 import gui.media.GUIHyperlink;
 import gui.page.Page;
