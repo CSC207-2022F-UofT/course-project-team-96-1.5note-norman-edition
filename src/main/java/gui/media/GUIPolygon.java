@@ -115,7 +115,7 @@ public class GUIPolygon extends GUIShape {
      * @param sideCount The number of sides of the polygon
      * @return A list of points representing the polygon's vertices
      */
-    public Double[] calcPointsFromRadiusAngle(double radius, double angle, int sideCount) {
+    public static Double[] calcPointsFromRadiusAngle(double radius, double angle, int sideCount) {
         Double[] points = new Double[2*sideCount];
         double angleStep = 360.0 / sideCount;
         // Iterate through every angle and create a vertex for each
@@ -136,7 +136,7 @@ public class GUIPolygon extends GUIShape {
      * @param sideCount The number of sides of the polygon
      * @return A list of points representing the polygon's vertices
      */
-    public Double[] calcPointsFromPoints(Point2D p1, Point2D p2, int sideCount) {
+    public static Double[] calcPointsFromPoints(Point2D p1, Point2D p2, int sideCount) {
         double radius = p1.distance(p2);
         double angle = calcAngle(p1, p2);
         return calcPointsFromRadiusAngle(radius, angle, sideCount);
