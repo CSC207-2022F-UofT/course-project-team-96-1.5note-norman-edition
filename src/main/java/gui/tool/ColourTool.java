@@ -10,6 +10,10 @@ import javafx.beans.property.*;
 import javafx.geometry.*;
 
 
+/**
+ * Provides a GUI for choosing a colour. The selected colour can be used by
+ * other tools.
+ */
 public class ColourTool implements Tool {
 
     private static final Color DEFAULT_COLOUR = Color.BLACK;
@@ -22,6 +26,9 @@ public class ColourTool implements Tool {
         colour = new SimpleObjectProperty<>();
         settings = new ColourSettings(colour);
 
+        // "indicator" circle which changes colour to match the currently
+        // selected colour. This way, the current colour can be seen without
+        // having to select the colour tool.
         colourIndicator = new Circle(7);
         colourIndicator.fillProperty().bind(colour);
         colourIndicator.setStrokeWidth(1);
@@ -36,6 +43,8 @@ public class ColourTool implements Tool {
 
         colour.setValue(DEFAULT_COLOUR);
     }
+
+    // Implementation of Tool interface:
 
     @Override
     public String getName() {
@@ -52,16 +61,25 @@ public class ColourTool implements Tool {
         return settings;
     }
 
+    /**
+     * Return the currently selected colour.
+     */
     public Color getColour() {
         return colour.getValue();
     }
 
+    /**
+     * Return an ObjectProperty wrapping the currently selected colour. This
+     * allows users of this class to listen for changes to the currently
+     * selected colour.
+     */
     public ObjectProperty<Color> colourProperty() {
         return colour;
     }
 }
 
 
+// Settings GUI for the colour tool
 class ColourSettings extends FlowPane {
 
     private static int PADDING = 5;
@@ -87,20 +105,27 @@ class ColourSettings extends FlowPane {
         hueSlider = new Slider(0, 360, 0);
         setHueSliderBackground();
         saturationSlider = new Slider(0, 1, 0);
+        saturationSlider.setBlockIncrement(0.1);
         valueSlider = new Slider(0, 1, 0);
+        valueSlider.setBlockIncrement(0.1);
         opacitySlider = new Slider(0, 1, 0);
+        opacitySlider.setBlockIncrement(0.1);
 
-        hueSlider.valueProperty().addListener(o -> setColourFromSliders());
-        saturationSlider.valueProperty().addListener(o -> setColourFromSliders());
-        valueSlider.valueProperty().addListener(o -> setColourFromSliders());
-        opacitySlider.valueProperty().addListener(o -> setColourFromSliders());
+        Slider[] sliders = new Slider[] {
+            hueSlider,
+            saturationSlider,
+            valueSlider,
+            opacitySlider
+        };
+
+        for (Slider slider: sliders) {
+            slider.valueProperty().addListener(o -> setColourFromSliders());
+            slider.setOnMouseReleased(e -> updateHistory(false));
+            slider.setOnKeyReleased(e -> updateHistory(false));
+        }
+
         colour.addListener(o -> setSlidersFromColour());
-
-        hueSlider.setOnMouseReleased(e -> updateHistory());
-        saturationSlider.setOnMouseReleased(e -> updateHistory());
-        valueSlider.setOnMouseReleased(e -> updateHistory());
-        opacitySlider.setOnMouseReleased(e -> updateHistory());
-        colour.addListener(o -> updateHistory());
+        colour.addListener(o -> updateHistory(true));
 
         HBox colourPickerRow = new HBox(new Label("Colour Picker:"), colourPicker);
         HBox hueRow = new HBox(new Label("Hue:"), hueSlider);
@@ -128,6 +153,14 @@ class ColourSettings extends FlowPane {
         setRowValignment(VPos.TOP);
     }
 
+    private boolean isSliderFocused() {
+        return
+            hueSlider.isFocused()
+            || saturationSlider.isFocused()
+            || valueSlider.isFocused()
+            || opacitySlider.isFocused();
+    }
+
     private boolean isSliderPressed() {
         return
             hueSlider.isPressed()
@@ -141,7 +174,7 @@ class ColourSettings extends FlowPane {
                 hueSlider.getValue(), saturationSlider.getValue(),
                 valueSlider.getValue(), opacitySlider.getValue());
 
-        if (isSliderPressed()) {
+        if (isSliderFocused()) {
             colour.setValue(sliderColour);
         }
     }
@@ -183,7 +216,7 @@ class ColourSettings extends FlowPane {
         double value = c.getBrightness();
         double opacity = c.getOpacity();
 
-        if (!isSliderPressed()) {
+        if (!isSliderFocused()) {
             hueSlider.setValue(c.getHue());
             saturationSlider.setValue(c.getSaturation());
             valueSlider.setValue(c.getBrightness());
@@ -198,7 +231,7 @@ class ColourSettings extends FlowPane {
                 Color.hsb(hue, saturation, value, 0), Color.hsb(hue, saturation, value, 1));
     }
 
-    private void updateHistory() {
+    private void updateHistory(boolean onlyIfNotFocused) {
         // If we update the colour on every change, even when the sliders are
         // being used, then the history will quickly fill up with very similar
         // colours.
@@ -207,7 +240,7 @@ class ColourSettings extends FlowPane {
         // updating the history. To make sure the history still gets updated
         // by the sliders, we call this method when they receive a "mouse
         // released" event, i.e. when a colour has been chosen decisively.
-        if (!isSliderPressed()) {
+        if (!onlyIfNotFocused || !isSliderFocused()) {
             history.update(colour.getValue());
         }
     }
@@ -222,6 +255,7 @@ class ColourHistory extends FlowPane {
 
     private ObjectProperty<Color> colour;
 
+    // GUI compontent for individual entries in the colour history.
     private static class Entry extends Rectangle {
 
         private static final int SIZE = 20;
@@ -245,24 +279,19 @@ class ColourHistory extends FlowPane {
         setAlignment(Pos.TOP_CENTER);
     }
 
+    // Add a new colour to the history. If the colour is already in the history,
+    // it is removed to avoid duplicates. If the history length exceeds the
+    // maximum, the last colour is removed to make room for the new one.
     public void update(Color colour) {
         removeAll(colour);
 
-        Color firstColour = null;
-        if (!getChildren().isEmpty()) {
-            Entry firstEntry = (Entry) getChildren().get(0);
-            firstColour = firstEntry.getColour();
-        }
+        Entry entry = new Entry(colour);
+        getChildren().add(0, entry);
 
-        if (!colour.equals(firstColour)) {
-            Entry entry = new Entry(colour);
-            getChildren().add(0, entry);
+        entry.setOnMouseClicked(e -> this.colour.setValue(entry.getColour()));
 
-            entry.setOnMouseClicked(e -> this.colour.setValue(entry.getColour()));
-
-            if (getChildren().size() > MAX_HISTORY) {
-                getChildren().remove(getChildren().size() - 1);
-            }
+        if (getChildren().size() > MAX_HISTORY) {
+            getChildren().remove(getChildren().size() - 1);
         }
     }
 

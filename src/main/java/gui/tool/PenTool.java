@@ -13,6 +13,9 @@ import gui.page.Page;
 import gui.media.GUIPenStroke;
 
 
+/**
+ * Allows drawing pen strokes on the page.
+ */
 public class PenTool implements Tool {
 
     private HandlerMethod[] handlers;
