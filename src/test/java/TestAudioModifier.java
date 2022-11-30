@@ -1,5 +1,6 @@
 import app.MediaCommunicator;
 import app.media.MediaAudio;
+import app.media_managers.AudioModifier;
 import gui.media.GUIAudio;
 import gui.page.Page;
 import javafx.util.Duration;
@@ -17,8 +18,6 @@ import javafx.application.Platform;
 
 
 public class TestAudioModifier {
-    private Duration TimeStamp;
-    private MediaAudio audio;
     public Page page;
     private static Boolean init = false;
 
@@ -35,7 +34,7 @@ public class TestAudioModifier {
         //Testing that a MediaAudio can be made using a generic mp3 input, and that the javafx.Media can be initialized
         initJfxRuntime();
         createPage();
-        GUIAudio audioGUI = addMedia("src\\test\\java\\test_files\\1.17 Axe to Grind.mp3");
+        addMedia("src\\test\\java\\test_files\\1.17 Axe to Grind.mp3");
     }
 
     @Test
@@ -43,23 +42,7 @@ public class TestAudioModifier {
         //Testing that a MediaAudio  can be made using a generic wav input, and that the javafx.Media can be initialized
         initJfxRuntime();
         createPage();
-        GUIAudio audioGUI = addMedia("src\\test\\java\\test_files\\1.17 Axe to Grind.wav");
-    }
-
-    @Test
-    public void testAddingAudio_mp3_empty()  {
-        //Testing that a MediaAudio can be made using an "empty" mp3 input, and that the javafx.Media can be initialized
-        initJfxRuntime();
-        createPage();
-        GUIAudio audioGUI = addMedia("src\\test\\java\\test_files\\empty.mp3");
-    }
-
-    @Test
-    public void testAddingAudio_wav_empty()  {
-        //Testing that a MediaAudio can be made using an "empty" wav input, and that the javafx.Media can be initialized
-        initJfxRuntime();
-        createPage();
-        GUIAudio audioGUI = addMedia("src\\test\\java\\test_files\\empty_1c.wav");
+        addMedia("src\\test\\java\\test_files\\1.17 Axe to Grind.wav");
     }
 
     @Test
@@ -67,10 +50,28 @@ public class TestAudioModifier {
         //Testing that a MediaAudio can be made using a long mp3 input, and that the javafx.Media can be initialized
         initJfxRuntime();
         createPage();
-        GUIAudio audioGUI = addMedia("src\\test\\java\\test_files\\NieR Automata OST with Rain.mp3");
+        addMedia("src\\test\\java\\test_files\\NieR Automata OST with Rain.mp3");
     }
 
     //No test for long WAVs because they're evidently not compressed and way too big for java to handle
+
+    @Test
+    public void testAddingHyperlink() throws Exception {
+        //testing that a hyperlink can be added when none presently exist
+        initJfxRuntime();
+        createPage();
+        MediaAudio audio = addMedia("src\\test\\java\\test_files\\NieR Automata OST with Rain.mp3");
+
+        AudioModifier am = new AudioModifier();
+        am.setCommunicator(page.getCommunicator());
+        am.addTimeStamp(new Duration(0));
+        am.setAudio(audio);
+        am.modifyMedia();
+
+        assert audio.getTimestamps().size() == 1;
+        assert audio.getTimestamps().get(0).equals(new Duration(0));
+    }
+
 
     public void createPage()    {
         try {
@@ -83,16 +84,29 @@ public class TestAudioModifier {
         }
     }
 
-    public GUIAudio addMedia(String source) {
+    public MediaAudio addMedia(String source) {
         //Loading raw audio data based on user selection
         byte[] rawData = readFile(source);
 
         try {
-            MediaAudio audio = new MediaAudio("", 0, 0, 0, 0, rawData, new ArrayList<Duration>()); //Temp Constructor
-            GUIAudio audioGUI = new GUIAudio(audio);
-            this.page.updateMedia(audioGUI);
-            this.page.addMedia(audioGUI);
-            return audioGUI; //returned in this version for testing purposes
+            MediaAudio audio = new MediaAudio("", 0, 0, 0, 0, rawData, new ArrayList<Duration>(),
+                    "Audio"); //Temp Constructor
+            page.getCommunicator().updateMedia(audio);
+            return audio;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public GUIAudio newMedia(String source) {
+        //Loading raw audio data based on user selection
+        byte[] rawData = readFile(source);
+
+        try {
+            MediaAudio audio = new MediaAudio("", 0, 0, 0, 0, rawData, new ArrayList<Duration>(),
+                    "Audio"); //Temp Constructor
+            GUIAudio audioUI = new GUIAudio(audio);
+            return audioUI;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
