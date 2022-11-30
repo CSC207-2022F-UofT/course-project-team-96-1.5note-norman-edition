@@ -23,7 +23,6 @@ public class ToolBarController {
 
     public void insertText() throws Exception {
         TextModifier textModifier = new TextModifier();
-        textModifier.addMedia();
     }
 
     public void insertImage() throws Exception {

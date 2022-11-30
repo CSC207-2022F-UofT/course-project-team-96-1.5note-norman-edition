@@ -19,7 +19,6 @@ public class AudioModifier implements MediaManager {
 
     private Duration timestamp;
     private MediaAudio audio;
-    private MediaCommunicator communicator;
 
     /** Allows the user to select an audio file to add to the page
      * @throws Exception when user selected file fails to load
