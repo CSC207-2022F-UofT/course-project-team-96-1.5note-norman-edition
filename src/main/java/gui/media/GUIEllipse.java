@@ -53,6 +53,27 @@ public class GUIEllipse extends GUIShape {
     }
 
     /**
+     * Specific implementation of updatePoints for GUIEllipse
+     */
+    public void updatePoints() {
+        Point2D p1 = getMedia().getP1();
+        Point2D p2 = getMedia().getP2();
+
+        double[] result = RestrictPoints(p1, p2, false);
+        double prevCenterX = result[0];
+        double prevCenterY = result[1];
+
+        double centerX = getMedia().getX();
+        double centerY = getMedia().getY();
+
+        Point2D diff = new Point2D(centerX, centerY)
+                .subtract(new Point2D(prevCenterX, prevCenterY));
+
+        getMedia().setP1(p1.add(diff));
+        getMedia().setP2(p2.add(diff));
+    }
+
+    /**
      * {@inheritDoc}
      * @param p1 The position of the ellipse's anchored corner
      * @param p2 The position the shape's untethered corner
@@ -69,7 +90,6 @@ public class GUIEllipse extends GUIShape {
         // Updating the graphics of our shape
         getMedia().setX(centerX); // RestrictPoints returns center position by default
         getMedia().setY(centerY); // RestrictPoints returns center position by default
-        getMedia().setCenter(new Point2D(centerX, centerY));
         getMedia().setP1(CornerTL(centerX, centerY, width, height));
         getMedia().setP2(CornerBR(centerX, centerY, width, height));
         ellipse.setRadiusX(width/2);

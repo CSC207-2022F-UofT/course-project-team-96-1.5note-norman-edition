@@ -66,6 +66,27 @@ public class GUIPolygon extends GUIShape {
     }
 
     /**
+     * Specific implementation of updatePoints for GUIPolygon
+     */
+    @Override
+    public void updatePoints() {
+        Point2D p1 = getMedia().getP1();
+        Point2D p2 = getMedia().getP2();
+
+        double prevCenterX = p1.getX();
+        double prevCenterY = p1.getY();
+
+        double centerX = getMedia().getX();
+        double centerY = getMedia().getY();
+
+        Point2D diff = new Point2D(centerX, centerY)
+                .subtract(new Point2D(prevCenterX, prevCenterY));
+
+        getMedia().setP1(p1.add(diff));
+        getMedia().setP2(p2.add(diff));
+    }
+
+    /**
      * {@inheritDoc}
      * @param p1 The position of the polygon's center
      * @param p2 The position which determines the polygon's radius and starting angle
@@ -81,7 +102,6 @@ public class GUIPolygon extends GUIShape {
         polygonshape.setStartAngle(calcAngle(p1, p2));
         getMedia().setX(p1.getX());
         getMedia().setY(p1.getY());
-        getMedia().setCenter(p1);
         getMedia().setP1(p1);
         getMedia().setP2(p2);
     }

@@ -12,7 +12,6 @@ public abstract class GenericShape extends Media {
     private Point p1;
     private Point p2;
 
-    private Point center;
 
     /**
      * Initializes a Generic Shape with the given parameters
@@ -55,14 +54,6 @@ public abstract class GenericShape extends Media {
     }
 
     /**
-     * Gets the center point defined by the shape
-     * @return the second point defined by the shape
-     */
-    public Point2D getCenter() {
-        return center.intoPoint2D();
-    }
-
-    /**
      * Returns the color of the shape
      * @return the color of the shape
      */
@@ -87,20 +78,11 @@ public abstract class GenericShape extends Media {
     }
 
     /**
-     * Sets the center point calculated from the shape
-     * @param center the center point calculated from the shape
-     */
-    public void setCenter(Point2D center) {
-        this.center = new Point(center);;
-    }
-
-    /**
      * Sets the colour of the shape
      * @param colour The desired color to set the shape to
      */
     public void setColour(String colour) {
         this.colour = colour;
     }
-
 }
 

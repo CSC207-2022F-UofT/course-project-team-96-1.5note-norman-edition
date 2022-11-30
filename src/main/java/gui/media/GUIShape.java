@@ -10,6 +10,7 @@ import java.awt.*;
  * A sub-class of GUIMedia representing an arbitrary shape
  */
 public abstract class GUIShape extends GUIMedia<GenericShape> {
+
     public GUIShape(GenericShape media) {
         super(media);
     }
@@ -45,20 +46,7 @@ public abstract class GUIShape extends GUIMedia<GenericShape> {
      */
     public abstract void setGenericShape(GenericShape shape);
 
-    private void updatePoints() {
-        Point2D prevCenter = getMedia().getCenter();
-        double prevCenterX = prevCenter.getX();
-        double prevCenterY = prevCenter.getY();
-
-        double centerX = getMedia().getX();
-        double centerY = getMedia().getY();
-
-        Point2D diff = new Point2D(centerX, centerY)
-                .subtract(new Point2D(prevCenterX, prevCenterY));
-
-        getMedia().setP1(getMedia().getP1().add(diff));
-        getMedia().setP2(getMedia().getP2().add(diff));
-    }
+    public abstract void updatePoints();
 
     /**
      * Returns the center and dimensions of a shape's bounding box, given two points
