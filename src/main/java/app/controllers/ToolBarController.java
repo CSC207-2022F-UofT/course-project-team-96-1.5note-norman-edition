@@ -33,26 +33,21 @@ public class ToolBarController {
 
     public void insertAudio(MediaCommunicator communicator) throws Exception {
         AudioModifier audioModifier = new AudioModifier();
-        audioModifier.setCommunicator(communicator);
-        audioModifier.setTypes(new String[]{"*.mp3", "*.wav"});
-        audioModifier.setFileType("Audio");
-        audioModifier.addMedia();
+        String[] types = new String[]{"*.mp3", "*.wav"};
+        String fileType = "Audio";
+        audioModifier.addMedia(types, fileType, communicator);
     }
 
     public void insertVideo(MediaCommunicator communicator) throws Exception {
         AudioModifier audioModifier = new AudioModifier();
-        audioModifier.setCommunicator(communicator);
-        audioModifier.setTypes(new String[]{"*.mp4"});
-        audioModifier.setFileType("Video");
-        audioModifier.addMedia();
+        String[] types = new String[]{"*.mp4"};
+        String fileType = "Video";
+        audioModifier.addMedia(types, fileType, communicator);
     }
 
-    public void modifyTimestamp(MediaAudio audioUI, Duration Timestamp, MediaCommunicator communicator) throws Exception {
+    public void modifyTimestamp(MediaAudio audio, Duration timestamp, MediaCommunicator communicator) throws Exception {
         AudioModifier audioModifier = new AudioModifier();
-        audioModifier.setAudio(audioUI);
-        audioModifier.addTimeStamp(Timestamp);
-        audioModifier.setCommunicator(communicator);
-        audioModifier.modifyMedia();
+        audioModifier.modifyMedia(audio, timestamp, communicator);
     }
 
     public MediaHyperlink createHyperlink(String text, String source)   {

@@ -9,25 +9,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public class AudioModifier implements MediaManager {
+public class AudioModifier  {
     /**
     * Manages creation/interactions on MediaAudio
-     * <p>
-     * Class stores instances of a MediaAudio to modify, the MediaCommunicator of the page it is on, and may store
-     * a Duration that should be added or removed from instance MediaAudio
     */
-
-    private Duration timestamp;
-    private MediaAudio audio;
-    private MediaCommunicator communicator;
-    private String[] types;
-    private String fileType;
 
     /** Allows the user to select an audio file to add to the page
      * @throws Exception when user selected file fails to load
      */
-    @Override
-    public void addMedia() throws Exception{
+    public void addMedia(String[] types, String fileType, MediaCommunicator communicator) throws Exception{
         //Loading raw audio data based on user selection
         Storage fileManager = new FileLoaderWriter();
         StringBuilder acceptedExtensions = new StringBuilder("(" + types[0]);
@@ -43,7 +33,7 @@ public class AudioModifier implements MediaManager {
                     , 200, 200, 200, 200, fileData.get(fileName), new ArrayList<Duration>(),
                     fileType);
             //Giving the audio an ID then adding it to the page
-            this.communicator.updateMedia(audio);
+            communicator.updateMedia(audio);
             }
     }
 
@@ -54,8 +44,7 @@ public class AudioModifier implements MediaManager {
      * it is added
      * @throws Exception when MediaCommunicator fails to update referenced audio
      */
-    @Override
-    public void modifyMedia() throws Exception{
+    public void modifyMedia(MediaAudio audio, Duration timestamp, MediaCommunicator communicator) throws Exception{
         //Either adds or removes timestamps from the audio
         if (audio.getTimestamps().contains(timestamp))  {
             audio.getTimestamps().remove(timestamp);
@@ -63,31 +52,5 @@ public class AudioModifier implements MediaManager {
             audio.getTimestamps().add(timestamp);
         }
         communicator.updateMedia(audio);
-    }
-
-    @Override
-    public void searchMedia() {
-
-    }
-
-    public void addTimeStamp(Duration givenTimeStamp){
-
-        this.timestamp = givenTimeStamp;
-    }
-
-    public void setAudio(MediaAudio audio) {
-        this.audio = audio;
-    }
-
-    public void setCommunicator(MediaCommunicator communicator) {
-        this.communicator = communicator;
-    }
-
-    public void setFileType(String fileType) {
-        this.fileType = fileType;
-    }
-
-    public void setTypes(String[] types) {
-        this.types = types;
     }
 }
