@@ -69,6 +69,7 @@ public class GUIEllipse extends GUIShape {
         // Updating the graphics of our shape
         getMedia().setX(centerX); // RestrictPoints returns center position by default
         getMedia().setY(centerY); // RestrictPoints returns center position by default
+        getMedia().setCenter(new Point2D(centerX, centerY));
         getMedia().setP1(CornerTL(centerX, centerY, width, height));
         getMedia().setP2(CornerBR(centerX, centerY, width, height));
         ellipse.setRadiusX(width/2);

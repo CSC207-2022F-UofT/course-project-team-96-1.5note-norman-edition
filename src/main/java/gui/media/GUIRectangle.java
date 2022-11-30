@@ -69,6 +69,7 @@ public class GUIRectangle extends GUIShape {
         // Updating the graphics of our shape
         getMedia().setX(centerX);
         getMedia().setY(centerY);
+        getMedia().setCenter(new Point2D(centerX, centerY));
         getMedia().setP1(CornerTL(centerX, centerY, width, height));
         getMedia().setP2(CornerBR(centerX, centerY, width, height));
         this.rectangle.setX(-width/2);

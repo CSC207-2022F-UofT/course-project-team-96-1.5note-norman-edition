@@ -75,13 +75,13 @@ public class GUIPolygon extends GUIShape {
     public void update(Point2D p1, Point2D p2, boolean sameSideLengths){
         polygon.getPoints().clear();
         polygon.getPoints().addAll(calcPointsFromPoints(p1, p2, sideCount));
-        System.out.println(polygon.getPoints());
         // Update the polygonshape's data so that when it gets saved it's updated
         PolygonShape polygonshape = ((PolygonShape) getMedia());
         polygonshape.setRadius(p1.distance(p2));
         polygonshape.setStartAngle(calcAngle(p1, p2));
         getMedia().setX(p1.getX());
-        getMedia().setY(p2.getY());
+        getMedia().setY(p1.getY());
+        getMedia().setCenter(p1);
         getMedia().setP1(p1);
         getMedia().setP2(p2);
     }
