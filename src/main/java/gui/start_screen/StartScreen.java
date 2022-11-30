@@ -14,7 +14,7 @@ import gui.error_window.ErrorWindow;
 
 import storage.SQLiteStorage;
 
-import app.MediaCommunicator;
+import gui.tool.app.MediaCommunicator;
 
 
 /**
@@ -236,7 +236,7 @@ public class StartScreen extends VBox {
      */
     private void centerPage() {
         Page page = pageScreen.getPage();
-        page.jumpToTopLeft(0, 0);
+        page.centerPage();
     }
 
 

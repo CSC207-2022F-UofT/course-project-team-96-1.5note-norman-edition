@@ -5,7 +5,6 @@ import javafx.scene.layout.*;
 import javafx.scene.transform.*;
 import javafx.scene.input.*;
 import javafx.beans.*;
-import javafx.beans.value.*;
 import javafx.geometry.*;
 import javafx.event.EventHandler;
 
@@ -16,9 +15,9 @@ import java.util.HashMap;
 import java.util.Set;
 import java.util.HashSet;
 
-import app.media.Media;
-import app.MediaCommunicator;
-import app.MediaObserver;
+import gui.tool.app.media.Media;
+import gui.tool.app.MediaCommunicator;
+import gui.tool.app.MediaObserver;
 import gui.media.GUIMedia;
 import gui.media.GUIMediaFactory;
 import gui.error_window.ErrorWindow;
@@ -437,22 +436,15 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
         this.zoomToFactor(zoomOptions[i]);
     }
 
-    // commented out for future use
-//    /** given the x and y coords of a point, make that point the center of the visible box
-//     *
-//     * @param x x coordinate of point you want to jump to
-//     * @param y y coordinate of point you want to jump to
-//     */
-//    public void jumpToPoint(double x, double y) {
-//        double translateX = x - getTranslateX();
-//        double translateY = y - getTranslateY();
-//        Bounds boundsInParent = mediaLayer.getBoundsInParent();
-//        Bounds boundsInSelf = mediaLayer.parentToLocal(boundsInParent);
-//        double centerX = boundsInSelf.getWidth()/2;
-//        double centerY = boundsInSelf.getHeight()/2;
-//        mediaLayer.setTranslateX(translateX - centerX);
-//        mediaLayer.setTranslateY(translateY - centerY);
-//    }
+    /**
+     * given the x and y coords of a point, make that point the center of the visible box
+     */
+    public void centerPage() {
+        double currentZoom = scaleFactor;
+        this.zoomToFactor(1.0);
+        this.jumpToTopLeft(0, 0);
+        this.zoomToFactor(currentZoom);
+    }
 
     /** given the x and y coords of a point, make that point the top left of the visible box
      *
@@ -464,6 +456,27 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
         double translateY = y - getTranslateY();
         mediaLayer.setTranslateX(translateX);
         mediaLayer.setTranslateY(translateY);
+    }
+
+    /** given the x and y coords of a point, make that point the center of the visible box
+     *
+     * @param x x coordinate of point you want to jump to
+     * @param y y coordinate of point you want to jump to
+     */
+    public void jumpToCenter(double x, double y) {
+        // * Translate the point to the top left of the view
+        double translateX = x - getTranslateX();
+        double translateY = y - getTranslateY();
+        mediaLayer.setTranslateX(translateX);
+        mediaLayer.setTranslateY(translateY);
+        // * Get the center of the view (in the mediaLayer's coordinate space)
+        Bounds b = getVisibleBounds();
+        Point2D center = new Point2D(b.getCenterX(), b.getCenterY());
+        // * Translate the mediaLayer to the center of the view
+        double centerTranslateX = center.getX() - getTranslateX();
+        double centerTranslateY = center.getY() - getTranslateY();
+        mediaLayer.setTranslateX(centerTranslateX);
+        mediaLayer.setTranslateY(centerTranslateY);
     }
 
     /** handles scrolling inputs, zooming when control is pressed, horizontal scrolling when shift is pressed, and
@@ -489,6 +502,8 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
         }
         private void zoomHandle(ScrollEvent scrollEvent) {
             double delta = scrollEvent.getDeltaY();
+            double mouseX = scrollEvent.getX();
+            double mouseY = scrollEvent.getY();
 
             if (delta < 0) {
                 // zooming out
@@ -506,6 +521,7 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
                 zoomInOrOut("In");
             }
         }
+
         private void scrollVerticallyHandle(ScrollEvent scrollEvent) {
             double currentTranslation = mediaLayer.getTranslateY();
             mediaLayer.setTranslateY(currentTranslation + scrollEvent.getDeltaY());
