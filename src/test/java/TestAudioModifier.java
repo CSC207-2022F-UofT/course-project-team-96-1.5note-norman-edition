@@ -13,7 +13,11 @@ import java.util.ArrayList;
 import javafx.application.Platform;
 
 /** NOTE: because junit doesnt like working with javafx, this test class uses modified versions of methods
- * actually found in AudioModifier. The logic is more or less the exact same, just the methods of doing things have been altered.
+ * actually found in AudioModifier. The logic is more or less the exact same, just the methods of doing things have
+ * been altered.
+ *
+ * This also means that AudioModifier only has 50% coverage since it consists of 2 methods, one of them being a
+ * modified method used here
  */
 
 
