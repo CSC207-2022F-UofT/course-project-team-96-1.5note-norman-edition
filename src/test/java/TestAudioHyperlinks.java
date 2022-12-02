@@ -1,3 +1,4 @@
+import app.MediaCommunicator;
 import app.media.MediaAudio;
 import app.media_managers.AudioModifier;
 import gui.media.GUIAudio;
@@ -8,38 +9,45 @@ import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import storage.SQLiteStorage;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
 public class TestAudioHyperlinks {
-    /**Tests systems involved with creating clickable timestamps
-     * Processes do involve classes previously tested, but test suite is seperate for the sake of seperation
+    /**Tests systems involved with interacting with Timestamps
+     * This assumes that removal / creation of timestamps works as intended
      */
+    private static Page page;
 
-    private static Boolean init = false;
-    private static TestAudioModifier tam = new TestAudioModifier();
-    private static GUIAudio audioGUI;
+    private GUIAudio audioGUI;
 
     @BeforeClass
     public static void initJfxRuntime() throws Exception {
         Platform.startup(() -> {});
-        tam.createPage();
-        audioGUI = tam.newMedia("src\\test\\java\\test_files\\1.17 Axe to Grind.mp3");
+        page = createPage();
+    }
+
+    public void createAudio() throws Exception {
+        GUIAudio audioGUI = addMedia("src\\test\\java\\test_files\\1.17 Axe to Grind.mp3");
         audioGUI.getAudioPlayer().setMute(true); //Preventing audio jumpscares
+
+        page.getCommunicator().updateMedia(audioGUI.getMedia());
 
         //Because the setOnReady call gets skipped, these need to be manually initialized
 
         audioGUI.configureUI();
         audioGUI.createInterface();
+        this.audioGUI = audioGUI;
     }
 
     public void addTimestamp(Duration duration) throws Exception {
         AudioModifier am = new AudioModifier();
-        am.setAudio(audioGUI.getMedia());
-        am.addTimeStamp(duration);
-        am.setCommunicator(tam.page.getCommunicator());
-
-        am.modifyMedia();
+        am.modifyMedia(audioGUI.getMedia(), duration, page.getCommunicator());
     }
 
     public void clearTimestamps()   {
@@ -48,7 +56,6 @@ public class TestAudioHyperlinks {
 
     public void setUpOne() throws Exception {
         clearTimestamps();
-
         addTimestamp(new Duration(0));
     }
 
@@ -64,88 +71,11 @@ public class TestAudioHyperlinks {
     //Testing addition/removal of timestamps at both the GUI and Core Data level
 
     @Test
-    public void testAddTimestampEmpty() throws Exception {
-        //Basic test that timestamps can be added to a MediaAudio with no timestamps
-        clearTimestamps();
-        addTimestamp(new Duration(0));
-
-        assertTrue(audioGUI.getMedia().getTimestamps().contains(new Duration(0)));
-        assertEquals("00:00:00",
-                ((GUIHyperlink) audioGUI.getTimestamps().getChildren().get(0)).getHyperlink().getText()) ;
-
-    }
-
-    @Test
-    public void testAddTimestampOne() throws Exception {
-        //Test that timestamps can be added to a MediaAudio with 1 timestamp
-        setUpOne();
-        Thread.sleep(1000);
-        addTimestamp(new Duration(1000));
-
-        assertEquals(audioGUI.getMedia().getTimestamps().get(1), new Duration(1000));
-        System.out.println(audioGUI.getTimestamps().getChildren().get(1));
-        //assertEquals("00:00:01",
-                //((GUIHyperlink) audioGUI.getTimestamps().getChildren().get(1)).getHyperlink().getText()) ;
-    }
-
-    @Test
-    public void testAddTimestampMultiple() throws Exception {
-        //Test that timestamps can be added to a MediaAudio with multiple timestamps
-        setUpMultiple();
-
-        addTimestamp(new Duration(5000));
-        assertTrue(audioGUI.getMedia().getTimestamps().get(4).equals(new Duration(5000)));
-        assertEquals("00:00:05",
-                ((GUIHyperlink) audioGUI.getTimestamps().getChildren().get(4)).getHyperlink().getText()) ;
-    }
-
-    @Test
-    public void testRemoveTimestampOne() throws Exception {
-        //Basic test that timestamp can be removed when there is only one
-        setUpOne();
-
-        addTimestamp(new Duration(0));
-        assertEquals(0, audioGUI.getMedia().getTimestamps().size());
-        assertEquals(0, audioGUI.getTimestamps().getChildren().size());
-    }
-
-    @Test
-    public void testRemoveTimestampMultiple_start() throws Exception {
-        //Basic test that timestamps at the start can be removed when there are multiple
-        setUpMultiple();
-
-        addTimestamp(new Duration(0));
-        assertEquals(3, audioGUI.getMedia().getTimestamps().size());
-        assertEquals(3, audioGUI.getTimestamps().getChildren().size());
-
-    }
-
-    @Test
-    public void testRemoveTimestampMultiple_middle() throws Exception {
-        //Basic test that timestamps at the middle can be removed when there are multiple
-        setUpMultiple();
-
-        addTimestamp(new Duration(2000));
-        assertEquals(3, audioGUI.getMedia().getTimestamps().size());
-        assertEquals(3, audioGUI.getTimestamps().getChildren().size());
-
-    }
-
-    @Test
-    public void testRemoveTimestampMultiple_end() throws Exception {
-        //Basic test that timestamps at the end can be removed when there are multiple
-        setUpMultiple();
-
-        addTimestamp(new Duration(3000));
-        assertEquals(3, audioGUI.getMedia().getTimestamps().size());
-        assertEquals(3, audioGUI.getTimestamps().getChildren().size());
-    }
-
-    @Test
     public void testAddTimestamp_largeDuration() throws Exception {
+        createAudio();
         clearTimestamps();
         addTimestamp(new Duration(100000000));
-        assertTrue(audioGUI.getMedia().getTimestamps().get(0).equals(new Duration(100000000)));
+        assertEquals(audioGUI.getMedia().getTimestamps().get(0), new Duration(100000000));
         assertEquals("27:46:40",
                 ((GUIHyperlink) audioGUI.getTimestamps().getChildren().get(0)).getHyperlink().getText()) ;
     }
@@ -156,6 +86,7 @@ public class TestAudioHyperlinks {
     @Test
     public void testClickTimestamp_startClip() throws Exception {
         //Test that a timestamp linked to the start of the player plays said part
+        createAudio();
         setUpOne();
         GUIHyperlink hyperlink = (GUIHyperlink) audioGUI.getTimestamps().getChildren().get(0);
         hyperlink.getHyperlink().fire();
@@ -226,5 +157,39 @@ public class TestAudioHyperlinks {
         Thread.sleep(1000);
         assertEquals(audioGUI.getAudioPlayer().getStatus(), MediaPlayer.Status.PLAYING);
         assertEquals(3000, audioGUI.getCurrentDuration().toMillis(), 2000);
+    }
+
+    public static Page createPage()    {
+        try {
+            SQLiteStorage storage = new SQLiteStorage(null);
+            MediaCommunicator mediaCommunicator = new MediaCommunicator(storage);
+            return new Page(mediaCommunicator);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public GUIAudio addMedia(String source) {
+        //Loading raw audio data based on user selection
+        byte[] rawData = readFile(source);
+
+        try {
+            MediaAudio audio = new MediaAudio("", 0, 0, 0, 0, rawData, new ArrayList<Duration>(),
+                    "Audio"); //Temp Constructor
+            page.getCommunicator().updateMedia(audio);
+            GUIAudio audioUI = new GUIAudio(audio);
+            return audioUI;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public byte[] readFile(String path) {
+        File chosenFile = new File(path);
+        try {
+            return Files.readAllBytes(chosenFile.toPath());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

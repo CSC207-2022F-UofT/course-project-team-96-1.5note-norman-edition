@@ -19,7 +19,6 @@ import javafx.application.Platform;
 
 public class TestAudioModifier {
     public static Page page;
-    private static Boolean init = false;
 
 
     @BeforeClass
@@ -140,8 +139,8 @@ public class TestAudioModifier {
     }
 
     @Test
-    public void testRemoveHyperlink_many() throws Exception {
-        //Testing that a hyperlink can be removed when many already exists
+    public void testRemoveHyperlink_manyStart() throws Exception {
+        //Testing that a hyperlink can be removed from the start when many already exists
         GUIAudio audio = createAudio();
 
         AudioModifier am = new AudioModifier();
@@ -157,6 +156,41 @@ public class TestAudioModifier {
         assert audio.getMedia().getTimestamps().get(0).equals(new Duration(100));
     }
 
+    @Test
+    public void testRemoveHyperlink_manyMiddle() throws Exception {
+        //Testing that a hyperlink can be removed from the middle when many already exists
+        GUIAudio audio = createAudio();
+
+        AudioModifier am = new AudioModifier();
+        am.modifyMedia(audio.getMedia(), new Duration(0), page.getCommunicator());
+        am.modifyMedia(audio.getMedia(), new Duration(100), page.getCommunicator());
+        am.modifyMedia(audio.getMedia(), new Duration(200), page.getCommunicator());
+        am.modifyMedia(audio.getMedia(), new Duration(300), page.getCommunicator());
+        am.modifyMedia(audio.getMedia(), new Duration(400), page.getCommunicator());
+
+        am.modifyMedia(audio.getMedia(), new Duration(200), page.getCommunicator());
+
+        assert audio.getMedia().getTimestamps().size() == 4;
+        assert audio.getMedia().getTimestamps().get(2).equals(new Duration(300));
+    }
+
+
+    @Test
+    public void testRemoveHyperlink_manyEnd() throws Exception {
+        //Testing that a hyperlink can be removed from the end when many already exists
+        GUIAudio audio = createAudio();
+
+        AudioModifier am = new AudioModifier();
+        am.modifyMedia(audio.getMedia(), new Duration(0), page.getCommunicator());
+        am.modifyMedia(audio.getMedia(), new Duration(100), page.getCommunicator());
+        am.modifyMedia(audio.getMedia(), new Duration(200), page.getCommunicator());
+        am.modifyMedia(audio.getMedia(), new Duration(300), page.getCommunicator());
+        am.modifyMedia(audio.getMedia(), new Duration(400), page.getCommunicator());
+
+        am.modifyMedia(audio.getMedia(), new Duration(400), page.getCommunicator());
+
+        assert audio.getMedia().getTimestamps().size() == 4;
+    }
 
 
     public static Page createPage()    {

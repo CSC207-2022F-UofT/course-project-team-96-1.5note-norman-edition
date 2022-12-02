@@ -36,7 +36,7 @@ public class TestGUIAudio{
     public static void initJfxRuntime() throws Exception {
         Platform.startup(() -> {});
         tam.createPage();
-        audioGUI = tam.newMedia("src\\test\\java\\test_files\\1.17 Axe to Grind.mp3");
+        //audioGUI = tam.newMedia("src\\test\\java\\test_files\\1.17 Axe to Grind.mp3");
         audioGUI.getAudioPlayer().setMute(true); //Preventing audio jumpscares
 
         //Because the setOnReady call gets skipped, these need to be manually initialized
