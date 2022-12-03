@@ -32,12 +32,11 @@ public class HyperlinkTool implements Tool {
         this.colour = colour;
     }
     public void interact(MouseEvent e) {
-        Double clickX = (e.getX());
-        Double clickY = (e.getY());
 
         if (e.getButton() == MouseButton.PRIMARY) {
             e.consume();
-            makeHyperlink(clickX, clickY);
+            Point2D point = page.getMouseCoords(e);
+            makeHyperlink(point, settings.getText(), settings.getLink(), colour.getValue());
 
         } else if (e.getButton() == MouseButton.SECONDARY) {
             e.consume();
@@ -69,19 +68,19 @@ public class HyperlinkTool implements Tool {
             }
         }
     }
-    public void makeHyperlink(Double x, Double y){
+
+    public boolean makeHyperlink(Point2D point, String words, String link, Color colour) {
 
         // Creates new TextBox in empty space
-        Point2D point = new Point2D (x,y);
-        currentText = new GUIHyperlinkBox(point                ,
-                settings.getText(), settings.getLink(), colour.getValue()
-        );
+        currentText = new GUIHyperlinkBox(point,
+                words, link, colour);
 
         // adds link to page if it is valid
-        if (checkLink(settings.getLink()) && currentText != null) {
-            currentText.updateHyperLink(settings.getText(), settings.getLink());
+        if (checkLink(link) && currentText != null) {
+            currentText.updateHyperLink(words, link);
             page.addMedia(currentText);
             page.updateMedia(currentText);
+            return true;
         }
         // alert message if link isn't valid
         else {
@@ -89,8 +88,11 @@ public class HyperlinkTool implements Tool {
                     page, "Couldn't add Hyperlink",
                     "Please input a valid URL into the \"Enter Hyperlink\" text box.",
                     null, null).show();
+
         }
+        return false;
     }
+
     // link validator
     // moved method outside settings class, so I could test this method and settings class is private
     public static boolean checkLink  (String givenLink){
@@ -116,6 +118,10 @@ public class HyperlinkTool implements Tool {
     public Node getGraphic() {
         return new Label(
                 getName(), ResourceLoader.loadSVGicon("icons/hyperlink.svg", 15, 15));
+    }
+
+    public GUIHyperlinkBox getCurrentHyperlinkBox (){
+        return currentText;
     }
 
     @Override
