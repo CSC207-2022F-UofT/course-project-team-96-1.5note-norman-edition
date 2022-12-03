@@ -7,53 +7,54 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
-import javafx.geometry.*;
 import gui.media.GUIHyperlinkBox;
 import gui.error_window.ErrorWindow;
 import gui.ResourceLoader;
 import javafx.scene.paint.*;
 import java.awt.Desktop;
+import javafx.geometry.Point2D;
 import java.net.URI;
 import java.net.URL;
 
 public class HyperlinkTool implements Tool {
 
     private Page page;
-    private HandlerMethod[] handlers;
-    private HyperlinkSettings settings;
+    private final HandlerMethod[] handlers;
+    private final HyperlinkSettings settings;
     private GUIHyperlinkBox currentText;
-    private ObjectProperty<Color> colour;
+    private final ObjectProperty<Color> colour;
 
     public HyperlinkTool(ObjectProperty<Color> colour) {
-        HandlerMethod[] handlers = {
+        this.handlers = new HandlerMethod[]{
                 new HandlerMethod<>(MouseEvent.MOUSE_CLICKED, this::interact)
         };
-        this.handlers = handlers;
         settings = new HyperlinkSettings();
         this.colour = colour;
     }
     public void interact(MouseEvent e) {
+        Double clickX = (e.getX());
+        Double clickY = (e.getY());
+
         if (e.getButton() == MouseButton.PRIMARY) {
             e.consume();
-            makeHyperlink(e);
+            makeHyperlink(clickX, clickY);
 
         } else if (e.getButton() == MouseButton.SECONDARY) {
             e.consume();
-            clickLink(e);
+            EventTarget pick = e.getTarget();
+            clickLink(pick);
         }
     }
 
-    public void clickLink (MouseEvent e) {
-        EventTarget pick = e.getTarget();
+    public void clickLink (EventTarget pick) {
 
-        if (pick instanceof GUIHyperlinkBox) {
-            GUIHyperlinkBox castpick = (GUIHyperlinkBox) pick; //casting to use the methods of GUIHyperlinkbox
+        if (pick instanceof GUIHyperlinkBox castpick) {
+            //casting to use the methods of GUIHyperlinkbox
             String clicked = castpick.getLink();
             System.out.print(clicked + "link");
 
             try {
                 URI url = new URI(clicked);
-
 
                 // https://bugs.openjdk.org/browse/JDK-8267572
                 javax.swing.SwingUtilities.invokeLater(() -> {
@@ -68,43 +69,19 @@ public class HyperlinkTool implements Tool {
             }
         }
     }
+    public void makeHyperlink(Double x, Double y){
 
-    public void makeHyperlink(MouseEvent e){
-       /* if (e.getButton() == MouseButton.PRIMARY) {
-            e.consume();*/
-
-        EventTarget pick = e.getTarget();
-
-        // editing text and hyperlink doin funny stuff; TODO fix
-/*        if (pick instanceof GUIHyperlinkBox) {
-            GUIHyperlinkBox castpick = (GUIHyperlinkBox) pick; //casting to use the methods of GUIHyperlinkbox
-
-            settings.setText(castpick.getText()); // retrieve the text from the page and putting it in the tools box
-            settings.setText(castpick.getLink()); //retrieve link from page
-            //System.out.println(castpick.getText() + castpick.getLink());
-
-
-            // castpick.updateHyperLink(settings.getText(), settings.getLink()); // update text on the page
-            // why does this do weird things with the updating
-            //this.currentText = castpick;
-            //page.updateMedia();
-
-
-        }*/
         // Creates new TextBox in empty space
-        //else{
-            currentText = new GUIHyperlinkBox(
-                    page.getMouseCoords(e),
-                    settings.getText(), settings.getLink(), colour.getValue()
-            );
+        Point2D point = new Point2D (x,y);
+        currentText = new GUIHyperlinkBox(point                ,
+                settings.getText(), settings.getLink(), colour.getValue()
+        );
 
         // adds link to page if it is valid
-        if (settings.checkLink(settings.getLink()) && currentText != null) {
+        if (checkLink(settings.getLink()) && currentText != null) {
             currentText.updateHyperLink(settings.getText(), settings.getLink());
             page.addMedia(currentText);
             page.updateMedia(currentText);
-/*            settings.setLink("");
-            settings.setText("");*/
         }
         // alert message if link isn't valid
         else {
@@ -114,14 +91,23 @@ public class HyperlinkTool implements Tool {
                     null, null).show();
         }
     }
-
+    // link validator
+    // moved method outside settings class, so I could test this method and settings class is private
+    public static boolean checkLink  (String givenLink){
+        try{
+            new URL(givenLink).openStream().close();
+            return true;
+        }
+        catch (Exception notLink){
+            return false;
+        }
+    }
     private void finishEdit(){
         if (currentText != null){
             currentText.end();
             page.updateMedia(currentText);
         }
     }
-
     // getter methods
     @Override
     public String getName() {return "Hyperlink";}
@@ -148,9 +134,9 @@ public class HyperlinkTool implements Tool {
 }
 
 class HyperlinkSettings extends FlowPane{
-    private static int PADDING = 5;
-    private TextArea textBox;
-    private TextArea linkBox;
+    private static final int PADDING = 5;
+    private final TextArea textBox;
+    private final TextArea linkBox;
     public HyperlinkSettings () {
         super(PADDING, PADDING);
 
@@ -165,25 +151,12 @@ class HyperlinkSettings extends FlowPane{
         // hyperlinkSettings.setAlignment(Pos.CENTER_LEFT);
         textBox.setPrefWidth(270);
         linkBox.setPrefWidth(270);
-
-        // getChildren().addAll(hyperlinkSettings);
         getChildren().addAll(textSettings, linkSettings);
-    }
-    // link validator
-    public boolean checkLink  (String givenLink){
-        try{
-            new URL(givenLink).openStream().close();
-            return true;
-        }
-        catch (Exception notLink){
-            return false;
-        }
     }
 
     public String getText() { return textBox.getText(); }
     public void setText(String textIn) {this.textBox.setText(textIn);}
     public String getLink() {return linkBox.getText();}
-
     public void setLink(String givenLink) {this.linkBox.setText(givenLink);} // setText from TextArea class
-    public TextArea getTextBox() { return this.textBox; }
+    // public TextArea getTextBox() { return this.textBox; }
 }
