@@ -1,7 +1,7 @@
 package gui.media;
 
 import app.controllers.ToolBarController;
-import app.media.MediaAudio;
+import app.media.MediaPlayable;
 import app.media.MediaHyperlink;
 import gui.error_window.ErrorWindow;
 import gui.model.GUIPlayerModel;
@@ -25,7 +25,7 @@ import java.util.ArrayList;
  *  <p>
  *  Parameter audioPlayer is the associated JavaFX.MediaPlayer - The effective backend of the interface
  */
-public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
+public class GUIAudio extends GUIMedia<MediaPlayable> implements Playable{
 
     private MediaPlayer audioPlayer;
     private VBox timestamps;
@@ -34,7 +34,7 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
     private double defaultVolume;
     private GUIPlayerModel playerManipulator;
 
-    public GUIAudio(MediaAudio audio)   {
+    public GUIAudio(MediaPlayable audio)   {
         super(audio);
         initializeMediaPlayer();
         playerUI = new PlayerInterface(audio.getName());

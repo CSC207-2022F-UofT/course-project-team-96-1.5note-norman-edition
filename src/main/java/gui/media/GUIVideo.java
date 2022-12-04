@@ -1,15 +1,12 @@
 package gui.media;
 
-import app.media.MediaAudio;
-import javafx.geometry.Insets;
+import app.media.MediaPlayable;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.layout.VBox;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 
 public class GUIVideo extends GUIAudio{
-    public GUIVideo(MediaAudio audio) {
+    public GUIVideo(MediaPlayable audio) {
         super(audio);
 
         //Repeat code, but for some reason this doesnt execute properly in the super class

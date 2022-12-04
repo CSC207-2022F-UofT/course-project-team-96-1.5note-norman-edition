@@ -1,6 +1,6 @@
 import app.MediaCommunicator;
-import app.media.MediaAudio;
-import app.media_managers.AudioModifier;
+import app.media.MediaPlayable;
+import app.media_managers.PlayableModifier;
 import gui.media.GUIAudio;
 import gui.media.GUIHyperlink;
 import gui.model.GUIPlayerModel;
@@ -29,10 +29,10 @@ public class TestGUIAudio{
      * Cover testing for GUIAudio, GUIHyperlink, PlayerInterface, GUIPlayerModel
      */
     private Duration TimeStamp;
-    private MediaAudio audio;
+    private MediaPlayable audio;
     private static Page page;
     private static Boolean init = false;
-    private static TestAudioModifier tam = new TestAudioModifier();
+    private static TestPlayableModifier tam = new TestPlayableModifier();
     private GUIAudio audioGUI;
     private static GUIPlayerModel model;
 
@@ -421,7 +421,7 @@ public class TestGUIAudio{
     //tests for timestamps
 
     public void addTimestamp(Duration duration) throws Exception {
-        AudioModifier am = new AudioModifier();
+        PlayableModifier am = new PlayableModifier();
         am.modifyMedia(audioGUI.getMedia(), duration, page.getCommunicator());
     }
 
@@ -545,7 +545,7 @@ public class TestGUIAudio{
         byte[] rawData = readFile(source);
 
         try {
-            MediaAudio audio = new MediaAudio("", 0, 0, 0, 0, rawData, new ArrayList<Duration>(),
+            MediaPlayable audio = new MediaPlayable("", 0, 0, 0, 0, rawData, new ArrayList<Duration>(),
                     "Audio"); //Temp Constructor
             page.getCommunicator().updateMedia(audio);
             GUIAudio audioUI = new GUIAudio(audio);

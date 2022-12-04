@@ -2,7 +2,7 @@ package app.media;
 import javafx.util.Duration;
 import java.util.ArrayList;
 
-public class MediaAudio extends FileMedia{
+public class MediaPlayable extends FileMedia{
     /** Entity class for storing playable types of media
      * <p>
      * Aside from regular Media and FileMedia parameters, defined by a list of Durations denoting points to be linked
@@ -14,8 +14,8 @@ public class MediaAudio extends FileMedia{
     private final ArrayList<Duration> timestamps;
     private final String type;
 
-    public MediaAudio(String name, double x, double y, double width, double height, byte[] rawData,
-                      ArrayList<Duration>  timestamps, String type) {
+    public MediaPlayable(String name, double x, double y, double width, double height, byte[] rawData,
+                         ArrayList<Duration>  timestamps, String type) {
         super(name, x, y, width, height, rawData);
         this.timestamps = timestamps;
         this.type = type;

@@ -1,6 +1,6 @@
 package app.media_managers;
 import app.MediaCommunicator;
-import app.media.MediaAudio;
+import app.media.MediaPlayable;
 import javafx.util.Duration;
 import storage.FileLoaderWriter;
 import storage.Storage;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public class AudioModifier  {
+public class PlayableModifier {
     /**
     * Manages creation/interactions on MediaAudio
     */
@@ -30,7 +30,7 @@ public class AudioModifier  {
         HashMap<String, byte[]> fileData = fileManager.readFile(types, fileType + acceptedExtensions);
         if (fileData != null)    {
             String fileName = (String) (fileData.keySet().toArray())[0];
-            MediaAudio audio = new MediaAudio(fileName.substring(0, fileName.length() - 4),
+            MediaPlayable audio = new MediaPlayable(fileName.substring(0, fileName.length() - 4),
                     x - 100, y - 100, 200, 200, fileData.get(fileName), new ArrayList<Duration>(), fileType);
             //Giving the audio an ID then adding it to the page
             communicator.updateMedia(audio);
@@ -44,7 +44,7 @@ public class AudioModifier  {
      * it is added
      * @throws Exception when MediaCommunicator fails to update referenced audio
      */
-    public void modifyMedia(MediaAudio audio, Duration timestamp, MediaCommunicator communicator) throws Exception{
+    public void modifyMedia(MediaPlayable audio, Duration timestamp, MediaCommunicator communicator) throws Exception{
         //Either adds or removes timestamps from the audio
         if (audio.getTimestamps().contains(timestamp))  {
             audio.getTimestamps().remove(timestamp);

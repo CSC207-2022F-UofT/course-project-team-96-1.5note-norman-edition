@@ -4,14 +4,11 @@ import app.MediaCommunicator;
 import app.draweables.SelectionTool;
 import app.draweables.ShapeCreator;
 import app.interaction_managers.Tagger;
-import app.media.MediaAudio;
+import app.media.MediaPlayable;
 import app.media.MediaHyperlink;
-import app.media_managers.AudioModifier;
+import app.media_managers.PlayableModifier;
 import app.media_managers.ImageModifier;
 import app.media_managers.TextModifier;
-import gui.media.GUIAudio;
-import gui.page.Page;
-import javafx.geometry.BoundingBox;
 import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.util.Duration;
@@ -34,30 +31,30 @@ public class ToolBarController {
     }
 
     public void insertAudio(MediaCommunicator communicator, Bounds bounds) throws Exception {
-        AudioModifier audioModifier = new AudioModifier();
+        PlayableModifier playableModifier = new PlayableModifier();
         String[] types = new String[]{"*.mp3", "*.wav"};
         String fileType = "Audio";
 
         double x = bounds.getCenterX();
         double y = bounds.getCenterY();
 
-        audioModifier.addMedia(types, fileType, communicator, x, y);
+        playableModifier.addMedia(types, fileType, communicator, x, y);
     }
 
     public void insertVideo(MediaCommunicator communicator, Bounds bounds) throws Exception {
-        AudioModifier audioModifier = new AudioModifier();
+        PlayableModifier playableModifier = new PlayableModifier();
         String[] types = new String[]{"*.mp4"};
         String fileType = "Video";
 
         double x = bounds.getCenterX();
         double y = bounds.getCenterY();
 
-        audioModifier.addMedia(types, fileType, communicator, x, y);
+        playableModifier.addMedia(types, fileType, communicator, x, y);
     }
 
-    public void modifyTimestamp(MediaAudio audio, Duration timestamp, MediaCommunicator communicator) throws Exception {
-        AudioModifier audioModifier = new AudioModifier();
-        audioModifier.modifyMedia(audio, timestamp, communicator);
+    public void modifyTimestamp(MediaPlayable audio, Duration timestamp, MediaCommunicator communicator) throws Exception {
+        PlayableModifier playableModifier = new PlayableModifier();
+        playableModifier.modifyMedia(audio, timestamp, communicator);
     }
 
     public MediaHyperlink createHyperlink(String text, String source)   {

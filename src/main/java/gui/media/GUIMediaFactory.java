@@ -1,7 +1,6 @@
 package gui.media;
 
 import app.media.*;
-import javafx.scene.media.MediaView;
 
 
 /**
@@ -23,11 +22,11 @@ public class GUIMediaFactory {
     public static GUIMedia getFor(Media media) throws Exception {
         if (media instanceof PenStroke) {
             return new GUIPenStroke((PenStroke) media);
-        } if (media instanceof MediaAudio) {
-            if (((MediaAudio) media).getType().equals("Video"))   {
-                return new GUIVideo((MediaAudio) media);
+        } if (media instanceof MediaPlayable) {
+            if (((MediaPlayable) media).getType().equals("Video"))   {
+                return new GUIVideo((MediaPlayable) media);
             }   else {
-                return new GUIAudio((MediaAudio) media);
+                return new GUIAudio((MediaPlayable) media);
             }
         } if (media instanceof  MediaHyperlink) {
             return new GUIHyperlink((MediaHyperlink) media);
