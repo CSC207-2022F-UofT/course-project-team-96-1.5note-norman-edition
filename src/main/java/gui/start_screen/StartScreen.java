@@ -1,5 +1,6 @@
 package gui.start_screen;
 
+import gui.Zoomable;
 import gui.page.Page;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
@@ -218,7 +219,7 @@ public class StartScreen extends VBox {
      * @param targetZoom factor to scale by
      */
     private void zoomTo(double targetZoom) {
-        Page page = pageScreen.getPage();
+        Zoomable page = pageScreen.getPage();
         page.zoomToFactor(targetZoom);
     }
 
@@ -227,7 +228,7 @@ public class StartScreen extends VBox {
      * @param inOrOut String specifying whether to zoom "In" or "Out"
      */
     private void zoomInOrOut(String inOrOut) {
-        Page page = pageScreen.getPage();
+        Zoomable page = pageScreen.getPage();
         page.zoomInOrOut(inOrOut);
     }
 
@@ -235,7 +236,7 @@ public class StartScreen extends VBox {
      *
      */
     private void centerPage() {
-        Page page = pageScreen.getPage();
+        Zoomable page = pageScreen.getPage();
         page.centerPage();
     }
 
