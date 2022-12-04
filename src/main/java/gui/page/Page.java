@@ -169,7 +169,7 @@ public class Page extends StackPane implements MediaObserver {
     /**
      * Return a regions containing everything that is currently visible on the page.
      */
-    private Bounds getVisibleBounds() {
+    public Bounds getVisibleBounds() {
         Bounds b = mediaLayer.parentToLocal(getLayoutBounds());
         // Add the VISIBLE_BOUNDS_MARGIN to each dimension to make sure we only
         // have to load in more media objects for large movements instead of for

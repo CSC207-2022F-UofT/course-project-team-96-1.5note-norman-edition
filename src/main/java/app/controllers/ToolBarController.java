@@ -11,6 +11,8 @@ import app.media_managers.ImageModifier;
 import app.media_managers.TextModifier;
 import gui.media.GUIAudio;
 import gui.page.Page;
+import javafx.geometry.BoundingBox;
+import javafx.geometry.Bounds;
 import javafx.geometry.Point2D;
 import javafx.util.Duration;
 
@@ -31,18 +33,26 @@ public class ToolBarController {
         imageModifier.addMedia();
     }
 
-    public void insertAudio(MediaCommunicator communicator) throws Exception {
+    public void insertAudio(MediaCommunicator communicator, Bounds bounds) throws Exception {
         AudioModifier audioModifier = new AudioModifier();
         String[] types = new String[]{"*.mp3", "*.wav"};
         String fileType = "Audio";
-        audioModifier.addMedia(types, fileType, communicator);
+
+        double x = bounds.getCenterX();
+        double y = bounds.getCenterY();
+
+        audioModifier.addMedia(types, fileType, communicator, x, y);
     }
 
-    public void insertVideo(MediaCommunicator communicator) throws Exception {
+    public void insertVideo(MediaCommunicator communicator, Bounds bounds) throws Exception {
         AudioModifier audioModifier = new AudioModifier();
         String[] types = new String[]{"*.mp4"};
         String fileType = "Video";
-        audioModifier.addMedia(types, fileType, communicator);
+
+        double x = bounds.getCenterX();
+        double y = bounds.getCenterY();
+
+        audioModifier.addMedia(types, fileType, communicator, x, y);
     }
 
     public void modifyTimestamp(MediaAudio audio, Duration timestamp, MediaCommunicator communicator) throws Exception {

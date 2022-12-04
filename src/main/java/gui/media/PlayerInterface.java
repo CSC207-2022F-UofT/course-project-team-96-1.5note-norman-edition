@@ -21,7 +21,7 @@ public class PlayerInterface extends VBox {
 
     public PlayerInterface(String name) {
         //Creating visual elements related to managing play state of the mediaplayer
-        this.play = new Button("Play"); //TODO: make these use assets
+        this.play = new Button("Play");
         this.redo = new Button("Replay");
         this.forward = new Button("Fast Forward"); //A bit useless but it's for visual effect
 

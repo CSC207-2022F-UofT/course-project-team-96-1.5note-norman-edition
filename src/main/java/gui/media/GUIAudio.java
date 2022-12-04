@@ -313,10 +313,6 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
         return playerUI.getPlaybackText();
     }
 
-    public GUIPlayerModel getPlayerManipulator() {
-        return playerManipulator;
-    }
-
     public PlayerInterface getPlayerUI() {
         return playerUI;
     }

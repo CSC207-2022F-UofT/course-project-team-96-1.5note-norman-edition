@@ -19,7 +19,7 @@ import java.util.ArrayList;
  */
 
 public class AudioTool implements Tool{
-    private Page page;
+    protected Page page;
     private final HandlerMethod<MouseEvent>[] handlers;
     private GUIAudio selectedPlayer;
     private final AudioSettings settings;
@@ -119,7 +119,7 @@ public class AudioTool implements Tool{
         //When the addAudio button is clicked, initiate MediaAudio creation process
         settings.getAddMedia().setOnAction(e ->    {
             try {
-                tbc.insertAudio(this.page.getCommunicator());
+                tbc.insertAudio(this.page.getCommunicator(), this.page.getVisibleBounds());
             } catch (Exception ex) {
                 new ErrorWindow(this.page, "There was an error loading you file",
                         "An exception occured" + "in the process of loading your file", ex);

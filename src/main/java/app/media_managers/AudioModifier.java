@@ -17,7 +17,8 @@ public class AudioModifier  {
     /** Allows the user to select an audio file to add to the page
      * @throws Exception when user selected file fails to load
      */
-    public void addMedia(String[] types, String fileType, MediaCommunicator communicator) throws Exception{
+    public void addMedia(String[] types, String fileType, MediaCommunicator communicator, double x, double y)
+            throws Exception{
         //Loading raw audio data based on user selection
         Storage fileManager = new FileLoaderWriter();
         StringBuilder acceptedExtensions = new StringBuilder("(" + types[0]);
@@ -29,9 +30,8 @@ public class AudioModifier  {
         HashMap<String, byte[]> fileData = fileManager.readFile(types, fileType + acceptedExtensions);
         if (fileData != null)    {
             String fileName = (String) (fileData.keySet().toArray())[0];
-            MediaAudio audio = new MediaAudio(fileName.substring(0, fileName.length() - 4)
-                    , 200, 200, 200, 200, fileData.get(fileName), new ArrayList<Duration>(),
-                    fileType);
+            MediaAudio audio = new MediaAudio(fileName.substring(0, fileName.length() - 4),
+                    x - 100, y - 100, 200, 200, fileData.get(fileName), new ArrayList<Duration>(), fileType);
             //Giving the audio an ID then adding it to the page
             communicator.updateMedia(audio);
             }

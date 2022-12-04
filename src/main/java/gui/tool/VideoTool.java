@@ -35,7 +35,7 @@ public class VideoTool extends AudioTool{
         //When the addAudio button is clicked, initiate MediaAudio creation process
         getSettingsGUI().getAddMedia().setOnAction(e ->    {
             try {
-                tbc.insertVideo(getPage().getCommunicator());
+                tbc.insertVideo(page.getCommunicator(), page.getVisibleBounds());
             } catch (Exception ex) {
                 new ErrorWindow(getPage(), "There was an error loading you file",
                         "An exception occured" + "in the process of loading your file", ex);
