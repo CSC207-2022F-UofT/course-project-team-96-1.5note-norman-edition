@@ -44,7 +44,7 @@ public class TestTag {
         byte[] testByte = new byte[] {};
         ArrayList<Duration> testDuration = new ArrayList<>();
 
-        MediaAudio audio = new MediaAudio("", 0, 0, 0, 0, testByte, testDuration, 1.0);
+        MediaPlayable audio = new MediaPlayable("", 0, 0, 0, 0, testByte, new ArrayList<>(), "Audio");
 
         Tagger tagger = new Tagger();
         tagger.setTag("TEST");

@@ -5,7 +5,7 @@ import app.media.MediaHyperlink;
 public class TextModifier {
     private String link;
 
-    public void addMedia() {
+    public void addMedia() throws Exception{
 
     }
 

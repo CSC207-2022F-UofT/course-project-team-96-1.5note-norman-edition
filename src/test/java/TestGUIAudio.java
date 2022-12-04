@@ -1,82 +1,81 @@
-import app.media.MediaAudio;
+import app.MediaCommunicator;
+import app.media.MediaPlayable;
+import app.media_managers.PlayableModifier;
 import gui.media.GUIAudio;
+import gui.media.GUIHyperlink;
+import gui.model.GUIPlayerModel;
 import gui.page.Page;
-import gui.view_controllers.MediaPlayerController;
-import javafx.animation.PauseTransition;
 import javafx.application.Platform;
-import javafx.scene.control.Button;
 import static org.junit.Assert.*;
 
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Slider;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.text.Text;
 import javafx.util.Duration;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import storage.SQLiteStorage;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.ArrayList;
 
 
 public class TestGUIAudio{
     /**
-     * These test MediaPlayerController, GUIAudio, and GUIPlayerModel as a whole since they are so heavily interlinked
+     * These tests are broken, and i cannot for the life of me get these to work consistently in any meaningful capacity
+     * leaving the tests in to show what I would have tested for
      *
-     * These tests assume that the creation of MediaPlayer will work, since those are tested in TestAudioModifer
-     * They also assume the UI controls work and send the correct "signals", and that aspect unfortunately cannot really
-     * be tested. That being said, from more visual testing it can be verified that it's correct
-     *
-     * Some modified methods are used as FileChooser and junit do not mesh well (or at all)
-     *
+     * Cover testing for GUIAudio, GUIHyperlink, PlayerInterface, GUIPlayerModel
      */
     private Duration TimeStamp;
-    private MediaAudio audio;
-    private Page page;
+    private MediaPlayable audio;
+    private static Page page;
     private static Boolean init = false;
-    private static TestAudioModifier tam = new TestAudioModifier();
-    private static GUIAudio audioGUI;
-    private static MediaPlayerController controller;
+    private static TestPlayableModifier tam = new TestPlayableModifier();
+    private GUIAudio audioGUI;
+    private static GUIPlayerModel model;
 
     @BeforeClass
     public static void initJfxRuntime() throws Exception {
         Platform.startup(() -> {});
-        tam.createPage();
-        audioGUI = tam.addMedia("src\\test\\java\\test_files\\1.17 Axe to Grind.mp3");
-        audioGUI.getAudioPlayer().setMute(true); //Preventing audio jumpscares
-
+        page = createPage();
+    }
+    public void createAudio() throws Exception {
+        GUIAudio audioGUI = addMedia("src\\test\\java\\test_files\\1.17 Axe to Grind.mp3");
         //Because the setOnReady call gets skipped, these need to be manually initialized
-
+        audioGUI.configureUI();
         audioGUI.createInterface();
-        controller = new MediaPlayerController(audioGUI, audioGUI.getAudioPlayer().getTotalDuration());
-        audioGUI.setController(controller);
-        controller.getAssociatedModel().setTotalDuration(new Duration(194324.897959));
 
-        //This transitions MediaPlayer state from READY to PAUSED, which can cause issues exclusively when testing
-        //because tests happen way too quickly for things to process
-        controller.firePlayButton("Play");
-        Thread.sleep(2000);
-        controller.firePlayButton("Pause");
-        audioGUI.getAudioPlayer().seek(new Duration(0));
+        page.getCommunicator().updateMedia(audioGUI.getMedia());
+
+        this.audioGUI = (GUIAudio) page.getMediaLayer().getChildren().get(0);
+        audioGUI.getAudioPlayer().setMute(true); //Preventing audio jumpscares
+        model = new GUIPlayerModel(audioGUI, audioGUI.getAudioPlayer().getTotalDuration());
     }
 
     //Tests for the play button
     @Test
     public void testPlayButton_playStart() throws Exception {
         //Test that when play is pressed at the start of an audio file while the player is paused, it plays
+        createAudio();
         audioGUI.getAudioPlayer().seek(audioGUI.getAudioPlayer().getStartTime());
 
-        controller.firePlayButton("Play");
+        model.firedPlayButton("Play");
         Thread.sleep(1000);
-        assertEquals("Pause", audioGUI.getPlayButton().getText());
+        assertEquals("Pause", audioGUI.getPlayerUI().getPlay().getText());
         assertEquals(audioGUI.getAudioPlayer().getStatus(), MediaPlayer.Status.PLAYING);
     }
 
     @Test
     public void testPlayButtonPlays_playMiddle() throws Exception {
         //Test that when play is pressed at the middle of an audio file while the player is paused, it plays
+        createAudio();
         audioGUI.getAudioPlayer().seek(new Duration(90000));
 
-        controller.firePlayButton("Play");
+        model.firedPlayButton("Play");
         Thread.sleep(1000);
-        assertEquals("Pause", audioGUI.getPlayButton().getText());
+        assertEquals("Pause", audioGUI.getPlayerUI().getPlay().getText());
         assertEquals(audioGUI.getAudioPlayer().getStatus(), MediaPlayer.Status.PLAYING);
     }
 
@@ -84,11 +83,12 @@ public class TestGUIAudio{
     @Test
     public void testPlayButtonPlays_playEnd() throws Exception {
         //Test that when play is pressed at the end of an audio file while the player is paused, it plays
+        createAudio();
         audioGUI.getAudioPlayer().seek(audioGUI.getAudioPlayer().getTotalDuration());
 
-        controller.firePlayButton("Play");
+        model.firedPlayButton("Play");
         Thread.sleep(1000);
-        assertEquals("Pause", audioGUI.getPlayButton().getText());
+        assertEquals("Pause", audioGUI.getPlayerUI().getPlay().getText());
         assertEquals(audioGUI.getAudioPlayer().getStatus(), MediaPlayer.Status.PLAYING);
 
         //Generally checking that the player looped, though this cant be precisely done in unit tests
@@ -98,43 +98,46 @@ public class TestGUIAudio{
     @Test
     public void testPlayButton_pauseStart() throws Exception {
         //Test that when play is pressed near the start of an audio file while the player is playing, it pauses
+        createAudio();
         audioGUI.getAudioPlayer().seek(audioGUI.getAudioPlayer().getStartTime());
 
-        controller.firePlayButton("Play");
+        model.firedPlayButton("Play");
         Thread.sleep(1000);
-        controller.firePlayButton("Pause");
+        model.firedPlayButton("Pause");
         Thread.sleep(1000);
 
-        assertEquals("Play", audioGUI.getPlayButton().getText());
+        assertEquals("Play", audioGUI.getPlayerUI().getPlay().getText());
         assertEquals(audioGUI.getAudioPlayer().getStatus(), MediaPlayer.Status.PAUSED);
     }
 
     @Test
     public void testPlayButtonPlays_pauseMiddle() throws Exception {
         //Test that when play is pressed near the middle of an audio file while the player is paused, it pauses
+        createAudio();
         audioGUI.getAudioPlayer().seek(new Duration(90000));
 
-        controller.firePlayButton("Play");
+        model.firedPlayButton("Play");
         Thread.sleep(1000);
-        controller.firePlayButton("Pause");
+        model.firedPlayButton("Pause");
         Thread.sleep(1000);
 
-        assertEquals("Play", audioGUI.getPlayButton().getText());
+        assertEquals("Play", audioGUI.getPlayerUI().getPlay().getText());
         assertEquals(audioGUI.getAudioPlayer().getStatus(), MediaPlayer.Status.PAUSED);
     }
 
     @Test
     public void testPlayButtonPlays_pauseEnd() throws Exception {
         //Test that when play is pressed near the end of an audio file while the player is paused, it pauses
+        createAudio();
         audioGUI.getAudioPlayer().seek(Duration.seconds(audioGUI.getAudioPlayer().getTotalDuration().toSeconds()
                 - 10));
 
-        controller.firePlayButton("Play");
+        model.firedPlayButton("Play");
         Thread.sleep(1000);
-        controller.firePlayButton("Pause");
+        model.firedPlayButton("Pause");
         Thread.sleep(1000);
 
-        assertEquals("Play", audioGUI.getPlayButton().getText());
+        assertEquals("Play", audioGUI.getPlayerUI().getPlay().getText());
         assertEquals(audioGUI.getAudioPlayer().getStatus(), MediaPlayer.Status.PAUSED);
     }
 
@@ -146,9 +149,10 @@ public class TestGUIAudio{
 
     //Tests for the playback rate box
     @Test
-    public void testPlayRate_rightCall()    {
+    public void testPlayRate_rightCall() throws Exception {
         //Test that the play rate box correctly determines the play rate
-        ComboBox<String> playrate = audioGUI.createPlayRateOptions();
+        createAudio();
+        ComboBox<String> playrate = audioGUI.getPlayerUI().getPlayRateOptions();
         //0.5x option
         playrate.getSelectionModel().select(0);
         assertEquals((playrate.getSelectionModel().getSelectedIndex() + 1) * 0.5, 0.5, 0);
@@ -168,95 +172,102 @@ public class TestGUIAudio{
 
 
     @Test
-    public void testPlayRate_half() {
+    public void testPlayRate_half() throws Exception {
         //Test that the half rate option correctly adjusts player rate
-        controller.changePlayRate(0.5);
-
+        createAudio();
+        model.changePlayRate(0.5);
         assertEquals(0.5, audioGUI.getAudioPlayer().getRate(), 0.0);
     }
 
     @Test
-    public void testPlayRate_normal() {
+    public void testPlayRate_normal() throws Exception {
         //Test that the normal rate option correctly adjusts player rate
-        controller.changePlayRate(1);
+        createAudio();
+        model.changePlayRate(1);
 
         assertEquals(1, audioGUI.getAudioPlayer().getRate(), 0.0);
     }
 
     @Test
-    public void testPlayRate_halfOverNormal() {
+    public void testPlayRate_halfOverNormal() throws Exception {
         //Test that the 1.5x rate option correctly adjusts player rate
-        controller.changePlayRate(1.5);
+        createAudio();
+        model.changePlayRate(1.5);
 
         assertEquals(1.5, audioGUI.getAudioPlayer().getRate(), 0.0);
     }
 
     @Test
-    public void testPlayRate_double() {
+    public void testPlayRate_double() throws Exception {
         //Test that the double rate option correctly adjusts player rate
-        controller.changePlayRate(2);
+        createAudio();
+        model.changePlayRate(2);
 
         assertEquals(2, audioGUI.getAudioPlayer().getRate(), 0.0);
     }
 
     @Test
-    public void testPlayRate_playingHalf() throws InterruptedException {
+    public void testPlayRate_playingHalf() throws Exception {
         //Test that the play rate adjusts to half even with the player is playing
+        createAudio();
         audioGUI.getAudioPlayer().seek(new Duration(0));
-        controller.firePlayButton("Play");
+        model.firedPlayButton("Play");
         Thread.sleep(1000);
-        controller.changePlayRate(0.5);
+        model.changePlayRate(0.5);
         assertEquals(audioGUI.getAudioPlayer().getStatus(), MediaPlayer.Status.PLAYING);
         assertEquals(0.5, audioGUI.getAudioPlayer().getRate(), 0.0);
-        controller.firePlayButton("Pause");
+        model.firedPlayButton("Pause");
     }
 
     @Test
-    public void testPlayRate_playingNormal() throws InterruptedException {
+    public void testPlayRate_playingNormal() throws Exception {
         //Test that the play rate adjusts to normal even with the player is playing
-
-        controller.changePlayRate(0.5);
+        createAudio();
+        model.changePlayRate(0.5);
         audioGUI.getAudioPlayer().seek(new Duration(0));
-        controller.firePlayButton("Play");
+        model.firedPlayButton("Play");
         Thread.sleep(1000);
-        controller.changePlayRate(1);
+        model.changePlayRate(1);
         assertEquals(audioGUI.getAudioPlayer().getStatus(), MediaPlayer.Status.PLAYING);
         assertEquals(1, audioGUI.getAudioPlayer().getRate(), 0.0);
-        controller.firePlayButton("Pause");
+        model.firedPlayButton("Pause");
     }
 
     @Test
-    public void testPlayRate_playingHalfOverNormal() throws InterruptedException {
+    public void testPlayRate_playingHalfOverNormal() throws Exception {
         //Test that the play rate adjusts to 1.5x even with the player is playing
+        createAudio();
         audioGUI.getAudioPlayer().seek(new Duration(0));
-        controller.firePlayButton("Play");
+        model.firedPlayButton("Play");
         Thread.sleep(1000);
-        controller.changePlayRate(1.5);
+        model.changePlayRate(1.5);
         assertEquals(audioGUI.getAudioPlayer().getStatus(), MediaPlayer.Status.PLAYING);
         assertEquals(1.5, audioGUI.getAudioPlayer().getRate(), 0.0);
-        controller.firePlayButton("Pause");
+        model.firedPlayButton("Pause");
     }
 
     @Test
-    public void testPlayRate_playingDouble() throws InterruptedException {
+    public void testPlayRate_playingDouble() throws Exception {
         //Test that the play rate adjusts to 2x even with the player is playing
+        createAudio();
         audioGUI.getAudioPlayer().seek(new Duration(0));
-        controller.firePlayButton("Play");
+        model.firedPlayButton("Play");
         Thread.sleep(1000);
-        controller.changePlayRate(2);
+        model.changePlayRate(2);
         assertEquals(audioGUI.getAudioPlayer().getStatus(), MediaPlayer.Status.PLAYING);
         assertEquals(2, audioGUI.getAudioPlayer().getRate(), 0.0);
-        controller.firePlayButton("Pause");
+        model.firedPlayButton("Pause");
     }
 
     //Tests for the playback slider
     @Test
-    public void testPlaySlider_setStart() throws InterruptedException {
+    public void testPlaySlider_setStart() throws Exception {
         //Test that the play slider sets the mediaplayer to the start when it is set to it's minimal value
-        controller.firePlayButton("Pause");
+        createAudio();
+        model.firedPlayButton("Pause");
         audioGUI.getAudioPlayer().seek(audioGUI.getAudioPlayer().getTotalDuration());
 
-        controller.changePlayback(0, audioGUI.getAudioPlayer().getStatus());
+        model.playbackSliderAdjusted(0, audioGUI.getAudioPlayer().getStatus());
         Thread.sleep(1000); //Not even sure why this is neccessary, but it is
         assertEquals(new Duration(0), audioGUI.getAudioPlayer().getCurrentTime());
 
@@ -265,11 +276,12 @@ public class TestGUIAudio{
     }
 
     @Test
-    public void testPlaySlider_setMiddle() throws InterruptedException {
+    public void testPlaySlider_setMiddle() throws Exception {
         //Test that the play slider sets the mediaplayer to the middle when it is set to the middle of the slider
+        createAudio();
         audioGUI.getAudioPlayer().seek(audioGUI.getAudioPlayer().getTotalDuration());
 
-        controller.changePlayback(0.5, audioGUI.getAudioPlayer().getStatus());
+        model.playbackSliderAdjusted(0.5, audioGUI.getAudioPlayer().getStatus());
         Thread.sleep(1000);
 
         //Because I had to approximate total duration for the GUIPlayerModel (there are threading issues for tests only),
@@ -281,10 +293,11 @@ public class TestGUIAudio{
     }
 
     @Test
-    public void testPlaySlider_setEnd() throws InterruptedException {
+    public void testPlaySlider_setEnd() throws Exception {
         //Test that the play slider sets the mediaplayer to the end when it is set to the end of the slider
+        createAudio();
         audioGUI.getAudioPlayer().seek(new Duration(0));
-        controller.changePlayback(1, audioGUI.getAudioPlayer().getStatus());
+        model.playbackSliderAdjusted(1, audioGUI.getAudioPlayer().getStatus());
         Thread.sleep(2000);
 
         assertTrue(audioGUI.getAudioPlayer().getCurrentTime().toMillis() > 0);
@@ -294,11 +307,12 @@ public class TestGUIAudio{
     }
 
     @Test
-    public void testPlaySlider_setStartPlaying() throws InterruptedException {
+    public void testPlaySlider_setStartPlaying() throws Exception {
         //Test that the play slider sets the mediaplayer to the start when it is set to the end of the slider and
         // still playing
-        controller.firePlayButton("Play");
-        controller.changePlayback(0.5, audioGUI.getAudioPlayer().getStatus());
+        createAudio();
+        model.firedPlayButton("Play");
+        model.playbackSliderAdjusted(0.5, audioGUI.getAudioPlayer().getStatus());
         double unexpected = audioGUI.getAudioPlayer().getCurrentTime().toMillis();
 
         Thread.sleep(2000);
@@ -309,12 +323,13 @@ public class TestGUIAudio{
     }
 
     @Test
-    public void testPlaySlider_setMiddlePlaying() throws InterruptedException {
+    public void testPlaySlider_setMiddlePlaying() throws Exception {
         //Test that the play slider sets the mediaplayer to the middle when it is set to the end of the slider and
         // still playing
+        createAudio();
         audioGUI.getAudioPlayer().seek(new Duration(0));
-        controller.firePlayButton("Play");
-        controller.changePlayback(0.5, audioGUI.getAudioPlayer().getStatus());
+        model.firedPlayButton("Play");
+        model.playbackSliderAdjusted(0.5, audioGUI.getAudioPlayer().getStatus());
         double unexpected = audioGUI.getAudioPlayer().getCurrentTime().toMillis();
 
         Thread.sleep(2000);
@@ -325,12 +340,13 @@ public class TestGUIAudio{
     }
 
     @Test
-    public void testPlaySlider_setEndPlaying() throws InterruptedException {
+    public void testPlaySlider_setEndPlaying() throws Exception {
         //Test that the play slider sets the mediaplayer to the end when it is set to the end of the slider and
         // still playing
+        createAudio();
         audioGUI.getAudioPlayer().seek(new Duration(0));
-        controller.firePlayButton("Play");
-        controller.changePlayback(1, audioGUI.getAudioPlayer().getStatus());
+        model.firedPlayButton("Play");
+        model.playbackSliderAdjusted(1, audioGUI.getAudioPlayer().getStatus());
         double unexpected = audioGUI.getAudioPlayer().getCurrentTime().toMillis();
 
         Thread.sleep(2000);
@@ -343,58 +359,209 @@ public class TestGUIAudio{
 
     //Tests for the volume slider
     @Test
-    public void testVolumeSlider_setStart() throws InterruptedException {
+    public void testVolumeSlider_setStart() throws Exception {
         //Test that the volume slider can set volume to its minimal value
-        controller.changePlayVolume(0);
+        createAudio();
+        model.changeVolume(0);
         assertEquals(0, audioGUI.getAudioPlayer().getVolume(), 0);
     }
 
     @Test
-    public void testVolumeSlider_setMiddle() throws InterruptedException {
+    public void testVolumeSlider_setMiddle() throws Exception {
         //Test that the volume slider can set volume to 0.5x volume
-        controller.changePlayVolume(0.5);
+        createAudio();
+        model.changeVolume(0.5);
         assertEquals(0.5, audioGUI.getAudioPlayer().getVolume(), 0.5);
     }
 
     @Test
-    public void testVolumeSlider_setEnd() throws InterruptedException {
+    public void testVolumeSlider_setEnd() throws Exception {
         //Test that the volume slider can set volume to max volume
-        controller.changePlayVolume(1);
+        createAudio();
+        model.changeVolume(1);
         assertEquals(1, audioGUI.getAudioPlayer().getVolume(), 1);
     }
 
     @Test
-    public void testVolumeSlider_setStartPlaying() throws InterruptedException {
+    public void testVolumeSlider_setStartPlaying() throws Exception {
         //Test that the volume slider can set the volume to 0 while the player is still playing
-        controller.firePlayButton("Play");
-        controller.changePlayVolume(0);
+        createAudio();
+        model.firedPlayButton("Play");
+        model.changeVolume(0);
         Thread.sleep(2000);
         assertEquals(0, audioGUI.getAudioPlayer().getVolume(), 0);
         assertEquals(audioGUI.getAudioPlayer().getStatus(), MediaPlayer.Status.PLAYING);
-        controller.firePlayButton("Pause");
+        model.firedPlayButton("Pause");
     }
 
     @Test
-    public void testVolumeSlider_setMiddlePlaying() throws InterruptedException {
+    public void testVolumeSlider_setMiddlePlaying() throws Exception {
         //Test that the volume slider can set the volume to 0.5 while the player is still playing
-        controller.firePlayButton("Play");
-        controller.changePlayVolume(0.5);
+        createAudio();
+        model.firedPlayButton("Play");
+        model.changeVolume(0.5);
         Thread.sleep(2000);
         assertEquals(0.5, audioGUI.getAudioPlayer().getVolume(), 0);
         assertEquals(audioGUI.getAudioPlayer().getStatus(), MediaPlayer.Status.PLAYING);
-        controller.firePlayButton("Pause");
+        model.firedPlayButton("Pause");
     }
 
     @Test
-    public void testVolumeSlider_setEndPlaying() throws InterruptedException {
+    public void testVolumeSlider_setEndPlaying() throws Exception {
         //Test that the volume slider can set the volume to 1 while the player is still playing
-        controller.firePlayButton("Play");
-        controller.changePlayVolume(1);
+        createAudio();
+        model.firedPlayButton("Play");
+        model.changeVolume(1);
         Thread.sleep(2000);
         assertEquals(1, audioGUI.getAudioPlayer().getVolume(), 0);
         assertEquals(audioGUI.getAudioPlayer().getStatus(), MediaPlayer.Status.PLAYING);
-        controller.firePlayButton("Pause");
+        model.firedPlayButton("Pause");
     }
 
+    //tests for timestamps
+
+    public void addTimestamp(Duration duration) throws Exception {
+        PlayableModifier am = new PlayableModifier();
+        am.modifyMedia(audioGUI.getMedia(), duration, page.getCommunicator());
+    }
+
+    public void clearTimestamps()   {
+        audioGUI.getMedia().getTimestamps().clear();
+    }
+
+    public void setUpOne() throws Exception {
+        clearTimestamps();
+        addTimestamp(new Duration(0));
+    }
+
+    public void setUpMultiple() throws Exception {
+        clearTimestamps();
+
+        addTimestamp(new Duration(0));
+        addTimestamp(new Duration(1000));
+        addTimestamp(new Duration(2000));
+        addTimestamp(new Duration(3000));
+    }
+
+    //Testing addition/removal of timestamps at both the GUI and Core Data level
+
+    @Test
+    public void testAddTimestamp_largeDuration() throws Exception {
+        createAudio();
+        clearTimestamps();
+        addTimestamp(new Duration(100000000));
+        assertEquals(audioGUI.getMedia().getTimestamps().get(0), new Duration(100000000));
+        GUIHyperlink link = (GUIHyperlink) audioGUI.getTimestamps().getChildren().get(0);
+        assertEquals("27:46:40", link.getHyperlink().getText());
+    }
+
+    //Testing functionality of timestamps
+    //It is assumed that timestamps will be for valid points in the associated audio
+
+    @Test
+    public void testClickTimestamp_startClip() throws Exception {
+        //Test that a timestamp linked to the start of the player plays said part
+        createAudio();
+        setUpOne();
+        GUIHyperlink hyperlink = (GUIHyperlink) audioGUI.getTimestamps().getChildren().get(0);
+        hyperlink.getHyperlink().fire();
+        assertEquals(0, audioGUI.getCurrentDuration().toMillis(), 2000);
+    }
+
+    @Test
+    public void testClickTimestamp_middleClip() throws Exception {
+        //Test that a timestamp linked to the middle of the player plays said part
+        //This test is prone to randomly failing, threading issues
+        createAudio();
+        clearTimestamps();
+        addTimestamp(audioGUI.getAudioPlayer().getTotalDuration().divide(2));
+
+        GUIHyperlink hyperlink = (GUIHyperlink) audioGUI.getTimestamps().getChildren().get(0);
+        hyperlink.getHyperlink().fire();
+        Thread.sleep(1000);
+        assertEquals(audioGUI.getAudioPlayer().getTotalDuration().toMillis() / 2,
+                audioGUI.getCurrentDuration().toMillis(), 2000);
+    }
+
+    @Test
+    public void testClickTimestamp_endClip() throws Exception {
+        //Test that a timestamp linked to the end of the player plays said part (or rather, doesnt)
+        createAudio();
+        clearTimestamps();
+        addTimestamp(audioGUI.getAudioPlayer().getTotalDuration());
+
+        GUIHyperlink hyperlink = (GUIHyperlink) audioGUI.getTimestamps().getChildren().get(0);
+        hyperlink.getHyperlink().fire();
+        Thread.sleep(2000);
+        assertEquals(audioGUI.getAudioPlayer().getTotalDuration().toMillis(),
+                audioGUI.getCurrentDuration().toMillis(), 0);
+    }
+
+    @Test
+    public void testClickTimestamp_first() throws Exception {
+        //Test that clicking the first of multiple timestamps works as expected
+        createAudio();
+        setUpMultiple();
+        GUIHyperlink hyperlink = (GUIHyperlink) audioGUI.getTimestamps().getChildren().get(0);
+        hyperlink.getHyperlink().fire();
+        Thread.sleep(1000);
+        assertEquals(0, audioGUI.getCurrentDuration().toMillis(), 2000);
+    }
+
+    @Test
+    public void testClickTimestamp_second() throws Exception {
+        //Test that clicking the second of multiple timestamps works as expected
+        createAudio();
+        setUpMultiple();
+        GUIHyperlink hyperlink = (GUIHyperlink) audioGUI.getTimestamps().getChildren().get(1);
+        hyperlink.getHyperlink().fire();
+        Thread.sleep(1000);
+        assertEquals(1000, audioGUI.getCurrentDuration().toMillis(), 2000);
+    }
+
+    @Test
+    public void testClickTimestamp_last() throws Exception {
+        //Test that clicking the last of multiple timestamps works as expected
+        createAudio();
+        setUpMultiple();
+        GUIHyperlink hyperlink = (GUIHyperlink) audioGUI.getTimestamps().getChildren().get(3);
+        hyperlink.getHyperlink().fire();
+        Thread.sleep(1000);
+        assertEquals(3000, audioGUI.getCurrentDuration().toMillis(), 2000);
+    }
+
+    public static Page createPage()    {
+        try {
+            SQLiteStorage storage = new SQLiteStorage(null);
+            MediaCommunicator mediaCommunicator = new MediaCommunicator(storage);
+            return new Page(mediaCommunicator);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public GUIAudio addMedia(String source) {
+        //Loading raw audio data based on user selection
+        byte[] rawData = readFile(source);
+
+        try {
+            MediaPlayable audio = new MediaPlayable("", 0, 0, 0, 0, rawData, new ArrayList<Duration>(),
+                    "Audio"); //Temp Constructor
+            page.getCommunicator().updateMedia(audio);
+            GUIAudio audioUI = new GUIAudio(audio);
+            return audioUI;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public byte[] readFile(String path) {
+        File chosenFile = new File(path);
+        try {
+            return Files.readAllBytes(chosenFile.toPath());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }

@@ -223,7 +223,7 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
     /**
      * Returns the currently visible region.
      */
-    private Bounds getVisibleBounds() {
+    public Bounds getVisibleBounds() {
         return mediaLayer.parentToLocal(getLayoutBounds());
     }
 

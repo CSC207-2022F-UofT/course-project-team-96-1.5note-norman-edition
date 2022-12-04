@@ -21,14 +21,14 @@ import java.util.ArrayList;
  */
 
 public class AudioTool implements Tool{
-    private Page page;
+    protected Page page;
     private final HandlerMethod<MouseEvent>[] handlers;
     private GUIAudio selectedPlayer;
     private final AudioSettings settings;
 
-    public AudioTool()  {
+    public AudioTool(String type)  {
         this.handlers = new HandlerMethod[]{new HandlerMethod<>(MouseEvent.MOUSE_CLICKED, this::setSelectedAudio)};
-        this.settings = new AudioSettings();
+        this.settings = new AudioSettings(type);
         initializeControls();
     }
 
@@ -46,36 +46,45 @@ public class AudioTool implements Tool{
 
         //Checking if the player clicked something related to a GUIAudio
         if (target instanceof  GUIAudio || ((Node) target).getParent() instanceof GUIAudio) {
-
             assert target instanceof GUIAudio; //This will always pass by the time we get here
             selectedPlayer = (GUIAudio) target;
-
-            //Enabling parts of the interface linked to timestamps and configuring them to selected player
-
-            ArrayList<String> playerTimestamps = selectedPlayer.getTimestampsText();
-
-            settings.getAudioLabel().setText("Managing " + selectedPlayer.getMedia().getName());
-
-            settings.getTimestampSelection().getItems().setAll(settings.getTimestampSelection().getItems().get(0));
-            settings.getTimestampSelection().getItems().addAll(playerTimestamps);
-            settings.getTimestampSelection().setDisable(playerTimestamps.isEmpty());
-
-            settings.getAddTimestamp().setDisable(playerTimestamps.contains(
-                    selectedPlayer.getPlaybackText().getText()));
-
-            settings.getDeleteTimestamp().setDisable(true);
+            setInterface();
         }   else {
             //Disabling parts of the interface linked to timestamps
-            settings.getAudioLabel().setText("Please Select an Audio Player");
-
-            selectedPlayer = null;
-            settings.getAddTimestamp().setDisable(true);
-            settings.getDeleteTimestamp().setDisable(true);
-
-            settings.getTimestampSelection().setDisable(true);
+            resetInterface("Please Select an Audio Player");
         }
         //Ensures selection box is never empty
         settings.getTimestampSelection().getSelectionModel().select(0);
+    }
+
+    public void setInterface()  {
+        //Enabling parts of the interface linked to timestamps and configuring them to selected player
+
+        ArrayList<String> playerTimestamps = selectedPlayer.getTimestampsText();
+
+        settings.getAudioLabel().setText("Managing " + selectedPlayer.getMedia().getName());
+
+        settings.getTimestampSelection().getItems().setAll(settings.getTimestampSelection().getItems().get(0));
+        settings.getTimestampSelection().getItems().addAll(playerTimestamps);
+        settings.getTimestampSelection().setDisable(playerTimestamps.isEmpty());
+
+        settings.getAddTimestamp().setDisable(playerTimestamps.contains(
+                selectedPlayer.getPlaybackText().getText()));
+
+        settings.getDeleteTimestamp().setDisable(true);
+    }
+
+    public void resetInterface(String text)    {
+        setAudioLabel(text);
+        selectedPlayer = null;
+        settings.getAddTimestamp().setDisable(true);
+        settings.getDeleteTimestamp().setDisable(true);
+
+        settings.getTimestampSelection().setDisable(true);
+    }
+
+    private void setAudioLabel(String text)  {
+        settings.getAudioLabel().setText(text);
     }
 
     @Override
@@ -93,9 +102,13 @@ public class AudioTool implements Tool{
     }
 
     @Override
-    public Node getSettingsGUI()    {
+    public AudioSettings getSettingsGUI()    {
         //Creates the visual tool pane the user interacts with
         return settings;
+    }
+
+    public void setSelectedPlayer(GUIAudio selectedPlayer) {
+        this.selectedPlayer = selectedPlayer;
     }
 
     /**
@@ -104,16 +117,25 @@ public class AudioTool implements Tool{
     public void initializeControls()    {
         ToolBarController tbc = new ToolBarController();
 
+        configureAddAudio(tbc);
+        configureAddTimestamp(tbc);
+        configureTimestampSelection(tbc);
+        configureDeleteTimestamp(tbc);
+    }
+
+    protected void configureAddAudio(ToolBarController tbc)   {
         //When the addAudio button is clicked, initiate MediaAudio creation process
-        settings.getAddAudio().setOnAction(e ->    {
+        settings.getAddMedia().setOnAction(e ->    {
             try {
-                tbc.insertAudio(this.page.getCommunicator());
+                tbc.insertAudio(this.page.getCommunicator(), this.page.getVisibleBounds());
             } catch (Exception ex) {
-                new ErrorWindow(this.page, "There was an error loading you file", "An exception occured" +
-                        "in the process of loading your file", ex);
+                new ErrorWindow(this.page, "There was an error loading you file",
+                        "An exception occured" + "in the process of loading your file", ex);
             }
         });
+    }
 
+    private void configureAddTimestamp(ToolBarController tbc)   {
         //Controls pertaining to creating timestamps
         //When the user clicks to add a timestamp, initiate timestamp creation process
         settings.getAddTimestamp().setOnAction(e ->    {
@@ -127,7 +149,9 @@ public class AudioTool implements Tool{
             //refreshes the timestamp selection box
             selectedPlayer.echoClick();
         });
+    }
 
+    private void configureTimestampSelection(ToolBarController tbc) {
         //Whenever the timestamp selection box detects change, disable the delete timestamp button if a timestamp was
         //selected
         settings.getTimestampSelection().setOnAction(e -> {
@@ -135,6 +159,9 @@ public class AudioTool implements Tool{
                     getSelectedIndex() == 0);
         });
 
+    }
+
+    private void configureDeleteTimestamp(ToolBarController tbc)    {
         //When the deleteTimestamp button is clicked, initiate timestamp removal process
         settings.getDeleteTimestamp().setOnAction(e ->   {
             int selectedTime = settings.getTimestampSelection().getSelectionModel().getSelectedIndex() - 1;
@@ -153,26 +180,39 @@ public class AudioTool implements Tool{
     public HandlerMethod<MouseEvent>[] getHandlerMethods() {
         return handlers;
     }
+
+    public GUIAudio getSelectedPlayer() {
+        return selectedPlayer;
+    }
+
+    public Page getPage() {
+        return page;
+    }
 }
 
 /**
  * Stores visual interface for the audio tool
  */
 class AudioSettings extends VBox{
-    private final Button addAudio, addTimestamp, deleteTimestamp;
+    private final Button addMedia, addTimestamp, deleteTimestamp;
     private final Text audioLabel;
     private final ComboBox<String> timestampSelection;
 
     /**
      * Constructor defines the entire interface for the tool, but provides no functionality
      */
-    public AudioSettings()  {
-        this.addAudio = new Button("Add new Audio");
+    public AudioSettings(String type)  {
+        this.addMedia = new Button("Add new " + type);
         this.deleteTimestamp = new Button("Delete");
         deleteTimestamp.setDisable(true);
         this.addTimestamp = new Button("Create Timestamp");
         addTimestamp.setDisable(true);
-        this.audioLabel = new Text("Please select an Audio Player");
+
+        if(type.equals("Audio"))    {
+            this.audioLabel = new Text("Please select an " + type + " Player");
+        }   else {
+            this.audioLabel = new Text("Please select a " + type + " Player");
+        }
 
         this.timestampSelection = new ComboBox<>();
         timestampSelection.getItems().add("Select a timestamp:");
@@ -188,11 +228,11 @@ class AudioSettings extends VBox{
         timestampLayout.getChildren().addAll(audioLabel, addTimestamp, deletionBox);
 
         setSpacing(30);
-        getChildren().addAll(addAudio, timestampLayout);
+        getChildren().addAll(addMedia, timestampLayout);
     }
 
-    public Button getAddAudio() {
-        return addAudio;
+    public Button getAddMedia() {
+        return addMedia;
     }
 
     public Button getAddTimestamp() {
