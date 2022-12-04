@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public class AudioModifier implements MediaManager {
+public class AudioModifier {
     /**
     * Manages creation/interactions on MediaAudio
      * <p>
@@ -24,7 +24,6 @@ public class AudioModifier implements MediaManager {
     /** Allows the user to select an audio file to add to the page
      * @throws Exception when user selected file fails to load
      */
-    @Override
     public void addMedia() throws Exception{
         //Loading raw audio data based on user selection
         Storage fileManager = new FileLoaderWriter();
@@ -47,7 +46,6 @@ public class AudioModifier implements MediaManager {
      * it is added
      * @throws Exception when MediaCommunicator fails to update referenced audio
      */
-    @Override
     public void modifyMedia() throws Exception{
         //Either adds or removes timestamps from the audio
         if (audio.getTimestamps().contains(timestamp))  {
@@ -58,7 +56,6 @@ public class AudioModifier implements MediaManager {
         communicator.updateMedia(audio);
     }
 
-    @Override
     public void searchMedia() {
 
     }

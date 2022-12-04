@@ -1,4 +1,4 @@
-package app.media_managers;
+package gui.tool.app.media_managers;
 
 public class ImageModifier  {
 

@@ -442,6 +442,7 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
      *
      * @param translation amount of pixels to translate by
      */
+    public void scrollVertically(double translation) {
         mediaLayer.setTranslateY(translation);
     }
 
@@ -451,6 +452,7 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
      *
      * @param translation amount of pixels to translate by
      */
+    public void scrollHorizontally(double translation) {
         mediaLayer.setTranslateX(translation);
     }
 
@@ -513,6 +515,14 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
      */
     public Scale getScale() {
         return scale;
+    }
+
+    /** Getter for mediaLayer
+     *
+     * @return mediaLayer
+     */
+    public Pane getMediaLayer() {
+        return mediaLayer;
     }
 
     /** handles scrolling inputs, zooming when control is pressed, horizontal scrolling when shift is pressed, and
