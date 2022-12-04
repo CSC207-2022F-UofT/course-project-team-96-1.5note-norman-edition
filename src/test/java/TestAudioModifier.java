@@ -196,6 +196,20 @@ public class TestAudioModifier {
         assert audio.getMedia().getTimestamps().size() == 4;
     }
 
+    @Test
+    public void testAddVideo_short() throws Exception{
+        //Test that short videos can be added to the page
+        addMedia("D:\\Coding\\CSC207\\src\\test\\java\\test_files\\" +
+                "Y2Mate.is - will smith playing fire emblem-7K0Z9BDl_fE-720p-1654219278699.mp4");
+    }
+
+    @Test
+    public void testAddVideo_averaget() throws Exception{
+        //Test that longer videos can be added to the page
+        addMedia("D:\\Coding\\CSC207\\src\\test\\java\\test_files\\" +
+                "Y2Mate.is - The best voice acting in any game ever-9QdfdQyQ7ns-720p-1656067504114.mp4");
+    }
+
 
     public static Page createPage()    {
         try {

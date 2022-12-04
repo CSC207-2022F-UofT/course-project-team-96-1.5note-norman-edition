@@ -26,7 +26,7 @@ public class TestGUIAudio{
      * These tests are broken, and i cannot for the life of me get these to work consistently in any meaningful capacity
      * leaving the tests in to show what I would have tested for
      *
-     * Cover testing for GUIAudio, GUIHyperlink, PlayerModel
+     * Cover testing for GUIAudio, GUIHyperlink, PlayerInterface, GUIPlayerModel
      */
     private Duration TimeStamp;
     private MediaAudio audio;
@@ -43,7 +43,6 @@ public class TestGUIAudio{
     }
     public void createAudio() throws Exception {
         GUIAudio audioGUI = addMedia("src\\test\\java\\test_files\\1.17 Axe to Grind.mp3");
-        audioGUI.getAudioPlayer().setMute(true); //Preventing audio jumpscares
         //Because the setOnReady call gets skipped, these need to be manually initialized
         audioGUI.configureUI();
         audioGUI.createInterface();
@@ -51,6 +50,7 @@ public class TestGUIAudio{
         page.getCommunicator().updateMedia(audioGUI.getMedia());
 
         this.audioGUI = (GUIAudio) page.getMediaLayer().getChildren().get(0);
+        audioGUI.getAudioPlayer().setMute(true); //Preventing audio jumpscares
         model = new GUIPlayerModel(audioGUI, audioGUI.getAudioPlayer().getTotalDuration());
     }
 
