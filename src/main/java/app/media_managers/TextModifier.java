@@ -9,7 +9,7 @@ public class TextModifier {
 
     }
 
-    public void modifyMedia() throws Exception{
+    public void modifyMedia() {
 
     }
 

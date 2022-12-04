@@ -1,12 +1,13 @@
 package app.media_managers;
 
-public class ImageModifier  {
+public class ImageModifier {
+    private String caption;
 
-    public void addMedia() throws Exception{
+    public void addMedia() {
 
     }
 
-    public void modifyMedia() throws Exception{
+    public void modifyMedia() {
 
     }
 
@@ -14,7 +15,7 @@ public class ImageModifier  {
 
     }
 
-    public void addCaption(){
-
+    public void addCaption(String givenCaption){
+        this.caption = givenCaption;
     }
 }

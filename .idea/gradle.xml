@@ -8,10 +8,9 @@
         <option name="testRunner" value="GRADLE" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleJvm" value="corretto-11" />
         <option name="modules">
           <set>
-            <option value="$PROJECT_DIR$" />
+            <option value="/mnt/03ded9a2-bd46-4b2a-9bb5-36cfaf01d2a3/projects/course-project-team-96-1.5note-norman-edition" />
           </set>
         </option>
       </GradleProjectSettings>

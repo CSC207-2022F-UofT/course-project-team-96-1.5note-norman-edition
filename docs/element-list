@@ -1,0 +1,16 @@
+unnamed package
+app
+app.controllers
+app.drawables
+app.interaction_managers
+app.media
+app.media_managers
+gui
+gui.error_window
+gui.media
+gui.model
+gui.page
+gui.page_screen
+gui.start_screen
+gui.tool
+storage

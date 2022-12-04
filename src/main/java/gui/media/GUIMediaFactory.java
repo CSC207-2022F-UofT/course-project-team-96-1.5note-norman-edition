@@ -22,14 +22,22 @@ public class GUIMediaFactory {
     public static GUIMedia getFor(Media media) throws Exception {
         if (media instanceof PenStroke) {
             return new GUIPenStroke((PenStroke) media);
-        } if (media instanceof MediaPlayable) {
-            if (((MediaPlayable) media).getType().equals("Video"))   {
+        } else if (media instanceof MediaPlayable) {
+            if (((MediaPlayable) media).getType().equals("Video")) {
                 return new GUIVideo((MediaPlayable) media);
-            }   else {
+            } else {
                 return new GUIAudio((MediaPlayable) media);
             }
-        } if (media instanceof  MediaHyperlink) {
+        } else if (media instanceof  MediaHyperlink) {
             return new GUIHyperlink((MediaHyperlink) media);
+        } else if (media instanceof GenericShape) {
+            return GUIShapeFactory.getFor((GenericShape) media);
+        } else if (media instanceof TextBox) {
+            if (media instanceof Hyperlink) {
+                return new GUIHyperlinkBox((Hyperlink) media);
+            } else {
+                return new GUITextBox((TextBox) media);
+            }
         } else {
             throw new Exception("No appropriate GUIMedia class for `" + media + "`.");
         }

@@ -211,10 +211,6 @@ class ColourSettings extends FlowPane {
 
     private void setSlidersFromColour() {
         Color c = colour.getValue();
-        double hue = c.getHue();
-        double saturation = c.getSaturation();
-        double value = c.getBrightness();
-        double opacity = c.getOpacity();
 
         if (!isSliderFocused()) {
             hueSlider.setValue(c.getHue());
@@ -222,6 +218,11 @@ class ColourSettings extends FlowPane {
             valueSlider.setValue(c.getBrightness());
             opacitySlider.setValue(c.getOpacity());
         }
+
+        double hue = hueSlider.getValue();
+        double saturation = c.getSaturation();
+        double value = c.getBrightness();
+        double opacity = c.getOpacity();
 
         setSliderBackground(saturationSlider,
                 Color.hsb(hue, 0, value), Color.hsb(hue, 1, value));

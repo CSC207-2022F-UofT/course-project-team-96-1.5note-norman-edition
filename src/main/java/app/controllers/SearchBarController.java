@@ -1,15 +1,23 @@
 package app.controllers;
 
 import app.interaction_managers.Searcher;
+import app.media.Media;
+import javafx.scene.Node;
+import javafx.scene.control.TextField;
+
+import java.util.ArrayList;
 
 public class SearchBarController {
 
-    // Refine return type. As of right now, documentation implies it can be a
-    // media, file, or subsection of text in a text box???
-    // I have started adjusting the CRC cards so that they only implies returning the text media,
-    // But tags are still an issue.
-    public String search(String input) {
-        Searcher searcher = new Searcher();
-        return searcher.search(input);
+    public ArrayList<Double> xPos;
+    public ArrayList<Double> yPos;
+
+    public int results;
+    public SearchBarController(ArrayList<Media> mediaArrayList, TextField searchPrompt){
+        Searcher searcher = new Searcher(mediaArrayList);
+        searcher.interact(searchPrompt);
+        this.xPos = searcher.getXResults();
+        this.yPos = searcher.getYResults();
+        this.results = xPos.size();
     }
 }

@@ -1,9 +1,11 @@
 package gui.tool;
 import app.controllers.ToolBarController;
+import gui.ResourceLoader;
 import gui.error_window.ErrorWindow;
 import gui.media.GUIAudio;
 import gui.page.Page;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.input.MouseEvent;
@@ -91,7 +93,13 @@ public class AudioTool implements Tool{
     }
 
     @Override
-    public String getName() {return "Manage Audio";}
+    public String getName() {return "Audio";}
+
+    @Override
+    public Node getGraphic() {
+        return new Label(
+                getName(), ResourceLoader.loadSVGicon("icons/audio.svg", 15, 15));
+    }
 
     @Override
     public AudioSettings getSettingsGUI()    {

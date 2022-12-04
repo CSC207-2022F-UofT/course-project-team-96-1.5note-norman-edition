@@ -4,10 +4,12 @@ import app.controllers.ToolBarController;
 import gui.error_window.ErrorWindow;
 import gui.media.GUIAudio;
 import gui.media.GUIVideo;
+import gui.ResourceLoader;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 
-public class VideoTool extends AudioTool{
+public class VideoTool extends AudioTool {
     public VideoTool(String type)  {
         super(type);
     }
@@ -44,7 +46,11 @@ public class VideoTool extends AudioTool{
     }
 
     @Override
-    public String getName() {return "Manage Video";}
+    public String getName() {return "Video";}
 
-
+    @Override
+    public Label getGraphic() {
+        return new Label(
+                getName(), ResourceLoader.loadSVGicon("icons/video.svg", 15, 15));
+    }
 }

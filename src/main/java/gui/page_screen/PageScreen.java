@@ -73,4 +73,8 @@ public class PageScreen extends VBox {
             page.removeAllMedia();
         }
     }
+
+    public Page getPage() {
+        return page;
+    }
 }

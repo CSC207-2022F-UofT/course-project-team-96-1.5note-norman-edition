@@ -1,8 +1,6 @@
 package app.controllers;
 
 import app.MediaCommunicator;
-import app.draweables.SelectionTool;
-import app.draweables.ShapeCreator;
 import app.interaction_managers.Tagger;
 import app.media.MediaPlayable;
 import app.media.MediaHyperlink;
@@ -10,8 +8,12 @@ import app.media_managers.PlayableModifier;
 import app.media_managers.ImageModifier;
 import app.media_managers.TextModifier;
 import javafx.geometry.Bounds;
+import gui.media.GUIMedia;
+import gui.media.GUIAudio;
+import gui.page.Page;
 import javafx.geometry.Point2D;
 import javafx.util.Duration;
+import javafx.scene.control.TextField;
 
 public class ToolBarController {
 
@@ -62,21 +64,10 @@ public class ToolBarController {
         return textModifier.createAudioTimestamp(text, source);
     }
 
-    public void drawShape(Point2D point1, Point2D point2, String shape) {
-        ShapeCreator shapeCreator = new ShapeCreator();
-
-        shapeCreator.useTwoPositions(point1, point2, shape);
-    }
-
-    public void select(Point2D point1, Point2D point2, String shape)
-    {
-        SelectionTool selectionTool = new SelectionTool();
-        selectionTool.useTwoPositions(point1, point2, shape);
-    }
-
-    public void tag() //TODO: add neccessary input
+    public void tag(TextField node, GUIMedia<?> guiMedia)
     {
         Tagger tagger = new Tagger();
-        tagger.interact();
+        tagger.interact(node);
+        tagger.addTag(guiMedia.getMedia());
     }
 }
