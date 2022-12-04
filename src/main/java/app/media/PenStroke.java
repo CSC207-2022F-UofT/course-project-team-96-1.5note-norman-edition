@@ -6,6 +6,12 @@ import java.util.ArrayList;
 import java.io.Serializable;
 
 
+/**
+ * Entity class for a pen stroke.
+ *
+ * A pen stroke is defined by a starting position, a thickness, a colour, and
+ * a list of ending positions for the line segments which make up the stroke.
+ */
 public class PenStroke extends Media {
 
     /** Data for a single line segment in a stroke. */

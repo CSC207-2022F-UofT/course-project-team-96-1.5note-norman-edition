@@ -5,6 +5,14 @@ import java.util.Set;
 import app.media.Media;
 
 
+/**
+ * Implementors of this interface can be used as a Media storage back-end by
+ * MediaCommunicator.
+ * <p>
+ * The methods in this interface permit throwing exceptions to accomodate
+ * implementations backed by something fallible, such as the filesystem.
+ * The possible sources of error (if any) depend on the specific implementation.
+ */
 public interface MediaStorage {
 
     /**
@@ -21,16 +29,21 @@ public interface MediaStorage {
 
     /**
      * Load the Media with the given name.
+     * @param id The unique identifier of the Media to load
      * @return The Media object with the given ID, or `null` if no such Media
      * object is stored.
      */
     Media loadMedia(long id) throws Exception;
 
     /**
-     * Return the IDs of the Media objects within the rectangular region
+     * @return The IDs of the Media objects within the rectangular region
      * with width `w`, height `h`, and top-left corner at (`x`, `y`).
      */
     Set<Long> getIDsWithin(double x, double y, double w, double h) throws Exception;
 
+
+    /**
+     * @return Whether or not Media with the given identifier is stored.
+     */
     boolean isIDtaken(long id) throws Exception;
 }

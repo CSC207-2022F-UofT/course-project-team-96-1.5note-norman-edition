@@ -27,6 +27,9 @@ class Toolbar extends FlowPane {
     private Map<Toggle, Tool> toolMap;
     private ReadOnlyObjectWrapper<Tool> selectedTool;
 
+    /**
+     * Instantiate a Toolbar for the given tools.
+     */
     public Toolbar(Tool[] tools) {
         super(PADDING, PADDING);
 
@@ -62,12 +65,21 @@ class Toolbar extends FlowPane {
         getChildren().add(toolButton);
     }
 
+    /**
+     * Return an ObservableValue for the currently selected tool.
+     * <p>
+     * This allows other parts of the program to update in accordance with the
+     * selection of a new tool.
+     */
     public ObservableValue<Tool> selectedTool() {
         return selectedTool.getReadOnlyProperty();
     }
 }
 
 
+// Button class for Tool buttons in the Toolbar. Only one can be selected at
+// a time. Additionally, there must always be an active tool, i.e. tool buttons
+// cannot be un-selected.
 class ToolButton extends ToggleButton {
 
     public ToolButton(Tool tool) {

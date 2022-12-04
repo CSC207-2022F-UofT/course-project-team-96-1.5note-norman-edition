@@ -25,6 +25,7 @@ public interface PageEventHandler {
      * all types of events and print them:
      * <pre>
      * new HandlerMethod(Event.ANY, e -> System.out.println(e));
+     * </pre>
      */
     public static record HandlerMethod<T extends Event>(
             EventType<T> eventType, EventHandler<? super T> eventHandler)

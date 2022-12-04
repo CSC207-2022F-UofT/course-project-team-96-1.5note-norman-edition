@@ -23,6 +23,12 @@ public class SQLiteStorage implements MediaStorage {
     private Connection connection;
     private File file;
 
+    /**
+     * Instantiate a new SQLiteStorage backed by the given file.
+     * <p>
+     * If `file` is `null`, then the storage will be backed by memory instead
+     * of a file.
+     */
     public SQLiteStorage(File file) throws Exception {
         setFile(file);
         setupTables();
@@ -80,6 +86,9 @@ public class SQLiteStorage implements MediaStorage {
         return file == null;
     }
 
+    /**
+     * Store the given media.
+     */
     public void insertMedia(Media media) throws Exception {
         if (media.getID() == Media.EMPTY_ID) {
             throw new Exception("Tried to store Media with empty ID");
@@ -172,6 +181,9 @@ public class SQLiteStorage implements MediaStorage {
         return tags;
     }
 
+    /**
+     * Load the Media with the given unique identifier.
+     */
     public Media selectMediaByID(Long id) throws Exception {
         PreparedStatement s = connection.prepareStatement("""
                 SELECT data FROM media WHERE id = ?
@@ -192,6 +204,9 @@ public class SQLiteStorage implements MediaStorage {
         }
     }
 
+    /**
+     * Delete the Media with the given unqiue identifier.
+     */
     public void deleteMediaByID(Long id) throws Exception {
         PreparedStatement s = connection.prepareStatement("""
                 DELETE FROM media WHERE id = ?
@@ -200,6 +215,9 @@ public class SQLiteStorage implements MediaStorage {
         s.executeUpdate();
     }
 
+    /**
+     * Return all the IDs currently stored
+     */
     public Set<Long> selectAllIDs() throws Exception {
         Statement s = connection.createStatement();
 
@@ -216,6 +234,13 @@ public class SQLiteStorage implements MediaStorage {
         return ids;
     }
 
+    /**
+     * Return the IDs of media within the given rectangular region.
+     * @param x The X-coordinate of the top-left corner of the rectangular region
+     * @param y The Y-coordinate of the top-left corner of the rectangular region
+     * @param w The width of the rectangular region
+     * @param h The height of the rectangular region
+     */
     public Set<Long> selectIDsWithin(
             double x, double y, double w, double h) throws Exception
     {
@@ -240,6 +265,9 @@ public class SQLiteStorage implements MediaStorage {
         return ids;
     }
 
+    /**
+     * Return whether or not Media with the given ID is stored.
+     */
     public boolean contains(Long id) throws Exception {
         PreparedStatement s = connection.prepareStatement("""
                 SELECT id FROM media WHERE id = ?
@@ -254,6 +282,10 @@ public class SQLiteStorage implements MediaStorage {
         connection.close();
     }
 
+
+    /*
+     * Implementation of app.MediaStorage interface
+     */
 
     @Override
     public void deleteMedia(long id) throws Exception {

@@ -15,6 +15,9 @@ public final class GUICreator {
 
     private GUICreator() {}
 
+    /**
+     * Return the root node for the GUI.
+     */
     public static Parent createGUI() {
         MenuBar menuBar = new MenuBar();
         SwapPane swapPane = new SwapPane();

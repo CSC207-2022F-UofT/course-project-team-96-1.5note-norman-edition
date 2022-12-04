@@ -53,10 +53,7 @@ public class PageScreen extends VBox {
     }
 
     public void newPage(MediaCommunicator c) {
-        if (page != null) {
-            page.setEventHandler(null);
-            layers.getChildren().remove(page);
-        }
+        closePage();
 
         page = new Page(c);
         page.setEventHandler(toolBar.selectedTool().getValue());
@@ -67,5 +64,13 @@ public class PageScreen extends VBox {
         });
 
         layers.getChildren().add(0, page);
+    }
+
+    public void closePage() {
+        if (page != null) {
+            page.setEventHandler(null);
+            layers.getChildren().remove(page);
+            page.removeAllMedia();
+        }
     }
 }
