@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="20mm"
+   height="20mm"
+   viewBox="0 0 20 20"
+   version="1.1"
+   id="svg5"
+   sodipodi:docname="tag.svg"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview881"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="4"
+     inkscape:cx="68"
+     inkscape:cy="60.625"
+     inkscape:window-width="1914"
+     inkscape:window-height="1057"
+     inkscape:window-x="900"
+     inkscape:window-y="17"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg5"
+     inkscape:snap-global="true" />
+  <defs
+     id="defs2">
+    <rect
+       x="-41.756632"
+       y="57.51315"
+       width="97.001723"
+       height="38.200716"
+       id="rect36716" />
+    <rect
+       x="4.7738342"
+       y="9.6156616"
+       width="70.562866"
+       height="61.787079"
+       id="rect4711" />
+    <rect
+       x="2.2694593"
+       y="3.0539625"
+       width="104.8575"
+       height="98.76088"
+       id="rect5314" />
+  </defs>
+  <path
+     id="rect64352"
+     style="fill:#020202;stroke-width:3.26929;stroke-linejoin:bevel;paint-order:markers fill stroke"
+     d="M 63.935547 0.3515625 L 36.099609 5.3164062 L 0.84179688 41.935547 C -0.18605078 42.963395 0.029829298 44.832564 1.3242188 46.126953 L 29.488281 74.291016 C 30.78267 75.585405 32.645977 75.795389 33.679688 74.773438 L 71.757812 37.119141 L 75.548828 13.236328 L 63.935547 0.3515625 z M 55.71875 10.257812 A 9.8537136 9.8537136 0 0 1 65.572266 20.111328 A 9.8537136 9.8537136 0 0 1 55.71875 29.964844 A 9.8537136 9.8537136 0 0 1 45.865234 20.111328 A 9.8537136 9.8537136 0 0 1 55.71875 10.257812 z "
+     transform="scale(0.26458333)" />
+</svg>

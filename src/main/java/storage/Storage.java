@@ -1,6 +1,9 @@
 package storage;
 
+import java.net.URI;
+import java.util.HashMap;
+
 public interface Storage {
-    public byte[] readFile(String path);
-    public void writeFile(String path, byte[] Data);
+    public HashMap<String, byte[]> readFile(String[] extensions, String description) throws Exception;
+    public URI writeFile(String name, byte[] Data) throws Exception;
 }

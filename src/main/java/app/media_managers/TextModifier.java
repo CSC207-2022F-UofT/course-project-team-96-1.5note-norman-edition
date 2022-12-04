@@ -1,11 +1,15 @@
 package app.media_managers;
 
+import app.media.MediaHyperlink;
+
 public class TextModifier {
-    public void addMedia() throws Exception{
+    private String link;
+
+    public void addMedia() {
 
     }
 
-    public void modifyMedia() throws Exception{
+    public void modifyMedia() {
 
     }
 
@@ -13,8 +17,14 @@ public class TextModifier {
 
     }
 
-    public void addLink(){
+    //Special method since normally you add the associated GUIMedia class directly to the class, but in the
+    //timestamp case it needs to be added under GUIAudio
+    public MediaHyperlink createAudioTimestamp(String text, String source) {
+        return new MediaHyperlink("", 0, 0, 0, 0, text, source); //temp constructor
+    }
 
+    public void addLink(String givenLink){
+        this.link = givenLink;
     }
 
 

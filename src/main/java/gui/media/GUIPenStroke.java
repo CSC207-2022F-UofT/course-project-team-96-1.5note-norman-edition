@@ -50,7 +50,7 @@ public class GUIPenStroke extends GUIMedia<PenStroke> {
         super(new PenStroke(point.getX(), point.getY(), thickness, colour.toString()));
 
         setInitialValues();
-        segments.add(new Segment(0, 0));
+        addSegment(new Segment(0, 0));
 
         path.setStroke(colour);
         startCircle.setFill(colour);

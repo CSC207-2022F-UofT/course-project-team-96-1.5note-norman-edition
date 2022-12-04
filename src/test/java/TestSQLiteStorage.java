@@ -112,4 +112,33 @@ public class TestSQLiteStorage {
         assertTrue(ids2.contains(m2.getID()));
         assertFalse(ids2.contains(m1.getID()));
     }
+
+    @Test
+    public void testSQLiteSelectBase() throws Exception {
+        // Test loading base media class from db columns instead of
+        // deserializing
+
+        SQLiteStorage s = new SQLiteStorage(null);
+
+        Media m1 = new Media(1, "foo", 0, 0, 0, 0);
+        m1.getTags().add("tag 1 aaaaaa");
+        m1.getTags().add("tag,,\\,,2,");
+        m1.getTags().add("");
+        // Little Bobby tables
+        m1.getTags().add("Robert'); DROP TABLE media;--");
+
+        s.insertMedia(m1);
+
+        Media m2 = s.selectBaseMediaByID(m1.getID());
+
+        assertEquals(m1.getID(), m2.getID());
+        assertEquals(m1.getName(), m2.getName());
+        assertEquals(m1.getX(), m2.getX(), 0.01);
+        assertEquals(m1.getY(), m2.getY(), 0.01);
+        assertEquals(m1.getWidth(), m2.getWidth(), 0.01);
+        assertEquals(m1.getHeight(), m2.getHeight(), 0.01);
+        assertEquals(m1.getAngle(), m2.getAngle(), 0.01);
+        assertEquals(m1.getZindex(), m2.getZindex());
+        assertEquals(m1.getTags(), m2.getTags());
+    }
 }

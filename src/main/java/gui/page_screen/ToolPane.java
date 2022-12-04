@@ -158,7 +158,7 @@ class ToolPaneTitleBar extends HBox {
     }
 
     public void setTitle(String title) {
-        titleText.setText(title + " Settings");
+        titleText.setText(title + " Tool");
     }
 }
 

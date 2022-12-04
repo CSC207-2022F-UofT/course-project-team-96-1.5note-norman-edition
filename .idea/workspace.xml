@@ -4,35 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ea57fb3c-8b45-48bb-954d-8b968e498d39" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+    <list default="true" id="ea57fb3c-8b45-48bb-954d-8b968e498d39" name="Changes" comment="Attempted to have the searchtool jump to results">
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/AudioModifier.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Destroyer.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Drawable.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/FileLoaderWriter.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ImageModifier.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/InteractionManager.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/MediaAudio.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/MediaCommunicator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/MediaImage.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/MediaManager.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/MediaText.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/MenuBarController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Page.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/PageController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/PageMedia.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/SearchBarController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Searcher.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/SelectionTool.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ShapeCreator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Storage.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Tagger.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/TextModifier.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ToolBarController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Zoomer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,6 +35,13 @@
       </state>
     </system>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -71,18 +54,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "/home/dexter/Documents/projects/p",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/dexter/Documents/projects/p&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -91,8 +75,20 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1667927896511</updated>
+      <workItem from="1669058665096" duration="6489000" />
     </task>
+    <task id="LOCAL-00001" summary="Attempted to have the searchtool jump to results">
+      <created>1669065850318</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1669065850318</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -104,5 +100,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Attempted to have the searchtool jump to results" />
+    <option name="LAST_COMMIT_MESSAGE" value="Attempted to have the searchtool jump to results" />
   </component>
 </project>

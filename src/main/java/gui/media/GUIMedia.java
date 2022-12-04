@@ -1,6 +1,5 @@
 package gui.media;
 
-import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.event.*;
 import javafx.beans.property.*;
@@ -15,8 +14,10 @@ import app.media.Media;
 public class GUIMedia<M extends Media> extends Pane {
 
     private M media;
-    private DoubleProperty width;
-    private DoubleProperty height;
+    private final DoubleProperty width;
+    private final DoubleProperty height;
+
+    private int numUsers;
 
     private GUIMedia() {
         // Consume events from child nodes and re-emit them with their target
@@ -43,6 +44,8 @@ public class GUIMedia<M extends Media> extends Pane {
                 boundsInParentProperty().addListener(this::setDimensions);
             }
         });
+
+        numUsers = 0;
     }
 
     private void setDimensions(Observable o) {
@@ -65,6 +68,39 @@ public class GUIMedia<M extends Media> extends Pane {
 
     public M getMedia() {
         return media;
+    }
+
+    /**
+     * Indicate that the caller is using the GUIMedia instance and it should
+     * not be un-loaded.
+     * <p>
+     * The `release` method MUST be called when the GUIMedia is no longer
+     * needed. Each call to `use` MUST have a corresponding call to `release`.
+     */
+    public void use() {
+        numUsers++;
+    }
+
+    /**
+     * Indicate that the caller is no longer using the GUIMedia instance and
+     * it can be un-loaded.
+     */
+    public void release() {
+        numUsers--;
+        if (numUsers < 0) {
+            throw new RuntimeException(
+                    new IllegalStateException(
+                        "GUIMedia released more times than used."));
+        }
+    }
+
+    /**
+     * Return whether or not there are any users of this GUIMedia.
+     * If this method returns `false`, the Media should not be automatically
+     * removed from the page.
+     */
+    public boolean isInUse() {
+        return numUsers > 0;
     }
 
     public void setMedia(M media) {
@@ -92,8 +128,11 @@ public class GUIMedia<M extends Media> extends Pane {
      * <p>
      * After this method finishes the GUIMedia object on which it was called
      * should properly represent the Media object which was passed in.
+     *
+     * @throws ClassCastException if the Media object is not of the appropriate
+     * type for this GUIMedia.
      */
-    public void mediaUpdated(Media media) {}
+    public void mediaUpdated(Media media) throws ClassCastException {}
 
     /**
      * This method is called when this GUIMedia object is "removed" and will
