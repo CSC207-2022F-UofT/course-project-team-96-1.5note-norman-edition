@@ -16,6 +16,4 @@ public class TextModifier {
     public void addLink(){
 
     }
-
-
 }
