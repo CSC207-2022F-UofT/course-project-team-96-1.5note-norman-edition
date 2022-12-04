@@ -8,7 +8,7 @@ import javafx.geometry.Point2D;
 import gui.page.Page;
 import gui.page.Selection;
 import gui.media.GUIMedia;
-import gui.tool.app.media.Media;
+import app.media.Media;
 
 
 public class TestSelection {

@@ -15,9 +15,9 @@ import java.util.HashMap;
 import java.util.Set;
 import java.util.HashSet;
 
-import gui.tool.app.media.Media;
-import gui.tool.app.MediaCommunicator;
-import gui.tool.app.MediaObserver;
+import app.media.Media;
+import app.MediaCommunicator;
+import app.MediaObserver;
 import gui.media.GUIMedia;
 import gui.media.GUIMediaFactory;
 import gui.error_window.ErrorWindow;

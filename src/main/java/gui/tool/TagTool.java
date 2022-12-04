@@ -1,6 +1,6 @@
 package gui.tool;
 
-import gui.tool.app.controllers.ToolBarController;
+import app.controllers.ToolBarController;
 import gui.media.GUIMedia;
 import gui.page.Page;
 import gui.ResourceLoader;

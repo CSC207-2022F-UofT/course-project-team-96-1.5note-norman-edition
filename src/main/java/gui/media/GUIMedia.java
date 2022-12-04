@@ -5,7 +5,7 @@ import javafx.event.*;
 import javafx.beans.property.*;
 import javafx.beans.*;
 
-import gui.tool.app.media.Media;
+import app.media.Media;
 
 
 /**

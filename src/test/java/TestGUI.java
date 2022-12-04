@@ -1,6 +1,6 @@
 import javafx.application.Platform;
 
-import gui.tool.app.MediaCommunicator;
+import app.MediaCommunicator;
 import gui.page.Page;
 import storage.SQLiteStorage;
 

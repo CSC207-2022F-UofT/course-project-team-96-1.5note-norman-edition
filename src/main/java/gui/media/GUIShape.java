@@ -1,8 +1,10 @@
 package gui.media;
 
-import gui.tool.app.media.GenericShape;
-import gui.tool.app.media.Media;
+import app.media.GenericShape;
+import app.media.Media;
 import javafx.geometry.Point2D;
+
+import java.awt.*;
 
 /**
  * A sub-class of GUIMedia representing an arbitrary shape
@@ -33,6 +35,9 @@ public abstract class GUIShape extends GUIMedia<GenericShape> {
             setMedia(newShape);
             setGenericShape(newShape);
         }
+        // Update the points of the underlying GenericShape to account for any
+        // translation.
+        updatePoints();
     }
 
     /**
@@ -40,6 +45,8 @@ public abstract class GUIShape extends GUIMedia<GenericShape> {
      * @param shape A GenericShape to be represented as a new GUIShape
      */
     public abstract void setGenericShape(GenericShape shape);
+
+    public abstract void updatePoints();
 
     /**
      * Returns the center and dimensions of a shape's bounding box, given two points
@@ -69,6 +76,14 @@ public abstract class GUIShape extends GUIMedia<GenericShape> {
         y2 = clamp(y2, y1 - height, y1 + height);
 
         return new double[]{(x1+x2)/2, (y1+y2)/2, width, height};
+    }
+
+    public Point2D CornerTL(double cx, double cy, double w, double h){
+        return new Point2D(cx - w/2, cy - h/2);
+    }
+
+    public Point2D CornerBR(double cx, double cy, double w, double h){
+        return new Point2D(cx + w/2, cy + h/2);
     }
 
     /**

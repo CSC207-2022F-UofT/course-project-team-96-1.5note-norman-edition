@@ -1,6 +1,6 @@
 package gui.media;
 
-import gui.tool.app.media.*;
+import app.media.*;
 
 
 /**

@@ -14,7 +14,7 @@ import gui.error_window.ErrorWindow;
 
 import storage.SQLiteStorage;
 
-import gui.tool.app.MediaCommunicator;
+import app.MediaCommunicator;
 
 
 /**

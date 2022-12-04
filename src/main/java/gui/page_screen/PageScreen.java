@@ -2,12 +2,18 @@ package gui.page_screen;
 
 import javafx.scene.*;
 import javafx.scene.layout.*;
+import javafx.scene.control.*;
+import javafx.geometry.Pos;
 
+import java.util.List;
+import java.util.ArrayList;
+
+import gui.SwapPane;
 import gui.page.Page;
 import gui.tool.ToolFactory;
 import gui.tool.Tool;
 
-import gui.tool.app.MediaCommunicator;
+import app.MediaCommunicator;
 
 
 /**

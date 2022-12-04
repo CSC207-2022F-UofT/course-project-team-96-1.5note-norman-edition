@@ -4,6 +4,7 @@ import javafx.scene.*;
 import javafx.scene.control.*;
 
 import gui.page.PageEventHandler;
+import app.MediaCommunicator;
 
 
 /**

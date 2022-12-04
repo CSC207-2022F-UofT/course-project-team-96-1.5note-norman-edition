@@ -1,9 +1,6 @@
 package gui.media;
 
-import gui.tool.app.media.EllipseShape;
-import gui.tool.app.media.GenericShape;
-import gui.tool.app.media.PolygonShape;
-import gui.tool.app.media.RectangleShape;
+import app.media.*;
 
 /**
  * Instantiate the correct GUIMedia sub-class for a given GenericShape object.

@@ -1,5 +1,5 @@
 package gui.tool;
-import gui.tool.app.controllers.ToolBarController;
+import app.controllers.ToolBarController;
 import gui.ResourceLoader;
 import gui.error_window.ErrorWindow;
 import gui.media.GUIAudio;

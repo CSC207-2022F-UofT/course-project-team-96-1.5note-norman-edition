@@ -1,8 +1,10 @@
 package gui.media;
+import app.media.Media;
 //import app.media.TextBox;
-import gui.tool.app.media.Hyperlink;
+import app.media.Hyperlink;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
+import javafx.scene.text.*;
 
 public class GUIHyperlinkBox extends GUITextBox {
     //private Text text;

@@ -1,5 +1,5 @@
-import gui.tool.app.MediaCommunicator;
-import gui.tool.app.media.MediaAudio;
+import app.MediaCommunicator;
+import app.media.MediaAudio;
 import gui.media.GUIAudio;
 import gui.page.Page;
 import javafx.util.Duration;

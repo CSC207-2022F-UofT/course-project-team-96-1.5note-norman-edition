@@ -1,5 +1,5 @@
 import gui.page.Page;
-import gui.tool.app.MediaCommunicator;
+import app.MediaCommunicator;
 import javafx.application.Platform;
 import org.junit.*;
 import static org.junit.Assert.*;

@@ -1,18 +1,26 @@
 package gui.tool;
 
+import java.util.Set;
+import java.util.HashSet;
+import java.util.Collections;
+
 import javafx.scene.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
+import javafx.scene.shape.*;
 import javafx.scene.paint.*;
 import javafx.scene.effect.*;
 import javafx.event.*;
 import javafx.beans.*;
 import javafx.geometry.*;
 
+import app.media.Media;
 import gui.ResourceLoader;
 import gui.media.GUIMedia;
 import gui.page.Page;
+import gui.page.PageEventHandler;
+import gui.page.PageEventHandler.HandlerMethod;
 import gui.page.Selection;
 
 

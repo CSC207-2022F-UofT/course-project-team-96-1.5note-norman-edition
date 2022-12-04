@@ -8,7 +8,7 @@ import javafx.beans.property.*;
 import javafx.scene.effect.*;
 import javafx.geometry.Point2D;
 
-import gui.tool.app.media.Media;
+import app.media.Media;
 import gui.media.GUIMedia;
 
 

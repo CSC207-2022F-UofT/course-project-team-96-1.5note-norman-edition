@@ -7,12 +7,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
 
-import gui.tool.app.controllers.SearchBarController;
-import gui.tool.app.media.Media;
+import app.controllers.SearchBarController;
+import app.media.Media;
 import gui.ResourceLoader;
 import gui.page.Page;
 import gui.media.GUIMedia;
@@ -88,7 +89,7 @@ public class SearchTool implements Tool{
             });
 
             findButton.setOnAction(e->{
-                page.jumpToCenter(xCoords.get(currentIndex), yCoords.get(currentIndex));
+                page.jumpToTopLeft(xCoords.get(currentIndex) - offsetX, yCoords.get(currentIndex) - offsetY);
 
                 currentIndex += 1;
                 if (currentIndex == xCoords.size()){

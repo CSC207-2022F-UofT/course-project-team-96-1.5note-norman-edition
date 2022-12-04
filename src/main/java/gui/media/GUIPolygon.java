@@ -1,7 +1,7 @@
 package gui.media;
 
-import gui.tool.app.media.GenericShape;
-import gui.tool.app.media.PolygonShape;
+import app.media.GenericShape;
+import app.media.PolygonShape;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
@@ -20,24 +20,21 @@ public class GUIPolygon extends GUIShape {
     /**
      * Initializes and draws GUIPolygon with the following settings
      * @param p1 The position of the polygon's center
-     * @param p2 The position which determine's the polygon's radius and starting angle
+     * @param p2 The position which determines the polygon's radius and starting angle
      * @param colour The polygon's color
      * @param sideCount The number of sides of the polygon
      */
     public GUIPolygon(Point2D p1, Point2D p2, Color colour, int sideCount) {
-        super(new PolygonShape(0, 0,0,0, colour.toString(), 0, 0, sideCount));
+        super(new PolygonShape(p1,p2, colour.toString(), 0, 0, sideCount));
 
-        getMedia().setX(p1.getX());
-        getMedia().setY(p1.getY());
         ((PolygonShape) getMedia()).setRadius(p1.distance(p2));
         ((PolygonShape) getMedia()).setStartAngle(calcAngle(p1, p2));
 
         this.sideCount = sideCount;
 
-        // Drawing Code
         polygon = new Polygon();
-        polygon.getPoints().addAll(calcPointsFromPoints(p1, p2, sideCount));
         polygon.setFill(colour);
+        update(p1, p2, false);
         getChildren().add(polygon);
     }
 
@@ -61,11 +58,32 @@ public class GUIPolygon extends GUIShape {
         PolygonShape poly = (PolygonShape) polygon;
         Color colour = Color.valueOf(polygon.getColour());
 
-        // Drawing Code
+        this.sideCount = poly.getSideCount();
         this.polygon = new Polygon();
-        this.polygon.getPoints().addAll(calcPointsFromRadiusAngle(poly.getRadius(), poly.getStartAngle(), poly.getSideCount()));
+        update(poly.getP1(), poly.getP2(), false);
         this.polygon.setFill(colour);
         getChildren().add(this.polygon);
+    }
+
+    /**
+     * Specific implementation of updatePoints for GUIPolygon
+     */
+    @Override
+    public void updatePoints() {
+        Point2D p1 = getMedia().getP1();
+        Point2D p2 = getMedia().getP2();
+
+        double prevCenterX = p1.getX();
+        double prevCenterY = p1.getY();
+
+        double centerX = getMedia().getX();
+        double centerY = getMedia().getY();
+
+        Point2D diff = new Point2D(centerX, centerY)
+                .subtract(new Point2D(prevCenterX, prevCenterY));
+
+        getMedia().setP1(p1.add(diff));
+        getMedia().setP2(p2.add(diff));
     }
 
     /**
@@ -78,11 +96,14 @@ public class GUIPolygon extends GUIShape {
     public void update(Point2D p1, Point2D p2, boolean sameSideLengths){
         polygon.getPoints().clear();
         polygon.getPoints().addAll(calcPointsFromPoints(p1, p2, sideCount));
-
         // Update the polygonshape's data so that when it gets saved it's updated
         PolygonShape polygonshape = ((PolygonShape) getMedia());
         polygonshape.setRadius(p1.distance(p2));
         polygonshape.setStartAngle(calcAngle(p1, p2));
+        getMedia().setX(p1.getX());
+        getMedia().setY(p1.getY());
+        getMedia().setP1(p1);
+        getMedia().setP2(p2);
     }
 
     /**
@@ -94,7 +115,7 @@ public class GUIPolygon extends GUIShape {
      * @param sideCount The number of sides of the polygon
      * @return A list of points representing the polygon's vertices
      */
-    public Double[] calcPointsFromRadiusAngle(double radius, double angle, int sideCount) {
+    public static Double[] calcPointsFromRadiusAngle(double radius, double angle, int sideCount) {
         Double[] points = new Double[2*sideCount];
         double angleStep = 360.0 / sideCount;
         // Iterate through every angle and create a vertex for each
@@ -115,7 +136,7 @@ public class GUIPolygon extends GUIShape {
      * @param sideCount The number of sides of the polygon
      * @return A list of points representing the polygon's vertices
      */
-    public Double[] calcPointsFromPoints(Point2D p1, Point2D p2, int sideCount) {
+    public static Double[] calcPointsFromPoints(Point2D p1, Point2D p2, int sideCount) {
         double radius = p1.distance(p2);
         double angle = calcAngle(p1, p2);
         return calcPointsFromRadiusAngle(radius, angle, sideCount);

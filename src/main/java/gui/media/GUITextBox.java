@@ -1,11 +1,14 @@
 package gui.media;
 
 import javafx.scene.text.*;
+import javafx.scene.input.*;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
 import javafx.scene.paint.*;
 import javafx.geometry.*;
 
-import gui.tool.app.media.TextBox;
-import gui.tool.app.media.Media;
+import app.media.TextBox;
+import app.media.Media;
 
 /**
  * Visually draws the TextBoxes in the canvas area. Interfaces with TextTool and TextBox to accomplish this.
