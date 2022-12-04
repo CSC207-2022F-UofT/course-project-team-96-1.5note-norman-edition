@@ -1,23 +1,20 @@
 package app.media_managers;
 
-public class ImageModifier implements MediaManager {
-    private String caption;
-    @Override
-    public void addMedia() {
+public class ImageModifier  {
+
+    public void addMedia() throws Exception{
 
     }
 
-    @Override
-    public void modifyMedia() {
+    public void modifyMedia() throws Exception{
 
     }
 
-    @Override
     public void searchMedia() {
 
     }
 
-    public void addCaption(String givenCaption){
-        this.caption = givenCaption;
+    public void addCaption(){
+
     }
 }

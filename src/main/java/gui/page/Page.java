@@ -22,6 +22,10 @@ import gui.media.GUIMediaFactory;
 import gui.error_window.ErrorWindow;
 
 
+/**
+ * GUI element which displays the visual representation of the Media entities
+ * in a page.
+ */
 public class Page extends StackPane implements MediaObserver {
 
     // Additional padding added to the visible region
@@ -108,6 +112,10 @@ public class Page extends StackPane implements MediaObserver {
      * Add the given GUIMedia object to this page.
      */
     public void addMedia(GUIMedia media) {
+        // Don't use a managed layout, i.e. stop the page in which the GUIMedia
+        // is placed from influencing the layout bounds of the GUIMedia.
+        media.setManaged(false);
+
         mediaLayer.getChildren().add(media);
     }
 
@@ -116,12 +124,7 @@ public class Page extends StackPane implements MediaObserver {
      */
     public void updateMedia(GUIMedia media) {
         try {
-            if (media.getID() == Media.EMPTY_ID) {
-                media.getMedia().setID(c.getNewID());
-            }
-
-            contents.put(media.getID(), media);
-            c.updateMedia(media.getMedia());
+            c.updateMedia(media.getMedia(), id -> contents.put(id, media));
         } catch (Exception e) {
             new ErrorWindow(this, null, "Updating Media object failed.", e)
                 .show();
@@ -251,11 +254,17 @@ public class Page extends StackPane implements MediaObserver {
                 prevVisibleBounds.getWidth(), prevVisibleBounds.getHeight());
     }
 
+    // Instantiate a GUIMedia object for the given Media entity and add it
+    // to the page.
     private void addGUIMediaFor(Media media) throws Exception {
         GUIMedia guiMedia = GUIMediaFactory.getFor(media);
         contents.put(guiMedia.getID(), guiMedia);
         addMedia(guiMedia);
     }
+
+    /*
+     * Implementation of app.MediaObserver interface
+     */
 
     @Override
     public void mediaDeleted(long id) {

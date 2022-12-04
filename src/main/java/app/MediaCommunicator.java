@@ -6,10 +6,21 @@ import java.util.HashSet;
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.Random;
+import java.util.function.Consumer;
 
 import app.media.Media;
 
 
+/**
+ * Main facade class.
+ * <p>
+ * Users of this class can submit the creation/modification/deletion of Media
+ * entities as well as request that changes be saved to whatever MediaStorage
+ * implementation is used.
+ * <p>
+ * The MediaCommunicator provides a central API for modifying Media and allows
+ * listening for changes made using its API via the MediaObserver interface.
+ */
 public class MediaCommunicator {
 
     private Set<MediaObserver> observers;
@@ -24,6 +35,9 @@ public class MediaCommunicator {
 
     private Random rng;
 
+    /**
+     * Instantiate a MediaCommunicator with the given storage backend.
+     */
     public MediaCommunicator(MediaStorage storage) {
         this.storage = storage;
         observers = new HashSet<>();
@@ -32,10 +46,20 @@ public class MediaCommunicator {
         rng = new Random();
     }
 
+    /**
+     * Add a MediaObserver to this MediaCommunicator. The added MediaObserver
+     * will be notified whenever Media is added/modified/removed via this
+     * MediaCommunicator.
+     */
     public void addObserver(MediaObserver o) {
         observers.add(o);
     }
 
+    /**
+     * Remove a MediaObserver from this MediaCommunicator. The removed
+     * MediaObserver will no longer be notified of any changes to Media made
+     * via this MediaCommunicator.
+     */
     public void removeObserver(MediaObserver o) {
         observers.remove(o);
     }
@@ -46,7 +70,7 @@ public class MediaCommunicator {
      * The ID is not guarateed to <i>remain</i> unique unless it is used by a
      * Media object which gets passed to the `updateMedia` method.
      */
-    public long getNewID() throws Exception {
+    private long getNewID() throws Exception {
         long id = Media.EMPTY_ID;
 
         while (
@@ -61,14 +85,34 @@ public class MediaCommunicator {
 
     /**
      * Update (or add, if it doesn't already exist) the given Media object.
+     * <p>
+     * If the given Media does not yet have an assigned ID, an ID will be
+     * generated and the method passed as `idCallback` will be called with the
+     * generated ID as its argument <i>before</i> any MediaObservers are
+     * notified of the new Media.
      */
-    public void updateMedia(Media media) throws Exception {
+    public void updateMedia(Media media, Consumer<Long> idCallback) throws Exception {
+        if (media.getID() == Media.EMPTY_ID) {
+            media.setID(getNewID());
+        }
+
         unsavedRemovals.remove(media.getID());
         unsavedUpdates.put(media.getID(), media);
+
+        if (idCallback != null) {
+            idCallback.accept(media.getID());
+        }
 
         for (MediaObserver o: observers) {
             o.mediaUpdated(media);
         }
+    }
+
+    /**
+     * Update (or add, if it doesn't already exist) the given Media object.
+     */
+    public void updateMedia(Media media) throws Exception {
+        updateMedia(media, null);
     }
 
     /**

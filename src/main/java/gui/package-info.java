@@ -1,0 +1,4 @@
+/**
+ * GUI elements.
+ */
+package gui;
