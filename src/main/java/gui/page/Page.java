@@ -504,20 +504,11 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
             double delta = scrollEvent.getDeltaY();
 
             if (delta < 0) {
-                // zooming out
-                if (scaleFactor == 0.1) {
-                    scrollEvent.consume();
-                    return;
-                }
                 zoomInOrOut("Out");
             } else if (delta > 0) {
-                // zooming in
-                if (scaleFactor == 10.0) {
-                    scrollEvent.consume();
-                    return;
-                }
                 zoomInOrOut("In");
             }
+            scrollEvent.consume();
         }
 
         private void scrollVerticallyHandle(ScrollEvent scrollEvent) {
