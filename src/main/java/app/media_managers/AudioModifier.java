@@ -1,8 +1,8 @@
 package app.media_managers;
 
-public class ImageModifier  {
+public class AudioModifier  {
 
-    public void addMedia() throws Exception{
+    public void addMedia() throws Exception {
 
     }
 
@@ -14,7 +14,8 @@ public class ImageModifier  {
 
     }
 
-    public void addCaption(){
+    public void addTimeStamp(){
 
     }
+
 }

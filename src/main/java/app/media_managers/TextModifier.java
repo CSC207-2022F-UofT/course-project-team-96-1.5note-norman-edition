@@ -1,7 +1,6 @@
 package app.media_managers;
 
-public class ImageModifier  {
-
+public class TextModifier {
     public void addMedia() throws Exception{
 
     }
@@ -14,7 +13,9 @@ public class ImageModifier  {
 
     }
 
-    public void addCaption(){
+    public void addLink(){
 
     }
+
+
 }
