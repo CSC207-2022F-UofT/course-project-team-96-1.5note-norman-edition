@@ -5,7 +5,6 @@ import javafx.scene.layout.*;
 import javafx.scene.transform.*;
 import javafx.scene.input.*;
 import javafx.beans.*;
-import javafx.beans.value.*;
 import javafx.geometry.*;
 import javafx.event.EventHandler;
 
@@ -375,7 +374,7 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
 
     /** Given a factor to scale the Page, scale in x and y directions by that factor. no pivot
      *
-     * @param factor the factor by which to scale toZoom, > 0
+     * @param factor the factor by which to scale toZoom, >= 0.1, <= 10.0
      */
     @Override
     public void zoomToFactor(double factor) {
@@ -412,7 +411,7 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
      */
     @Override
     public void zoomInOrOut(String inOrOut){
-        double[] zoomOptions = {0.1, 0.25, 1.0/3.0, 0.5, 2.0/3.0, 0.75, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0,
+        double[] zoomOptions = {0.1, 0.25, 1.0/3.0, 0.5, 2.0/3.0, 0.75, 1.0, 1.5, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0,
                 9.0, 10.0};
         double currentFactor = scaleFactor;
         if (currentFactor == 0.1 && inOrOut.equals("Out")) {
@@ -437,22 +436,35 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
         this.zoomToFactor(zoomOptions[i]);
     }
 
-    // commented out for future use
-//    /** given the x and y coords of a point, make that point the center of the visible box
-//     *
-//     * @param x x coordinate of point you want to jump to
-//     * @param y y coordinate of point you want to jump to
-//     */
-//    public void jumpToPoint(double x, double y) {
-//        double translateX = x - getTranslateX();
-//        double translateY = y - getTranslateY();
-//        Bounds boundsInParent = mediaLayer.getBoundsInParent();
-//        Bounds boundsInSelf = mediaLayer.parentToLocal(boundsInParent);
-//        double centerX = boundsInSelf.getWidth()/2;
-//        double centerY = boundsInSelf.getHeight()/2;
-//        mediaLayer.setTranslateX(translateX - centerX);
-//        mediaLayer.setTranslateY(translateY - centerY);
-//    }
+    /** Translate the mediaLayer vertically by translation amount of pixels (using traditional computer graphics
+     * coordinate systems with the top left corner being (0, 0) and y increasing positively downwards and x increasing
+     * positively to the right)
+     *
+     * @param translation amount of pixels to translate by
+     */
+    public void scrollVertically(double translation) {
+        mediaLayer.setTranslateY(translation);
+    }
+
+    /** Translate the mediaLayer horizontally by translation amount of pixels (using traditional computer graphics
+     * coordinate systems with the top left corner being (0, 0) and y increasing positively downwards and x increasing
+     * positively to the right)
+     *
+     * @param translation amount of pixels to translate by
+     */
+    public void scrollHorizontally(double translation) {
+        mediaLayer.setTranslateX(translation);
+    }
+
+    /**
+     * given the x and y coords of a point, make that point the center of the visible box
+     */
+    public void centerPage() {
+        double currentZoom = scaleFactor;
+        this.zoomToFactor(1.0);
+        this.jumpToTopLeft(0, 0);
+        this.zoomToFactor(currentZoom);
+    }
 
     /** given the x and y coords of a point, make that point the top left of the visible box
      *
@@ -464,6 +476,53 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
         double translateY = y - getTranslateY();
         mediaLayer.setTranslateX(translateX);
         mediaLayer.setTranslateY(translateY);
+    }
+
+    /** given the x and y coords of a point, make that point the center of the visible box
+     *
+     * @param x x coordinate of point you want to jump to
+     * @param y y coordinate of point you want to jump to
+     */
+    public void jumpToCenter(double x, double y) {
+        // * Translate the point to the top left of the view
+        double translateX = x - getTranslateX();
+        double translateY = y - getTranslateY();
+        mediaLayer.setTranslateX(translateX);
+        mediaLayer.setTranslateY(translateY);
+        // * Get the center of the view (in the mediaLayer's coordinate space)
+        Bounds b = getVisibleBounds();
+        Point2D center = new Point2D(b.getCenterX(), b.getCenterY());
+        // * Translate the mediaLayer to the center of the view
+        double centerTranslateX = center.getX() - getTranslateX();
+        double centerTranslateY = center.getY() - getTranslateY();
+        mediaLayer.setTranslateX(centerTranslateX);
+        mediaLayer.setTranslateY(centerTranslateY);
+    }
+
+    // getters for testing
+
+    /** Getter for scaleFactor
+     *
+     * @return scaleFactor
+     */
+    public double getScaleFactor() {
+        return scaleFactor;
+    }
+
+    /** Getter for scale
+     *
+     * @return scale
+     */
+    public Scale getScale() {
+        return scale;
+    }
+
+    /** Getter for mediaLayer
+     *
+     * @return mediaLayer
+     */
+    public Pane getMediaLayer() {
+        return mediaLayer;
     }
 
     /** handles scrolling inputs, zooming when control is pressed, horizontal scrolling when shift is pressed, and
@@ -491,29 +550,21 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
             double delta = scrollEvent.getDeltaY();
 
             if (delta < 0) {
-                // zooming out
-                if (scaleFactor == 0.1) {
-                    scrollEvent.consume();
-                    return;
-                }
                 zoomInOrOut("Out");
             } else if (delta > 0) {
-                // zooming in
-                if (scaleFactor == 10.0) {
-                    scrollEvent.consume();
-                    return;
-                }
                 zoomInOrOut("In");
             }
         }
+
         private void scrollVerticallyHandle(ScrollEvent scrollEvent) {
             double currentTranslation = mediaLayer.getTranslateY();
-            mediaLayer.setTranslateY(currentTranslation + scrollEvent.getDeltaY());
+            scrollVertically(currentTranslation + scrollEvent.getDeltaY());
         }
 
         private void scrollHorizontallyHandle(ScrollEvent scrollEvent) {
             double currentTranslation = mediaLayer.getTranslateX();
-            mediaLayer.setTranslateX(currentTranslation + scrollEvent.getDeltaX());
+            scrollHorizontally(currentTranslation + scrollEvent.getDeltaX());
         }
     }
 }
+
