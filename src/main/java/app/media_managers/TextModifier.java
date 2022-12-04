@@ -1,21 +1,18 @@
 package app.media_managers;
 
 import app.media.MediaHyperlink;
-import app.media_managers.MediaManager;
 
-public class TextModifier implements MediaManager {
+public class TextModifier {
     private String link;
-    @Override
+
     public void addMedia() {
 
     }
 
-    @Override
     public void modifyMedia() {
 
     }
 
-    @Override
     public void searchMedia() {
 
     }
