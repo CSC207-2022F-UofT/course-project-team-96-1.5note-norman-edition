@@ -1,7 +1,6 @@
 package gui.start_screen;
 
 import gui.Zoomable;
-import gui.page.Page;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.geometry.Insets;

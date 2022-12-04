@@ -442,7 +442,6 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
      *
      * @param translation amount of pixels to translate by
      */
-    private void scrollVertically(double translation) {
         mediaLayer.setTranslateY(translation);
     }
 
@@ -452,7 +451,6 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
      *
      * @param translation amount of pixels to translate by
      */
-    private void scrollHorizontally(double translation) {
         mediaLayer.setTranslateX(translation);
     }
 
