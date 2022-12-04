@@ -374,7 +374,7 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
 
     /** Given a factor to scale the Page, scale in x and y directions by that factor. no pivot
      *
-     * @param factor the factor by which to scale toZoom, > 0
+     * @param factor the factor by which to scale toZoom, >= 0.1, <= 10.0
      */
     @Override
     public void zoomToFactor(double factor) {
@@ -411,7 +411,7 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
      */
     @Override
     public void zoomInOrOut(String inOrOut){
-        double[] zoomOptions = {0.1, 0.25, 1.0/3.0, 0.5, 2.0/3.0, 0.75, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0,
+        double[] zoomOptions = {0.1, 0.25, 1.0/3.0, 0.5, 2.0/3.0, 0.75, 1.0, 1.5, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0,
                 9.0, 10.0};
         double currentFactor = scaleFactor;
         if (currentFactor == 0.1 && inOrOut.equals("Out")) {
@@ -434,6 +434,26 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
             // once the loop ends, we have the index of a factor that is less than the current one
         }
         this.zoomToFactor(zoomOptions[i]);
+    }
+
+    /** Translate the mediaLayer vertically by translation amount of pixels (using traditional computer graphics
+     * coordinate systems with the top left corner being (0, 0) and y increasing positively downwards and x increasing
+     * positively to the right)
+     *
+     * @param translation amount of pixels to translate by
+     */
+    private void scrollVertically(double translation) {
+        mediaLayer.setTranslateY(translation);
+    }
+
+    /** Translate the mediaLayer horizontally by translation amount of pixels (using traditional computer graphics
+     * coordinate systems with the top left corner being (0, 0) and y increasing positively downwards and x increasing
+     * positively to the right)
+     *
+     * @param translation amount of pixels to translate by
+     */
+    private void scrollHorizontally(double translation) {
+        mediaLayer.setTranslateX(translation);
     }
 
     /**
@@ -479,6 +499,24 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
         mediaLayer.setTranslateY(centerTranslateY);
     }
 
+    // getters for testing
+
+    /** Getter for scaleFactor
+     *
+     * @return scaleFactor
+     */
+    public double getScaleFactor() {
+        return scaleFactor;
+    }
+
+    /** Getter for scale
+     *
+     * @return scale
+     */
+    public Scale getScale() {
+        return scale;
+    }
+
     /** handles scrolling inputs, zooming when control is pressed, horizontal scrolling when shift is pressed, and
      * vertical scrolling otherwise
      *
@@ -508,17 +546,17 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
             } else if (delta > 0) {
                 zoomInOrOut("In");
             }
-            scrollEvent.consume();
         }
 
         private void scrollVerticallyHandle(ScrollEvent scrollEvent) {
             double currentTranslation = mediaLayer.getTranslateY();
-            mediaLayer.setTranslateY(currentTranslation + scrollEvent.getDeltaY());
+            scrollVertically(currentTranslation + scrollEvent.getDeltaY());
         }
 
         private void scrollHorizontallyHandle(ScrollEvent scrollEvent) {
             double currentTranslation = mediaLayer.getTranslateX();
-            mediaLayer.setTranslateX(currentTranslation + scrollEvent.getDeltaX());
+            scrollHorizontally(currentTranslation + scrollEvent.getDeltaX());
         }
     }
 }
+
