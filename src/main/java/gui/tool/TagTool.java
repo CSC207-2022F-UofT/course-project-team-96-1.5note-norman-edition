@@ -15,6 +15,8 @@ import javafx.scene.layout.Priority;
 import javafx.event.*;
 import javafx.scene.input.MouseEvent;
 
+import java.util.Objects;
+
 
 public class TagTool implements Tool{
     private final TagSettings settings;
@@ -23,7 +25,7 @@ public class TagTool implements Tool{
     private final Button removeTagButton = new Button("Remove Tag");
     private GUIMedia<?> media;
     private Page page;
-    private final String tagStatement = "Tags of Last Clicked Object: ";
+    private final String tagStatement = "This Object's Tags: ";
     private final Label action = new Label(tagStatement);
     public TagTool(){
         settings = new TagSettings();
@@ -72,10 +74,12 @@ public class TagTool implements Tool{
                 media = (GUIMedia<?>) clicked;
                 tagButton.setDisable(false);
                 removeTagButton.setDisable(media.getMedia().getTags().isEmpty());
+                updateStatement();
             }
             else{
                 tagButton.setDisable(true);
                 removeTagButton.setDisable(true);
+                clearStatement();
             }
         }
     }
@@ -83,9 +87,15 @@ public class TagTool implements Tool{
     public void updateStatement(){
         StringBuilder results = new StringBuilder();
         for (String tag: media.getMedia().getTags()){
-            results.append("\n").append(tag);
+            if(!tag.isEmpty()) {
+                results.append("\n").append(tag);
+            }
         }
         action.setText(tagStatement + results);
+    }
+
+    public void clearStatement(){
+        action.setText(tagStatement);
     }
 
     class TagSettings extends FlowPane{

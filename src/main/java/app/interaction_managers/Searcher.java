@@ -19,7 +19,7 @@ public class Searcher implements InteractionManager {
                 results.add(media);
             }
             else if(media instanceof MediaText){
-                if (((MediaText) media).getText().equals(userSearch)){
+                if (((MediaText) media).getText().contains(userSearch)){
                     results.add(media);
                 }
             }
