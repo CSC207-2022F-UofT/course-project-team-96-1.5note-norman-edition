@@ -19,7 +19,7 @@ public class ImageTool implements Tool {
     public ImageTool() {
         this.settings = new ImageSettings();
 
-        settings.getInsertImage().setOnAction(e ->  {
+        settings.getInsertImage().setOnAction(e -> {
             try {
                 ImageModifier.addMedia();
             } catch (Exception ex) {
@@ -27,10 +27,12 @@ public class ImageTool implements Tool {
             }
         });
     }
-}
+
 
     @Override
-    public Node getSettingsGUI() { return settings; }
+    public Node getSettingsGUI() {
+        return settings;
+    }
 
     @Override
     public void enabledFor(Page page) {
@@ -38,7 +40,10 @@ public class ImageTool implements Tool {
     }
 
     @Override
-    public String getName() { return "Image"; }
+    public String getName() {
+        return "Image";
+    }
+}
 
 class ImageSettings extends VBox {
 
