@@ -15,6 +15,6 @@ public class MediaCommunicator {
     }
 
     public void writeFile(String path, byte[] Data) throws  Exception{
-        this.storage.writeFile(path, Data);
+        this.storage.writeFile(path, Data, "");
     }
 }

@@ -2,7 +2,7 @@ package gui.media;
 import app.media.Media;
 //import app.media.TextBox;
 import app.media.Hyperlink;
-import app.media.TextBox;
+import app.media.MediaText;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;

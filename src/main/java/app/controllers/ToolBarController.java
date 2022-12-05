@@ -26,9 +26,9 @@ public class ToolBarController {
         TextModifier textModifier = new TextModifier();
     }
 
-    public void insertImage() throws Exception {
+    public void insertImage(MediaCommunicator com) throws Exception {
         ImageModifier imageModifier = new ImageModifier();
-        imageModifier.addMedia();
+        imageModifier.addMedia(com);
     }
 
     public void insertAudio(MediaCommunicator communicator, Bounds bounds) throws Exception {

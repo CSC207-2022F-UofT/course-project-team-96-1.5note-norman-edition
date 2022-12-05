@@ -26,6 +26,7 @@ public class GUIImage extends GUIMedia<MediaImage> {
     public GUIImage (MediaImage image) {
         super(image);
         mediaUpdated(image);
+        setInitialValues();
     }
 
     @Override

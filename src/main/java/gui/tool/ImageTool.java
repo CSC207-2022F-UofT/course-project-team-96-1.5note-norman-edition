@@ -21,7 +21,7 @@ public class ImageTool implements Tool {
 
         settings.getInsertImage().setOnAction(e -> {
             try {
-                ImageModifier.addMedia();
+                ImageModifier.addMedia(page.getCommunicator());
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }

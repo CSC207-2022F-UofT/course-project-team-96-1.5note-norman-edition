@@ -38,6 +38,8 @@ public class GUIMediaFactory {
             } else {
                 return new GUITextBox((MediaText) media);
             }
+        } else if (media instanceof MediaImage) {
+            return new GUIImage((MediaImage) media);
         } else {
             throw new Exception("No appropriate GUIMedia class for `" + media + "`.");
         }
