@@ -15,7 +15,6 @@ import java.io.InputStream;
  */
 public class GUIImage extends GUIMedia<MediaImage> {
 
-    //private Image image;
     private ImageView imageView;
 
     protected void setInitialValues() {
@@ -42,9 +41,4 @@ public class GUIImage extends GUIMedia<MediaImage> {
         ByteArrayInputStream bais = new ByteArrayInputStream(image.getRawData());
         this.imageView = new ImageView(new Image(bais));
     }
-
-    public void end() {
-        if (getMedia().getRawData().equals(this.imageView.getImage())) {
-            getMedia().setRawData(this.imageView.getImage());
-        }
 }

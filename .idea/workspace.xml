@@ -5,10 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ea57fb3c-8b45-48bb-954d-8b968e498d39" name="Changes" comment="Attempted to have the searchtool jump to results">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/gui/tool/ImageTool.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/media_managers/ImageModifier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/media_managers/ImageModifier.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gui/media/GUIImage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/media/GUIImage.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -83,7 +82,9 @@
       <updated>1667927896511</updated>
       <workItem from="1669058665096" duration="6489000" />
       <workItem from="1669841935595" duration="6067000" />
-      <workItem from="1670231332970" duration="2563000" />
+      <workItem from="1670231332970" duration="2710000" />
+      <workItem from="1670251959607" duration="601000" />
+      <workItem from="1670267642280" duration="1567000" />
     </task>
     <task id="LOCAL-00001" summary="Attempted to have the searchtool jump to results">
       <created>1669065850318</created>

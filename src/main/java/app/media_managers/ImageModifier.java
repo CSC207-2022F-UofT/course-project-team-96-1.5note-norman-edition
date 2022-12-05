@@ -15,9 +15,9 @@ public class ImageModifier{
      */
     private String caption;
 
-    private MediaImage image;
+    private static MediaImage image;
 
-    public void addMedia() throws Exception {
+    public static void addMedia() throws Exception {
         // Load image based on user selection
         Storage fileManager = new FileLoaderWriter();
         HashMap<String, byte[]> fileData = fileManager.readFile(new String[]{"*.png", "*.jpg", "*.jpeg", ".gif"},
