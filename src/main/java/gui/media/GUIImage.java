@@ -18,7 +18,7 @@ public class GUIImage extends GUIMedia<MediaImage> {
     private ImageView imageView;
 
     protected void setInitialValues() {
-        this.imageView = new ImageView(); // Make blank image, placeholder
+        setImageView(getMedia());
 
         getChildren().clear();
         getChildren().add(this.imageView);
