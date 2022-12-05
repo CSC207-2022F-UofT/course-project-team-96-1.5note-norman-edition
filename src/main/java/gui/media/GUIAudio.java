@@ -61,8 +61,16 @@ public class GUIAudio extends GUIMedia<MediaPlayable> implements Playable{
         String name = "id" + Double.toString(getMedia().getID());
         Storage fw = new FileLoaderWriter();
 
+        String extension;
         try {
-            URI tempFile = fw.writeFile(name, getMedia().getRawData()); //Creating temp file for use by javafx.Media Class
+            if (getMedia().getType().equals("Audio")) {
+                extension = ".mp3";
+            }   else    {
+                extension = ".mp4";
+            }
+
+            //Creating temp file for use by javafx.Media Class
+            URI tempFile = fw.writeFile(name, getMedia().getRawData(), extension);
             Media audioMedia = new Media(tempFile.toString());
             this.audioPlayer = new MediaPlayer(audioMedia);
             this.defaultVolume = this.audioPlayer.getVolume();
@@ -241,7 +249,7 @@ public class GUIAudio extends GUIMedia<MediaPlayable> implements Playable{
 
     @Override
     public void removed()   {
-        playerManipulator.firedPlayButton("Pause");
+        audioPlayer.pause();
     }
 
     @Override
