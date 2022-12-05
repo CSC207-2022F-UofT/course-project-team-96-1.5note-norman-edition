@@ -3,6 +3,7 @@ package gui.tool;
 import app.controllers.ToolBarController;
 import app.media_managers.ImageModifier;
 import gui.page.Page;
+import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
@@ -21,7 +22,9 @@ public class ImageTool implements Tool {
 
         settings.getInsertImage().setOnAction(e -> {
             try {
-                ImageModifier.addMedia(page.getCommunicator());
+                ToolBarController tbc = new ToolBarController();
+                Bounds bounds = page.getVisibleBounds();
+                tbc.insertImage(page.getCommunicator(), bounds.getCenterX(), bounds.getCenterY());
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }

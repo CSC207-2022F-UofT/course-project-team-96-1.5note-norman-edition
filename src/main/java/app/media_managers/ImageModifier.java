@@ -18,14 +18,15 @@ public class ImageModifier{
 
     private static MediaImage image;
 
-    public static void addMedia(MediaCommunicator com) throws Exception {
+    public static void addMedia(MediaCommunicator com, double x, double y) throws Exception {
         // Load image based on user selection
         Storage fileManager = new FileLoaderWriter();
         HashMap<String, byte[]> fileData = fileManager.readFile(new String[]{"*.png", "*.jpg", "*.jpeg", ".gif", "*.JPG"},
                 "Image (.png, .jpg, .jpeg, .gif, .JPG)");
         if (fileData != null) {
             String fileName = (String) (fileData.keySet().toArray())[0];
-            image = new MediaImage(fileName, 200, 200, 200, 200,
+
+            image = new MediaImage(fileName, x - 100, y - 100, 200, 200,
                     fileData.get(fileName));
             com.updateMedia(image);
         }
