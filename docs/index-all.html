@@ -56,10 +56,6 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="app/media_managers/TextModifier.html#addLink(java.lang.String)" class="member-name-link">addLink(String)</a> - Method in class app.media_managers.<a href="app/media_managers/TextModifier.html" title="class in app.media_managers">TextModifier</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="app/media_managers/AudioModifier.html#addMedia()" class="member-name-link">addMedia()</a> - Method in class app.media_managers.<a href="app/media_managers/AudioModifier.html" title="class in app.media_managers">AudioModifier</a></dt>
-<dd>
-<div class="block">Allows the user to select an audio file to add to the page</div>
-</dd>
 <dt><a href="app/media_managers/ImageModifier.html#addMedia()" class="member-name-link">addMedia()</a> - Method in class app.media_managers.<a href="app/media_managers/ImageModifier.html" title="class in app.media_managers">ImageModifier</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="app/media_managers/TextModifier.html#addMedia()" class="member-name-link">addMedia()</a> - Method in class app.media_managers.<a href="app/media_managers/TextModifier.html" title="class in app.media_managers">TextModifier</a></dt>
@@ -72,6 +68,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Add the given GUIMedia to the selection.</div>
 </dd>
+<dt><a href="app/media_managers/PlayableModifier.html#addMedia(java.lang.String%5B%5D,java.lang.String,app.MediaCommunicator,double,double)" class="member-name-link">addMedia(String[], String, MediaCommunicator, double, double)</a> - Method in class app.media_managers.<a href="app/media_managers/PlayableModifier.html" title="class in app.media_managers">PlayableModifier</a></dt>
+<dd>
+<div class="block">Allows the user to select an audio file to add to the page</div>
+</dd>
 <dt><a href="app/MediaCommunicator.html#addObserver(app.MediaObserver)" class="member-name-link">addObserver(MediaObserver)</a> - Method in class app.<a href="app/MediaCommunicator.html" title="class in app">MediaCommunicator</a></dt>
 <dd>
 <div class="block">Add a MediaObserver to this MediaCommunicator.</div>
@@ -79,8 +79,6 @@ loadScripts(document, 'script');</script>
 <dt><a href="app/media/PenStroke.html#addSegment(app.media.PenStroke.Segment)" class="member-name-link">addSegment(PenStroke.Segment)</a> - Method in class app.media.<a href="app/media/PenStroke.html" title="class in app.media">PenStroke</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="app/interaction_managers/Tagger.html#addTag(app.media.Media)" class="member-name-link">addTag(Media)</a> - Method in class app.interaction_managers.<a href="app/interaction_managers/Tagger.html" title="class in app.interaction_managers">Tagger</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="app/media_managers/AudioModifier.html#addTimeStamp(javafx.util.Duration)" class="member-name-link">addTimeStamp(Duration)</a> - Method in class app.media_managers.<a href="app/media_managers/AudioModifier.html" title="class in app.media_managers">AudioModifier</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="app/media/Media.html#angleProperty()" class="member-name-link">angleProperty()</a> - Method in class app.media.<a href="app/media/Media.html" title="class in app.media">Media</a></dt>
 <dd>&nbsp;</dd>
@@ -90,8 +88,6 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="app/controllers/package-summary.html">app.controllers</a> - package app.controllers</dt>
 <dd>&nbsp;</dd>
-<dt><a href="app/drawables/package-summary.html">app.drawables</a> - package app.drawables</dt>
-<dd>&nbsp;</dd>
 <dt><a href="app/interaction_managers/package-summary.html">app.interaction_managers</a> - package app.interaction_managers</dt>
 <dd>&nbsp;</dd>
 <dt><a href="app/media/package-summary.html">app.media</a> - package app.media</dt>
@@ -100,15 +96,11 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="app/media_managers/package-summary.html">app.media_managers</a> - package app.media_managers</dt>
 <dd>&nbsp;</dd>
-<dt><a href="app/media_managers/AudioModifier.html" class="type-name-link" title="class in app.media_managers">AudioModifier</a> - Class in <a href="app/media_managers/package-summary.html">app.media_managers</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="app/media_managers/AudioModifier.html#%3Cinit%3E()" class="member-name-link">AudioModifier()</a> - Constructor for class app.media_managers.<a href="app/media_managers/AudioModifier.html" title="class in app.media_managers">AudioModifier</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="gui/tool/AudioTool.html" class="type-name-link" title="class in gui.tool">AudioTool</a> - Class in <a href="gui/tool/package-summary.html">gui.tool</a></dt>
 <dd>
 <div class="block">GUI for adding or modifying audio on the page</div>
 </dd>
-<dt><a href="gui/tool/AudioTool.html#%3Cinit%3E()" class="member-name-link">AudioTool()</a> - Constructor for class gui.tool.<a href="gui/tool/AudioTool.html" title="class in gui.tool">AudioTool</a></dt>
+<dt><a href="gui/tool/AudioTool.html#%3Cinit%3E(java.lang.String)" class="member-name-link">AudioTool(String)</a> - Constructor for class gui.tool.<a href="gui/tool/AudioTool.html" title="class in gui.tool">AudioTool</a></dt>
 <dd>&nbsp;</dd>
 </dl>
 <h2 class="title" id="I:B">B</h2>
@@ -130,17 +122,25 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Returns the angle of the vector connecting two points</div>
 </dd>
-<dt><a href="gui/media/GUIPolygon.html#calcPointsFromPoints(javafx.geometry.Point2D,javafx.geometry.Point2D,int)" class="member-name-link">calcPointsFromPoints(Point2D, Point2D, int)</a> - Method in class gui.media.<a href="gui/media/GUIPolygon.html" title="class in gui.media">GUIPolygon</a></dt>
+<dt><a href="gui/media/GUIPolygon.html#calcPointsFromPoints(javafx.geometry.Point2D,javafx.geometry.Point2D,int)" class="member-name-link">calcPointsFromPoints(Point2D, Point2D, int)</a> - Static method in class gui.media.<a href="gui/media/GUIPolygon.html" title="class in gui.media">GUIPolygon</a></dt>
 <dd>
 <div class="block">Generates a list of points representing the vertices of a polygon with an arbitrary orientation and dimensions.</div>
 </dd>
-<dt><a href="gui/media/GUIPolygon.html#calcPointsFromRadiusAngle(double,double,int)" class="member-name-link">calcPointsFromRadiusAngle(double, double, int)</a> - Method in class gui.media.<a href="gui/media/GUIPolygon.html" title="class in gui.media">GUIPolygon</a></dt>
+<dt><a href="gui/media/GUIPolygon.html#calcPointsFromRadiusAngle(double,double,int)" class="member-name-link">calcPointsFromRadiusAngle(double, double, int)</a> - Static method in class gui.media.<a href="gui/media/GUIPolygon.html" title="class in gui.media">GUIPolygon</a></dt>
 <dd>
 <div class="block">Generates a list of points representing the vertices of a polygon with an arbitrary orientation and dimensions.</div>
 </dd>
+<dt><a href="gui/page/Page.html#centerPage()" class="member-name-link">centerPage()</a> - Method in class gui.page.<a href="gui/page/Page.html" title="class in gui.page">Page</a></dt>
+<dd>
+<div class="block">given the x and y coords of a point, make that point the center of the visible box</div>
+</dd>
+<dt><a href="gui/Zoomable.html#centerPage()" class="member-name-link">centerPage()</a> - Method in interface gui.<a href="gui/Zoomable.html" title="interface in gui">Zoomable</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="gui/model/GUIPlayerModel.html#changePlayRate(double)" class="member-name-link">changePlayRate(double)</a> - Method in class gui.model.<a href="gui/model/GUIPlayerModel.html" title="class in gui.model">GUIPlayerModel</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="gui/model/GUIPlayerModel.html#changeVolume(double)" class="member-name-link">changeVolume(double)</a> - Method in class gui.model.<a href="gui/model/GUIPlayerModel.html" title="class in gui.model">GUIPlayerModel</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="gui/tool/HyperlinkTool.html#checkLink(java.lang.String)" class="member-name-link">checkLink(String)</a> - Static method in class gui.tool.<a href="gui/tool/HyperlinkTool.html" title="class in gui.tool">HyperlinkTool</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="gui/media/GUIShape.html#clamp(double,double,double)" class="member-name-link">clamp(double, double, double)</a> - Method in class gui.media.<a href="gui/media/GUIShape.html" title="class in gui.media">GUIShape</a></dt>
 <dd>
@@ -148,13 +148,11 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="gui/tool/MediaTool.html#clearSelection()" class="member-name-link">clearSelection()</a> - Method in class gui.tool.<a href="gui/tool/MediaTool.html" title="class in gui.tool">MediaTool</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="gui/tool/HyperlinkTool.html#clickLink(javafx.scene.input.MouseEvent)" class="member-name-link">clickLink(MouseEvent)</a> - Method in class gui.tool.<a href="gui/tool/HyperlinkTool.html" title="class in gui.tool">HyperlinkTool</a></dt>
+<dt><a href="gui/tool/HyperlinkTool.html#clickLink(javafx.event.EventTarget)" class="member-name-link">clickLink(EventTarget)</a> - Method in class gui.tool.<a href="gui/tool/HyperlinkTool.html" title="class in gui.tool">HyperlinkTool</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="storage/SQLiteStorage.html#close()" class="member-name-link">close()</a> - Method in class storage.<a href="storage/SQLiteStorage.html" title="class in storage">SQLiteStorage</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="gui/page_screen/PageScreen.html#closePage()" class="member-name-link">closePage()</a> - Method in class gui.page_screen.<a href="gui/page_screen/PageScreen.html" title="class in gui.page_screen">PageScreen</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="app/media/GenericShape.html#colour" class="member-name-link">colour</a> - Variable in class app.media.<a href="app/media/GenericShape.html" title="class in app.media">GenericShape</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="gui/tool/ColourTool.html#colourProperty()" class="member-name-link">colourProperty()</a> - Method in class gui.tool.<a href="gui/tool/ColourTool.html" title="class in gui.tool">ColourTool</a></dt>
 <dd>
@@ -166,6 +164,18 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="gui/tool/ColourTool.html#%3Cinit%3E()" class="member-name-link">ColourTool()</a> - Constructor for class gui.tool.<a href="gui/tool/ColourTool.html" title="class in gui.tool">ColourTool</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="gui/media/PlayerInterface.html#compileLayout()" class="member-name-link">compileLayout()</a> - Method in class gui.media.<a href="gui/media/PlayerInterface.html" title="class in gui.media">PlayerInterface</a></dt>
+<dd>
+<div class="block">Compiles all UI elements into 1 layout</div>
+</dd>
+<dt><a href="gui/tool/AudioTool.html#configureAddAudio(app.controllers.ToolBarController)" class="member-name-link">configureAddAudio(ToolBarController)</a> - Method in class gui.tool.<a href="gui/tool/AudioTool.html" title="class in gui.tool">AudioTool</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="gui/tool/VideoTool.html#configureAddAudio(app.controllers.ToolBarController)" class="member-name-link">configureAddAudio(ToolBarController)</a> - Method in class gui.tool.<a href="gui/tool/VideoTool.html" title="class in gui.tool">VideoTool</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="gui/media/GUIAudio.html#configureUI()" class="member-name-link">configureUI()</a> - Method in class gui.media.<a href="gui/media/GUIAudio.html" title="class in gui.media">GUIAudio</a></dt>
+<dd>
+<div class="block">Configures all the controls for UI elements of the associated PlayerInterface</div>
+</dd>
 <dt><a href="gui/page/Page.html#contains(gui.media.GUIMedia)" class="member-name-link">contains(GUIMedia)</a> - Method in class gui.page.<a href="gui/page/Page.html" title="class in gui.page">Page</a></dt>
 <dd>
 <div class="block">Return whether or not the given GUIMedia object is within this page</div>
@@ -178,6 +188,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Return whether or not Media with the given ID is stored.</div>
 </dd>
+<dt><a href="gui/media/GUIShape.html#CornerBR(double,double,double,double)" class="member-name-link">CornerBR(double, double, double, double)</a> - Method in class gui.media.<a href="gui/media/GUIShape.html" title="class in gui.media">GUIShape</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="gui/media/GUIShape.html#CornerTL(double,double,double,double)" class="member-name-link">CornerTL(double, double, double, double)</a> - Method in class gui.media.<a href="gui/media/GUIShape.html" title="class in gui.media">GUIShape</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="app/media_managers/TextModifier.html#createAudioTimestamp(java.lang.String,java.lang.String)" class="member-name-link">createAudioTimestamp(String, String)</a> - Method in class app.media_managers.<a href="app/media_managers/TextModifier.html" title="class in app.media_managers">TextModifier</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="gui/GUICreator.html#createGUI()" class="member-name-link">createGUI()</a> - Static method in class gui.<a href="gui/GUICreator.html" title="class in gui">GUICreator</a></dt>
@@ -185,6 +199,8 @@ loadScripts(document, 'script');</script>
 <div class="block">Return the root node for the GUI.</div>
 </dd>
 <dt><a href="app/controllers/ToolBarController.html#createHyperlink(java.lang.String,java.lang.String)" class="member-name-link">createHyperlink(String, String)</a> - Method in class app.controllers.<a href="app/controllers/ToolBarController.html" title="class in app.controllers">ToolBarController</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="gui/media/GUIAudio.html#createInterface()" class="member-name-link">createInterface()</a> - Method in class gui.media.<a href="gui/media/GUIAudio.html" title="class in gui.media">GUIAudio</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="gui/media/GUIAudio.html#createTimestamps()" class="member-name-link">createTimestamps()</a> - Method in class gui.media.<a href="gui/media/GUIAudio.html" title="class in gui.media">GUIAudio</a></dt>
 <dd>
@@ -230,8 +246,6 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="gui/tool/TextTool.html#disabledFor(gui.page.Page)" class="member-name-link">disabledFor(Page)</a> - Method in class gui.tool.<a href="gui/tool/TextTool.html" title="class in gui.tool">TextTool</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="app/drawables/Drawable.html" class="type-name-link" title="interface in app.drawables">Drawable</a> - Interface in <a href="app/drawables/package-summary.html">app.drawables</a></dt>
-<dd>&nbsp;</dd>
 </dl>
 <h2 class="title" id="I:E">E</h2>
 <dl class="index">
@@ -246,7 +260,7 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">An implementation of GenericShape representing an ellipse</div>
 </dd>
-<dt><a href="app/media/EllipseShape.html#%3Cinit%3E(double,double,double,double,java.lang.String)" class="member-name-link">EllipseShape(double, double, double, double, String)</a> - Constructor for class app.media.<a href="app/media/EllipseShape.html" title="class in app.media">EllipseShape</a></dt>
+<dt><a href="app/media/EllipseShape.html#%3Cinit%3E(javafx.geometry.Point2D,javafx.geometry.Point2D,java.lang.String)" class="member-name-link">EllipseShape(Point2D, Point2D, String)</a> - Constructor for class app.media.<a href="app/media/EllipseShape.html" title="class in app.media">EllipseShape</a></dt>
 <dd>
 <div class="block">Initializes an ellipse with the following settings</div>
 </dd>
@@ -354,7 +368,7 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">A sub-class of Media representing an arbitrary shape</div>
 </dd>
-<dt><a href="app/media/GenericShape.html#%3Cinit%3E(java.lang.String,double,double,double,double,java.lang.String)" class="member-name-link">GenericShape(String, double, double, double, double, String)</a> - Constructor for class app.media.<a href="app/media/GenericShape.html" title="class in app.media">GenericShape</a></dt>
+<dt><a href="app/media/GenericShape.html#%3Cinit%3E(java.lang.String,javafx.geometry.Point2D,javafx.geometry.Point2D,java.lang.String)" class="member-name-link">GenericShape(String, Point2D, Point2D, String)</a> - Constructor for class app.media.<a href="app/media/GenericShape.html" title="class in app.media">GenericShape</a></dt>
 <dd>
 <div class="block">Initializes a Generic Shape with the given parameters</div>
 </dd>
@@ -371,6 +385,8 @@ loadScripts(document, 'script');</script>
 <div class="block">Return an angle for the selection.</div>
 </dd>
 <dt><a href="gui/media/GUIAudio.html#getAudioPlayer()" class="member-name-link">getAudioPlayer()</a> - Method in class gui.media.<a href="gui/media/GUIAudio.html" title="class in gui.media">GUIAudio</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="gui/media/PlayerInterface.html#getAudioSlider()" class="member-name-link">getAudioSlider()</a> - Method in class gui.media.<a href="gui/media/PlayerInterface.html" title="class in gui.media">PlayerInterface</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="gui/SwapPane.html#getChildren()" class="member-name-link">getChildren()</a> - Method in class gui.<a href="gui/SwapPane.html" title="class in gui">SwapPane</a></dt>
 <dd>&nbsp;</dd>
@@ -406,6 +422,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="gui/media/Playable.html#getCurrentDuration()" class="member-name-link">getCurrentDuration()</a> - Method in interface gui.media.<a href="gui/media/Playable.html" title="interface in gui.media">Playable</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="gui/tool/HyperlinkTool.html#getCurrentHyperlinkBox()" class="member-name-link">getCurrentHyperlinkBox()</a> - Method in class gui.tool.<a href="gui/tool/HyperlinkTool.html" title="class in gui.tool">HyperlinkTool</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="gui/tool/ShapeTool.html#getCurrentShape()" class="member-name-link">getCurrentShape()</a> - Method in class gui.tool.<a href="gui/tool/ShapeTool.html" title="class in gui.tool">ShapeTool</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="app/media/Page.html#getElements()" class="member-name-link">getElements()</a> - Method in class app.media.<a href="app/media/Page.html" title="class in app.media">Page</a></dt>
@@ -418,6 +436,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Instatiate the correct GUIMedia sub-class for the given Media object.</div>
 </dd>
+<dt><a href="gui/media/PlayerInterface.html#getForward()" class="member-name-link">getForward()</a> - Method in class gui.media.<a href="gui/media/PlayerInterface.html" title="class in gui.media">PlayerInterface</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="gui/tool/AudioTool.html#getGraphic()" class="member-name-link">getGraphic()</a> - Method in class gui.tool.<a href="gui/tool/AudioTool.html" title="class in gui.tool">AudioTool</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="gui/tool/ColourTool.html#getGraphic()" class="member-name-link">getGraphic()</a> - Method in class gui.tool.<a href="gui/tool/ColourTool.html" title="class in gui.tool">ColourTool</a></dt>
@@ -440,6 +460,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Return the "graphic" to show in the toolbar for this tool.</div>
 </dd>
+<dt><a href="gui/tool/VideoTool.html#getGraphic()" class="member-name-link">getGraphic()</a> - Method in class gui.tool.<a href="gui/tool/VideoTool.html" title="class in gui.tool">VideoTool</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="gui/page/PageEventHandler.html#getHandlerMethods()" class="member-name-link">getHandlerMethods()</a> - Method in interface gui.page.<a href="gui/page/PageEventHandler.html" title="interface in gui.page">PageEventHandler</a></dt>
 <dd>
 <div class="block">Get the handler methods to be added to a page through which events will
@@ -497,6 +519,10 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="gui/tool/TagTool.html#getMedia(javafx.scene.input.MouseEvent)" class="member-name-link">getMedia(MouseEvent)</a> - Method in class gui.tool.<a href="gui/tool/TagTool.html" title="class in gui.tool">TagTool</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="gui/page/Page.html#getMediaLayer()" class="member-name-link">getMediaLayer()</a> - Method in class gui.page.<a href="gui/page/Page.html" title="class in gui.page">Page</a></dt>
+<dd>
+<div class="block">Getter for mediaLayer</div>
+</dd>
 <dt><a href="gui/page/Page.html#getMouseCoords(javafx.scene.input.MouseEvent)" class="member-name-link">getMouseCoords(MouseEvent)</a> - Method in class gui.page.<a href="gui/page/Page.html" title="class in gui.page">Page</a></dt>
 <dd>
 <div class="block">Return the coordinates of the given MouseEvent in the page's coordinate space.</div>
@@ -533,11 +559,33 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Return the name of this tool.</div>
 </dd>
+<dt><a href="gui/tool/VideoTool.html#getName()" class="member-name-link">getName()</a> - Method in class gui.tool.<a href="gui/tool/VideoTool.html" title="class in gui.tool">VideoTool</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="app/media/GenericShape.html#getP1()" class="member-name-link">getP1()</a> - Method in class app.media.<a href="app/media/GenericShape.html" title="class in app.media">GenericShape</a></dt>
+<dd>
+<div class="block">Gets the first point defining the shape</div>
+</dd>
+<dt><a href="app/media/GenericShape.html#getP2()" class="member-name-link">getP2()</a> - Method in class app.media.<a href="app/media/GenericShape.html" title="class in app.media">GenericShape</a></dt>
+<dd>
+<div class="block">Gets the second point defining the shape</div>
+</dd>
 <dt><a href="gui/page_screen/PageScreen.html#getPage()" class="member-name-link">getPage()</a> - Method in class gui.page_screen.<a href="gui/page_screen/PageScreen.html" title="class in gui.page_screen">PageScreen</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="gui/tool/AudioTool.html#getPage()" class="member-name-link">getPage()</a> - Method in class gui.tool.<a href="gui/tool/AudioTool.html" title="class in gui.tool">AudioTool</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="MediaCommunicator.html#getPage()" class="member-name-link">getPage()</a> - Method in class <a href="MediaCommunicator.html" title="class in Unnamed Package">MediaCommunicator</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="gui/media/PlayerInterface.html#getPlay()" class="member-name-link">getPlay()</a> - Method in class gui.media.<a href="gui/media/PlayerInterface.html" title="class in gui.media">PlayerInterface</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="gui/media/PlayerInterface.html#getPlaybackSlider()" class="member-name-link">getPlaybackSlider()</a> - Method in class gui.media.<a href="gui/media/PlayerInterface.html" title="class in gui.media">PlayerInterface</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="gui/media/GUIAudio.html#getPlaybackText()" class="member-name-link">getPlaybackText()</a> - Method in class gui.media.<a href="gui/media/GUIAudio.html" title="class in gui.media">GUIAudio</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="gui/media/PlayerInterface.html#getPlaybackText()" class="member-name-link">getPlaybackText()</a> - Method in class gui.media.<a href="gui/media/PlayerInterface.html" title="class in gui.media">PlayerInterface</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="gui/media/GUIAudio.html#getPlayerUI()" class="member-name-link">getPlayerUI()</a> - Method in class gui.media.<a href="gui/media/GUIAudio.html" title="class in gui.media">GUIAudio</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="gui/media/PlayerInterface.html#getPlayRateOptions()" class="member-name-link">getPlayRateOptions()</a> - Method in class gui.media.<a href="gui/media/PlayerInterface.html" title="class in gui.media">PlayerInterface</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="app/media/PolygonShape.html#getRadius()" class="member-name-link">getRadius()</a> - Method in class app.media.<a href="app/media/PolygonShape.html" title="class in app.media">PolygonShape</a></dt>
 <dd>
@@ -545,11 +593,23 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="app/media/FileMedia.html#getRawData()" class="member-name-link">getRawData()</a> - Method in class app.media.<a href="app/media/FileMedia.html" title="class in app.media">FileMedia</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="gui/media/PlayerInterface.html#getRedo()" class="member-name-link">getRedo()</a> - Method in class gui.media.<a href="gui/media/PlayerInterface.html" title="class in gui.media">PlayerInterface</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="gui/ResourceLoader.html#getResourceURL(java.lang.String)" class="member-name-link">getResourceURL(String)</a> - Static method in class gui.<a href="gui/ResourceLoader.html" title="class in gui">ResourceLoader</a></dt>
 <dd>
 <div class="block">Return a URL for the resource at the given path.</div>
 </dd>
+<dt><a href="gui/page/Page.html#getScale()" class="member-name-link">getScale()</a> - Method in class gui.page.<a href="gui/page/Page.html" title="class in gui.page">Page</a></dt>
+<dd>
+<div class="block">Getter for scale</div>
+</dd>
+<dt><a href="gui/page/Page.html#getScaleFactor()" class="member-name-link">getScaleFactor()</a> - Method in class gui.page.<a href="gui/page/Page.html" title="class in gui.page">Page</a></dt>
+<dd>
+<div class="block">Getter for scaleFactor</div>
+</dd>
 <dt><a href="app/media/PenStroke.html#getSegments()" class="member-name-link">getSegments()</a> - Method in class app.media.<a href="app/media/PenStroke.html" title="class in app.media">PenStroke</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="gui/tool/AudioTool.html#getSelectedPlayer()" class="member-name-link">getSelectedPlayer()</a> - Method in class gui.tool.<a href="gui/tool/AudioTool.html" title="class in gui.tool">AudioTool</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="gui/tool/AudioTool.html#getSettingsGUI()" class="member-name-link">getSettingsGUI()</a> - Method in class gui.tool.<a href="gui/tool/AudioTool.html" title="class in gui.tool">AudioTool</a></dt>
 <dd>&nbsp;</dd>
@@ -589,13 +649,17 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="app/media/TextBox.html#getText()" class="member-name-link">getText()</a> - Method in class app.media.<a href="app/media/TextBox.html" title="class in app.media">TextBox</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="gui/media/GUIHyperlinkBox.html#getText()" class="member-name-link">getText()</a> - Method in class gui.media.<a href="gui/media/GUIHyperlinkBox.html" title="class in gui.media">GUIHyperlinkBox</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="gui/media/GUITextBox.html#getText()" class="member-name-link">getText()</a> - Method in class gui.media.<a href="gui/media/GUITextBox.html" title="class in gui.media">GUITextBox</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="gui/media/GUIHyperlinkBox.html#getTextNode()" class="member-name-link">getTextNode()</a> - Method in class gui.media.<a href="gui/media/GUIHyperlinkBox.html" title="class in gui.media">GUIHyperlinkBox</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="gui/media/GUITextBox.html#getTextNode()" class="member-name-link">getTextNode()</a> - Method in class gui.media.<a href="gui/media/GUITextBox.html" title="class in gui.media">GUITextBox</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="app/media/PenStroke.html#getThickness()" class="member-name-link">getThickness()</a> - Method in class app.media.<a href="app/media/PenStroke.html" title="class in app.media">PenStroke</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="app/media/MediaAudio.html#getTimestamps()" class="member-name-link">getTimestamps()</a> - Method in class app.media.<a href="app/media/MediaAudio.html" title="class in app.media">MediaAudio</a></dt>
+<dt><a href="app/media/MediaPlayable.html#getTimestamps()" class="member-name-link">getTimestamps()</a> - Method in class app.media.<a href="app/media/MediaPlayable.html" title="class in app.media">MediaPlayable</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="gui/media/GUIAudio.html#getTimestamps()" class="member-name-link">getTimestamps()</a> - Method in class gui.media.<a href="gui/media/GUIAudio.html" title="class in gui.media">GUIAudio</a></dt>
 <dd>&nbsp;</dd>
@@ -605,8 +669,14 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Return an array containing instances of all the available tools.</div>
 </dd>
+<dt><a href="app/media/MediaPlayable.html#getType()" class="member-name-link">getType()</a> - Method in class app.media.<a href="app/media/MediaPlayable.html" title="class in app.media">MediaPlayable</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="app/media/Page.html#getViewSize()" class="member-name-link">getViewSize()</a> - Method in class app.media.<a href="app/media/Page.html" title="class in app.media">Page</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="gui/page/Page.html#getVisibleBounds()" class="member-name-link">getVisibleBounds()</a> - Method in class gui.page.<a href="gui/page/Page.html" title="class in gui.page">Page</a></dt>
+<dd>
+<div class="block">Returns the currently visible region.</div>
+</dd>
 <dt><a href="app/media/Media.html#getWidth()" class="member-name-link">getWidth()</a> - Method in class app.media.<a href="app/media/Media.html" title="class in app.media">Media</a></dt>
 <dd>
 <div class="block">Gets the value of the property width.</div>
@@ -663,7 +733,7 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">GUI for playing an associated MediaAudio</div>
 </dd>
-<dt><a href="gui/media/GUIAudio.html#%3Cinit%3E(app.media.MediaAudio)" class="member-name-link">GUIAudio(MediaAudio)</a> - Constructor for class gui.media.<a href="gui/media/GUIAudio.html" title="class in gui.media">GUIAudio</a></dt>
+<dt><a href="gui/media/GUIAudio.html#%3Cinit%3E(app.media.MediaPlayable)" class="member-name-link">GUIAudio(MediaPlayable)</a> - Constructor for class gui.media.<a href="gui/media/GUIAudio.html" title="class in gui.media">GUIAudio</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="gui/GUICreator.html" class="type-name-link" title="class in gui">GUICreator</a> - Class in <a href="gui/package-summary.html">gui</a></dt>
 <dd>
@@ -760,6 +830,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="gui/media/GUITextBox.html#%3Cinit%3E(javafx.geometry.Point2D,java.lang.String,javafx.scene.paint.Color)" class="member-name-link">GUITextBox(Point2D, String, Color)</a> - Constructor for class gui.media.<a href="gui/media/GUITextBox.html" title="class in gui.media">GUITextBox</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="gui/media/GUIVideo.html" class="type-name-link" title="class in gui.media">GUIVideo</a> - Class in <a href="gui/media/package-summary.html">gui.media</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="gui/media/GUIVideo.html#%3Cinit%3E(app.media.MediaPlayable)" class="member-name-link">GUIVideo(MediaPlayable)</a> - Constructor for class gui.media.<a href="gui/media/GUIVideo.html" title="class in gui.media">GUIVideo</a></dt>
+<dd>&nbsp;</dd>
 </dl>
 <h2 class="title" id="I:H">H</h2>
 <dl class="index">
@@ -800,7 +874,7 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Provides functionality to the UI elements as defined in settings</div>
 </dd>
-<dt><a href="app/controllers/ToolBarController.html#insertAudio(app.MediaCommunicator)" class="member-name-link">insertAudio(MediaCommunicator)</a> - Method in class app.controllers.<a href="app/controllers/ToolBarController.html" title="class in app.controllers">ToolBarController</a></dt>
+<dt><a href="app/controllers/ToolBarController.html#insertAudio(app.MediaCommunicator,javafx.geometry.Bounds)" class="member-name-link">insertAudio(MediaCommunicator, Bounds)</a> - Method in class app.controllers.<a href="app/controllers/ToolBarController.html" title="class in app.controllers">ToolBarController</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="app/controllers/ToolBarController.html#insertImage()" class="member-name-link">insertImage()</a> - Method in class app.controllers.<a href="app/controllers/ToolBarController.html" title="class in app.controllers">ToolBarController</a></dt>
 <dd>&nbsp;</dd>
@@ -809,6 +883,8 @@ loadScripts(document, 'script');</script>
 <div class="block">Store the given media.</div>
 </dd>
 <dt><a href="app/controllers/ToolBarController.html#insertText()" class="member-name-link">insertText()</a> - Method in class app.controllers.<a href="app/controllers/ToolBarController.html" title="class in app.controllers">ToolBarController</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="app/controllers/ToolBarController.html#insertVideo(app.MediaCommunicator,javafx.geometry.Bounds)" class="member-name-link">insertVideo(MediaCommunicator, Bounds)</a> - Method in class app.controllers.<a href="app/controllers/ToolBarController.html" title="class in app.controllers">ToolBarController</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="app/interaction_managers/InteractionManager.html#interact(javafx.scene.control.TextField)" class="member-name-link">interact(TextField)</a> - Method in interface app.interaction_managers.<a href="app/interaction_managers/InteractionManager.html" title="interface in app.interaction_managers">InteractionManager</a></dt>
 <dd>&nbsp;</dd>
@@ -839,6 +915,10 @@ loadScripts(document, 'script');</script>
 </dl>
 <h2 class="title" id="I:J">J</h2>
 <dl class="index">
+<dt><a href="gui/page/Page.html#jumpToCenter(double,double)" class="member-name-link">jumpToCenter(double, double)</a> - Method in class gui.page.<a href="gui/page/Page.html" title="class in gui.page">Page</a></dt>
+<dd>
+<div class="block">given the x and y coords of a point, make that point the center of the visible box</div>
+</dd>
 <dt><a href="gui/page/Page.html#jumpToTopLeft(double,double)" class="member-name-link">jumpToTopLeft(double, double)</a> - Method in class gui.page.<a href="gui/page/Page.html" title="class in gui.page">Page</a></dt>
 <dd>
 <div class="block">given the x and y coords of a point, make that point the top left of the visible box</div>
@@ -883,7 +963,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="Main.html#%3Cinit%3E()" class="member-name-link">Main()</a> - Constructor for class <a href="Main.html" title="class in Unnamed Package">Main</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="gui/tool/HyperlinkTool.html#makeHyperlink(javafx.scene.input.MouseEvent)" class="member-name-link">makeHyperlink(MouseEvent)</a> - Method in class gui.tool.<a href="gui/tool/HyperlinkTool.html" title="class in gui.tool">HyperlinkTool</a></dt>
+<dt><a href="gui/tool/HyperlinkTool.html#makeHyperlink(javafx.geometry.Point2D,java.lang.String,java.lang.String,javafx.scene.paint.Color)" class="member-name-link">makeHyperlink(Point2D, String, String, Color)</a> - Method in class gui.tool.<a href="gui/tool/HyperlinkTool.html" title="class in gui.tool">HyperlinkTool</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="app/media/Media.html" class="type-name-link" title="class in app.media">Media</a> - Class in <a href="app/media/package-summary.html">app.media</a></dt>
 <dd>
@@ -905,10 +985,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Instantiate a new Media object given all fields <i>except</i> ID.</div>
 </dd>
-<dt><a href="app/media/MediaAudio.html" class="type-name-link" title="class in app.media">MediaAudio</a> - Class in <a href="app/media/package-summary.html">app.media</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="app/media/MediaAudio.html#%3Cinit%3E(java.lang.String,double,double,double,double,byte%5B%5D,java.util.ArrayList)" class="member-name-link">MediaAudio(String, double, double, double, double, byte[], ArrayList&lt;Duration&gt;)</a> - Constructor for class app.media.<a href="app/media/MediaAudio.html" title="class in app.media">MediaAudio</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="app/MediaCommunicator.html" class="type-name-link" title="class in app">MediaCommunicator</a> - Class in <a href="app/package-summary.html">app</a></dt>
 <dd>
 <div class="block">Main facade class.</div>
@@ -940,6 +1016,10 @@ loadScripts(document, 'script');</script>
 <div class="block">Implementors of this interface can be given to an instance of
  MediaCommunicator to be notified when Media is added/updated/removed.</div>
 </dd>
+<dt><a href="app/media/MediaPlayable.html" class="type-name-link" title="class in app.media">MediaPlayable</a> - Class in <a href="app/media/package-summary.html">app.media</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="app/media/MediaPlayable.html#%3Cinit%3E(java.lang.String,double,double,double,double,byte%5B%5D,java.util.ArrayList,java.lang.String)" class="member-name-link">MediaPlayable(String, double, double, double, double, byte[], ArrayList&lt;Duration&gt;, String)</a> - Constructor for class app.media.<a href="app/media/MediaPlayable.html" title="class in app.media">MediaPlayable</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="app/MediaStorage.html" class="type-name-link" title="interface in app">MediaStorage</a> - Interface in <a href="app/package-summary.html">app</a></dt>
 <dd>
 <div class="block">Implementors of this interface can be used as a Media storage back-end by
@@ -978,15 +1058,15 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="gui/page/Page.html#mediaUpdated(app.media.Media)" class="member-name-link">mediaUpdated(Media)</a> - Method in class gui.page.<a href="gui/page/Page.html" title="class in gui.page">Page</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="app/media_managers/AudioModifier.html#modifyMedia()" class="member-name-link">modifyMedia()</a> - Method in class app.media_managers.<a href="app/media_managers/AudioModifier.html" title="class in app.media_managers">AudioModifier</a></dt>
-<dd>
-<div class="block">Allowing timestamps to either be added or removed from referenced parameter audio</div>
-</dd>
 <dt><a href="app/media_managers/ImageModifier.html#modifyMedia()" class="member-name-link">modifyMedia()</a> - Method in class app.media_managers.<a href="app/media_managers/ImageModifier.html" title="class in app.media_managers">ImageModifier</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="app/media_managers/TextModifier.html#modifyMedia()" class="member-name-link">modifyMedia()</a> - Method in class app.media_managers.<a href="app/media_managers/TextModifier.html" title="class in app.media_managers">TextModifier</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="app/controllers/ToolBarController.html#modifyTimestamp(app.media.MediaAudio,javafx.util.Duration,app.MediaCommunicator)" class="member-name-link">modifyTimestamp(MediaAudio, Duration, MediaCommunicator)</a> - Method in class app.controllers.<a href="app/controllers/ToolBarController.html" title="class in app.controllers">ToolBarController</a></dt>
+<dt><a href="app/media_managers/PlayableModifier.html#modifyMedia(app.media.MediaPlayable,javafx.util.Duration,app.MediaCommunicator)" class="member-name-link">modifyMedia(MediaPlayable, Duration, MediaCommunicator)</a> - Method in class app.media_managers.<a href="app/media_managers/PlayableModifier.html" title="class in app.media_managers">PlayableModifier</a></dt>
+<dd>
+<div class="block">Allowing timestamps to either be added or removed from referenced parameter audio</div>
+</dd>
+<dt><a href="app/controllers/ToolBarController.html#modifyTimestamp(app.media.MediaPlayable,javafx.util.Duration,app.MediaCommunicator)" class="member-name-link">modifyTimestamp(MediaPlayable, Duration, MediaCommunicator)</a> - Method in class app.controllers.<a href="app/controllers/ToolBarController.html" title="class in app.controllers">ToolBarController</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="gui/page/Selection.html#move(javafx.geometry.Point2D)" class="member-name-link">move(Point2D)</a> - Method in class gui.page.<a href="gui/page/Selection.html" title="class in gui.page">Selection</a></dt>
 <dd>
@@ -1004,6 +1084,8 @@ loadScripts(document, 'script');</script>
 </dl>
 <h2 class="title" id="I:P">P</h2>
 <dl class="index">
+<dt><a href="gui/tool/AudioTool.html#page" class="member-name-link">page</a> - Variable in class gui.tool.<a href="gui/tool/AudioTool.html" title="class in gui.tool">AudioTool</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="app/media/Page.html" class="type-name-link" title="class in app.media">Page</a> - Class in <a href="app/media/package-summary.html">app.media</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="gui/page/Page.html" class="type-name-link" title="class in gui.page">Page</a> - Class in <a href="gui/page/package-summary.html">gui.page</a></dt>
@@ -1057,17 +1139,27 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="gui/media/Playable.html" class="type-name-link" title="interface in gui.media">Playable</a> - Interface in <a href="gui/media/package-summary.html">gui.media</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="app/media_managers/PlayableModifier.html" class="type-name-link" title="class in app.media_managers">PlayableModifier</a> - Class in <a href="app/media_managers/package-summary.html">app.media_managers</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="app/media_managers/PlayableModifier.html#%3Cinit%3E()" class="member-name-link">PlayableModifier()</a> - Constructor for class app.media_managers.<a href="app/media_managers/PlayableModifier.html" title="class in app.media_managers">PlayableModifier</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="gui/model/GUIPlayerModel.html#playbackSliderAdjusted(double,javafx.scene.media.MediaPlayer.Status)" class="member-name-link">playbackSliderAdjusted(double, MediaPlayer.Status)</a> - Method in class gui.model.<a href="gui/model/GUIPlayerModel.html" title="class in gui.model">GUIPlayerModel</a></dt>
 <dd>
 <div class="block">Adjusts where the associated GUIAudio will play from when the user interacts with the playback slider</div>
 </dd>
+<dt><a href="gui/media/PlayerInterface.html" class="type-name-link" title="class in gui.media">PlayerInterface</a> - Class in <a href="gui/media/package-summary.html">gui.media</a></dt>
+<dd>
+<div class="block">Represents the GUI elements compromising a media player</div>
+</dd>
+<dt><a href="gui/media/PlayerInterface.html#%3Cinit%3E(java.lang.String)" class="member-name-link">PlayerInterface(String)</a> - Constructor for class gui.media.<a href="gui/media/PlayerInterface.html" title="class in gui.media">PlayerInterface</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="gui/tool/ShapeType.html#POLYGON" class="member-name-link">POLYGON</a> - Enum constant in enum class gui.tool.<a href="gui/tool/ShapeType.html" title="enum class in gui.tool">ShapeType</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="app/media/PolygonShape.html" class="type-name-link" title="class in app.media">PolygonShape</a> - Class in <a href="app/media/package-summary.html">app.media</a></dt>
 <dd>
 <div class="block">An implementation of GenericShape representing a polygon</div>
 </dd>
-<dt><a href="app/media/PolygonShape.html#%3Cinit%3E(double,double,double,double,java.lang.String,double,double,int)" class="member-name-link">PolygonShape(double, double, double, double, String, double, double, int)</a> - Constructor for class app.media.<a href="app/media/PolygonShape.html" title="class in app.media">PolygonShape</a></dt>
+<dt><a href="app/media/PolygonShape.html#%3Cinit%3E(javafx.geometry.Point2D,javafx.geometry.Point2D,java.lang.String,double,double,int)" class="member-name-link">PolygonShape(Point2D, Point2D, String, double, double, int)</a> - Constructor for class app.media.<a href="app/media/PolygonShape.html" title="class in app.media">PolygonShape</a></dt>
 <dd>
 <div class="block">Initializes a polygon with the following settings</div>
 </dd>
@@ -1088,7 +1180,7 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">An implementation of GenericShape representing a rectangle</div>
 </dd>
-<dt><a href="app/media/RectangleShape.html#%3Cinit%3E(double,double,double,double,java.lang.String)" class="member-name-link">RectangleShape(double, double, double, double, String)</a> - Constructor for class app.media.<a href="app/media/RectangleShape.html" title="class in app.media">RectangleShape</a></dt>
+<dt><a href="app/media/RectangleShape.html#%3Cinit%3E(javafx.geometry.Point2D,javafx.geometry.Point2D,java.lang.String)" class="member-name-link">RectangleShape(Point2D, Point2D, String)</a> - Constructor for class app.media.<a href="app/media/RectangleShape.html" title="class in app.media">RectangleShape</a></dt>
 <dd>
 <div class="block">Initializes a rectangle with the following settings</div>
 </dd>
@@ -1128,6 +1220,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Rename the selected Media to the given name.</div>
 </dd>
+<dt><a href="gui/tool/AudioTool.html#resetInterface(java.lang.String)" class="member-name-link">resetInterface(String)</a> - Method in class gui.tool.<a href="gui/tool/AudioTool.html" title="class in gui.tool">AudioTool</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="gui/ResourceLoader.html" class="type-name-link" title="class in gui">ResourceLoader</a> - Class in <a href="gui/package-summary.html">gui</a></dt>
 <dd>
 <div class="block">Utility class for loading resource files (icon images, stylesheets, etc.).</div>
@@ -1164,6 +1258,18 @@ loadScripts(document, 'script');</script>
 <div class="block">Store the current database in the given file and switch to using that
  file as the current database.</div>
 </dd>
+<dt><a href="gui/page/Page.html#scrollHorizontally(double)" class="member-name-link">scrollHorizontally(double)</a> - Method in class gui.page.<a href="gui/page/Page.html" title="class in gui.page">Page</a></dt>
+<dd>
+<div class="block">Translate the mediaLayer horizontally by translation amount of pixels (using traditional computer graphics
+ coordinate systems with the top left corner being (0, 0) and y increasing positively downwards and x increasing
+ positively to the right)</div>
+</dd>
+<dt><a href="gui/page/Page.html#scrollVertically(double)" class="member-name-link">scrollVertically(double)</a> - Method in class gui.page.<a href="gui/page/Page.html" title="class in gui.page">Page</a></dt>
+<dd>
+<div class="block">Translate the mediaLayer vertically by translation amount of pixels (using traditional computer graphics
+ coordinate systems with the top left corner being (0, 0) and y increasing positively downwards and x increasing
+ positively to the right)</div>
+</dd>
 <dt><a href="app/controllers/SearchBarController.html" class="type-name-link" title="class in app.controllers">SearchBarController</a> - Class in <a href="app/controllers/package-summary.html">app.controllers</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="app/controllers/SearchBarController.html#%3Cinit%3E(java.util.ArrayList,javafx.scene.control.TextField)" class="member-name-link">SearchBarController(ArrayList&lt;Media&gt;, TextField)</a> - Constructor for class app.controllers.<a href="app/controllers/SearchBarController.html" title="class in app.controllers">SearchBarController</a></dt>
@@ -1171,8 +1277,6 @@ loadScripts(document, 'script');</script>
 <dt><a href="app/interaction_managers/Searcher.html" class="type-name-link" title="class in app.interaction_managers">Searcher</a> - Class in <a href="app/interaction_managers/package-summary.html">app.interaction_managers</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="app/interaction_managers/Searcher.html#%3Cinit%3E(java.util.ArrayList)" class="member-name-link">Searcher(ArrayList&lt;Media&gt;)</a> - Constructor for class app.interaction_managers.<a href="app/interaction_managers/Searcher.html" title="class in app.interaction_managers">Searcher</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="app/media_managers/AudioModifier.html#searchMedia()" class="member-name-link">searchMedia()</a> - Method in class app.media_managers.<a href="app/media_managers/AudioModifier.html" title="class in app.media_managers">AudioModifier</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="app/media_managers/ImageModifier.html#searchMedia()" class="member-name-link">searchMedia()</a> - Method in class app.media_managers.<a href="app/media_managers/ImageModifier.html" title="class in app.media_managers">ImageModifier</a></dt>
 <dd>&nbsp;</dd>
@@ -1206,10 +1310,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Create a new Selection for the given Page.</div>
 </dd>
-<dt><a href="app/drawables/SelectionTool.html" class="type-name-link" title="class in app.drawables">SelectionTool</a> - Class in <a href="app/drawables/package-summary.html">app.drawables</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="app/drawables/SelectionTool.html#%3Cinit%3E()" class="member-name-link">SelectionTool()</a> - Constructor for class app.drawables.<a href="app/drawables/SelectionTool.html" title="class in app.drawables">SelectionTool</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="gui/tool/MediaTool.html#selectMedia(gui.media.GUIMedia)" class="member-name-link">selectMedia(GUIMedia)</a> - Method in class gui.tool.<a href="gui/tool/MediaTool.html" title="class in gui.tool">MediaTool</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="storage/SQLiteStorage.html#selectMediaByID(java.lang.Long)" class="member-name-link">selectMediaByID(Long)</a> - Method in class storage.<a href="storage/SQLiteStorage.html" title="class in storage">SQLiteStorage</a></dt>
@@ -1220,8 +1320,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Sets the value of the property angle.</div>
 </dd>
-<dt><a href="app/media_managers/AudioModifier.html#setAudio(app.media.MediaAudio)" class="member-name-link">setAudio(MediaAudio)</a> - Method in class app.media_managers.<a href="app/media_managers/AudioModifier.html" title="class in app.media_managers">AudioModifier</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="gui/SwapPane.html#setBase(javafx.scene.Node)" class="member-name-link">setBase(Node)</a> - Method in class gui.<a href="gui/SwapPane.html" title="class in gui">SwapPane</a></dt>
 <dd>
 <div class="block">Set the "base" Node, replacing the previous "base" Node.</div>
@@ -1230,8 +1328,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Sets the colour of the shape</div>
 </dd>
-<dt><a href="app/media_managers/AudioModifier.html#setCommunicator(app.MediaCommunicator)" class="member-name-link">setCommunicator(MediaCommunicator)</a> - Method in class app.media_managers.<a href="app/media_managers/AudioModifier.html" title="class in app.media_managers">AudioModifier</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="app/media/Page.html#setElements(java.util.ArrayList)" class="member-name-link">setElements(ArrayList&lt;Media&gt;)</a> - Method in class app.media.<a href="app/media/Page.html" title="class in app.media">Page</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="gui/page/Page.html#setEventHandler(gui.page.PageEventHandler)" class="member-name-link">setEventHandler(PageEventHandler)</a> - Method in class gui.page.<a href="gui/page/Page.html" title="class in gui.page">Page</a></dt>
@@ -1266,15 +1362,27 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="gui/media/GUITextBox.html#setInitialValues()" class="member-name-link">setInitialValues()</a> - Method in class gui.media.<a href="gui/media/GUITextBox.html" title="class in gui.media">GUITextBox</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="gui/tool/AudioTool.html#setInterface()" class="member-name-link">setInterface()</a> - Method in class gui.tool.<a href="gui/tool/AudioTool.html" title="class in gui.tool">AudioTool</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="app/media/Hyperlink.html#setLink(java.lang.String)" class="member-name-link">setLink(String)</a> - Method in class app.media.<a href="app/media/Hyperlink.html" title="class in app.media">Hyperlink</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="app/media/MediaHyperlink.html#setLink(java.lang.String)" class="member-name-link">setLink(String)</a> - Method in class app.media.<a href="app/media/MediaHyperlink.html" title="class in app.media">MediaHyperlink</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="gui/media/GUIHyperlinkBox.html#setLink(java.lang.String)" class="member-name-link">setLink(String)</a> - Method in class gui.media.<a href="gui/media/GUIHyperlinkBox.html" title="class in gui.media">GUIHyperlinkBox</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="gui/media/GUIMedia.html#setMedia(M)" class="member-name-link">setMedia(M)</a> - Method in class gui.media.<a href="gui/media/GUIMedia.html" title="class in gui.media">GUIMedia</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="app/media/Media.html#setName(java.lang.String)" class="member-name-link">setName(String)</a> - Method in class app.media.<a href="app/media/Media.html" title="class in app.media">Media</a></dt>
 <dd>
 <div class="block">Sets the value of the property name.</div>
+</dd>
+<dt><a href="app/media/GenericShape.html#setP1(javafx.geometry.Point2D)" class="member-name-link">setP1(Point2D)</a> - Method in class app.media.<a href="app/media/GenericShape.html" title="class in app.media">GenericShape</a></dt>
+<dd>
+<div class="block">Sets the first point defining the shape</div>
+</dd>
+<dt><a href="app/media/GenericShape.html#setP2(javafx.geometry.Point2D)" class="member-name-link">setP2(Point2D)</a> - Method in class app.media.<a href="app/media/GenericShape.html" title="class in app.media">GenericShape</a></dt>
+<dd>
+<div class="block">Sets the second point defining the shape</div>
 </dd>
 <dt><a href="gui/media/GUIAudio.html#setPlaybackRate(double)" class="member-name-link">setPlaybackRate(double)</a> - Method in class gui.media.<a href="gui/media/GUIAudio.html" title="class in gui.media">GUIAudio</a></dt>
 <dd>&nbsp;</dd>
@@ -1296,7 +1404,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="gui/media/Playable.html#setPlayerDuration(javafx.util.Duration)" class="member-name-link">setPlayerDuration(Duration)</a> - Method in interface gui.media.<a href="gui/media/Playable.html" title="interface in gui.media">Playable</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="gui/media/GUIAudio.html#setPlayerManipulator(gui.model.GUIPlayerModel)" class="member-name-link">setPlayerManipulator(GUIPlayerModel)</a> - Method in class gui.media.<a href="gui/media/GUIAudio.html" title="class in gui.media">GUIAudio</a></dt>
+<dt><a href="gui/media/GUIAudio.html#setPlayerUI(gui.media.PlayerInterface)" class="member-name-link">setPlayerUI(PlayerInterface)</a> - Method in class gui.media.<a href="gui/media/GUIAudio.html" title="class in gui.media">GUIAudio</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="gui/media/GUIAudio.html#setPlayerVolume(double)" class="member-name-link">setPlayerVolume(double)</a> - Method in class gui.media.<a href="gui/media/GUIAudio.html" title="class in gui.media">GUIAudio</a></dt>
 <dd>&nbsp;</dd>
@@ -1312,6 +1420,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Defines how GUIAudio on the page can either be selected or de-selected</div>
 </dd>
+<dt><a href="gui/tool/VideoTool.html#setSelectedAudio(javafx.scene.input.MouseEvent)" class="member-name-link">setSelectedAudio(MouseEvent)</a> - Method in class gui.tool.<a href="gui/tool/VideoTool.html" title="class in gui.tool">VideoTool</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="gui/tool/AudioTool.html#setSelectedPlayer(gui.media.GUIAudio)" class="member-name-link">setSelectedPlayer(GUIAudio)</a> - Method in class gui.tool.<a href="gui/tool/AudioTool.html" title="class in gui.tool">AudioTool</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="app/media/PolygonShape.html#setSideCount(int)" class="member-name-link">setSideCount(int)</a> - Method in class app.media.<a href="app/media/PolygonShape.html" title="class in app.media">PolygonShape</a></dt>
 <dd>
 <div class="block">Sets the side count of the polygon</div>
@@ -1329,6 +1441,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="app/media/MediaText.html#setText(java.lang.String)" class="member-name-link">setText(String)</a> - Method in class app.media.<a href="app/media/MediaText.html" title="class in app.media">MediaText</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="app/media/TextBox.html#setText(java.lang.String)" class="member-name-link">setText(String)</a> - Method in class app.media.<a href="app/media/TextBox.html" title="class in app.media">TextBox</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="gui/media/GUIHyperlinkBox.html#setText(java.lang.String)" class="member-name-link">setText(String)</a> - Method in class gui.media.<a href="gui/media/GUIHyperlinkBox.html" title="class in gui.media">GUIHyperlinkBox</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="gui/media/GUITextBox.html#setText(java.lang.String)" class="member-name-link">setText(String)</a> - Method in class gui.media.<a href="gui/media/GUITextBox.html" title="class in gui.media">GUITextBox</a></dt>
 <dd>&nbsp;</dd>
@@ -1358,10 +1472,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Set the Z-index of the selected Media to the given Z-index.</div>
 </dd>
-<dt><a href="app/drawables/ShapeCreator.html" class="type-name-link" title="class in app.drawables">ShapeCreator</a> - Class in <a href="app/drawables/package-summary.html">app.drawables</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="app/drawables/ShapeCreator.html#%3Cinit%3E()" class="member-name-link">ShapeCreator()</a> - Constructor for class app.drawables.<a href="app/drawables/ShapeCreator.html" title="class in app.drawables">ShapeCreator</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="gui/tool/ShapeTool.html" class="type-name-link" title="class in gui.tool">ShapeTool</a> - Class in <a href="gui/tool/package-summary.html">gui.tool</a></dt>
 <dd>
 <div class="block">An implementation of Tool that allows the user to create various shapes</div>
@@ -1533,6 +1643,20 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="gui/model/GUIPlayerModel.html#updatePlaybackText(javafx.util.Duration)" class="member-name-link">updatePlaybackText(Duration)</a> - Method in class gui.model.<a href="gui/model/GUIPlayerModel.html" title="class in gui.model">GUIPlayerModel</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="gui/media/GUIEllipse.html#updatePoints()" class="member-name-link">updatePoints()</a> - Method in class gui.media.<a href="gui/media/GUIEllipse.html" title="class in gui.media">GUIEllipse</a></dt>
+<dd>
+<div class="block">Specific implementation of updatePoints for GUIEllipse</div>
+</dd>
+<dt><a href="gui/media/GUIPolygon.html#updatePoints()" class="member-name-link">updatePoints()</a> - Method in class gui.media.<a href="gui/media/GUIPolygon.html" title="class in gui.media">GUIPolygon</a></dt>
+<dd>
+<div class="block">Specific implementation of updatePoints for GUIPolygon</div>
+</dd>
+<dt><a href="gui/media/GUIRectangle.html#updatePoints()" class="member-name-link">updatePoints()</a> - Method in class gui.media.<a href="gui/media/GUIRectangle.html" title="class in gui.media">GUIRectangle</a></dt>
+<dd>
+<div class="block">Specific implementation of updatePoints for GUIRectangle</div>
+</dd>
+<dt><a href="gui/media/GUIShape.html#updatePoints()" class="member-name-link">updatePoints()</a> - Method in class gui.media.<a href="gui/media/GUIShape.html" title="class in gui.media">GUIShape</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="gui/tool/ShapeTool.html#updateShape(javafx.geometry.Point2D,javafx.geometry.Point2D,boolean)" class="member-name-link">updateShape(Point2D, Point2D, boolean)</a> - Method in class gui.tool.<a href="gui/tool/ShapeTool.html" title="class in gui.tool">ShapeTool</a></dt>
 <dd>
 <div class="block">Modifies and updates a shape to fit within the bounding box defined by two points.</div>
@@ -1541,19 +1665,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Indicate that the caller is using the GUIMedia instance and it should
  not be un-loaded.</div>
-</dd>
-<dt><a href="app/drawables/Drawable.html#useTwoPositions(javafx.geometry.Point2D,javafx.geometry.Point2D,java.lang.String)" class="member-name-link">useTwoPositions(Point2D, Point2D, String)</a> - Method in interface app.drawables.<a href="app/drawables/Drawable.html" title="interface in app.drawables">Drawable</a></dt>
-<dd>
-<div class="block">Takes in two positions from mouse input and does something with them</div>
-</dd>
-<dt><a href="app/drawables/SelectionTool.html#useTwoPositions(javafx.geometry.Point2D,javafx.geometry.Point2D,java.lang.String)" class="member-name-link">useTwoPositions(Point2D, Point2D, String)</a> - Method in class app.drawables.<a href="app/drawables/SelectionTool.html" title="class in app.drawables">SelectionTool</a></dt>
-<dd>
-<div class="block">Takes in two positions from mouse input and sends the area to the app.interaction_managers.Zoomer</div>
-</dd>
-<dt><a href="app/drawables/ShapeCreator.html#useTwoPositions(javafx.geometry.Point2D,javafx.geometry.Point2D,java.lang.String)" class="member-name-link">useTwoPositions(Point2D, Point2D, String)</a> - Method in class app.drawables.<a href="app/drawables/ShapeCreator.html" title="class in app.drawables">ShapeCreator</a></dt>
-<dd>
-<div class="block">Takes in two positions from mouse input and creates a shape with the positions as endpoints and then
- call JavaFX shape thingy</div>
 </dd>
 </dl>
 <h2 class="title" id="I:V">V</h2>
@@ -1567,6 +1678,10 @@ loadScripts(document, 'script');</script>
 <div class="block">Returns an array containing the constants of this enum class, in
 the order they are declared.</div>
 </dd>
+<dt><a href="gui/tool/VideoTool.html" class="type-name-link" title="class in gui.tool">VideoTool</a> - Class in <a href="gui/tool/package-summary.html">gui.tool</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="gui/tool/VideoTool.html#%3Cinit%3E(java.lang.String)" class="member-name-link">VideoTool(String)</a> - Constructor for class gui.tool.<a href="gui/tool/VideoTool.html" title="class in gui.tool">VideoTool</a></dt>
+<dd>&nbsp;</dd>
 </dl>
 <h2 class="title" id="I:W">W</h2>
 <dl class="index">

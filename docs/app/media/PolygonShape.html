@@ -113,9 +113,6 @@ loadScripts(document, 'script');</script>
 <section class="field-summary" id="field-summary">
 <h2>Field Summary</h2>
 <div class="inherited-list">
-<h3 id="fields-inherited-from-class-app.media.GenericShape">Fields inherited from class&nbsp;app.media.<a href="GenericShape.html" title="class in app.media">GenericShape</a></h3>
-<code><a href="GenericShape.html#colour">colour</a></code></div>
-<div class="inherited-list">
 <h3 id="fields-inherited-from-class-app.media.Media">Fields inherited from class&nbsp;app.media.<a href="Media.html" title="class in app.media">Media</a></h3>
 <code><a href="Media.html#EMPTY_ID">EMPTY_ID</a></code></div>
 </section>
@@ -128,10 +125,8 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(double,double,double,double,java.lang.String,double,double,int)" class="member-name-link">PolygonShape</a><wbr>(double&nbsp;x,
- double&nbsp;y,
- double&nbsp;width,
- double&nbsp;height,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(javafx.geometry.Point2D,javafx.geometry.Point2D,java.lang.String,double,double,int)" class="member-name-link">PolygonShape</a><wbr>(javafx.geometry.Point2D&nbsp;p1,
+ javafx.geometry.Point2D&nbsp;p2,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;colour,
  double&nbsp;radius,
  double&nbsp;startAngle,
@@ -193,7 +188,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-app.media.GenericShape">Methods inherited from class&nbsp;app.media.<a href="GenericShape.html" title="class in app.media">GenericShape</a></h3>
-<code><a href="GenericShape.html#getColour()">getColour</a>, <a href="GenericShape.html#setColour(java.lang.String)">setColour</a></code></div>
+<code><a href="GenericShape.html#getColour()">getColour</a>, <a href="GenericShape.html#getP1()">getP1</a>, <a href="GenericShape.html#getP2()">getP2</a>, <a href="GenericShape.html#setColour(java.lang.String)">setColour</a>, <a href="GenericShape.html#setP1(javafx.geometry.Point2D)">setP1</a>, <a href="GenericShape.html#setP2(javafx.geometry.Point2D)">setP2</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-app.media.Media">Methods inherited from class&nbsp;app.media.<a href="Media.html" title="class in app.media">Media</a></h3>
 <code><a href="Media.html#angleProperty()">angleProperty</a>, <a href="Media.html#getAngle()">getAngle</a>, <a href="Media.html#getHeight()">getHeight</a>, <a href="Media.html#getID()">getID</a>, <a href="Media.html#getName()">getName</a>, <a href="Media.html#getTags()">getTags</a>, <a href="Media.html#getWidth()">getWidth</a>, <a href="Media.html#getX()">getX</a>, <a href="Media.html#getY()">getY</a>, <a href="Media.html#getZindex()">getZindex</a>, <a href="Media.html#heightProperty()">heightProperty</a>, <a href="Media.html#isWithin(double,double,double,double)">isWithin</a>, <a href="Media.html#nameProperty()">nameProperty</a>, <a href="Media.html#setAngle(double)">setAngle</a>, <a href="Media.html#setHeight(double)">setHeight</a>, <a href="Media.html#setID(long)">setID</a>, <a href="Media.html#setName(java.lang.String)">setName</a>, <a href="Media.html#setTags(java.util.Set)">setTags</a>, <a href="Media.html#setWidth(double)">setWidth</a>, <a href="Media.html#setX(double)">setX</a>, <a href="Media.html#setY(double)">setY</a>, <a href="Media.html#setZindex(int)">setZindex</a>, <a href="Media.html#widthProperty()">widthProperty</a>, <a href="Media.html#xProperty()">xProperty</a>, <a href="Media.html#yProperty()">yProperty</a>, <a href="Media.html#zIndexProperty()">zIndexProperty</a></code></div>
@@ -212,12 +207,10 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(double,double,double,double,java.lang.String,double,double,int)">
+<section class="detail" id="&lt;init&gt;(javafx.geometry.Point2D,javafx.geometry.Point2D,java.lang.String,double,double,int)">
 <h3>PolygonShape</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">PolygonShape</span><wbr><span class="parameters">(double&nbsp;x,
- double&nbsp;y,
- double&nbsp;width,
- double&nbsp;height,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">PolygonShape</span><wbr><span class="parameters">(javafx.geometry.Point2D&nbsp;p1,
+ javafx.geometry.Point2D&nbsp;p2,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;colour,
  double&nbsp;radius,
  double&nbsp;startAngle,
@@ -225,10 +218,8 @@ loadScripts(document, 'script');</script>
 <div class="block">Initializes a polygon with the following settings</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>x</code> - The shape's x position (Top left corner of bounding box)</dd>
-<dd><code>y</code> - The shape's y position (Top left corner of bounding box)</dd>
-<dd><code>width</code> - The shape's width</dd>
-<dd><code>height</code> - The shape's height</dd>
+<dd><code>p1</code> - The position of the polygon's center</dd>
+<dd><code>p2</code> - The position which determines the polygon's radius and starting angle</dd>
 <dd><code>colour</code> - The shape's color</dd>
 <dd><code>radius</code> - The shape's radius</dd>
 <dd><code>startAngle</code> - The shape's starting angle</dd>
