@@ -1,7 +1,10 @@
 package gui.media;
 
+import app.media.Media;
 import app.media.MediaImage;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -12,11 +15,36 @@ import java.io.InputStream;
  */
 public class GUIImage extends GUIMedia<MediaImage> {
 
-    private Image image;
+    //private Image image;
+    private ImageView imageView;
 
-    public void createInterface () throws Exception {
-        byte[] buf = new byte[0];
-        ByteArrayInputStream bais = new ByteArrayInputStream(buf);
-        this.image = new Image();
+    protected void setInitialValues() {
+        this.imageView = new ImageView(); // Make blank image, placeholder
+
+        getChildren().clear();
+        getChildren().add(this.imageView);
     }
+    public GUIImage (MediaImage image) {
+        super(image);
+        mediaUpdated(image);
+    }
+
+    @Override
+    public void mediaUpdated(Media media) {
+        MediaImage newImage = (MediaImage) media;
+
+        setInitialValues();
+        setMedia(newImage);
+        setImageView(newImage);
+    }
+
+    public void setImageView(MediaImage image) {
+        ByteArrayInputStream bais = new ByteArrayInputStream(image.getRawData());
+        this.imageView = new ImageView(new Image(bais));
+    }
+
+    public void end() {
+        if (getMedia().getRawData().equals(this.imageView.getImage())) {
+            getMedia().setRawData(this.imageView.getImage());
+        }
 }
