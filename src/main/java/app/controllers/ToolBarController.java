@@ -8,11 +8,7 @@ import app.media_managers.AudioModifier;
 import app.media_managers.ImageModifier;
 import app.media_managers.TextModifier;
 import gui.media.GUIMedia;
-import gui.media.GUIAudio;
-import gui.page.Page;
-import javafx.geometry.Point2D;
 import javafx.util.Duration;
-import javafx.scene.control.TextField;
 
 public class ToolBarController {
 
@@ -50,10 +46,17 @@ public class ToolBarController {
         return textModifier.createAudioTimestamp(text, source);
     }
 
-    public void tag(TextField node, GUIMedia<?> guiMedia)
+    public void tag(String node, GUIMedia<?> guiMedia)
     {
         Tagger tagger = new Tagger();
         tagger.interact(node);
         tagger.addTag(guiMedia.getMedia());
     }
+
+    public void removeTag(String node, GUIMedia<?> guiMedia){
+        Tagger tagger = new Tagger();
+        tagger.interact(node);
+        tagger.removeTag(guiMedia.getMedia());
+    }
+
 }

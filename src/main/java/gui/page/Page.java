@@ -5,7 +5,6 @@ import javafx.scene.layout.*;
 import javafx.scene.transform.*;
 import javafx.scene.input.*;
 import javafx.beans.*;
-import javafx.beans.value.*;
 import javafx.geometry.*;
 import javafx.event.EventHandler;
 
@@ -443,11 +442,21 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
      * @param y y coordinate of point you want to jump to
      */
     public void jumpToCenter(double x, double y) {
-        double currentZoom = scaleFactor;
-        this.zoomToFactor(1.0);
-        this.jumpToTopLeft(x, y);
-        this.zoomToFactor(currentZoom);
+        // * Translate the point to the top left of the view
+        double translateX = x - getTranslateX();
+        double translateY = y - getTranslateY();
+        mediaLayer.setTranslateX(translateX);
+        mediaLayer.setTranslateY(translateY);
+        // * Get the center of the view (in the mediaLayer's coordinate space)
+        Bounds b = getVisibleBounds();
+        Point2D center = new Point2D(b.getCenterX(), b.getCenterY());
+        // * Translate the mediaLayer to the center of the view
+        double centerTranslateX = center.getX() - getTranslateX();
+        double centerTranslateY = center.getY() - getTranslateY();
+        mediaLayer.setTranslateX(centerTranslateX);
+        mediaLayer.setTranslateY(centerTranslateY);
     }
+
 
     /** given the x and y coords of a point, make that point the top left of the visible box
      *

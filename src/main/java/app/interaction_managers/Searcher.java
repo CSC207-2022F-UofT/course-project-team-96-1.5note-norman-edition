@@ -2,7 +2,6 @@ package app.interaction_managers;
 
 import app.media.Media;
 import app.media.MediaText;
-import javafx.scene.control.TextField;
 
 import java.util.ArrayList;
 
@@ -30,8 +29,8 @@ public class Searcher implements InteractionManager {
     }
 
     @Override
-    public void interact(TextField node) {
-        this.userSearch = node.getText();
+    public void interact(String node) {
+        this.userSearch = node;
 
     }
 }
