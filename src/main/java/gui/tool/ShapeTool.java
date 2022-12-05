@@ -23,7 +23,7 @@ import javafx.scene.paint.Color;
  * An implementation of Tool that allows the user to create various shapes
  */
 public class ShapeTool implements Tool {
-    private final HandlerMethod[] handlers;
+    private final HandlerMethod<?>[] handlers;
     private Page page;
 
     private final ShapeSettings settings;
@@ -43,18 +43,12 @@ public class ShapeTool implements Tool {
      */
     private Point2D point1;
 
-    /**
-     * The point which defines the shape's dimensions
-     */
-    private Point2D point2;
-
     public ShapeTool(ObjectProperty<Color> colour) {
-        HandlerMethod[] handlers = {
+        this.handlers = new HandlerMethod[] {
                 new HandlerMethod<>(MouseEvent.MOUSE_PRESSED, this::startShapeMouse),
                 new HandlerMethod<>(MouseEvent.MOUSE_RELEASED, this::endShapeMouse),
                 new HandlerMethod<>(MouseEvent.MOUSE_DRAGGED, this::updateShapeMouse)
         };
-        this.handlers = handlers;
 
         this.colour = colour;
         settings = new ShapeSettings();
@@ -72,7 +66,7 @@ public class ShapeTool implements Tool {
     }
 
     @Override
-    public HandlerMethod[] getHandlerMethods() {
+    public HandlerMethod<?>[] getHandlerMethods() {
         return handlers;
     }
 
@@ -113,7 +107,10 @@ public class ShapeTool implements Tool {
     private void updateShapeMouse(MouseEvent e) {
         if (e.getButton() == MouseButton.PRIMARY) {
             e.consume();
-            point2 = page.getMouseCoords(e);
+            /*
+             * The point which defines the shape's dimensions
+             */
+            Point2D point2 = page.getMouseCoords(e);
             updateShape(point1, point2, e.isShiftDown());
         }
     }

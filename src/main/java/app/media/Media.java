@@ -3,18 +3,14 @@ package app.media;
 import javafx.beans.property.*;
 import javafx.collections.*;
 
-import java.io.Serializable;
-import java.io.ObjectOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectStreamException;
-import java.io.IOException;
+import java.io.*;
 import java.util.Set;
 import java.util.HashSet;
 
 
 /**
  * Core entity representing a piece of media which can be displayed on a page.
- *
+ * <p>
  * Media and its sub-classes all have the following properties:
  * <ul>
  * <li>`id`: A unique identifier. This may initially be the placeholder value
@@ -33,7 +29,7 @@ import java.util.HashSet;
  */
 public class Media implements Serializable {
 
-    public static final Long EMPTY_ID = 0l;
+    public static final Long EMPTY_ID = 0L;
 
     long id;
     StringProperty name;
@@ -48,13 +44,14 @@ public class Media implements Serializable {
     // JavaFX property objects are not serializable, so a record class is used
     // for the purpose of actually serializing and de-seralizing the data which
     // is then loaded into an instance of Media with the `setFields` method.
-    private static record Data(
+    private record Data(
             long id,
             String name, Set<String> tags,
             double x, double y,
             double width, double height,
             double angle, int zIndex) implements Serializable {}
 
+    @Serial
     private void writeObject(ObjectOutputStream out) throws IOException {
         Data d = new Data(
                 id, getName(), new HashSet<>(tags), getX(), getY(),
@@ -63,6 +60,7 @@ public class Media implements Serializable {
         out.writeObject(d);
     }
 
+    @Serial
     private void readObject(ObjectInputStream in)
         throws IOException, ClassNotFoundException
     {
@@ -72,6 +70,8 @@ public class Media implements Serializable {
                 d.width(), d.height(), d.angle(), d.zIndex());
     }
 
+    @Serial
+    @SuppressWarnings("EmptyMethod")
     private void readObjectNoData() throws ObjectStreamException {}
 
     // the above `writeObject`, `readObject`, and `readObjectNoData` methods

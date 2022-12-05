@@ -3,7 +3,7 @@ package gui.media;
 import app.media.*;
 
 /**
- * Instantiate the correct GUIMedia sub-class for a given GenericShape object.
+ * Instantiate the correct GUIMedia subclass for a given GenericShape object.
  * <p>
  * Determines the appropriate GenericShape subclass to create, given a GenericShape
  * Used as a helper class for the GUIMediaFactory

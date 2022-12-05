@@ -1,12 +1,11 @@
 package gui.page;
 
 import javafx.event.*;
-import javafx.scene.input.InputEvent;
 
 
 /**
  * Implementors of this interface provide handler methods which accept events
- * from a app.media.Page.
+ * from a Page.
  * <p>
  * Implementors will also be notified when their handlers are added to or
  * removed from a page via the `enabledFor` and `disabledFor` methods.
@@ -27,7 +26,7 @@ public interface PageEventHandler {
      * new HandlerMethod(Event.ANY, e -> System.out.println(e));
      * </pre>
      */
-    public static record HandlerMethod<T extends Event>(
+    record HandlerMethod<T extends Event>(
             EventType<T> eventType, EventHandler<? super T> eventHandler)
     {
         // NOTE: the `addToPage` and `removeFromPage` methods are defined here
@@ -47,7 +46,7 @@ public interface PageEventHandler {
      * Get the handler methods to be added to a page through which events will
      * be received.
      */
-    default HandlerMethod[] getHandlerMethods() {
+    default HandlerMethod<?>[] getHandlerMethods() {
         return new HandlerMethod[0];
     }
 

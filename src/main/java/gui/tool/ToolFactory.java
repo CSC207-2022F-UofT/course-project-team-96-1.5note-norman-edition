@@ -15,7 +15,7 @@ public final class ToolFactory {
 
         ColourTool colourTool = new ColourTool();
 
-        Tool[] tools = {
+        return new Tool[] {
             colourTool,
             new PenTool(colourTool.colourProperty()),
             new ShapeTool(colourTool.colourProperty()),
@@ -27,7 +27,5 @@ public final class ToolFactory {
             new TagTool(),
             new SearchTool(),
         };
-
-        return tools;
     }
 }

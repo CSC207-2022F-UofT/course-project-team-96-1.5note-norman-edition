@@ -1,9 +1,6 @@
 package gui.media;
 
 import javafx.scene.text.*;
-import javafx.scene.input.*;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
 import javafx.scene.paint.*;
 import javafx.geometry.*;
 
