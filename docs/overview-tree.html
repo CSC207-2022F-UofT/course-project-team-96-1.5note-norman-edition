@@ -52,7 +52,6 @@ loadScripts(document, 'script');</script>
 <ul class="horizontal">
 <li><a href="app/package-tree.html">app</a>, </li>
 <li><a href="app/controllers/package-tree.html">app.controllers</a>, </li>
-<li><a href="app/drawables/package-tree.html">app.drawables</a>, </li>
 <li><a href="app/interaction_managers/package-tree.html">app.interaction_managers</a>, </li>
 <li><a href="app/media/package-tree.html">app.media</a>, </li>
 <li><a href="app/media_managers/package-tree.html">app.media_managers</a>, </li>
@@ -77,8 +76,11 @@ loadScripts(document, 'script');</script>
 <li class="circle">gui.<a href="gui/Main.html" class="type-name-link" title="class in gui">Main</a></li>
 </ul>
 </li>
-<li class="circle">app.media_managers.<a href="app/media_managers/AudioModifier.html" class="type-name-link" title="class in app.media_managers">AudioModifier</a></li>
-<li class="circle">gui.tool.<a href="gui/tool/AudioTool.html" class="type-name-link" title="class in gui.tool">AudioTool</a> (implements gui.tool.<a href="gui/tool/Tool.html" title="interface in gui.tool">Tool</a>)</li>
+<li class="circle">gui.tool.<a href="gui/tool/AudioTool.html" class="type-name-link" title="class in gui.tool">AudioTool</a> (implements gui.tool.<a href="gui/tool/Tool.html" title="interface in gui.tool">Tool</a>)
+<ul>
+<li class="circle">gui.tool.<a href="gui/tool/VideoTool.html" class="type-name-link" title="class in gui.tool">VideoTool</a></li>
+</ul>
+</li>
 <li class="circle">gui.tool.<a href="gui/tool/ColourTool.html" class="type-name-link" title="class in gui.tool">ColourTool</a> (implements gui.tool.<a href="gui/tool/Tool.html" title="interface in gui.tool">Tool</a>)</li>
 <li class="circle">javafx.scene.control.Dialog&lt;R&gt; (implements javafx.event.EventTarget)
 <ul>
@@ -97,8 +99,8 @@ loadScripts(document, 'script');</script>
 <ul>
 <li class="circle">app.media.<a href="app/media/FileMedia.html" class="type-name-link" title="class in app.media">FileMedia</a>
 <ul>
-<li class="circle">app.media.<a href="app/media/MediaAudio.html" class="type-name-link" title="class in app.media">MediaAudio</a></li>
 <li class="circle">app.media.<a href="app/media/MediaImage.html" class="type-name-link" title="class in app.media">MediaImage</a></li>
+<li class="circle">app.media.<a href="app/media/MediaPlayable.html" class="type-name-link" title="class in app.media">MediaPlayable</a></li>
 </ul>
 </li>
 <li class="circle">app.media.<a href="app/media/GenericShape.html" class="type-name-link" title="class in app.media">GenericShape</a>
@@ -131,8 +133,13 @@ loadScripts(document, 'script');</script>
 <ul>
 <li class="circle">gui.media.<a href="gui/media/GUIMedia.html" class="type-name-link" title="class in gui.media">GUIMedia</a>&lt;M&gt;
 <ul>
-<li class="circle">gui.media.<a href="gui/media/GUIAudio.html" class="type-name-link" title="class in gui.media">GUIAudio</a> (implements gui.media.<a href="gui/media/Playable.html" title="interface in gui.media">Playable</a>)</li>
+<li class="circle">gui.media.<a href="gui/media/GUIAudio.html" class="type-name-link" title="class in gui.media">GUIAudio</a> (implements gui.media.<a href="gui/media/Playable.html" title="interface in gui.media">Playable</a>)
+<ul>
+<li class="circle">gui.media.<a href="gui/media/GUIVideo.html" class="type-name-link" title="class in gui.media">GUIVideo</a></li>
+</ul>
+</li>
 <li class="circle">gui.media.<a href="gui/media/GUIHyperlink.html" class="type-name-link" title="class in gui.media">GUIHyperlink</a></li>
+<li class="circle">gui.media.<a href="gui/media/GUIHyperlinkBox.html" class="type-name-link" title="class in gui.media">GUIHyperlinkBox</a></li>
 <li class="circle">gui.media.<a href="gui/media/GUIPenStroke.html" class="type-name-link" title="class in gui.media">GUIPenStroke</a></li>
 <li class="circle">gui.media.<a href="gui/media/GUIShape.html" class="type-name-link" title="class in gui.media">GUIShape</a>
 <ul>
@@ -141,11 +148,7 @@ loadScripts(document, 'script');</script>
 <li class="circle">gui.media.<a href="gui/media/GUIRectangle.html" class="type-name-link" title="class in gui.media">GUIRectangle</a></li>
 </ul>
 </li>
-<li class="circle">gui.media.<a href="gui/media/GUITextBox.html" class="type-name-link" title="class in gui.media">GUITextBox</a>
-<ul>
-<li class="circle">gui.media.<a href="gui/media/GUIHyperlinkBox.html" class="type-name-link" title="class in gui.media">GUIHyperlinkBox</a></li>
-</ul>
-</li>
+<li class="circle">gui.media.<a href="gui/media/GUITextBox.html" class="type-name-link" title="class in gui.media">GUITextBox</a></li>
 </ul>
 </li>
 <li class="circle">javafx.scene.layout.StackPane
@@ -157,6 +160,7 @@ loadScripts(document, 'script');</script>
 <li class="circle">javafx.scene.layout.VBox
 <ul>
 <li class="circle">gui.page_screen.<a href="gui/page_screen/PageScreen.html" class="type-name-link" title="class in gui.page_screen">PageScreen</a></li>
+<li class="circle">gui.media.<a href="gui/media/PlayerInterface.html" class="type-name-link" title="class in gui.media">PlayerInterface</a></li>
 <li class="circle">gui.start_screen.<a href="gui/start_screen/StartScreen.html" class="type-name-link" title="class in gui.start_screen">StartScreen</a></li>
 </ul>
 </li>
@@ -179,6 +183,7 @@ loadScripts(document, 'script');</script>
 </li>
 <li class="circle">app.media.<a href="app/media/Page.html" class="type-name-link" title="class in app.media">Page</a></li>
 <li class="circle">gui.tool.<a href="gui/tool/PenTool.html" class="type-name-link" title="class in gui.tool">PenTool</a> (implements gui.tool.<a href="gui/tool/Tool.html" title="interface in gui.tool">Tool</a>)</li>
+<li class="circle">app.media_managers.<a href="app/media_managers/PlayableModifier.html" class="type-name-link" title="class in app.media_managers">PlayableModifier</a></li>
 <li class="circle">java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Record.html" class="type-name-link external-link" title="class or interface in java.lang">Record</a>
 <ul>
 <li class="circle">gui.page.<a href="gui/page/PageEventHandler.HandlerMethod.html" class="type-name-link" title="class in gui.page">PageEventHandler.HandlerMethod</a>&lt;T&gt;</li>
@@ -191,8 +196,6 @@ loadScripts(document, 'script');</script>
 <li class="circle">app.interaction_managers.<a href="app/interaction_managers/Searcher.html" class="type-name-link" title="class in app.interaction_managers">Searcher</a> (implements app.interaction_managers.<a href="app/interaction_managers/InteractionManager.html" title="interface in app.interaction_managers">InteractionManager</a>)</li>
 <li class="circle">gui.tool.<a href="gui/tool/SearchTool.html" class="type-name-link" title="class in gui.tool">SearchTool</a> (implements gui.tool.<a href="gui/tool/Tool.html" title="interface in gui.tool">Tool</a>)</li>
 <li class="circle">gui.page.<a href="gui/page/Selection.html" class="type-name-link" title="class in gui.page">Selection</a></li>
-<li class="circle">app.drawables.<a href="app/drawables/SelectionTool.html" class="type-name-link" title="class in app.drawables">SelectionTool</a> (implements app.drawables.<a href="app/drawables/Drawable.html" title="interface in app.drawables">Drawable</a>)</li>
-<li class="circle">app.drawables.<a href="app/drawables/ShapeCreator.html" class="type-name-link" title="class in app.drawables">ShapeCreator</a> (implements app.drawables.<a href="app/drawables/Drawable.html" title="interface in app.drawables">Drawable</a>)</li>
 <li class="circle">gui.tool.<a href="gui/tool/ShapeTool.html" class="type-name-link" title="class in gui.tool">ShapeTool</a> (implements gui.tool.<a href="gui/tool/Tool.html" title="interface in gui.tool">Tool</a>)</li>
 <li class="circle">storage.<a href="storage/SQLiteStorage.html" class="type-name-link" title="class in storage">SQLiteStorage</a> (implements app.<a href="app/MediaStorage.html" title="interface in app">MediaStorage</a>)</li>
 <li class="circle">app.interaction_managers.<a href="app/interaction_managers/Tagger.html" class="type-name-link" title="class in app.interaction_managers">Tagger</a> (implements app.interaction_managers.<a href="app/interaction_managers/InteractionManager.html" title="interface in app.interaction_managers">InteractionManager</a>)</li>
@@ -208,7 +211,6 @@ loadScripts(document, 'script');</script>
 <section class="hierarchy">
 <h2 title="Interface Hierarchy">Interface Hierarchy</h2>
 <ul>
-<li class="circle">app.drawables.<a href="app/drawables/Drawable.html" class="type-name-link" title="interface in app.drawables">Drawable</a></li>
 <li class="circle">app.interaction_managers.<a href="app/interaction_managers/InteractionManager.html" class="type-name-link" title="interface in app.interaction_managers">InteractionManager</a></li>
 <li class="circle">app.<a href="app/MediaObserver.html" class="type-name-link" title="interface in app">MediaObserver</a></li>
 <li class="circle">app.<a href="app/MediaStorage.html" class="type-name-link" title="interface in app">MediaStorage</a></li>

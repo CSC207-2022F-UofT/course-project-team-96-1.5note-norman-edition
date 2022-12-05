@@ -75,7 +75,7 @@ loadScripts(document, 'script');</script>
 <div class="inheritance">javafx.scene.Parent
 <div class="inheritance">javafx.scene.layout.Region
 <div class="inheritance">javafx.scene.layout.Pane
-<div class="inheritance"><a href="GUIMedia.html" title="class in gui.media">gui.media.GUIMedia</a>&lt;<a href="../../app/media/MediaAudio.html" title="class in app.media">MediaAudio</a>&gt;
+<div class="inheritance"><a href="GUIMedia.html" title="class in gui.media">gui.media.GUIMedia</a>&lt;<a href="../../app/media/MediaPlayable.html" title="class in app.media">MediaPlayable</a>&gt;
 <div class="inheritance">gui.media.GUIAudio</div>
 </div>
 </div>
@@ -88,9 +88,13 @@ loadScripts(document, 'script');</script>
 <dt>All Implemented Interfaces:</dt>
 <dd><code><a href="Playable.html" title="interface in gui.media">Playable</a></code>, <code>javafx.css.Styleable</code>, <code>javafx.event.EventTarget</code></dd>
 </dl>
+<dl class="notes">
+<dt>Direct Known Subclasses:</dt>
+<dd><code><a href="GUIVideo.html" title="class in gui.media">GUIVideo</a></code></dd>
+</dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">GUIAudio</span>
-<span class="extends-implements">extends <a href="GUIMedia.html" title="class in gui.media">GUIMedia</a>&lt;<a href="../../app/media/MediaAudio.html" title="class in app.media">MediaAudio</a>&gt;
+<span class="extends-implements">extends <a href="GUIMedia.html" title="class in gui.media">GUIMedia</a>&lt;<a href="../../app/media/MediaPlayable.html" title="class in app.media">MediaPlayable</a>&gt;
 implements <a href="Playable.html" title="interface in gui.media">Playable</a></span></div>
 <div class="block">GUI for playing an associated MediaAudio
   <p>
@@ -133,7 +137,7 @@ implements <a href="Playable.html" title="interface in gui.media">Playable</a></
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(app.media.MediaAudio)" class="member-name-link">GUIAudio</a><wbr>(<a href="../../app/media/MediaAudio.html" title="class in app.media">MediaAudio</a>&nbsp;audio)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(app.media.MediaPlayable)" class="member-name-link">GUIAudio</a><wbr>(<a href="../../app/media/MediaPlayable.html" title="class in app.media">MediaPlayable</a>&nbsp;audio)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -149,6 +153,14 @@ implements <a href="Playable.html" title="interface in gui.media">Playable</a></
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#configureUI()" class="member-name-link">configureUI</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Configures all the controls for UI elements of the associated PlayerInterface</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createInterface()" class="member-name-link">createInterface</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createTimestamps()" class="member-name-link">createTimestamps</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -169,50 +181,53 @@ implements <a href="Playable.html" title="interface in gui.media">Playable</a></
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>javafx.scene.text.Text</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPlaybackText()" class="member-name-link">getPlaybackText</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>javafx.scene.layout.VBox</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTimestamps()" class="member-name-link">getTimestamps</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="PlayerInterface.html" title="class in gui.media">PlayerInterface</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPlayerUI()" class="member-name-link">getPlayerUI</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTimestampsText()" class="member-name-link">getTimestampsText</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>javafx.scene.layout.VBox</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTimestamps()" class="member-name-link">getTimestamps</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#mediaUpdated(app.media.Media)" class="member-name-link">mediaUpdated</a><wbr>(<a href="../../app/media/Media.html" title="class in app.media">Media</a>&nbsp;media)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTimestampsText()" class="member-name-link">getTimestampsText</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#mediaUpdated(app.media.Media)" class="member-name-link">mediaUpdated</a><wbr>(<a href="../../app/media/Media.html" title="class in app.media">Media</a>&nbsp;media)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Notifies that the interface for timestamps must be updated</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#pause()" class="member-name-link">pause</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#play()" class="member-name-link">play</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#pause()" class="member-name-link">pause</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#removed()" class="member-name-link">removed</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#play()" class="member-name-link">play</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#removed()" class="member-name-link">removed</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">This method is called when this GUIMedia object is "removed" and will
  no longer be displayed.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPlaybackRate(double)" class="member-name-link">setPlaybackRate</a><wbr>(double&nbsp;value)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPlaybackSliderValue(double)" class="member-name-link">setPlaybackSliderValue</a><wbr>(double&nbsp;value)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPlaybackRate(double)" class="member-name-link">setPlaybackRate</a><wbr>(double&nbsp;value)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPlaybackText(java.lang.String)" class="member-name-link">setPlaybackText</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;text)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPlaybackSliderValue(double)" class="member-name-link">setPlaybackSliderValue</a><wbr>(double&nbsp;value)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPlayButtonText(java.lang.String)" class="member-name-link">setPlayButtonText</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;text)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPlaybackText(java.lang.String)" class="member-name-link">setPlaybackText</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;text)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPlayerDuration(javafx.util.Duration)" class="member-name-link">setPlayerDuration</a><wbr>(javafx.util.Duration&nbsp;time)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPlayButtonText(java.lang.String)" class="member-name-link">setPlayButtonText</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;text)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPlayerManipulator(gui.model.GUIPlayerModel)" class="member-name-link">setPlayerManipulator</a><wbr>(<a href="../model/GUIPlayerModel.html" title="class in gui.model">GUIPlayerModel</a>&nbsp;playerManipulator)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPlayerDuration(javafx.util.Duration)" class="member-name-link">setPlayerDuration</a><wbr>(javafx.util.Duration&nbsp;time)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPlayerVolume(double)" class="member-name-link">setPlayerVolume</a><wbr>(double&nbsp;value)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPlayerUI(gui.media.PlayerInterface)" class="member-name-link">setPlayerUI</a><wbr>(<a href="PlayerInterface.html" title="class in gui.media">PlayerInterface</a>&nbsp;playerUI)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPlayerVolume(double)" class="member-name-link">setPlayerVolume</a><wbr>(double&nbsp;value)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -249,9 +264,9 @@ implements <a href="Playable.html" title="interface in gui.media">Playable</a></
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(app.media.MediaAudio)">
+<section class="detail" id="&lt;init&gt;(app.media.MediaPlayable)">
 <h3>GUIAudio</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">GUIAudio</span><wbr><span class="parameters">(<a href="../../app/media/MediaAudio.html" title="class in app.media">MediaAudio</a>&nbsp;audio)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">GUIAudio</span><wbr><span class="parameters">(<a href="../../app/media/MediaPlayable.html" title="class in app.media">MediaPlayable</a>&nbsp;audio)</span></div>
 </section>
 </li>
 </ul>
@@ -262,6 +277,24 @@ implements <a href="Playable.html" title="interface in gui.media">Playable</a></
 <section class="method-details" id="method-detail">
 <h2>Method Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="configureUI()">
+<h3>configureUI</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">configureUI</span>()</div>
+<div class="block">Configures all the controls for UI elements of the associated PlayerInterface</div>
+</section>
+</li>
+<li>
+<section class="detail" id="createInterface()">
+<h3>createInterface</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">createInterface</span>()
+                     throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a></code></dd>
+</dl>
+</section>
+</li>
 <li>
 <section class="detail" id="createTimestamps()">
 <h3>createTimestamps</h3>
@@ -291,7 +324,7 @@ implements <a href="Playable.html" title="interface in gui.media">Playable</a></
  Preconditions: media is the same media represented by this GUIAudio</div>
 <dl class="notes">
 <dt>Overrides:</dt>
-<dd><code><a href="GUIMedia.html#mediaUpdated(app.media.Media)">mediaUpdated</a></code>&nbsp;in class&nbsp;<code><a href="GUIMedia.html" title="class in gui.media">GUIMedia</a>&lt;<a href="../../app/media/MediaAudio.html" title="class in app.media">MediaAudio</a>&gt;</code></dd>
+<dd><code><a href="GUIMedia.html#mediaUpdated(app.media.Media)">mediaUpdated</a></code>&nbsp;in class&nbsp;<code><a href="GUIMedia.html" title="class in gui.media">GUIMedia</a>&lt;<a href="../../app/media/MediaPlayable.html" title="class in app.media">MediaPlayable</a>&gt;</code></dd>
 <dt>Parameters:</dt>
 <dd><code>media</code> - Media object that was just updated</dd>
 </dl>
@@ -310,7 +343,7 @@ implements <a href="Playable.html" title="interface in gui.media">Playable</a></
  visible.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
-<dd><code><a href="GUIMedia.html#removed()">removed</a></code>&nbsp;in class&nbsp;<code><a href="GUIMedia.html" title="class in gui.media">GUIMedia</a>&lt;<a href="../../app/media/MediaAudio.html" title="class in app.media">MediaAudio</a>&gt;</code></dd>
+<dd><code><a href="GUIMedia.html#removed()">removed</a></code>&nbsp;in class&nbsp;<code><a href="GUIMedia.html" title="class in gui.media">GUIMedia</a>&lt;<a href="../../app/media/MediaPlayable.html" title="class in app.media">MediaPlayable</a>&gt;</code></dd>
 </dl>
 </section>
 </li>
@@ -411,15 +444,15 @@ implements <a href="Playable.html" title="interface in gui.media">Playable</a></
 </section>
 </li>
 <li>
-<section class="detail" id="getTimestampsText()">
-<h3>getTimestampsText</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name">getTimestampsText</span>()</div>
+<section class="detail" id="setPlayerUI(gui.media.PlayerInterface)">
+<h3>setPlayerUI</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setPlayerUI</span><wbr><span class="parameters">(<a href="PlayerInterface.html" title="class in gui.media">PlayerInterface</a>&nbsp;playerUI)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="setPlayerManipulator(gui.model.GUIPlayerModel)">
-<h3>setPlayerManipulator</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setPlayerManipulator</span><wbr><span class="parameters">(<a href="../model/GUIPlayerModel.html" title="class in gui.model">GUIPlayerModel</a>&nbsp;playerManipulator)</span></div>
+<section class="detail" id="getTimestampsText()">
+<h3>getTimestampsText</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name">getTimestampsText</span>()</div>
 </section>
 </li>
 <li>
@@ -432,6 +465,12 @@ implements <a href="Playable.html" title="interface in gui.media">Playable</a></
 <section class="detail" id="getPlaybackText()">
 <h3>getPlaybackText</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">javafx.scene.text.Text</span>&nbsp;<span class="element-name">getPlaybackText</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getPlayerUI()">
+<h3>getPlayerUI</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="PlayerInterface.html" title="class in gui.media">PlayerInterface</a></span>&nbsp;<span class="element-name">getPlayerUI</span>()</div>
 </section>
 </li>
 </ul>

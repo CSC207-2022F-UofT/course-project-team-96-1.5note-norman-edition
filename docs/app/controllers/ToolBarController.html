@@ -109,7 +109,8 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;source)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#insertAudio(app.MediaCommunicator)" class="member-name-link">insertAudio</a><wbr>(<a href="../MediaCommunicator.html" title="class in app">MediaCommunicator</a>&nbsp;communicator)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#insertAudio(app.MediaCommunicator,javafx.geometry.Bounds)" class="member-name-link">insertAudio</a><wbr>(<a href="../MediaCommunicator.html" title="class in app">MediaCommunicator</a>&nbsp;communicator,
+ javafx.geometry.Bounds&nbsp;bounds)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#insertImage()" class="member-name-link">insertImage</a>()</code></div>
@@ -118,14 +119,18 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#insertText()" class="member-name-link">insertText</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#modifyTimestamp(app.media.MediaAudio,javafx.util.Duration,app.MediaCommunicator)" class="member-name-link">modifyTimestamp</a><wbr>(<a href="../media/MediaAudio.html" title="class in app.media">MediaAudio</a>&nbsp;audioUI,
- javafx.util.Duration&nbsp;Timestamp,
- <a href="../MediaCommunicator.html" title="class in app">MediaCommunicator</a>&nbsp;communicator)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#insertVideo(app.MediaCommunicator,javafx.geometry.Bounds)" class="member-name-link">insertVideo</a><wbr>(<a href="../MediaCommunicator.html" title="class in app">MediaCommunicator</a>&nbsp;communicator,
+ javafx.geometry.Bounds&nbsp;bounds)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#tag(javafx.scene.control.TextField,gui.media.GUIMedia)" class="member-name-link">tag</a><wbr>(javafx.scene.control.TextField&nbsp;node,
- <a href="../../gui/media/GUIMedia.html" title="class in gui.media">GUIMedia</a>&lt;?&gt;&nbsp;guiMedia)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#modifyTimestamp(app.media.MediaPlayable,javafx.util.Duration,app.MediaCommunicator)" class="member-name-link">modifyTimestamp</a><wbr>(<a href="../media/MediaPlayable.html" title="class in app.media">MediaPlayable</a>&nbsp;audio,
+ javafx.util.Duration&nbsp;timestamp,
+ <a href="../MediaCommunicator.html" title="class in app">MediaCommunicator</a>&nbsp;communicator)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#tag(javafx.scene.control.TextField,gui.media.GUIMedia)" class="member-name-link">tag</a><wbr>(javafx.scene.control.TextField&nbsp;node,
+ <a href="../../gui/media/GUIMedia.html" title="class in gui.media">GUIMedia</a>&lt;?&gt;&nbsp;guiMedia)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -180,9 +185,10 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="insertAudio(app.MediaCommunicator)">
+<section class="detail" id="insertAudio(app.MediaCommunicator,javafx.geometry.Bounds)">
 <h3>insertAudio</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">insertAudio</span><wbr><span class="parameters">(<a href="../MediaCommunicator.html" title="class in app">MediaCommunicator</a>&nbsp;communicator)</span>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">insertAudio</span><wbr><span class="parameters">(<a href="../MediaCommunicator.html" title="class in app">MediaCommunicator</a>&nbsp;communicator,
+ javafx.geometry.Bounds&nbsp;bounds)</span>
                  throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a></span></div>
 <dl class="notes">
 <dt>Throws:</dt>
@@ -191,10 +197,22 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="modifyTimestamp(app.media.MediaAudio,javafx.util.Duration,app.MediaCommunicator)">
+<section class="detail" id="insertVideo(app.MediaCommunicator,javafx.geometry.Bounds)">
+<h3>insertVideo</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">insertVideo</span><wbr><span class="parameters">(<a href="../MediaCommunicator.html" title="class in app">MediaCommunicator</a>&nbsp;communicator,
+ javafx.geometry.Bounds&nbsp;bounds)</span>
+                 throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="modifyTimestamp(app.media.MediaPlayable,javafx.util.Duration,app.MediaCommunicator)">
 <h3>modifyTimestamp</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">modifyTimestamp</span><wbr><span class="parameters">(<a href="../media/MediaAudio.html" title="class in app.media">MediaAudio</a>&nbsp;audioUI,
- javafx.util.Duration&nbsp;Timestamp,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">modifyTimestamp</span><wbr><span class="parameters">(<a href="../media/MediaPlayable.html" title="class in app.media">MediaPlayable</a>&nbsp;audio,
+ javafx.util.Duration&nbsp;timestamp,
  <a href="../MediaCommunicator.html" title="class in app">MediaCommunicator</a>&nbsp;communicator)</span>
                      throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a></span></div>
 <dl class="notes">
