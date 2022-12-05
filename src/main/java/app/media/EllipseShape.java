@@ -1,19 +1,19 @@
 package app.media;
 
+import javafx.geometry.Point2D;
+
 /**
  * An implementation of GenericShape representing an ellipse
  */
 public class EllipseShape extends GenericShape {
     /**
      * Initializes an ellipse with the following settings
-     * @param x The shape's x position (Top left corner of bounding box)
-     * @param y The shape's y position (Top left corner of bounding box)
-     * @param width The shape's width
-     * @param height The shape's height
+     * @param p1 The first point defining the shape (often the origin point)
+     * @param p2 The second point defining the shape (often the point bound)
      * @param colour The shape's color
      */
-    public EllipseShape(double x, double y, double width, double height, String colour) {
-        super("Ellipse", x, y, 0, 0, colour);
+    public EllipseShape(Point2D p1, Point2D p2, String colour) {
+        super("Ellipse", p1, p2, colour);
     }
 
     /**

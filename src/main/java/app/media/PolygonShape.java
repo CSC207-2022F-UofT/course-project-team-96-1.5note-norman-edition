@@ -1,5 +1,7 @@
 package app.media;
 
+import javafx.geometry.Point2D;
+
 /**
  * An implementation of GenericShape representing a polygon
  * <p>
@@ -23,17 +25,15 @@ public class PolygonShape extends GenericShape {
 
     /**
      * Initializes a polygon with the following settings
-     * @param x The shape's x position (Top left corner of bounding box)
-     * @param y The shape's y position (Top left corner of bounding box)
-     * @param width The shape's width
-     * @param height The shape's height
+     * @param p1 The position of the polygon's center
+     * @param p2 The position which determines the polygon's radius and starting angle
      * @param colour The shape's color
      * @param radius The shape's radius
      * @param startAngle The shape's starting angle
      * @param sideCount The number of sides the shape has
      */
-    public PolygonShape(double x, double y, double width, double height, String colour, double radius, double startAngle, int sideCount) {
-        super("Polygon", x, y, 0, 0, colour);
+    public PolygonShape(Point2D p1, Point2D p2, String colour, double radius, double startAngle, int sideCount) {
+        super("Polygon", p1, p2, colour);
         this.radius = radius;
         this.startAngle = startAngle;
         this.sideCount = sideCount;

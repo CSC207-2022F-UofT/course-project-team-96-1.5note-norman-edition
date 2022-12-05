@@ -33,7 +33,7 @@ public class FileLoaderWriter implements Storage{
             return null;
         }   else {
             HashMap<String, byte[]> file = new HashMap<>();
-            file.put(chosenFile.getName().substring(0, chosenFile.getName().length() - 4),
+            file.put(chosenFile.getName(),
                     Files.readAllBytes(chosenFile.toPath()));
             return file;
         }
@@ -43,11 +43,12 @@ public class FileLoaderWriter implements Storage{
      * Writes a temp file for use by FileMedia
      * @param name what the temp file will be called
      * @param Data the raw data to be written
-     * @return a URI indeitfying the temp file that was written
+     * @param extension the extension type the written temp file will be. Must be in form '.extensionType'
+     * @return a URI indentfying the temp file that was written
      * @throws Exception when writing fails for any reason
      */
-    public URI writeFile(String name, byte[] Data) throws Exception{
-        File newFile = File.createTempFile(name, ".mp3");
+    public URI writeFile(String name, byte[] Data, String extension) throws Exception{
+        File newFile = File.createTempFile(name, extension);
         FileOutputStream writer = new FileOutputStream(newFile);
         writer.write(Data);
         writer.close();

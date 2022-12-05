@@ -136,14 +136,12 @@ public class ShapeTool implements Tool {
      * @param type The enum representing the shape's type
      */
     public void startShape(Point2D p1, Point2D p2, Color c1, ShapeType type) {
-        if (settings.getShapeType() != null) {
-            switch (type) {
-                case RECTANGLE -> currentShape = new GUIRectangle(p1, p2, c1);
-                case ELLIPSE -> currentShape = new GUIEllipse(p1, p2, c1);
-                case POLYGON -> currentShape = new GUIPolygon(p1, p2, c1, settings.getPolySideCount());
-            }
-            page.addMedia(currentShape);
+        switch (type) {
+            case RECTANGLE -> currentShape = new GUIRectangle(p1, p2, c1);
+            case ELLIPSE -> currentShape = new GUIEllipse(p1, p2, c1);
+            case POLYGON -> currentShape = new GUIPolygon(p1, p2, c1, settings.getPolySideCount());
         }
+        page.addMedia(currentShape);
     }
 
     /**
@@ -178,7 +176,7 @@ class ShapeSettings extends FlowPane {
     private static final int DEFAULT_SIDE_COUNT = 3;
 
 
-    private static ShapeType selectedShapeType = ShapeType.RECTANGLE;
+    private ShapeType selectedShapeType = ShapeType.RECTANGLE;
 
     private final ObjectProperty<Double> sideCountProperty;
 

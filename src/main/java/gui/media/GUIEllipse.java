@@ -5,6 +5,7 @@ import app.media.GenericShape;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
+import javafx.scene.shape.Rectangle;
 
 /**
  * An implementation of GUIShape representing an ellipse
@@ -19,22 +20,11 @@ public class GUIEllipse extends GUIShape {
      * @param colour The ellipse's color
      */
     public GUIEllipse(Point2D p1, Point2D p2, Color colour) {
-        super(new EllipseShape(0, 0,0,0, colour.toString()));
-        double[] result = RestrictPoints(p1, p2, false);
-        double posX = result[0];
-        double posY = result[1];
-        double width = result[2];
-        double height = result[3];
+        super(new EllipseShape(p1, p2, colour.toString()));
 
-        // Updating dimensions of media
-        getMedia().setX(posX);
-        getMedia().setY(posY);
-        getMedia().setWidth(width);
-        getMedia().setHeight(height);
-
-        // Drawing Code
-        ellipse = new Ellipse(0, 0, width / 2, height / 2);
+        ellipse = new Ellipse(0, 0, 0, 0);
         ellipse.setFill(colour);
+        update(p1, p2, false);
         getChildren().add(ellipse);
     }
 
@@ -56,10 +46,31 @@ public class GUIEllipse extends GUIShape {
     public void setGenericShape(GenericShape ellipse) {
         Color colour = Color.valueOf(ellipse.getColour());
 
-        // Drawing Code
-        this.ellipse = new Ellipse(0,0,ellipse.getWidth()/2,ellipse.getHeight()/2);
+        this.ellipse = new Ellipse(0,0,0,0);
+        update(ellipse.getP1(), ellipse.getP2(), false);
         this.ellipse.setFill(colour);
         getChildren().add(this.ellipse);
+    }
+
+    /**
+     * Specific implementation of updatePoints for GUIEllipse
+     */
+    public void updatePoints() {
+        Point2D p1 = getMedia().getP1();
+        Point2D p2 = getMedia().getP2();
+
+        double[] result = RestrictPoints(p1, p2, false);
+        double prevCenterX = result[0];
+        double prevCenterY = result[1];
+
+        double centerX = getMedia().getX();
+        double centerY = getMedia().getY();
+
+        Point2D diff = new Point2D(centerX, centerY)
+                .subtract(new Point2D(prevCenterX, prevCenterY));
+
+        getMedia().setP1(p1.add(diff));
+        getMedia().setP2(p2.add(diff));
     }
 
     /**
@@ -79,6 +90,8 @@ public class GUIEllipse extends GUIShape {
         // Updating the graphics of our shape
         getMedia().setX(centerX); // RestrictPoints returns center position by default
         getMedia().setY(centerY); // RestrictPoints returns center position by default
+        getMedia().setP1(CornerTL(centerX, centerY, width, height));
+        getMedia().setP2(CornerBR(centerX, centerY, width, height));
         ellipse.setRadiusX(width/2);
         ellipse.setRadiusY(height/2);
     }

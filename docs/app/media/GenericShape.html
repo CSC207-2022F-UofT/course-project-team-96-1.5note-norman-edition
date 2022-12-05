@@ -50,7 +50,7 @@ loadScripts(document, 'script');</script>
 </ul>
 <ul class="sub-nav-list">
 <li>Detail:&nbsp;</li>
-<li><a href="#field-detail">Field</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor-detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-detail">Method</a></li>
 </ul>
@@ -112,15 +112,6 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="field-summary" id="field-summary">
 <h2>Field Summary</h2>
-<div class="caption"><span>Fields</span></div>
-<div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier and Type</div>
-<div class="table-header col-second">Field</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color"><code><a href="#colour" class="member-name-link">colour</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-</div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-app.media.Media">Fields inherited from class&nbsp;app.media.<a href="Media.html" title="class in app.media">Media</a></h3>
 <code><a href="Media.html#EMPTY_ID">EMPTY_ID</a></code></div>
@@ -134,11 +125,9 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,double,double,double,double,java.lang.String)" class="member-name-link">GenericShape</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;type,
- double&nbsp;x,
- double&nbsp;y,
- double&nbsp;width,
- double&nbsp;height,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,javafx.geometry.Point2D,javafx.geometry.Point2D,java.lang.String)" class="member-name-link">GenericShape</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;type,
+ javafx.geometry.Point2D&nbsp;p1,
+ javafx.geometry.Point2D&nbsp;p2,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;colour)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Initializes a Generic Shape with the given parameters</div>
@@ -162,10 +151,30 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the color of the shape</div>
 </div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>javafx.geometry.Point2D</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getP1()" class="member-name-link">getP1</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Gets the first point defining the shape</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>javafx.geometry.Point2D</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getP2()" class="member-name-link">getP2</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Gets the second point defining the shape</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setColour(java.lang.String)" class="member-name-link">setColour</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;colour)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the colour of the shape</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setP1(javafx.geometry.Point2D)" class="member-name-link">setP1</a><wbr>(javafx.geometry.Point2D&nbsp;p1)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the first point defining the shape</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setP2(javafx.geometry.Point2D)" class="member-name-link">setP2</a><wbr>(javafx.geometry.Point2D&nbsp;p2)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the second point defining the shape</div>
 </div>
 </div>
 </div>
@@ -182,42 +191,24 @@ loadScripts(document, 'script');</script>
 </section>
 <section class="details">
 <ul class="details-list">
-<!-- ============ FIELD DETAIL =========== -->
-<li>
-<section class="field-details" id="field-detail">
-<h2>Field Details</h2>
-<ul class="member-list">
-<li>
-<section class="detail" id="colour">
-<h3>colour</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">colour</span></div>
-</section>
-</li>
-</ul>
-</section>
-</li>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <li>
 <section class="constructor-details" id="constructor-detail">
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(java.lang.String,double,double,double,double,java.lang.String)">
+<section class="detail" id="&lt;init&gt;(java.lang.String,javafx.geometry.Point2D,javafx.geometry.Point2D,java.lang.String)">
 <h3>GenericShape</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">GenericShape</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;type,
- double&nbsp;x,
- double&nbsp;y,
- double&nbsp;width,
- double&nbsp;height,
+ javafx.geometry.Point2D&nbsp;p1,
+ javafx.geometry.Point2D&nbsp;p2,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;colour)</span></div>
 <div class="block">Initializes a Generic Shape with the given parameters</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>type</code> - The shape's type</dd>
-<dd><code>x</code> - The shape's x position</dd>
-<dd><code>y</code> - The shape's y position</dd>
-<dd><code>width</code> - The shape's width</dd>
-<dd><code>height</code> - The shape's height</dd>
+<dd><code>p1</code> - The first point the shape is defined by</dd>
+<dd><code>p2</code> - The second point the shape is defined by</dd>
 <dd><code>colour</code> - The shape's color</dd>
 </dl>
 </section>
@@ -231,6 +222,28 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
+<section class="detail" id="getP1()">
+<h3>getP1</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">javafx.geometry.Point2D</span>&nbsp;<span class="element-name">getP1</span>()</div>
+<div class="block">Gets the first point defining the shape</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the first point defining the shape</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getP2()">
+<h3>getP2</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">javafx.geometry.Point2D</span>&nbsp;<span class="element-name">getP2</span>()</div>
+<div class="block">Gets the second point defining the shape</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>the second point defining the shape</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="getColour()">
 <h3>getColour</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getColour</span>()</div>
@@ -238,6 +251,28 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>the color of the shape</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setP1(javafx.geometry.Point2D)">
+<h3>setP1</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setP1</span><wbr><span class="parameters">(javafx.geometry.Point2D&nbsp;p1)</span></div>
+<div class="block">Sets the first point defining the shape</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>p1</code> - the first point defining the shape</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setP2(javafx.geometry.Point2D)">
+<h3>setP2</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setP2</span><wbr><span class="parameters">(javafx.geometry.Point2D&nbsp;p2)</span></div>
+<div class="block">Sets the second point defining the shape</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>p2</code> - the second point defining the shape</dd>
 </dl>
 </section>
 </li>
