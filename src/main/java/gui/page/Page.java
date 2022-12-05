@@ -374,7 +374,7 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
 
     /** Given a factor to scale the Page, scale in x and y directions by that factor. no pivot
      *
-     * @param factor the factor by which to scale toZoom, >= 0.1, <= 10.0
+     * @param factor the factor by which to scale toZoom, &ge; 0.1, &le; 10.0
      */
     @Override
     public void zoomToFactor(double factor) {

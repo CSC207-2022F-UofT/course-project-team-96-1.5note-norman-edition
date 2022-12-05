@@ -8,10 +8,8 @@ import javafx.geometry.Point2D;
 public class RectangleShape extends GenericShape {
     /**
      * Initializes a rectangle with the following settings
-     * @param x The shape's x position (Top left corner of bounding box)
-     * @param y The shape's y position (Top left corner of bounding box)
-     * @param width The shape's width
-     * @param height The shape's height
+     * @param p1 First corner of the rectangle
+     * @param p2 Opposite corner of the rectangle
      * @param colour The shape's color
      */
     public RectangleShape(Point2D p1, Point2D p2, String colour) {
