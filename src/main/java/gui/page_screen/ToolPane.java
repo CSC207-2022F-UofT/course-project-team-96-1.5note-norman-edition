@@ -23,23 +23,20 @@ import gui.tool.Tool;
  */
 class ToolPane extends BorderPane {
 
-    private static final int PADDING = 5;
     private static final int PANE_SIZE = 300;
 
     private static final String HORIZONTAL_STYLE_CLASS = "horizontal";
     private static final String VERTICAL_STYLE_CLASS = "vertical";
 
-    private VBox toolPane;
-    private ToolPaneTitleBar titleBar;
-    private ScrollPane settingsPane;
-    private Node toolSettingsGUI;
-    private ToggleButton showHideButton;
+    private final VBox toolPane;
+    private final ToolPaneTitleBar titleBar;
+    private final ScrollPane settingsPane;
 
     public ToolPane(ObservableValue<Tool> selectedTool) {
         // Don't block mouse clicks/other input
         setPickOnBounds(false);
 
-        showHideButton = new ShowHideButton();
+        ToggleButton showHideButton = new ShowHideButton();
         showHideButton.selectedProperty().addListener((o, oldVal, newVal) -> {
             if (newVal) {
                 hideToolPane();
@@ -87,26 +84,21 @@ class ToolPane extends BorderPane {
         List<String> styleClass = toolPane.getStyleClass();
 
         switch (o) {
-            case HORIZONTAL:
+            case HORIZONTAL -> {
                 setLeft(null);
                 setBottom(toolPane);
-
                 styleClass.remove(VERTICAL_STYLE_CLASS);
                 if (!styleClass.contains(HORIZONTAL_STYLE_CLASS)) {
                     styleClass.add(HORIZONTAL_STYLE_CLASS);
                 }
-
-                break;
-            case VERTICAL:
+            } case VERTICAL -> {
                 setBottom(null);
                 setLeft(toolPane);
-
                 styleClass.remove(HORIZONTAL_STYLE_CLASS);
                 if (!styleClass.contains(VERTICAL_STYLE_CLASS)) {
                     styleClass.add(VERTICAL_STYLE_CLASS);
                 }
-
-                break;
+            }
         }
     }
 
@@ -114,7 +106,7 @@ class ToolPane extends BorderPane {
         settingsPane.setContent(null);
 
         titleBar.setTitle(tool.getName());
-        toolSettingsGUI = tool.getSettingsGUI();
+        Node toolSettingsGUI = tool.getSettingsGUI();
 
         if (toolSettingsGUI != null) {
             settingsPane.setContent(toolSettingsGUI);
@@ -138,7 +130,7 @@ class ToolPaneTitleBar extends HBox {
     private static final int PADDING = 2;
     private static final int LEFT_PADDING = 5;
 
-    private Text titleText;
+    private final Text titleText;
 
     public ToolPaneTitleBar(Node... contents) {
         super(PADDING * 2);
@@ -164,8 +156,8 @@ class ToolPaneTitleBar extends HBox {
 
 class ShowHideButton extends ToggleButton {
 
-    private static String SHOW_TEXT = "Show";
-    private static String HIDE_TEXT = "Hide";
+    private static final String SHOW_TEXT = "Show";
+    private static final String HIDE_TEXT = "Hide";
 
     public ShowHideButton() {
         updateText();

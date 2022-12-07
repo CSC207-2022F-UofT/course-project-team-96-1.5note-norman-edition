@@ -27,7 +27,7 @@ public abstract class GenericShape extends Media {
         this.colour = colour;
     }
 
-    private static record Point(double x, double y) implements Serializable {
+    private record Point(double x, double y) implements Serializable {
         Point(Point2D p1){
             this(p1.getX(), p1.getY());
         }

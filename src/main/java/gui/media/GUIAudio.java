@@ -5,8 +5,6 @@ import app.media.MediaAudio;
 import app.media.MediaHyperlink;
 import gui.error_window.ErrorWindow;
 import gui.model.GUIPlayerModel;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -39,15 +37,12 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
         playerUI = new PlayerInterface(audio.getName());
         timestamps = new VBox();
         //Waiting for MediaPlayer to be ready because otherwise some functions will not work
-        audioPlayer.setOnReady(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    configureUI();
-                    createInterface();
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
+        audioPlayer.setOnReady(() -> {
+            try {
+                configureUI();
+                createInterface();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
         });
     }
@@ -88,22 +83,16 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
         configurePlayRateOptions();
 
         //Makes it so when the player is playing, playback slider and playback text update accordingly
-        this.audioPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
-            @Override
-            public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
-                double percentElapsed = newValue.toMillis() / audioPlayer.getTotalDuration().toMillis();
-                playerUI.getPlaybackSlider().setValue(percentElapsed);
-                playerManipulator.updatePlaybackText(newValue);
-            }
+        this.audioPlayer.currentTimeProperty().addListener((observable, oldValue, newValue) -> {
+            double percentElapsed = newValue.toMillis() / audioPlayer.getTotalDuration().toMillis();
+            playerUI.getPlaybackSlider().setValue(percentElapsed);
+            playerManipulator.updatePlaybackText(newValue);
         });
 
         //Allow play button to restart player when it reaches the end
-        this.audioPlayer.setOnEndOfMedia(new Runnable() {
-            @Override
-            public void run() {
-                playerUI.getPlaybackSlider().setValue(1); //For some reason the listener won't update properly on short files
-                playerUI.getPlay().setText("Play");
-            }
+        this.audioPlayer.setOnEndOfMedia(() -> {
+            playerUI.getPlaybackSlider().setValue(1); //For some reason the listener won't update properly on short files
+            playerUI.getPlay().setText("Play");
         });
     }
 
@@ -157,12 +146,9 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
      * Configures playback slider of the player to change as the audio slider is interacted with
      */
     private void configureAudioSlider()   {
-        playerUI.getAudioSlider().valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                playerManipulator.changeVolume(defaultVolume * (double) newValue);
-                echoClick();
-            }
+        playerUI.getAudioSlider().valueProperty().addListener((observable, oldValue, newValue) -> {
+            playerManipulator.changeVolume(defaultVolume * (double) newValue);
+            echoClick();
         });
     }
 
@@ -170,13 +156,10 @@ public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
      * Configures playback slider so that it can change where the player is playing from
      */
     private void configurePlaybackSlider()    {
-        playerUI.getPlaybackSlider().valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                if(playerUI.getPlaybackSlider().isPressed())    {
-                    playerManipulator.playbackSliderAdjusted((Double) newValue, audioPlayer.getStatus());
-                    echoClick();
-                }
+        playerUI.getPlaybackSlider().valueProperty().addListener((observable, oldValue, newValue) -> {
+            if(playerUI.getPlaybackSlider().isPressed()) {
+                playerManipulator.playbackSliderAdjusted((Double) newValue, audioPlayer.getStatus());
+                echoClick();
             }
         });
     }

@@ -5,7 +5,6 @@ import app.media.GenericShape;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
-import javafx.scene.shape.Rectangle;
 
 /**
  * An implementation of GUIShape representing an ellipse

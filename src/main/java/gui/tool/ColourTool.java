@@ -1,7 +1,6 @@
 package gui.tool;
 
 import javafx.scene.*;
-import javafx.scene.text.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.scene.shape.*;
@@ -18,9 +17,9 @@ public class ColourTool implements Tool {
 
     private static final Color DEFAULT_COLOUR = Color.BLACK;
 
-    private ObjectProperty<Color> colour;
-    private ColourSettings settings;
-    private Circle colourIndicator;
+    private final ObjectProperty<Color> colour;
+    private final ColourSettings settings;
+    private final Circle colourIndicator;
 
     public ColourTool() {
         colour = new SimpleObjectProperty<>();
@@ -62,13 +61,6 @@ public class ColourTool implements Tool {
     }
 
     /**
-     * Return the currently selected colour.
-     */
-    public Color getColour() {
-        return colour.getValue();
-    }
-
-    /**
      * Return an ObjectProperty wrapping the currently selected colour. This
      * allows users of this class to listen for changes to the currently
      * selected colour.
@@ -82,16 +74,15 @@ public class ColourTool implements Tool {
 // Settings GUI for the colour tool
 class ColourSettings extends FlowPane {
 
-    private static int PADDING = 5;
+    private static final int PADDING = 5;
 
-    private ColorPicker colourPicker;
-    private Slider hueSlider;
-    private Slider saturationSlider;
-    private Slider valueSlider;
-    private Slider opacitySlider;
-    private ObjectProperty<Color> colour;
+    private final Slider hueSlider;
+    private final Slider saturationSlider;
+    private final Slider valueSlider;
+    private final Slider opacitySlider;
+    private final ObjectProperty<Color> colour;
 
-    private ColourHistory history;
+    private final ColourHistory history;
 
     public ColourSettings(ObjectProperty<Color> colour) {
         super(PADDING, PADDING * 3);
@@ -99,7 +90,7 @@ class ColourSettings extends FlowPane {
 
         history = new ColourHistory(colour);
 
-        colourPicker = new ColorPicker();
+        ColorPicker colourPicker = new ColorPicker();
         colourPicker.valueProperty().bindBidirectional(colour);
 
         hueSlider = new Slider(0, 360, 0);
@@ -161,14 +152,6 @@ class ColourSettings extends FlowPane {
             || opacitySlider.isFocused();
     }
 
-    private boolean isSliderPressed() {
-        return
-            hueSlider.isPressed()
-            || saturationSlider.isPressed()
-            || valueSlider.isPressed()
-            || opacitySlider.isPressed();
-    }
-
     private void setColourFromSliders() {
         Color sliderColour = Color.hsb(
                 hueSlider.getValue(), saturationSlider.getValue(),
@@ -222,7 +205,6 @@ class ColourSettings extends FlowPane {
         double hue = hueSlider.getValue();
         double saturation = c.getSaturation();
         double value = c.getBrightness();
-        double opacity = c.getOpacity();
 
         setSliderBackground(saturationSlider,
                 Color.hsb(hue, 0, value), Color.hsb(hue, 1, value));
@@ -251,17 +233,17 @@ class ColourSettings extends FlowPane {
 // Allow the user to click on one of these rectangles to select its colour.
 class ColourHistory extends FlowPane {
 
-    private static int PADDING = 5;
-    private static int MAX_HISTORY = 60;
+    private static final int PADDING = 5;
+    private static final int MAX_HISTORY = 60;
 
-    private ObjectProperty<Color> colour;
+    private final ObjectProperty<Color> colour;
 
     // GUI compontent for individual entries in the colour history.
     private static class Entry extends Rectangle {
 
         private static final int SIZE = 20;
 
-        private Color colour;
+        private final Color colour;
 
         public Entry(Color colour) {
             super(SIZE, SIZE, colour);

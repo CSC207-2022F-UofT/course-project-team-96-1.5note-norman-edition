@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class TextBox extends Media {
 
 
-    public static record Box (double leftCorner, double rightCorner)
+    public record Box (double leftCorner, double rightCorner)
         implements Serializable {}
 
     // textbox defined by the text in the box, font colour
@@ -24,15 +24,6 @@ public class TextBox extends Media {
         this.text = "";
     }
 
-    /*
-    public TextBox(double x, double y, String text, String link, String colour){
-        super("text-box", x, y, 0, 0);
-        this.text = text;
-        this.link = link;
-        this.colour = colour;
-    }
-    */
-
     public void setText(String text) {
         this.text = text;
     }
@@ -40,17 +31,6 @@ public class TextBox extends Media {
     public String getText() {
         return this.text;
     }
-
-    /*
-    public void setLink(String link){
-        this.link = link;
-
-    }
-
-    public String getLink(){
-        return this.link;
-    }
-    */
 
     public String getColour(){
         return colour;

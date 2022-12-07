@@ -22,7 +22,7 @@ import java.util.ArrayList;
 
 public class AudioTool implements Tool{
     protected Page page;
-    private final HandlerMethod<MouseEvent>[] handlers;
+    private final HandlerMethod<?>[] handlers;
     private GUIAudio selectedPlayer;
     private final AudioSettings settings;
 
@@ -119,7 +119,7 @@ public class AudioTool implements Tool{
 
         configureAddAudio(tbc);
         configureAddTimestamp(tbc);
-        configureTimestampSelection(tbc);
+        configureTimestampSelection();
         configureDeleteTimestamp(tbc);
     }
 
@@ -151,7 +151,7 @@ public class AudioTool implements Tool{
         });
     }
 
-    private void configureTimestampSelection(ToolBarController tbc) {
+    private void configureTimestampSelection() {
         //Whenever the timestamp selection box detects change, disable the delete timestamp button if a timestamp was
         //selected
         settings.getTimestampSelection().setOnAction(e -> {
@@ -177,7 +177,7 @@ public class AudioTool implements Tool{
     }
 
     @Override
-    public HandlerMethod<MouseEvent>[] getHandlerMethods() {
+    public HandlerMethod<?>[] getHandlerMethods() {
         return handlers;
     }
 

@@ -31,15 +31,15 @@ import gui.Zoomable;
 public class Page extends StackPane implements MediaObserver, Zoomable {
 
     // Additional padding added to the visible region
-    private static double LOADABLE_BOUNDS_MARGIN = 1000;
+    private static final double LOADABLE_BOUNDS_MARGIN = 1000;
 
-    private MediaCommunicator c;
+    private final MediaCommunicator c;
     private PageEventHandler.HandlerMethod<?>[] handlerMethods;
     private PageEventHandler handler;
-    private Pane mediaLayer;
-    private Pane uiLayer;
+    private final Pane mediaLayer;
+    private final Pane uiLayer;
 
-    private Map<Long, GUIMedia> contents;
+    private final Map<Long, GUIMedia<?>> contents;
 
     private Bounds prevLoadableBounds;
 
@@ -137,7 +137,7 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
     /**
      * Add the given GUIMedia object to this page.
      */
-    public void addMedia(GUIMedia media) {
+    public void addMedia(GUIMedia<?> media) {
         // Don't use a managed layout, i.e. stop the page in which the GUIMedia
         // is placed from influencing the layout bounds of the GUIMedia.
         media.setManaged(false);
@@ -148,14 +148,14 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
     /**
      * Return whether or not the given GUIMedia object is within this page
      */
-    public boolean contains(GUIMedia media) {
+    public boolean contains(GUIMedia<?> media) {
         return contents.containsKey(media.getID());
     }
 
     /**
      * Indicate that the given GUIMedia object has been updated.
      */
-    public void updateMedia(GUIMedia media) {
+    public void updateMedia(GUIMedia<?> media) {
         try {
             c.updateMedia(media.getMedia(), id -> contents.put(id, media));
         } catch (Exception e) {
@@ -167,7 +167,7 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
     /**
      * Remove the given GUIMedia object from this page.
      */
-    public void removeMedia(GUIMedia media) {
+    public void removeMedia(GUIMedia<?> media) {
         contents.remove(media.getID());
         mediaLayer.getChildren().remove(media);
         media.removed();
@@ -177,9 +177,9 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
      * Remove ALL GUIMedia objects from this page.
      */
     public void removeAllMedia() {
-        Set<GUIMedia> mediaToRemove = new HashSet<>(contents.values());
+        Set<GUIMedia<?>> mediaToRemove = new HashSet<>(contents.values());
 
-        for (GUIMedia media: mediaToRemove) {
+        for (GUIMedia<?> media: mediaToRemove) {
             removeMedia(media);
         }
     }
@@ -187,7 +187,7 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
     /**
      * Get all the media currently displayed on this page which have assigned IDs.
      */
-    public Set<GUIMedia> getAllMedia() {
+    public Set<GUIMedia<?>> getAllMedia() {
         return new HashSet<>(contents.values());
     }
 
@@ -288,7 +288,7 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
             // Remove nodes which are no longer visible
             Set<Long> initialIDs = new HashSet<>(contents.keySet());
             for (long id: initialIDs) {
-                GUIMedia media = contents.get(id);
+                GUIMedia<?> media = contents.get(id);
 
                 if (
                         media != null
@@ -311,7 +311,7 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
     // Instantiate a GUIMedia object for the given Media entity and add it
     // to the page.
     private void addGUIMediaFor(Media media) throws Exception {
-        GUIMedia guiMedia = GUIMediaFactory.getFor(media);
+        GUIMedia<?> guiMedia = GUIMediaFactory.getFor(media);
         contents.put(guiMedia.getID(), guiMedia);
         addMedia(guiMedia);
     }

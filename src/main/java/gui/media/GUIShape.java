@@ -4,8 +4,6 @@ import app.media.GenericShape;
 import app.media.Media;
 import javafx.geometry.Point2D;
 
-import java.awt.*;
-
 /**
  * A sub-class of GUIMedia representing an arbitrary shape
  */

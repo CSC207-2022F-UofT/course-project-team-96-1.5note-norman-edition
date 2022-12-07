@@ -10,18 +10,15 @@ public class GUIVideo extends GUIAudio{
         super(audio);
 
         //Repeat code, but for some reason this doesnt execute properly in the super class
-        getAudioPlayer().setOnReady(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    MediaView videoView = new MediaView(getAudioPlayer());
-                    setPlayerUI(new VideoPlayerInterface(audio.getName(), videoView));
+        getAudioPlayer().setOnReady(() -> {
+            try {
+                MediaView videoView = new MediaView(getAudioPlayer());
+                setPlayerUI(new VideoPlayerInterface(audio.getName(), videoView));
 
-                    configureUI();
-                    createInterface();
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
+                configureUI();
+                createInterface();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
         });
     }
