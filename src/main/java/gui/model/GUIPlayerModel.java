@@ -1,5 +1,5 @@
 package gui.model;
-import gui.media.GUIAudio;
+import gui.media.Playable;
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
@@ -8,10 +8,10 @@ import javafx.util.Duration;
  * Use case class that changes the view of a GUIAudio based on how the user interacts with it
  * */
 public class GUIPlayerModel {
-    private final GUIAudio associatedPlayer;
+    private final Playable associatedPlayer;
     private Duration totalDuration;
 
-    public GUIPlayerModel(GUIAudio associatedPlayer, Duration totalDuration)    {
+    public GUIPlayerModel(Playable associatedPlayer, Duration totalDuration)    {
         this.associatedPlayer = associatedPlayer;
         this.totalDuration = totalDuration;
     }
@@ -52,7 +52,7 @@ public class GUIPlayerModel {
      * @param value what % of the full duration of associated audio to play from
      * @param mediaStatus current status of the associated GUIAudio
      */
-    public void playbackSliderAdjusted(double value, MediaPlayer.Status mediaStatus)    {
+    public void changePlayTime(double value, MediaPlayer.Status mediaStatus)    {
         Duration newTime = new Duration(value * totalDuration.toMillis());
         //When status is ready, the audio player currentTime property does not update until the player plays
         if (mediaStatus == MediaPlayer.Status.READY)  {
@@ -63,6 +63,10 @@ public class GUIPlayerModel {
         }   else {
             associatedPlayer.setPlayerDuration(newTime);
         }
+    }
+
+    public void changePlaybackSlider(double value)  {
+        associatedPlayer.setPlaybackSliderValue(value);
     }
 
     public void updatePlaybackText(Duration newDuration)    {

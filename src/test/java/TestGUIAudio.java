@@ -267,7 +267,7 @@ public class TestGUIAudio{
         model.firedPlayButton("Pause");
         audioGUI.getAudioPlayer().seek(audioGUI.getAudioPlayer().getTotalDuration());
 
-        model.playbackSliderAdjusted(0, audioGUI.getAudioPlayer().getStatus());
+        model.changePlayTime(0, audioGUI.getAudioPlayer().getStatus());
         Thread.sleep(1000); //Not even sure why this is neccessary, but it is
         assertEquals(new Duration(0), audioGUI.getAudioPlayer().getCurrentTime());
 
@@ -281,7 +281,7 @@ public class TestGUIAudio{
         createAudio();
         audioGUI.getAudioPlayer().seek(audioGUI.getAudioPlayer().getTotalDuration());
 
-        model.playbackSliderAdjusted(0.5, audioGUI.getAudioPlayer().getStatus());
+        model.changePlayTime(0.5, audioGUI.getAudioPlayer().getStatus());
         Thread.sleep(1000);
 
         //Because I had to approximate total duration for the GUIPlayerModel (there are threading issues for tests only),
@@ -297,7 +297,7 @@ public class TestGUIAudio{
         //Test that the play slider sets the mediaplayer to the end when it is set to the end of the slider
         createAudio();
         audioGUI.getAudioPlayer().seek(new Duration(0));
-        model.playbackSliderAdjusted(1, audioGUI.getAudioPlayer().getStatus());
+        model.changePlayTime(1, audioGUI.getAudioPlayer().getStatus());
         Thread.sleep(2000);
 
         assertTrue(audioGUI.getAudioPlayer().getCurrentTime().toMillis() > 0);
@@ -312,7 +312,7 @@ public class TestGUIAudio{
         // still playing
         createAudio();
         model.firedPlayButton("Play");
-        model.playbackSliderAdjusted(0.5, audioGUI.getAudioPlayer().getStatus());
+        model.changePlayTime(0.5, audioGUI.getAudioPlayer().getStatus());
         double unexpected = audioGUI.getAudioPlayer().getCurrentTime().toMillis();
 
         Thread.sleep(2000);
@@ -329,7 +329,7 @@ public class TestGUIAudio{
         createAudio();
         audioGUI.getAudioPlayer().seek(new Duration(0));
         model.firedPlayButton("Play");
-        model.playbackSliderAdjusted(0.5, audioGUI.getAudioPlayer().getStatus());
+        model.changePlayTime(0.5, audioGUI.getAudioPlayer().getStatus());
         double unexpected = audioGUI.getAudioPlayer().getCurrentTime().toMillis();
 
         Thread.sleep(2000);
@@ -346,7 +346,7 @@ public class TestGUIAudio{
         createAudio();
         audioGUI.getAudioPlayer().seek(new Duration(0));
         model.firedPlayButton("Play");
-        model.playbackSliderAdjusted(1, audioGUI.getAudioPlayer().getStatus());
+        model.changePlayTime(1, audioGUI.getAudioPlayer().getStatus());
         double unexpected = audioGUI.getAudioPlayer().getCurrentTime().toMillis();
 
         Thread.sleep(2000);
