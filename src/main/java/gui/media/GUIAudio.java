@@ -4,7 +4,6 @@ import app.controllers.ToolBarController;
 import app.media.MediaAudio;
 import app.media.MediaHyperlink;
 import gui.error_window.ErrorWindow;
-import gui.model.GUIPlayerModel;
 import gui.view_controllers.GUIPlayerController;
 import javafx.scene.Node;
 import javafx.scene.input.MouseButton;

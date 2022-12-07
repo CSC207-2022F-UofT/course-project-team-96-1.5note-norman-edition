@@ -16,7 +16,6 @@ public class GUIPlayerController {
     }
 
     public void firePlay(String text)    {
-        System.out.println("y");
         associatedModel.firedPlayButton(text);
     }
 
