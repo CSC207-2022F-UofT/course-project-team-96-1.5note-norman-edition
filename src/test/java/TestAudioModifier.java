@@ -1,6 +1,6 @@
 import app.MediaCommunicator;
-import app.media.MediaPlayable;
-import app.media_managers.PlayableModifier;
+import app.media.MediaAudio;
+import app.media_managers.AudioModifier;
 import gui.media.GUIAudio;
 import gui.page.Page;
 import javafx.util.Duration;
@@ -21,7 +21,7 @@ import javafx.application.Platform;
  */
 
 
-public class TestPlayableModifier {
+public class TestAudioModifier {
     public static Page page;
 
 
@@ -68,7 +68,7 @@ public class TestPlayableModifier {
         //testing that a hyperlink can be added for the beginning of the media
         GUIAudio audio = addMedia("src\\test\\java\\test_files\\NieR Automata OST with Rain.mp3");
 
-        PlayableModifier am = new PlayableModifier();
+        AudioModifier am = new AudioModifier();
         am.modifyMedia(audio.getMedia(), new Duration(0), page.getCommunicator());
 
         assert audio.getMedia().getTimestamps().size() == 1;
@@ -79,7 +79,7 @@ public class TestPlayableModifier {
     public void testAddingHyperlink_middle() throws Exception {
         //testing that a hyperlink can be added for the middle of the media
         GUIAudio audio = createAudio();
-        PlayableModifier am = new PlayableModifier();
+        AudioModifier am = new AudioModifier();
         Duration middle = new Duration(audio.getAudioPlayer().getTotalDuration().divide(2).toMillis());
         am.modifyMedia(audio.getMedia(), middle, page.getCommunicator());
 
@@ -92,7 +92,7 @@ public class TestPlayableModifier {
         //testing that a hyperlink can be added for the end of the media
         GUIAudio audio = createAudio();
 
-        PlayableModifier am = new PlayableModifier();
+        AudioModifier am = new AudioModifier();
         Duration end = new Duration(audio.getAudioPlayer().getTotalDuration().toMillis());
         am.modifyMedia(audio.getMedia(), end, page.getCommunicator());
 
@@ -105,7 +105,7 @@ public class TestPlayableModifier {
         //Testing that a hyperlink can be added when one already exists
         GUIAudio audio = createAudio();
 
-        PlayableModifier am = new PlayableModifier();
+        AudioModifier am = new AudioModifier();
         am.modifyMedia(audio.getMedia(), new Duration(0), page.getCommunicator());
         am.modifyMedia(audio.getMedia(), new Duration(100), page.getCommunicator());
 
@@ -119,7 +119,7 @@ public class TestPlayableModifier {
         //Testing that a hyperlink can be added when many already exists
         GUIAudio audio = createAudio();
 
-        PlayableModifier am = new PlayableModifier();
+        AudioModifier am = new AudioModifier();
         am.modifyMedia(audio.getMedia(), new Duration(0), page.getCommunicator());
         am.modifyMedia(audio.getMedia(), new Duration(100), page.getCommunicator());
         am.modifyMedia(audio.getMedia(), new Duration(200), page.getCommunicator());
@@ -135,7 +135,7 @@ public class TestPlayableModifier {
         //Testing that a hyperlink can be removed when only one already exists
         GUIAudio audio = createAudio();
 
-        PlayableModifier am = new PlayableModifier();
+        AudioModifier am = new AudioModifier();
         am.modifyMedia(audio.getMedia(), new Duration(0), page.getCommunicator());
         am.modifyMedia(audio.getMedia(), new Duration(0), page.getCommunicator());
 
@@ -147,7 +147,7 @@ public class TestPlayableModifier {
         //Testing that a hyperlink can be removed from the start when many already exists
         GUIAudio audio = createAudio();
 
-        PlayableModifier am = new PlayableModifier();
+        AudioModifier am = new AudioModifier();
         am.modifyMedia(audio.getMedia(), new Duration(0), page.getCommunicator());
         am.modifyMedia(audio.getMedia(), new Duration(100), page.getCommunicator());
         am.modifyMedia(audio.getMedia(), new Duration(200), page.getCommunicator());
@@ -165,7 +165,7 @@ public class TestPlayableModifier {
         //Testing that a hyperlink can be removed from the middle when many already exists
         GUIAudio audio = createAudio();
 
-        PlayableModifier am = new PlayableModifier();
+        AudioModifier am = new AudioModifier();
         am.modifyMedia(audio.getMedia(), new Duration(0), page.getCommunicator());
         am.modifyMedia(audio.getMedia(), new Duration(100), page.getCommunicator());
         am.modifyMedia(audio.getMedia(), new Duration(200), page.getCommunicator());
@@ -184,7 +184,7 @@ public class TestPlayableModifier {
         //Testing that a hyperlink can be removed from the end when many already exists
         GUIAudio audio = createAudio();
 
-        PlayableModifier am = new PlayableModifier();
+        AudioModifier am = new AudioModifier();
         am.modifyMedia(audio.getMedia(), new Duration(0), page.getCommunicator());
         am.modifyMedia(audio.getMedia(), new Duration(100), page.getCommunicator());
         am.modifyMedia(audio.getMedia(), new Duration(200), page.getCommunicator());
@@ -226,8 +226,7 @@ public class TestPlayableModifier {
         byte[] rawData = readFile(source);
 
         try {
-            MediaPlayable audio = new MediaPlayable("", 0, 0, 0, 0, rawData, new ArrayList<Duration>(),
-                    "Audio"); //Temp Constructor
+            MediaAudio audio = new MediaAudio("", 0, 0, 0, 0, rawData, new ArrayList<Duration>()); //Temp Constructor
             page.getCommunicator().updateMedia(audio);
             GUIAudio audioUI = new GUIAudio(audio);
             return audioUI;

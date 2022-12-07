@@ -1,7 +1,7 @@
 package gui.media;
 
 import app.controllers.ToolBarController;
-import app.media.MediaPlayable;
+import app.media.MediaAudio;
 import app.media.MediaHyperlink;
 import gui.error_window.ErrorWindow;
 import gui.model.GUIPlayerModel;
@@ -25,16 +25,15 @@ import java.util.ArrayList;
  *  <p>
  *  Parameter audioPlayer is the associated JavaFX.MediaPlayer - The effective backend of the interface
  */
-public class GUIAudio extends GUIMedia<MediaPlayable> implements Playable{
+public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
 
     private MediaPlayer audioPlayer;
     private VBox timestamps;
-
     private PlayerInterface playerUI;
     private double defaultVolume;
     private GUIPlayerModel playerManipulator;
 
-    public GUIAudio(MediaPlayable audio)   {
+    public GUIAudio(MediaAudio audio)   {
         super(audio);
         initializeMediaPlayer();
         playerUI = new PlayerInterface(audio.getName());
@@ -61,16 +60,9 @@ public class GUIAudio extends GUIMedia<MediaPlayable> implements Playable{
         String name = "id" + Double.toString(getMedia().getID());
         Storage fw = new FileLoaderWriter();
 
-        String extension;
         try {
-            if (getMedia().getType().equals("Audio")) {
-                extension = ".mp3";
-            }   else    {
-                extension = ".mp4";
-            }
-
             //Creating temp file for use by javafx.Media Class
-            URI tempFile = fw.writeFile(name, getMedia().getRawData(), extension);
+            URI tempFile = fw.writeFile(name, getMedia().getRawData(), getExtension());
             Media audioMedia = new Media(tempFile.toString());
             this.audioPlayer = new MediaPlayer(audioMedia);
             this.defaultVolume = this.audioPlayer.getVolume();
@@ -78,6 +70,10 @@ public class GUIAudio extends GUIMedia<MediaPlayable> implements Playable{
             new ErrorWindow(this, "Could not write temp file", "There was a runtime error while" +
                     " loading your file", e).show();
         }
+    }
+
+    protected String getExtension() {
+        return ".mp3";
     }
 
     /**

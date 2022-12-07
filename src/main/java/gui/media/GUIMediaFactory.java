@@ -22,12 +22,10 @@ public class GUIMediaFactory {
     public static GUIMedia getFor(Media media) throws Exception {
         if (media instanceof PenStroke) {
             return new GUIPenStroke((PenStroke) media);
-        } else if (media instanceof MediaPlayable) {
-            if (((MediaPlayable) media).getType().equals("Video")) {
-                return new GUIVideo((MediaPlayable) media);
-            } else {
-                return new GUIAudio((MediaPlayable) media);
-            }
+        } else if (media instanceof MediaVideo) {
+            return new GUIVideo((MediaVideo) media);
+        } else if (media instanceof  MediaAudio)    {
+            return  new GUIAudio((MediaAudio) media);
         } else if (media instanceof  MediaHyperlink) {
             return new GUIHyperlink((MediaHyperlink) media);
         } else if (media instanceof GenericShape) {
