@@ -1,8 +1,4 @@
 package app.media;
-import javafx.util.Duration;
-
-import java.util.ArrayList;
-import java.util.Set;
 
 public class MediaText extends Media {
     //A subclass of PageMedia, defining a text that exists on the page

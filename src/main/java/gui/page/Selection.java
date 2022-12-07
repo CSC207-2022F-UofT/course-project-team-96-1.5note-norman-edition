@@ -2,6 +2,7 @@ package gui.page;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Objects;
 
 import javafx.collections.*;
 import javafx.beans.property.*;
@@ -23,9 +24,9 @@ import gui.media.GUIMedia;
  */
 public class Selection {
 
-    private Page page;
-    private Effect selectedEffect;
-    private ReadOnlySetWrapper<GUIMedia> selection;
+    private final Page page;
+    private final Effect selectedEffect;
+    private final ReadOnlySetWrapper<GUIMedia<?>> selection;
 
     /**
      * Create a new Selection for the given Page.
@@ -40,21 +41,21 @@ public class Selection {
                 FXCollections.observableSet(new HashSet<>()));
     }
 
-    private void removeSelectedEffect(GUIMedia media) {
+    private void removeSelectedEffect(GUIMedia<?> media) {
         media.setEffect(null);
     }
 
-    private void addSelectedEffect(GUIMedia media) {
+    private void addSelectedEffect(GUIMedia<?> media) {
         media.setEffect(selectedEffect);
     }
 
     /**
      * Add the given GUIMedia to the selection.
      */
-    public void addMedia(GUIMedia... media) {
+    public void addMedia(GUIMedia<?>... media) {
         selection.addAll(Arrays.asList(media));
 
-        for (GUIMedia m: media) {
+        for (GUIMedia<?> m: media) {
             addSelectedEffect(m);
             m.use();
         }
@@ -63,10 +64,10 @@ public class Selection {
     /**
      * Remove the given GUIMedia from the selection.
      */
-    public void removeMedia(GUIMedia... media) {
-        selection.removeAll(Arrays.asList(media));
+    public void removeMedia(GUIMedia<?>... media) {
+        Arrays.asList(media).forEach(selection::remove);
 
-        for (GUIMedia m: media) {
+        for (GUIMedia<?> m: media) {
             removeSelectedEffect(m);
             m.release();
         }
@@ -79,14 +80,14 @@ public class Selection {
         removeMedia(selection.toArray(new GUIMedia[0]));
     }
 
-    public ObservableSet<GUIMedia> getMedia() {
+    public ObservableSet<GUIMedia<?>> getMedia() {
         return selection.getReadOnlyProperty();
     }
 
     /**
      * Return whether or not the given GUIMedia is selected.
      */
-    public boolean contains(GUIMedia media) {
+    public boolean contains(GUIMedia<?> media) {
         return selection.contains(media);
     }
 
@@ -95,7 +96,7 @@ public class Selection {
      * Increment the positions of the selected Media by the given displacement.
      */
     public void move(Point2D displacement) {
-        for (GUIMedia selected: selection) {
+        for (GUIMedia<?> selected: selection) {
             Media media = selected.getMedia();
             media.setX(media.getX() + displacement.getX());
             media.setY(media.getY() + displacement.getY());
@@ -108,7 +109,7 @@ public class Selection {
      * Delete the selected Media from the page.
      */
     public void delete() {
-        for (GUIMedia media: selection) {
+        for (GUIMedia<?> media: selection) {
             page.getCommunicator().deleteMedia(media.getID());
         }
 
@@ -119,7 +120,7 @@ public class Selection {
      * Rename the selected Media to the given name.
      */
     public void rename(String name) {
-        for (GUIMedia media: selection) {
+        for (GUIMedia<?> media: selection) {
             media.getMedia().setName(name);
             page.updateMedia(media);
         }
@@ -129,7 +130,7 @@ public class Selection {
      * Set the angle of rotation of the selected Media to the given angle.
      */
     public void rotate(double angle) {
-        for (GUIMedia media: selection) {
+        for (GUIMedia<?> media: selection) {
             media.getMedia().setAngle(angle);
             page.updateMedia(media);
         }
@@ -139,7 +140,7 @@ public class Selection {
      * Set the Z-index of the selected Media to the given Z-index.
      */
     public void setZindex(int zIndex) {
-        for (GUIMedia media: selection) {
+        for (GUIMedia<?> media: selection) {
             media.getMedia().setZindex(zIndex);
             page.updateMedia(media);
         }
@@ -156,7 +157,7 @@ public class Selection {
     public String getName() {
         String name = null;
 
-        for (GUIMedia media: selection) {
+        for (GUIMedia<?> media: selection) {
             if (name == null || media.getName().equals(name)) {
                 name = media.getName();
             } else {
@@ -164,11 +165,7 @@ public class Selection {
             }
         }
 
-        if (name == null) {
-            return "";
-        } else {
-            return name;
-        }
+        return Objects.requireNonNullElse(name, "");
     }
 
     /**
@@ -180,7 +177,7 @@ public class Selection {
     public double getAngle() {
         double angle = 0;
 
-        for (GUIMedia selected: selection) {
+        for (GUIMedia<?> selected: selection) {
             Media media = selected.getMedia();
             angle += media.getAngle() / selection.size();
         }
@@ -196,7 +193,7 @@ public class Selection {
     public int getZindex() {
         int zIndex = 0;
 
-        for (GUIMedia selected: selection) {
+        for (GUIMedia<?> selected: selection) {
             Media media = selected.getMedia();
 
             if (media.getZindex() > zIndex) {

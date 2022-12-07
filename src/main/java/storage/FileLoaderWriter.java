@@ -11,7 +11,7 @@ public class FileLoaderWriter implements Storage{
     // TODO: Implement a file cache, which stores recently opened files to prevent consecutive reopening
     private final int cacheSize = 10; // Size of the internal file cache
 
-    private byte[][] fileCache = new byte[cacheSize][]; // Internal file cache
+    private final byte[][] fileCache = new byte[cacheSize][]; // Internal file cache
 
     /**
      * Allows the user to choose media to be added to the Page

@@ -1,8 +1,4 @@
 package app.media;
-import javafx.util.Duration;
-
-import java.util.ArrayList;
-import java.util.Set;
 
 public class MediaImage extends FileMedia{
     //A subclass of PageFileMedia, defining an Image that exists on the page

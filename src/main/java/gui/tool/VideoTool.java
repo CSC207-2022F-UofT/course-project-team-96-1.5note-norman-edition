@@ -2,7 +2,6 @@ package gui.tool;
 
 import app.controllers.ToolBarController;
 import gui.error_window.ErrorWindow;
-import gui.media.GUIAudio;
 import gui.media.GUIVideo;
 import gui.ResourceLoader;
 import javafx.scene.Node;

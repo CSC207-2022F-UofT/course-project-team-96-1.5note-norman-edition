@@ -1,8 +1,5 @@
 package app.media;
 
-import javafx.scene.control.Hyperlink;
-
-import java.util.Set;
 
 public class MediaHyperlink extends Media{
     //A subclass of PageMedia, defining a Hyperlink that exists on the page

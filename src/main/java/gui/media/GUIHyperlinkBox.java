@@ -1,8 +1,5 @@
 package gui.media;
-import app.media.Media;
-//import app.media.TextBox;
 import app.media.Hyperlink;
-import app.media.TextBox;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
@@ -20,7 +17,7 @@ public class GUIHyperlinkBox extends GUIMedia<Hyperlink> {
         getChildren().clear();
         getChildren().addAll(this.text);
 
-        this.link = new String ("");
+        this.link = "";
         getTextNode().setUnderline(true);
     }
 
@@ -37,18 +34,6 @@ public class GUIHyperlinkBox extends GUIMedia<Hyperlink> {
         super(media);
         mediaUpdated(media);
     }
-
-// clicking links doesn't work when this method is uncommented
-/*    @Override
-    public void mediaUpdated(Media media) {
-        Hyperlink newHyperlink = (Hyperlink) media;
-
-        setInitialValues();
-        setMedia(newHyperlink);
-        colour = Color.valueOf(newHyperlink.getColour());
-        setText(newHyperlink.getText());
-    }*/
-
 
     public String getLink(){
         return this.link;

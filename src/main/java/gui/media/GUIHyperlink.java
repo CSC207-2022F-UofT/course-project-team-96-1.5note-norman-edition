@@ -1,7 +1,5 @@
 package gui.media;
 import javafx.scene.control.Hyperlink;
-import javafx.scene.media.MediaPlayer;
-import javafx.util.Duration;
 import app.media.MediaHyperlink;
 
 public class GUIHyperlink extends GUIMedia<MediaHyperlink>{
@@ -10,7 +8,7 @@ public class GUIHyperlink extends GUIMedia<MediaHyperlink>{
      *  -hyperlink: The Hyperlink object represented by media
     **/
 
-    private Hyperlink hyperlink;
+    private final Hyperlink hyperlink;
 
     public GUIHyperlink(MediaHyperlink media) {
         super(media);
