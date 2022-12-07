@@ -19,7 +19,7 @@ import java.net.URL;
 public class HyperlinkTool implements Tool {
 
     private Page page;
-    private final HandlerMethod[] handlers;
+    private final HandlerMethod<?>[] handlers;
     private final HyperlinkSettings settings;
     private GUIHyperlinkBox currentText;
     private final ObjectProperty<Color> colour;
@@ -125,7 +125,7 @@ public class HyperlinkTool implements Tool {
     }
 
     @Override
-    public HandlerMethod[] getHandlerMethods() {
+    public HandlerMethod<?>[] getHandlerMethods() {
         return handlers;
     }
     @Override

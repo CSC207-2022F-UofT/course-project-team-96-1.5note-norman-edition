@@ -1,10 +1,8 @@
 package gui.page_screen;
 
 import javafx.scene.layout.*;
-import javafx.scene.text.*;
 import javafx.scene.control.*;
 import javafx.geometry.Insets;
-import javafx.beans.*;
 import javafx.beans.value.*;
 import javafx.beans.property.*;
 
@@ -21,11 +19,11 @@ class Toolbar extends FlowPane {
 
     private static final int PADDING = 5;
 
-    private ToggleGroup toggles;
+    private final ToggleGroup toggles;
     // Map toggle buttons to tools, so we can get the currently selected tool
     // when the selected toggle changes.
-    private Map<Toggle, Tool> toolMap;
-    private ReadOnlyObjectWrapper<Tool> selectedTool;
+    private final Map<Toggle, Tool> toolMap;
+    private final ReadOnlyObjectWrapper<Tool> selectedTool;
 
     /**
      * Instantiate a Toolbar for the given tools.

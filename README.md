@@ -1,6 +1,6 @@
 # OnePointFiveNote (Norman Edition)
 
-A digital multi-media notebook with infinite pages.
+A digital multi-media notebook with infinite pages. [Online Javadocs](https://csc207-2022f-uoft.github.io/course-project-team-96-1.5note-norman-edition/), [Implementation Notes](implementation_notes).
 
 ## Compiling
 

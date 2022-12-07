@@ -8,11 +8,10 @@ import storage.Storage;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
+/**
+ * Manages creation/interactions on MediaAudio
+ */
 public class PlayableModifier {
-    /**
-    * Manages creation/interactions on MediaAudio
-    */
 
     /** Allows the user to select an audio file to add to the page
      * @throws Exception when user selected file fails to load

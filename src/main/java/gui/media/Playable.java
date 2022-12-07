@@ -1,5 +1,4 @@
 package gui.media;
-import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
 public interface Playable {
