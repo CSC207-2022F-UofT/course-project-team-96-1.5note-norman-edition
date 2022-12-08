@@ -41,15 +41,18 @@ public class GUIMediaFactory {
         } else if (media instanceof GenericShape) {
             // Shape
             return GUIShapeFactory.getFor((GenericShape) media);
-        } else if (media instanceof TextBox) {
+        } else if (media instanceof MediaText) {
             // Text Box
             if (media instanceof Hyperlink) {
                 // Hyperlink Text Box
                 return new GUIHyperlinkBox((Hyperlink) media);
             } else {
                 // Plain Text Box
-                return new GUITextBox((TextBox) media);
+                return new GUITextBox((MediaText) media);
             }
+        } else if (media instanceof MediaImage) {
+            // Image
+            return new GUIImage((MediaImage) media);
         } else {
             throw new Exception("No appropriate GUIMedia class for `" + media + "`.");
         }

@@ -6,11 +6,26 @@ import app.media.MediaPlayable;
 import app.media.MediaHyperlink;
 import app.media_managers.PlayableModifier;
 import app.media_managers.TextModifier;
+import app.media_managers.ImageModifier;
 import javafx.geometry.Bounds;
 import gui.media.GUIMedia;
 import javafx.util.Duration;
 
 public class ToolBarController {
+
+    /*
+    A lot of these reference undefined methods and have unclear jobs. None make sense to return anything right now
+    though maybe later they will return booleans to signify if they completed their job or failed.
+     */
+
+    public void insertText() throws Exception {
+        TextModifier textModifier = new TextModifier();
+    }
+
+    public void insertImage(MediaCommunicator com, double x, double y) throws Exception {
+        ImageModifier imageModifier = new ImageModifier();
+        imageModifier.addMedia(com, x, y);
+    }
 
     public void insertAudio(MediaCommunicator communicator, Bounds bounds) throws Exception {
         PlayableModifier playableModifier = new PlayableModifier();

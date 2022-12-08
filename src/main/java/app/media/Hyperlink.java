@@ -1,6 +1,6 @@
 package app.media;
 
-public class Hyperlink extends TextBox {
+public class Hyperlink extends MediaText {
 
     private String link;
 
