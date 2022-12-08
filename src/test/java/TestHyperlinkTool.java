@@ -18,15 +18,17 @@ public class TestHyperlinkTool {
 
     static boolean init = false;
     static void initJfxRuntime() {
-        // Necessary in order to run JavaFX in a JUnit test
-        if (!init) {
-            System.out.println("Init JFX");
-            Platform.startup(() ->
-            {
-                // This block will be executed on JavaFX Thread
-            });
-            init = true;
-        }
+        try {
+            // Necessary in order to run JavaFX in a JUnit test
+            if (!init) {
+                System.out.println("Init JFX");
+                Platform.startup(() ->
+                {
+                    // This block will be executed on JavaFX Thread
+                });
+                init = true;
+            }
+        } catch (IllegalStateException e) {}
     }
 
     static Point2D randomPoint() {

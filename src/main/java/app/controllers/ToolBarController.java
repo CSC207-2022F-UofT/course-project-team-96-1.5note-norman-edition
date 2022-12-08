@@ -7,10 +7,10 @@ import app.media.MediaHyperlink;
 import app.media_managers.AudioModifier;
 import app.media_managers.TextModifier;
 import app.media_managers.VideoModifier;
+import app.media_managers.ImageModifier;
 import javafx.geometry.Bounds;
 import gui.media.GUIMedia;
 import javafx.util.Duration;
-import javafx.scene.control.TextField;
 
 public class ToolBarController {
 
@@ -18,6 +18,15 @@ public class ToolBarController {
     A lot of these reference undefined methods and have unclear jobs. None make sense to return anything right now
     though maybe later they will return booleans to signify if they completed their job or failed.
      */
+
+    public void insertText() throws Exception {
+        TextModifier textModifier = new TextModifier();
+    }
+
+    public void insertImage(MediaCommunicator com, double x, double y) throws Exception {
+        ImageModifier imageModifier = new ImageModifier();
+        imageModifier.addMedia(com, x, y);
+    }
 
     public void insertAudio(MediaCommunicator communicator, Bounds bounds) throws Exception {
         AudioModifier audioModifier = new AudioModifier();
@@ -47,10 +56,17 @@ public class ToolBarController {
         return textModifier.createAudioTimestamp(text, source);
     }
 
-    public void tag(TextField node, GUIMedia<?> guiMedia)
+    public void tag(String node, GUIMedia<?> guiMedia)
     {
         Tagger tagger = new Tagger();
         tagger.interact(node);
         tagger.addTag(guiMedia.getMedia());
     }
+
+    public void removeTag(String node, GUIMedia<?> guiMedia){
+        Tagger tagger = new Tagger();
+        tagger.interact(node);
+        tagger.removeTag(guiMedia.getMedia());
+    }
+
 }

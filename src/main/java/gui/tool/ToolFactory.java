@@ -20,6 +20,7 @@ public final class ToolFactory {
             new PenTool(colourTool.colourProperty()),
             new ShapeTool(colourTool.colourProperty()),
             new TextTool(colourTool.colourProperty()),
+                new ImageTool(),
             new HyperlinkTool(colourTool.colourProperty()),
             new AudioTool("Audio"),
             new VideoTool("Video"),
