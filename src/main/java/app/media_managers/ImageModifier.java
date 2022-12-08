@@ -1,7 +1,6 @@
 package app.media_managers;
 
 import app.MediaCommunicator;
-import app.media.Media;
 import app.media.MediaImage;
 import storage.FileLoaderWriter;
 import storage.Storage;
@@ -18,11 +17,19 @@ public class ImageModifier{
 
     private static MediaImage image;
 
+    /**
+     * Loads images into the page from a file, passing back to MediaCommunicator to be displayed.
+     *
+     * @param com MediaCommunicator of the page
+     * @param x X coordinate of top-left corner of image once placed
+     * @param y Y coordinate of top-left corner of image once played
+     * @throws Exception Throws exception upon failing to find proper file.
+     */
     public static void addMedia(MediaCommunicator com, double x, double y) throws Exception {
         // Load image based on user selection
         Storage fileManager = new FileLoaderWriter();
         HashMap<String, byte[]> fileData = fileManager.readFile(new String[]{"*.png", "*.jpg", "*.jpeg", ".gif", "*.JPG"},
-                "Image (.png, .jpg, .jpeg, .gif, .JPG)");
+                "Select Image Type");
         if (fileData != null) {
             String fileName = (String) (fileData.keySet().toArray())[0];
 
@@ -31,6 +38,8 @@ public class ImageModifier{
             com.updateMedia(image);
         }
     }
+
+    //These methods below here are never used, but left in for possible future extension.
 
     public void setCaption(String givenCaption) {
         this.caption = givenCaption;

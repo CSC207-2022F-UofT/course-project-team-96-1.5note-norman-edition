@@ -1,7 +1,6 @@
 package gui.tool;
 
 import app.controllers.ToolBarController;
-import app.media_managers.ImageModifier;
 import gui.page.Page;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
@@ -9,6 +8,9 @@ import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
+/**
+ * Tool for the toolbar to insert images onto the page. Interfaces with MediaImage, ImageModifier and GUIImage to do this.
+ */
 public class ImageTool implements Tool {
 
     private Page page;
@@ -17,6 +19,9 @@ public class ImageTool implements Tool {
 
     private ImageView currentImage;
 
+    /**
+     * Default constructor, used to set up the tool and detect actions, then trigger image insertion.
+     */
     public ImageTool() {
         this.settings = new ImageSettings();
 
@@ -48,6 +53,9 @@ public class ImageTool implements Tool {
     }
 }
 
+/**
+ * Defines settings panel on the left for tool usage. In this case, just the "import image" button.
+ */
 class ImageSettings extends VBox {
 
     private final Button insertImage;

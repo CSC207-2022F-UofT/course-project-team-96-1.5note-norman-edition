@@ -4,14 +4,11 @@ import app.media.Media;
 import app.media.MediaImage;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.WritableImage;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 
 /**
- * Draws image into the page. Interfaces with ImageTool and MediaImage to accomplish this.
+ * Draws image into the page. Interfaces with ImageTool, ImageModifier and MediaImage to accomplish this.
  */
 public class GUIImage extends GUIMedia<MediaImage> {
 
