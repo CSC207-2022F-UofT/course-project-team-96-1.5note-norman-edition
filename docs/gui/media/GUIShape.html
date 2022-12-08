@@ -157,6 +157,18 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">A Helper method which clamps a value between a minimum and a maximum</div>
 </div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>javafx.geometry.Point2D</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#CornerBR(double,double,double,double)" class="member-name-link">CornerBR</a><wbr>(double&nbsp;cx,
+ double&nbsp;cy,
+ double&nbsp;w,
+ double&nbsp;h)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>javafx.geometry.Point2D</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#CornerTL(double,double,double,double)" class="member-name-link">CornerTL</a><wbr>(double&nbsp;cx,
+ double&nbsp;cy,
+ double&nbsp;w,
+ double&nbsp;h)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#mediaUpdated(app.media.Media)" class="member-name-link">mediaUpdated</a><wbr>(<a href="../../app/media/Media.html" title="class in app.media">Media</a>&nbsp;media)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -186,6 +198,9 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Called when changing the position or dimensions of a shape</div>
 </div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#updatePoints()" class="member-name-link">updatePoints</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -276,6 +291,12 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="updatePoints()">
+<h3>updatePoints</h3>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updatePoints</span>()</div>
+</section>
+</li>
+<li>
 <section class="detail" id="RestrictPoints(javafx.geometry.Point2D,javafx.geometry.Point2D,boolean)">
 <h3>RestrictPoints</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">double[]</span>&nbsp;<span class="element-name">RestrictPoints</span><wbr><span class="parameters">(javafx.geometry.Point2D&nbsp;origin,
@@ -292,6 +313,24 @@ loadScripts(document, 'script');</script>
 <dt>Returns:</dt>
 <dd>An array of doubles containing the horizontal and vertical midpoints and the width and height of the bouding box</dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="CornerTL(double,double,double,double)">
+<h3>CornerTL</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">javafx.geometry.Point2D</span>&nbsp;<span class="element-name">CornerTL</span><wbr><span class="parameters">(double&nbsp;cx,
+ double&nbsp;cy,
+ double&nbsp;w,
+ double&nbsp;h)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="CornerBR(double,double,double,double)">
+<h3>CornerBR</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">javafx.geometry.Point2D</span>&nbsp;<span class="element-name">CornerBR</span><wbr><span class="parameters">(double&nbsp;cx,
+ double&nbsp;cy,
+ double&nbsp;w,
+ double&nbsp;h)</span></div>
 </section>
 </li>
 <li>

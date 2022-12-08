@@ -1,16 +1,16 @@
 package gui.media;
 
-import app.media.MediaText;
 import javafx.scene.text.*;
 import javafx.scene.paint.*;
 import javafx.geometry.*;
 
+import app.media.TextBox;
 import app.media.Media;
 
 /**
  * Visually draws the TextBoxes in the canvas area. Interfaces with TextTool and TextBox to accomplish this.
  */
-public class GUITextBox extends GUIMedia<MediaText> {
+public class GUITextBox extends GUIMedia<TextBox> {
 
     private Text text;
     private Color colour;
@@ -24,21 +24,21 @@ public class GUITextBox extends GUIMedia<MediaText> {
     }
 
     public GUITextBox(Point2D point, String text, Color colour) {
-        super(new MediaText(point.getX(), point.getY(), text, colour.toString()));
+        super(new TextBox(point.getX(), point.getY(), text, colour.toString()));
 
         setInitialValues();
         this.colour = colour;
         setText(text);
     }
 
-    public GUITextBox(MediaText media) {
+    public GUITextBox(TextBox media) {
         super(media);
         mediaUpdated(media);
     }
 
     @Override
     public void mediaUpdated(Media media) {
-        MediaText newText = (MediaText) media;
+        TextBox newText = (TextBox) media;
 
         setInitialValues();
         setMedia(newText);

@@ -1,7 +1,6 @@
 package app;
 
 import java.util.Set;
-import java.util.Map;
 import java.util.HashSet;
 import java.util.HashMap;
 import java.util.Optional;
@@ -23,17 +22,17 @@ import app.media.Media;
  */
 public class MediaCommunicator {
 
-    private Set<MediaObserver> observers;
-    private MediaStorage storage;
+    private final Set<MediaObserver> observers;
+    private final MediaStorage storage;
 
     // Changes to media (updates/removals) which have not yet been committed to
     // storage via the `save` method. We need to keep track of these to make
     // sure they don't get lost if a Page, etc. "forgets" about them without
     // the user first saving them.
-    private HashMap<Long, Media> unsavedUpdates;
-    private Set<Long> unsavedRemovals;
+    private final HashMap<Long, Media> unsavedUpdates;
+    private final Set<Long> unsavedRemovals;
 
-    private Random rng;
+    private final Random rng;
 
     /**
      * Instantiate a MediaCommunicator with the given storage backend.

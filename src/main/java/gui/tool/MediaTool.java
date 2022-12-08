@@ -1,26 +1,18 @@
 package gui.tool;
 
-import java.util.Set;
-import java.util.HashSet;
-import java.util.Collections;
-
 import javafx.scene.*;
 import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
-import javafx.scene.shape.*;
 import javafx.scene.paint.*;
 import javafx.scene.effect.*;
 import javafx.event.*;
 import javafx.beans.*;
 import javafx.geometry.*;
 
-import app.media.Media;
 import gui.ResourceLoader;
 import gui.media.GUIMedia;
 import gui.page.Page;
-import gui.page.PageEventHandler;
-import gui.page.PageEventHandler.HandlerMethod;
 import gui.page.Selection;
 
 
@@ -53,20 +45,20 @@ public class MediaTool implements Tool {
 
     private Selection selection;
     private Page page;
-    private HandlerMethod[] handlers;
+    private final HandlerMethod<?>[] handlers;
 
     private Point2D boxSelectStart;
     private Point2D boxSelectEnd;
-    private BoxSelectRectangle boxSelectRectangle;
+    private final BoxSelectRectangle boxSelectRectangle;
 
     private static final Color SELECTED_COLOUR = Color.DODGERBLUE;
-    private Effect selectedEffect;
+    private final Effect selectedEffect;
     
     private Point2D prevDragPosition;
 
     private Action action;
 
-    private MediaSettings settings;
+    private final MediaSettings settings;
 
     public MediaTool() {
         boxSelectRectangle = new BoxSelectRectangle();
@@ -101,7 +93,7 @@ public class MediaTool implements Tool {
     }
 
     @Override
-    public HandlerMethod[] getHandlerMethods() {
+    public HandlerMethod<?>[] getHandlerMethods() {
         return handlers;
     }
 
@@ -121,11 +113,11 @@ public class MediaTool implements Tool {
         return settings;
     }
 
-    public void selectMedia(GUIMedia media) {
+    public void selectMedia(GUIMedia<?> media) {
         selection.addMedia(media);
     }
 
-    public void unSelectMedia(GUIMedia media) {
+    public void unSelectMedia(GUIMedia<?> media) {
         selection.removeMedia(media);
     }
 
@@ -160,9 +152,7 @@ public class MediaTool implements Tool {
             }
 
             EventTarget target = e.getTarget();
-            if (target instanceof GUIMedia) {
-                GUIMedia media = (GUIMedia) target;
-
+            if (target instanceof GUIMedia<?> media) {
                 if (selection.contains(media)) {
                     unSelectMedia(media);
                 } else {
@@ -180,7 +170,7 @@ public class MediaTool implements Tool {
             EventTarget target = e.getTarget();
             if (
                     target instanceof GUIMedia
-                    && selection.contains((GUIMedia) target))
+                    && selection.contains((GUIMedia<?>) target))
             {
                 action = Action.DRAGGING;
                 beginDrag(e);
@@ -266,7 +256,7 @@ public class MediaTool implements Tool {
                 clearSelection();
             }
 
-            for (GUIMedia media: page.getAllMedia()) {
+            for (GUIMedia<?> media: page.getAllMedia()) {
                 if (selectBox.intersects(media.getBoundsInParent())) {
                     selectMedia(media);
                 }
@@ -278,13 +268,12 @@ public class MediaTool implements Tool {
 
 class MediaSettings extends FlowPane {
 
-    private static int PADDING = 5;
+    private static final int PADDING = 5;
 
-    private Label numSelectedLabel;
-    private TextField nameField;
-    private Slider angleSlider;
-    private Spinner<Integer> zIndexSpinner;
-    private Button deleteButton;
+    private final Label numSelectedLabel;
+    private final TextField nameField;
+    private final Slider angleSlider;
+    private final Spinner<Integer> zIndexSpinner;
 
     private Selection selection;
 
@@ -310,7 +299,7 @@ class MediaSettings extends FlowPane {
 
         zIndexSpinner = new Spinner<>(Integer.MIN_VALUE, Integer.MAX_VALUE, 0, 1);
 
-        deleteButton = new Button("Delete All Selected Media");
+        Button deleteButton = new Button("Delete All Selected Media");
 
         HBox[] rows = new HBox[] {
             new HBox(new Label("Name:"), nameField, setNameButton),

@@ -3,7 +3,6 @@ package gui.media;
 import java.util.List;
 import java.util.ArrayList;
 
-import javafx.scene.*;
 import javafx.scene.shape.*;
 import javafx.scene.paint.*;
 import javafx.geometry.Point2D;
@@ -14,7 +13,7 @@ import app.media.Media;
 
 /**
  * GUI representation of a pen stroke on a page.
- *
+ * <p>
  * The pen stroke is made from consecutive line segments. A new segment is
  * added when the direction of the mouse movement changes significantly.
  */
@@ -178,8 +177,8 @@ public class GUIPenStroke extends GUIMedia<PenStroke> {
 // Individual segment in the line.
 class Segment extends LineTo {
 
-    double startX;
-    double startY;
+    final double startX;
+    final double startY;
 
     double endX;
     double endY;

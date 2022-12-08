@@ -11,4 +11,6 @@ public interface Zoomable {
     default void zoomToFactor(double zoomFactor){}
 
     default void zoomInOrOut(String inOrOut){}
+
+    default void centerPage() {}
 }

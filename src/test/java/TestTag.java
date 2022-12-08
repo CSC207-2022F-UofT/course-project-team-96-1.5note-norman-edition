@@ -31,7 +31,7 @@ public class TestTag {
 
     @Test
     public void testTagText(){
-        MediaText text = new MediaText(0, 0, "","content");
+        MediaText text = new MediaText("", 0, 0, 0, 0, "content");
 
         Tagger tagger = new Tagger();
         tagger.interact("TEST");
@@ -45,7 +45,7 @@ public class TestTag {
         byte[] testByte = new byte[] {};
         ArrayList<Duration> testDuration = new ArrayList<>();
 
-        MediaAudio audio = new MediaAudio("", 0, 0, 0, 0, testByte, testDuration);
+        MediaPlayable audio = new MediaPlayable("", 0, 0, 0, 0, testByte, new ArrayList<>(), "Audio");
 
         Tagger tagger = new Tagger();
         tagger.interact("TEST");
@@ -109,7 +109,7 @@ public class TestTag {
     public void testToolBarControllerTag(){
         byte[] testByte = new byte[] {};
         ArrayList<Duration> testDuration = new ArrayList<>();
-        MediaAudio audio = new MediaAudio("", 0, 0, 0, 0, testByte, testDuration);
+        MediaPlayable audio = new MediaPlayable("", 0, 0, 0, 0, testByte, new ArrayList<>(), "Audio");
         GUIMedia<?> guiMedia = new GUIMedia<>(audio);
 
         ToolBarController toolBarController = new ToolBarController();

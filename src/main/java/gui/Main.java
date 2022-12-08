@@ -21,7 +21,7 @@ public class Main extends Application {
     private static final int INITIAL_HEIGHT = 700;
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
         // create the GUI contents
         Parent gui = GUICreator.createGUI();
 

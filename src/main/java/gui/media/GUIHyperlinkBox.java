@@ -1,19 +1,23 @@
 package gui.media;
-import app.media.Media;
-//import app.media.TextBox;
 import app.media.Hyperlink;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 
-public class GUIHyperlinkBox extends GUITextBox {
-    //private Text text;
+public class GUIHyperlinkBox extends GUIMedia<Hyperlink> {
+    private Text text;
     private String link;
+    private Color colour;
 
-    @Override
+
     protected void setInitialValues() {
-        super.setInitialValues();
-        this.link = new String ("");
+        this.text = new Text("");
+        colour = Color.BLACK;
+
+        getChildren().clear();
+        getChildren().addAll(this.text);
+
+        this.link = "";
         getTextNode().setUnderline(true);
     }
 
@@ -21,6 +25,7 @@ public class GUIHyperlinkBox extends GUITextBox {
         super(new Hyperlink(point.getX(), point.getY(), text, link, colour.toString()));
 
         setInitialValues();
+        this.colour = colour;
         setText(text);
         setLink(link);
     }
@@ -30,22 +35,36 @@ public class GUIHyperlinkBox extends GUITextBox {
         mediaUpdated(media);
     }
 
-    private void setLink(String givenLink) {
-        this.link = givenLink;
-    }
-
     public String getLink(){
         return this.link;
     }
 
     public void updateHyperLink(String textIn, String givenLink) {
-        setText(textIn);
+        this.text.setText(textIn);
         this.link = givenLink;
+        this.getMedia().setText(textIn);
     }
 
+
+    protected Text getTextNode() {
+        return text;
+    }
+
+    protected void setText(String textIn) {
+        this.text.setFill(colour);
+        this.text.setText(textIn);
+        this.getMedia().setText(textIn);
+    }
+
+    protected void setLink(String linkIn) {
+        this.link = linkIn;
+        this.getMedia().setText(linkIn);
+    }
+    public String getText() { return this.text.getText(); }
+
     public void end() {
-        if (getMedia().getText().equals(getText())) {
-            getMedia().setText(getText());
+        if (getMedia().getText().equals(this.text.getText())) {
+            getMedia().setText(this.text.getText());
         }
     }
 

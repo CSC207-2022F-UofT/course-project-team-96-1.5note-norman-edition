@@ -56,6 +56,7 @@ public class SearchTool implements Tool{
         private ArrayList<Double> xCoords;
         private ArrayList<Double> yCoords;
         private int currentIndex;
+
         public SearchSettings(){
             // Creating the textfield for user input and button for searching
             Button searchButton = new Button("Search");

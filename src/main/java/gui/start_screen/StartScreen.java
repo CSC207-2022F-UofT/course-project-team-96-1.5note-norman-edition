@@ -1,6 +1,6 @@
 package gui.start_screen;
 
-import gui.page.Page;
+import gui.Zoomable;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.geometry.Insets;
@@ -24,13 +24,8 @@ public class StartScreen extends VBox {
 
     private static final int PADDING = 5;
 
-    private SwapPane parent;
+    private final SwapPane parent;
 
-    private final MenuBar menuBar;
-    private final Menu pageMenu;
-    private final Menu viewMenu;
-    private final Button newPageButton;
-    private final Button loadPageButton;
     private PageScreen pageScreen;
 
     private SQLiteStorage storage;
@@ -38,13 +33,12 @@ public class StartScreen extends VBox {
 
     public StartScreen(SwapPane parent, MenuBar menuBar) {
         this.parent = parent;
-        this.menuBar = menuBar;
 
-        newPageButton = new NewPageButton();
-        loadPageButton = new LoadPageButton();
+        Button newPageButton = new NewPageButton();
+        Button loadPageButton = new LoadPageButton();
 
-        pageMenu = new Menu("Page");
-        viewMenu = new Menu("View");
+        Menu pageMenu = new Menu("Page");
+        Menu viewMenu = new Menu("View");
         menuBar.getMenus().add(pageMenu);
         menuBar.getMenus().add(viewMenu);
 
@@ -218,7 +212,7 @@ public class StartScreen extends VBox {
      * @param targetZoom factor to scale by
      */
     private void zoomTo(double targetZoom) {
-        Page page = pageScreen.getPage();
+        Zoomable page = pageScreen.getPage();
         page.zoomToFactor(targetZoom);
     }
 
@@ -227,7 +221,7 @@ public class StartScreen extends VBox {
      * @param inOrOut String specifying whether to zoom "In" or "Out"
      */
     private void zoomInOrOut(String inOrOut) {
-        Page page = pageScreen.getPage();
+        Zoomable page = pageScreen.getPage();
         page.zoomInOrOut(inOrOut);
     }
 
@@ -235,8 +229,8 @@ public class StartScreen extends VBox {
      *
      */
     private void centerPage() {
-        Page page = pageScreen.getPage();
-        page.jumpToTopLeft(0, 0);
+        Zoomable page = pageScreen.getPage();
+        page.centerPage();
     }
 
 

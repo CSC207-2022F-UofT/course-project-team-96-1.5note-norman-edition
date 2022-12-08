@@ -2,13 +2,7 @@ package gui.page_screen;
 
 import javafx.scene.*;
 import javafx.scene.layout.*;
-import javafx.scene.control.*;
-import javafx.geometry.Pos;
 
-import java.util.List;
-import java.util.ArrayList;
-
-import gui.SwapPane;
 import gui.page.Page;
 import gui.tool.ToolFactory;
 import gui.tool.Tool;
@@ -23,14 +17,12 @@ import app.MediaCommunicator;
  */
 public class PageScreen extends VBox {
 
-    private StackPane layers;
-    private Tool[] tools;
-    private Toolbar toolBar;
-    private ToolPane toolPane;
+    private final StackPane layers;
+    private final Toolbar toolBar;
     private Page page;
 
     public PageScreen(MediaCommunicator c) {
-        tools = ToolFactory.getTools();
+        Tool[] tools = ToolFactory.getTools();
 
         toolBar = new Toolbar(tools);
         getChildren().add(toolBar);
@@ -44,7 +36,7 @@ public class PageScreen extends VBox {
         getChildren().add(layers);
 
 
-        toolPane = new ToolPane(toolBar.selectedTool());
+        ToolPane toolPane = new ToolPane(toolBar.selectedTool());
         addLayer(toolPane);
     }
 

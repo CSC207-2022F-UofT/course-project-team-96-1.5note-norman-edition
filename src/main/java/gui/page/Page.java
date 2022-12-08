@@ -31,15 +31,15 @@ import gui.Zoomable;
 public class Page extends StackPane implements MediaObserver, Zoomable {
 
     // Additional padding added to the visible region
-    private static double LOADABLE_BOUNDS_MARGIN = 1000;
+    private static final double LOADABLE_BOUNDS_MARGIN = 1000;
 
-    private MediaCommunicator c;
+    private final MediaCommunicator c;
     private PageEventHandler.HandlerMethod<?>[] handlerMethods;
     private PageEventHandler handler;
-    private Pane mediaLayer;
-    private Pane uiLayer;
+    private final Pane mediaLayer;
+    private final Pane uiLayer;
 
-    private Map<Long, GUIMedia> contents;
+    private final Map<Long, GUIMedia<?>> contents;
 
     private Bounds prevLoadableBounds;
 
@@ -137,7 +137,7 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
     /**
      * Add the given GUIMedia object to this page.
      */
-    public void addMedia(GUIMedia media) {
+    public void addMedia(GUIMedia<?> media) {
         // Don't use a managed layout, i.e. stop the page in which the GUIMedia
         // is placed from influencing the layout bounds of the GUIMedia.
         media.setManaged(false);
@@ -148,14 +148,14 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
     /**
      * Return whether or not the given GUIMedia object is within this page
      */
-    public boolean contains(GUIMedia media) {
+    public boolean contains(GUIMedia<?> media) {
         return contents.containsKey(media.getID());
     }
 
     /**
      * Indicate that the given GUIMedia object has been updated.
      */
-    public void updateMedia(GUIMedia media) {
+    public void updateMedia(GUIMedia<?> media) {
         try {
             c.updateMedia(media.getMedia(), id -> contents.put(id, media));
         } catch (Exception e) {
@@ -167,7 +167,7 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
     /**
      * Remove the given GUIMedia object from this page.
      */
-    public void removeMedia(GUIMedia media) {
+    public void removeMedia(GUIMedia<?> media) {
         contents.remove(media.getID());
         mediaLayer.getChildren().remove(media);
         media.removed();
@@ -177,9 +177,9 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
      * Remove ALL GUIMedia objects from this page.
      */
     public void removeAllMedia() {
-        Set<GUIMedia> mediaToRemove = new HashSet<>(contents.values());
+        Set<GUIMedia<?>> mediaToRemove = new HashSet<>(contents.values());
 
-        for (GUIMedia media: mediaToRemove) {
+        for (GUIMedia<?> media: mediaToRemove) {
             removeMedia(media);
         }
     }
@@ -187,7 +187,7 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
     /**
      * Get all the media currently displayed on this page which have assigned IDs.
      */
-    public Set<GUIMedia> getAllMedia() {
+    public Set<GUIMedia<?>> getAllMedia() {
         return new HashSet<>(contents.values());
     }
 
@@ -223,7 +223,7 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
     /**
      * Returns the currently visible region.
      */
-    private Bounds getVisibleBounds() {
+    public Bounds getVisibleBounds() {
         return mediaLayer.parentToLocal(getLayoutBounds());
     }
 
@@ -288,7 +288,7 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
             // Remove nodes which are no longer visible
             Set<Long> initialIDs = new HashSet<>(contents.keySet());
             for (long id: initialIDs) {
-                GUIMedia media = contents.get(id);
+                GUIMedia<?> media = contents.get(id);
 
                 if (
                         media != null
@@ -311,7 +311,7 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
     // Instantiate a GUIMedia object for the given Media entity and add it
     // to the page.
     private void addGUIMediaFor(Media media) throws Exception {
-        GUIMedia guiMedia = GUIMediaFactory.getFor(media);
+        GUIMedia<?> guiMedia = GUIMediaFactory.getFor(media);
         contents.put(guiMedia.getID(), guiMedia);
         addMedia(guiMedia);
     }
@@ -374,7 +374,7 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
 
     /** Given a factor to scale the Page, scale in x and y directions by that factor. no pivot
      *
-     * @param factor the factor by which to scale toZoom, > 0
+     * @param factor the factor by which to scale toZoom, &ge; 0.1, &le; 10.0
      */
     @Override
     public void zoomToFactor(double factor) {
@@ -411,7 +411,7 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
      */
     @Override
     public void zoomInOrOut(String inOrOut){
-        double[] zoomOptions = {0.1, 0.25, 1.0/3.0, 0.5, 2.0/3.0, 0.75, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0,
+        double[] zoomOptions = {0.1, 0.25, 1.0/3.0, 0.5, 2.0/3.0, 0.75, 1.0, 1.5, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0,
                 9.0, 10.0};
         double currentFactor = scaleFactor;
         if (currentFactor == 0.1 && inOrOut.equals("Out")) {
@@ -436,6 +436,48 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
         this.zoomToFactor(zoomOptions[i]);
     }
 
+    /** Translate the mediaLayer vertically by translation amount of pixels (using traditional computer graphics
+     * coordinate systems with the top left corner being (0, 0) and y increasing positively downwards and x increasing
+     * positively to the right)
+     *
+     * @param translation amount of pixels to translate by
+     */
+    public void scrollVertically(double translation) {
+        mediaLayer.setTranslateY(translation);
+    }
+
+    /** Translate the mediaLayer horizontally by translation amount of pixels (using traditional computer graphics
+     * coordinate systems with the top left corner being (0, 0) and y increasing positively downwards and x increasing
+     * positively to the right)
+     *
+     * @param translation amount of pixels to translate by
+     */
+    public void scrollHorizontally(double translation) {
+        mediaLayer.setTranslateX(translation);
+    }
+
+    /**
+     * given the x and y coords of a point, make that point the center of the visible box
+     */
+    public void centerPage() {
+        double currentZoom = scaleFactor;
+        this.zoomToFactor(1.0);
+        this.jumpToTopLeft(0, 0);
+        this.zoomToFactor(currentZoom);
+    }
+
+    /** given the x and y coords of a point, make that point the top left of the visible box
+     *
+     * @param x x coordinate of point you want to jump to
+     * @param y y coordinate of point you want to jump to
+     */
+    public void jumpToTopLeft(double x, double y) {
+        double translateX = x - getTranslateX();
+        double translateY = y - getTranslateY();
+        mediaLayer.setTranslateX(translateX);
+        mediaLayer.setTranslateY(translateY);
+    }
+
     /** given the x and y coords of a point, make that point the center of the visible box
      *
      * @param x x coordinate of point you want to jump to
@@ -457,17 +499,30 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
         mediaLayer.setTranslateY(centerTranslateY);
     }
 
+    // getters for testing
 
-    /** given the x and y coords of a point, make that point the top left of the visible box
+    /** Getter for scaleFactor
      *
-     * @param x x coordinate of point you want to jump to
-     * @param y y coordinate of point you want to jump to
+     * @return scaleFactor
      */
-    public void jumpToTopLeft(double x, double y) {
-        double translateX = x - getTranslateX();
-        double translateY = y - getTranslateY();
-        mediaLayer.setTranslateX(translateX);
-        mediaLayer.setTranslateY(translateY);
+    public double getScaleFactor() {
+        return scaleFactor;
+    }
+
+    /** Getter for scale
+     *
+     * @return scale
+     */
+    public Scale getScale() {
+        return scale;
+    }
+
+    /** Getter for mediaLayer
+     *
+     * @return mediaLayer
+     */
+    public Pane getMediaLayer() {
+        return mediaLayer;
     }
 
     /** handles scrolling inputs, zooming when control is pressed, horizontal scrolling when shift is pressed, and
@@ -495,29 +550,21 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
             double delta = scrollEvent.getDeltaY();
 
             if (delta < 0) {
-                // zooming out
-                if (scaleFactor == 0.1) {
-                    scrollEvent.consume();
-                    return;
-                }
                 zoomInOrOut("Out");
             } else if (delta > 0) {
-                // zooming in
-                if (scaleFactor == 10.0) {
-                    scrollEvent.consume();
-                    return;
-                }
                 zoomInOrOut("In");
             }
         }
+
         private void scrollVerticallyHandle(ScrollEvent scrollEvent) {
             double currentTranslation = mediaLayer.getTranslateY();
-            mediaLayer.setTranslateY(currentTranslation + scrollEvent.getDeltaY());
+            scrollVertically(currentTranslation + scrollEvent.getDeltaY());
         }
 
         private void scrollHorizontallyHandle(ScrollEvent scrollEvent) {
             double currentTranslation = mediaLayer.getTranslateX();
-            mediaLayer.setTranslateX(currentTranslation + scrollEvent.getDeltaX());
+            scrollHorizontally(currentTranslation + scrollEvent.getDeltaX());
         }
     }
 }
+
