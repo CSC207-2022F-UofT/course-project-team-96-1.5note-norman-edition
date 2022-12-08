@@ -2,8 +2,10 @@ package gui.tool;
 
 import app.controllers.ToolBarController;
 import gui.page.Page;
+import gui.ResourceLoader;
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
@@ -45,6 +47,12 @@ public class ImageTool implements Tool {
     @Override
     public void enabledFor(Page page) {
         this.page = page;
+    }
+
+    @Override
+    public Node getGraphic() {
+        return new Label(
+                getName(), ResourceLoader.loadSVGicon("icons/image.svg", 15, 15));
     }
 
     @Override
