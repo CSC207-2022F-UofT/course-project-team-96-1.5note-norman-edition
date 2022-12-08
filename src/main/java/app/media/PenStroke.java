@@ -8,21 +8,21 @@ import java.io.Serializable;
 
 /**
  * Entity class for a pen stroke.
- *
+ * <p>
  * A pen stroke is defined by a starting position, a thickness, a colour, and
  * a list of ending positions for the line segments which make up the stroke.
  */
 public class PenStroke extends Media {
 
     /** Data for a single line segment in a stroke. */
-    public static record Segment(double endX, double endY)
+    public record Segment(double endX, double endY)
             implements Serializable {}
 
     // A pen stroke is defined by a list of line segments and the
     // colour + thickness for those line segments.
-    private List<Segment> segments;
-    private double thickness;
-    private String colour;
+    private final List<Segment> segments;
+    private final double thickness;
+    private final String colour;
 
     public PenStroke(double x, double y, double thickness, String colour) {
         super("pen-stroke", x, y, 0, 0);

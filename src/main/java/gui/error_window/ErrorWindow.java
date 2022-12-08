@@ -8,17 +8,16 @@ import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
 import javafx.scene.text.*;
-import javafx.geometry.Pos;
 
 
 /**
- * Display an error message to the user and prevent futher use of the GUI until
+ * Display an error message to the user and prevent further use of the GUI until
  * the message is dismissed.
  */
 public class ErrorWindow extends Dialog<Object> {
 
-    private static int PADDING = 5;
-    private static String DEFAULT_TITLE = "Error!";
+    private static final int PADDING = 5;
+    private static final String DEFAULT_TITLE = "Error!";
 
     /**
      * @param owner The main window to which the error window belongs.
@@ -130,6 +129,6 @@ public class ErrorWindow extends Dialog<Object> {
         error.printStackTrace(p);
         p.flush();
 
-        return new String(b.toByteArray());
+        return b.toString();
     }
 }

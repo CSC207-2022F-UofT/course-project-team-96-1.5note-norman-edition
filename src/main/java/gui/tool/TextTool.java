@@ -16,25 +16,24 @@ import gui.media.GUITextBox;
 /**
  * Allows the user to create and edit textboxes. Click on an existing box to edit its content in real-time, or
  * type into the side panel box and drop the text down wherever you choose.
- *
+ * <p>
  * Utilizes the GUITextBox class to visually display and edit the text, and TextBox to store the information itself.
  */
 public class TextTool implements Tool {
 
-    private HandlerMethod[] handlers;
+    private final HandlerMethod<?>[] handlers;
     private Page page;
 
-    private TextSettings settings;
+    private final TextSettings settings;
 
     private GUITextBox currentText;
 
-    private ObjectProperty<Color> colour;
+    private final ObjectProperty<Color> colour;
 
     public TextTool(ObjectProperty<Color> colour) {
-        HandlerMethod[] handlers = {
+        this.handlers = new HandlerMethod[] {
                 new HandlerMethod<>(MouseEvent.MOUSE_CLICKED, this::manipulateText)
         };
-        this.handlers = handlers;
 
         this.colour = colour;
 
@@ -58,7 +57,7 @@ public class TextTool implements Tool {
     }
 
     @Override
-    public HandlerMethod[] getHandlerMethods() {
+    public HandlerMethod<?>[] getHandlerMethods() {
         return handlers;
     }
 
@@ -126,8 +125,8 @@ public class TextTool implements Tool {
  */
 class TextSettings extends FlowPane {
 
-    private static int PADDING = 5;
-    private TextArea textZone;
+    private static final int PADDING = 5;
+    private final TextArea textZone;
 
     public TextSettings() {
         textZone = new TextArea();

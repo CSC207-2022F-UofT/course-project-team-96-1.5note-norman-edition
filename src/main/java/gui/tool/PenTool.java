@@ -4,13 +4,11 @@ import javafx.scene.*;
 import javafx.scene.input.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.text.*;
 import javafx.scene.paint.*;
 import javafx.geometry.*;
 import javafx.beans.property.*;
 
 import gui.ResourceLoader;
-import gui.page.PageEventHandler.*;
 import gui.page.Page;
 import gui.media.GUIPenStroke;
 
@@ -20,20 +18,19 @@ import gui.media.GUIPenStroke;
  */
 public class PenTool implements Tool {
 
-    private HandlerMethod[] handlers;
+    private final HandlerMethod<?>[] handlers;
     private Page page;
-    private PenSettings settings;
-    private ObjectProperty<Color> colour;
+    private final PenSettings settings;
+    private final ObjectProperty<Color> colour;
 
     private GUIPenStroke currentStroke;
 
     public PenTool(ObjectProperty<Color> colour) {
-        HandlerMethod[] handlers = {
+        this.handlers = new HandlerMethod[] {
             new HandlerMethod<>(MouseEvent.MOUSE_PRESSED, this::startStroke),
             new HandlerMethod<>(MouseEvent.MOUSE_RELEASED, this::endStroke),
             new HandlerMethod<>(MouseEvent.MOUSE_DRAGGED, this::updateStroke)
         };
-        this.handlers = handlers;
 
         this.colour = colour;
         settings = new PenSettings();
@@ -51,7 +48,7 @@ public class PenTool implements Tool {
     }
 
     @Override
-    public HandlerMethod[] getHandlerMethods() {
+    public HandlerMethod<?>[] getHandlerMethods() {
         return handlers;
     }
 
@@ -110,19 +107,17 @@ public class PenTool implements Tool {
 
 class PenSettings extends FlowPane {
 
-    private static double MIN_THICKNESS = 1;
-    private static double MAX_THICKNESS = 20;
-    private static double DEFAULT_THICKNESS = 3;
+    private static final double MIN_THICKNESS = 1;
+    private static final double MAX_THICKNESS = 20;
+    private static final double DEFAULT_THICKNESS = 3;
 
-    private static int PADDING = 5;
+    private static final int PADDING = 5;
 
-    private Slider thicknessSlider;
-    private Spinner<Double> thicknessSpinner;
-    private ObjectProperty<Double> thicknessProperty;
+    private final ObjectProperty<Double> thicknessProperty;
 
     public PenSettings() {
-        thicknessSlider = new Slider(MIN_THICKNESS, MAX_THICKNESS, DEFAULT_THICKNESS);
-        thicknessSpinner = new Spinner<>(MIN_THICKNESS, MAX_THICKNESS, DEFAULT_THICKNESS);
+        Slider thicknessSlider = new Slider(MIN_THICKNESS, MAX_THICKNESS, DEFAULT_THICKNESS);
+        Spinner<Double> thicknessSpinner = new Spinner<>(MIN_THICKNESS, MAX_THICKNESS, DEFAULT_THICKNESS);
         thicknessSpinner.setPrefWidth(75);
         thicknessSpinner.setEditable(true);
 

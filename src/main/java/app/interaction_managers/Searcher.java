@@ -13,20 +13,35 @@ public class Searcher implements InteractionManager {
     public Searcher(ArrayList<Media> mediaArrayList){
         this.mediaList = mediaArrayList;
     }
-    public ArrayList<Media> getResults(){
-        ArrayList<Media> results = new ArrayList<>();
+    public ArrayList<Double> getXResults(){
+        ArrayList<Double> xResults = new ArrayList<>();
         for (Media media : mediaList){
-            if(media.getTags().contains(userSearch) || media.getName().contains(userSearch)){
-                results.add(media);
+            if(media.getTags().contains(userSearch)){
+                xResults.add(media.getX());
             }
             else if(media instanceof MediaText){
                 if (((MediaText) media).getText().equals(userSearch)){
-                    results.add(media);
+                    xResults.add(media.getX());
                 }
             }
 
         }
-        return results;
+        return xResults;
+    }
+    public ArrayList<Double> getYResults(){
+        ArrayList<Double> yResults = new ArrayList<>();
+        for (Media media : mediaList){
+            if(media.getTags().contains(userSearch)){
+                yResults.add(media.getY());
+            }
+            else if(media instanceof MediaText){
+                if (((MediaText) media).getText().equals(userSearch)){
+                    yResults.add(media.getY());
+                }
+            }
+
+        }
+        return yResults;
     }
 
     @Override

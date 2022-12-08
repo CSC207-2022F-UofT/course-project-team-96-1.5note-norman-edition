@@ -5,13 +5,10 @@ import app.interaction_managers.Tagger;
 import app.media.MediaPlayable;
 import app.media.MediaHyperlink;
 import app.media_managers.PlayableModifier;
-import app.media_managers.ImageModifier;
 import app.media_managers.TextModifier;
+import app.media_managers.ImageModifier;
 import javafx.geometry.Bounds;
 import gui.media.GUIMedia;
-import gui.media.GUIAudio;
-import gui.page.Page;
-import javafx.geometry.Point2D;
 import javafx.util.Duration;
 import javafx.scene.control.TextField;
 

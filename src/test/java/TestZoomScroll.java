@@ -12,18 +12,16 @@ import storage.SQLiteStorage;
 public class TestZoomScroll {
 
     static Page page;
-    static boolean init = false;
 
     static void initJfxRuntime() {
         // Necessary in order to run JavaFX in a JUnit test
-        if (!init) {
+        try {
             System.out.println("Init JFX");
             Platform.startup(() ->
             {
                 // This block will be executed on JavaFX Thread
             });
-            init = true;
-        }
+        } catch (IllegalStateException e) {}
     }
 
     public static void createPage() throws Exception {

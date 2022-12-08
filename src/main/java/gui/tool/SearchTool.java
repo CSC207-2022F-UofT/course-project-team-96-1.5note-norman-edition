@@ -7,7 +7,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
@@ -57,6 +56,9 @@ public class SearchTool implements Tool{
         private ArrayList<Double> xCoords;
         private ArrayList<Double> yCoords;
         private int currentIndex;
+
+        private final int offsetX = 800;
+        private final int offsetY = 200;
         public SearchSettings(){
             // Creating the textfield for user input and button for searching
             Button searchButton = new Button("Search");
@@ -71,7 +73,7 @@ public class SearchTool implements Tool{
             // SearchBarController to call the searcher method
             searchButton.setOnAction(e->{
                 ArrayList<Media> pageMedia = new ArrayList<>();
-                for (GUIMedia media: page.getAllMedia()) {
+                for (GUIMedia<?> media: page.getAllMedia()) {
                     pageMedia.add(media.getMedia());
                 }
 
@@ -86,7 +88,7 @@ public class SearchTool implements Tool{
             });
 
             findButton.setOnAction(e->{
-                page.jumpToTopLeft(xCoords.get(currentIndex) - 400, yCoords.get(currentIndex) - 300);
+                page.jumpToTopLeft(xCoords.get(currentIndex) - offsetX, yCoords.get(currentIndex) - offsetY);
 
                 currentIndex += 1;
                 if (currentIndex == xCoords.size()){

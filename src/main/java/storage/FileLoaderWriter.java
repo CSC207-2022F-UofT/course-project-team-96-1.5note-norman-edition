@@ -11,7 +11,7 @@ public class FileLoaderWriter implements Storage{
     // TODO: Implement a file cache, which stores recently opened files to prevent consecutive reopening
     private final int cacheSize = 10; // Size of the internal file cache
 
-    private byte[][] fileCache = new byte[cacheSize][]; // Internal file cache
+    private final byte[][] fileCache = new byte[cacheSize][]; // Internal file cache
 
     /**
      * Allows the user to choose media to be added to the Page
@@ -43,12 +43,11 @@ public class FileLoaderWriter implements Storage{
      * Writes a temp file for use by FileMedia
      * @param name what the temp file will be called
      * @param Data the raw data to be written
-     * @param extension the extension type the written temp file will be. Must be in form '.extensionType'
-     * @return a URI indentfying the temp file that was written
+     * @return a URI indeitfying the temp file that was written
      * @throws Exception when writing fails for any reason
      */
-    public URI writeFile(String name, byte[] Data, String extension) throws Exception{
-        File newFile = File.createTempFile(name, extension);
+    public URI writeFile(String name, byte[] Data) throws Exception{
+        File newFile = File.createTempFile(name, ".File");
         FileOutputStream writer = new FileOutputStream(newFile);
         writer.write(Data);
         writer.close();
