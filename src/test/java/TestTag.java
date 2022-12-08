@@ -29,10 +29,9 @@ public class TestTag {
         assertTrue(media.getTags().contains("TEST"));
     }
 
-    /*
     @Test
     public void testTagText(){
-        MediaText text = new MediaText("", 0, 0, 0, 0, "content");
+        MediaText text = new MediaText(0, 0, "content", "");
 
         Tagger tagger = new Tagger();
         tagger.interact("TEST");
@@ -40,13 +39,13 @@ public class TestTag {
 
         assertTrue(text.getTags().contains("TEST"));
     }
-    */
+
     @Test
     public void testTagAudio(){
         byte[] testByte = new byte[] {};
         ArrayList<Duration> testDuration = new ArrayList<>();
 
-        MediaPlayable audio = new MediaPlayable("", 0, 0, 0, 0, testByte, new ArrayList<>(), "Audio");
+        MediaAudio audio = new MediaAudio("", 0, 0, 0, 0, testByte, new ArrayList<>());
 
         Tagger tagger = new Tagger();
         tagger.interact("TEST");
@@ -110,7 +109,7 @@ public class TestTag {
     public void testToolBarControllerTag(){
         byte[] testByte = new byte[] {};
         ArrayList<Duration> testDuration = new ArrayList<>();
-        MediaPlayable audio = new MediaPlayable("", 0, 0, 0, 0, testByte, new ArrayList<>(), "Audio");
+        MediaAudio audio = new MediaAudio("", 0, 0, 0, 0, testByte, new ArrayList<>());
         GUIMedia<?> guiMedia = new GUIMedia<>(audio);
 
         ToolBarController toolBarController = new ToolBarController();

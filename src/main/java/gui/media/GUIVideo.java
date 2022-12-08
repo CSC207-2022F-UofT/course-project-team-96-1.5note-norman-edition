@@ -1,12 +1,12 @@
 package gui.media;
 
-import app.media.MediaPlayable;
+import app.media.MediaAudio;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.media.MediaView;
 
 public class GUIVideo extends GUIAudio{
-    public GUIVideo(MediaPlayable audio) {
+    public GUIVideo(MediaAudio audio) {
         super(audio);
 
         //Repeat code, but for some reason this doesnt execute properly in the super class
@@ -22,7 +22,13 @@ public class GUIVideo extends GUIAudio{
             }
         });
     }
+
+    @Override
+    protected String getExtension() {
+        return ".mp4";
+    }
 }
+
 
 class VideoPlayerInterface extends PlayerInterface  {
 

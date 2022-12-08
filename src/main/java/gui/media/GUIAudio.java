@@ -1,10 +1,10 @@
 package gui.media;
 
 import app.controllers.ToolBarController;
-import app.media.MediaPlayable;
+import app.media.MediaAudio;
 import app.media.MediaHyperlink;
 import gui.error_window.ErrorWindow;
-import gui.model.GUIPlayerModel;
+import gui.view_controllers.GUIPlayerController;
 import javafx.scene.Node;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -23,16 +23,15 @@ import java.util.ArrayList;
  *  <p>
  *  Parameter audioPlayer is the associated JavaFX.MediaPlayer - The effective backend of the interface
  */
-public class GUIAudio extends GUIMedia<MediaPlayable> implements Playable{
+public class GUIAudio extends GUIMedia<MediaAudio> implements Playable{
 
     private MediaPlayer audioPlayer;
     private VBox timestamps;
-
     private PlayerInterface playerUI;
     private double defaultVolume;
-    private GUIPlayerModel playerManipulator;
+    private GUIPlayerController playerManipulator;
 
-    public GUIAudio(MediaPlayable audio)   {
+    public GUIAudio(MediaAudio audio)   {
         super(audio);
         initializeMediaPlayer();
         playerUI = new PlayerInterface(audio.getName());
@@ -56,16 +55,9 @@ public class GUIAudio extends GUIMedia<MediaPlayable> implements Playable{
         String name = "id" + Double.toString(getMedia().getID());
         Storage fw = new FileLoaderWriter();
 
-        String extension;
         try {
-            if (getMedia().getType().equals("Audio")) {
-                extension = ".mp3";
-            }   else    {
-                extension = ".mp4";
-            }
-
             //Creating temp file for use by javafx.Media Class
-            URI tempFile = fw.writeFile(name, getMedia().getRawData(), extension);
+            URI tempFile = fw.writeFile(name, getMedia().getRawData(), getExtension());
             Media audioMedia = new Media(tempFile.toString());
             this.audioPlayer = new MediaPlayer(audioMedia);
             this.defaultVolume = this.audioPlayer.getVolume();
@@ -75,11 +67,15 @@ public class GUIAudio extends GUIMedia<MediaPlayable> implements Playable{
         }
     }
 
+    protected String getExtension() {
+        return ".mp3";
+    }
+
     /**
      * Configures all the controls for UI elements of the associated PlayerInterface
      */
     public void configureUI()  {
-        playerManipulator = new GUIPlayerModel(this, audioPlayer.getTotalDuration());
+        playerManipulator = new GUIPlayerController(this, audioPlayer.getTotalDuration());
 
         configurePlayButtons();
         configureAudioSlider();
@@ -89,14 +85,14 @@ public class GUIAudio extends GUIMedia<MediaPlayable> implements Playable{
         //Makes it so when the player is playing, playback slider and playback text update accordingly
         this.audioPlayer.currentTimeProperty().addListener((observable, oldValue, newValue) -> {
             double percentElapsed = newValue.toMillis() / audioPlayer.getTotalDuration().toMillis();
-            playerUI.getPlaybackSlider().setValue(percentElapsed);
+            playerManipulator.changePlaybackSlider(percentElapsed);
             playerManipulator.updatePlaybackText(newValue);
         });
 
         //Allow play button to restart player when it reaches the end
         this.audioPlayer.setOnEndOfMedia(() -> {
-            playerUI.getPlaybackSlider().setValue(1); //For some reason the listener won't update properly on short files
-            playerUI.getPlay().setText("Play");
+            playerManipulator.changePlaybackSlider(1); //For some reason the listener won't update properly on short files
+            playerManipulator.firePlay("Pause");
         });
     }
 
@@ -116,21 +112,21 @@ public class GUIAudio extends GUIMedia<MediaPlayable> implements Playable{
      */
     private void configurePlayButtons()    {
         playerUI.getPlay().setOnAction(e -> {
-            playerManipulator.firedPlayButton(playerUI.getPlay().getText());
+            playerManipulator.firePlay(playerUI.getPlay().getText());
             echoClick();
         });
         playerUI.getForward().setOnAction(e -> {
             //For some reason, without the following line this method just doesn't work sometimes and there isn't any
             //rhyme or reason as to why, though my readings indicate mediaPlayer.seek() can be inaccurate
-            playerManipulator.playbackSliderAdjusted(1, audioPlayer.getStatus());
-            playerUI.getPlaybackSlider().setValue(1);
-            playerManipulator.firedPlayButton("Pause");
+            playerManipulator.adjustPlayTime(1.0, audioPlayer.getStatus());
+            playerManipulator.changePlaybackSlider(1);
+            playerManipulator.firePlay("Pause");
             echoClick();
         });
 
         playerUI.getRedo().setOnAction(e -> {
-            playerManipulator.playbackSliderAdjusted(0, audioPlayer.getStatus());
-            playerManipulator.firedPlayButton("Play"); //Ensures the player plays
+            playerManipulator.adjustPlayTime(0.0, audioPlayer.getStatus());
+            playerManipulator.firePlay("Play"); //Ensures the player plays
             echoClick();
         });
     }
@@ -162,7 +158,7 @@ public class GUIAudio extends GUIMedia<MediaPlayable> implements Playable{
     private void configurePlaybackSlider()    {
         playerUI.getPlaybackSlider().valueProperty().addListener((observable, oldValue, newValue) -> {
             if(playerUI.getPlaybackSlider().isPressed()) {
-                playerManipulator.playbackSliderAdjusted((Double) newValue, audioPlayer.getStatus());
+                playerManipulator.adjustPlayTime((Double) newValue, audioPlayer.getStatus());
                 echoClick();
             }
         });
@@ -185,13 +181,13 @@ public class GUIAudio extends GUIMedia<MediaPlayable> implements Playable{
             GUIHyperlink hyperlinkUI = (GUIHyperlink) GUIMediaFactory.getFor(newTimestamp);
             hyperlinkUI.getHyperlink().setOnAction(e -> {
                 //Play first because of an odd bug with clicking after player ends
-                playerManipulator.firedPlayButton("Play");
-                playerManipulator.playbackSliderAdjusted(timestamp.toMillis() /
+                playerManipulator.firePlay("Play");
+                playerManipulator.adjustPlayTime(timestamp.toMillis() /
                                 audioPlayer.getTotalDuration().toMillis(),
                         getAudioPlayer().getStatus());
                 //Doing it twice because the player being in READY status causes some really bizarre bugs for no reason
                 if (audioPlayer.getStatus() == MediaPlayer.Status.READY) {
-                    playerManipulator.firedPlayButton("Play");
+                    playerManipulator.firePlay("Play");
                 }});
             hyperlinkUI.setManaged(true);
             alignment.getChildren().add(hyperlinkUI);

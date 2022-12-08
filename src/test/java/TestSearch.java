@@ -26,7 +26,7 @@ public class TestSearch {
         ArrayList<Media> TestList = new ArrayList<>();
         ArrayList<Duration> testDuration = new ArrayList<>();
         byte[] testByte = new byte[] {};
-        MediaPlayable mediaAudio = new MediaPlayable("", 0, 0, 0, 0, testByte, new ArrayList<>(), "Audio");
+        MediaAudio mediaAudio = new MediaAudio("", 0, 0, 0, 0, testByte, new ArrayList<>());
 
         Tagger tagger = new Tagger();
         tagger.interact("TEST");
@@ -50,7 +50,7 @@ public class TestSearch {
         byte[] testByte = new byte[] {};
         Tagger tagger = new Tagger();
 
-        MediaPlayable mediaAudio = new MediaPlayable("", 0, 0, 0, 0, testByte, new ArrayList<>(), "Audio");
+        MediaAudio mediaAudio = new MediaAudio("", 0, 0, 0, 0, testByte, new ArrayList<>());
 
         tagger.interact("TEST");
         tagger.addTag(mediaAudio);
@@ -76,7 +76,7 @@ public class TestSearch {
 
     @Test
     public void testSearchMediaText(){
-        MediaText text = new MediaText("", 0, 0, 0, 0, "content");
+        MediaText text = new MediaText(0, 0, "content", "");
         ArrayList<Media> TestList = new ArrayList<>();
 
         TestList.add(text);
@@ -92,7 +92,7 @@ public class TestSearch {
     public void testSearchBarController(){
         byte[] testByte = new byte[] {};
         ArrayList<Duration> testDuration = new ArrayList<>();
-        MediaPlayable audio = new MediaPlayable("", 0, 0, 0, 0, testByte, new ArrayList<>(), "Audio");
+        MediaAudio audio = new MediaAudio("", 0, 0, 0, 0, testByte, new ArrayList<>());
         audio.getTags().add("TEST");
         ArrayList<Media> mediaArrayList = new ArrayList<>();
         mediaArrayList.add(audio);
