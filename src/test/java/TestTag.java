@@ -28,6 +28,7 @@ public class TestTag {
         assertTrue(media.getTags().contains("TEST"));
     }
 
+    /*
     @Test
     public void testTagText(){
         MediaText text = new MediaText("", 0, 0, 0, 0, "content");
@@ -38,7 +39,7 @@ public class TestTag {
 
         assertTrue(text.getTags().contains("TEST"));
     }
-
+    */
     @Test
     public void testTagAudio(){
         byte[] testByte = new byte[] {};

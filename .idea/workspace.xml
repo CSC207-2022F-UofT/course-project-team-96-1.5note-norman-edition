@@ -5,11 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ea57fb3c-8b45-48bb-954d-8b968e498d39" name="Changes" comment="Attempted to have the searchtool jump to results">
-      <change afterPath="$PROJECT_DIR$/implementation_notes/text-image.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/TestTextAndImage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/media_managers/ImageModifier.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/media_managers/ImageModifier.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gui/media/GUIImage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/media/GUIImage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gui/tool/ImageTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gui/tool/ImageTool.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/implementation_notes/text-image.md" beforeDir="false" afterPath="$PROJECT_DIR$/implementation_notes/text-image.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/TestTag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/TestTag.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,10 +16,10 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="ExternalProjectsData">
-    <projectState path="$PROJECT_DIR$">
+    <projectState path="/mnt/03ded9a2-bd46-4b2a-9bb5-36cfaf01d2a3/projects/course-project-team-96-1.5note-norman-edition">
       <ProjectState />
     </projectState>
-    <projectState path="/mnt/03ded9a2-bd46-4b2a-9bb5-36cfaf01d2a3/projects/course-project-team-96-1.5note-norman-edition">
+    <projectState path="$PROJECT_DIR$">
       <ProjectState />
     </projectState>
   </component>
@@ -40,6 +39,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -67,6 +67,8 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "last_opened_file_path": "/home/dexter/Documents/projects/p",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Modules",
@@ -75,7 +77,7 @@
     "settings.editor.selected.configurable": "configurable.group.tools"
   }
 }]]></component>
-  <component name="RunManager" selected="Gradle.TestShapeTool">
+  <component name="RunManager" selected="Gradle.TestTextAndImage">
     <configuration name="Main (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="course-project-team-96-1.5note-norman-edition.main" />
@@ -95,6 +97,29 @@
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
+    </configuration>
+    <configuration name="TestGUIAudio" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;TestGUIAudio&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
     </configuration>
     <configuration name="TestShapeTool" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
@@ -119,12 +144,35 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
+    <configuration name="TestTextAndImage" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;TestTextAndImage&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.TestTextAndImage" />
         <item itemvalue="Gradle.TestShapeTool" />
+        <item itemvalue="Gradle.TestGUIAudio" />
         <item itemvalue="Application.Main (1)" />
-        <item itemvalue="Application.Main" />
-        <item itemvalue="Application.Main" />
         <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
@@ -138,6 +186,7 @@
       <option name="presentableId" value="Default" />
       <updated>1667927896511</updated>
       <workItem from="1669058665096" duration="6489000" />
+      <workItem from="1670467042561" duration="1451000" />
     </task>
     <task id="LOCAL-00001" summary="Attempted to have the searchtool jump to results">
       <created>1669065850318</created>
