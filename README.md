@@ -121,7 +121,10 @@ Once a selection is made, all selected media can be:
 
 The tag tool allows adding strings of text as "tags" to the contents of the
 page. To add a tag to a piece of media, click on it in the page, then write the
-tag string into the "Tag Name" text field and press the "Tag" button.
+tag string into the "Tag" text field and press the "Tag" button. The tag tool
+also allows the user to view the tags of a selected/clicked object in the settings
+pane of the tool. To remove a tag, perform the same step as adding a tag, but select
+the "Remove Tag" button instead.
 
 #### Search
 
