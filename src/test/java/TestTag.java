@@ -1,5 +1,7 @@
+import app.controllers.ToolBarController;
 import app.interaction_managers.Tagger;
 import app.media.*;
+import gui.media.GUIMedia;
 import javafx.util.Duration;
 import org.junit.*;
 
@@ -22,9 +24,8 @@ public class TestTag {
         Media media = new Media(1, "", 0, 0, 0, 0);
 
         Tagger tagger = new Tagger();
-        tagger.setTag("TEST");
+        tagger.interact("TEST");
         tagger.addTag(media);
-
         assertTrue(media.getTags().contains("TEST"));
     }
 
@@ -33,7 +34,7 @@ public class TestTag {
         MediaText text = new MediaText("", 0, 0, 0, 0, "content");
 
         Tagger tagger = new Tagger();
-        tagger.setTag("TEST");
+        tagger.interact("TEST");
         tagger.addTag(text);
 
         assertTrue(text.getTags().contains("TEST"));
@@ -47,7 +48,7 @@ public class TestTag {
         MediaPlayable audio = new MediaPlayable("", 0, 0, 0, 0, testByte, new ArrayList<>(), "Audio");
 
         Tagger tagger = new Tagger();
-        tagger.setTag("TEST");
+        tagger.interact("TEST");
         tagger.addTag(audio);
 
         assertTrue(audio.getTags().contains("TEST"));
@@ -60,7 +61,7 @@ public class TestTag {
         MediaImage image = new MediaImage("", 0, 0, 0, 0, testByte);
 
         Tagger tagger = new Tagger();
-        tagger.setTag("TEST");
+        tagger.interact("TEST");
         tagger.addTag(image);
 
         assertTrue(image.getTags().contains("TEST"));
@@ -72,7 +73,7 @@ public class TestTag {
                 new MediaHyperlink("", 1, 1, 1, 1, "content", "link");
 
         Tagger tagger = new Tagger();
-        tagger.setTag("TEST");
+        tagger.interact("TEST");
         tagger.addTag(hyperlink);
 
         assertTrue(hyperlink.getTags().contains("TEST"));
@@ -83,27 +84,52 @@ public class TestTag {
         PenStroke penStroke = new PenStroke(1, 1, 1, "colour");
 
         Tagger tagger = new Tagger();
-        tagger.setTag("TEST");
+        tagger.interact("TEST");
         tagger.addTag(penStroke);
 
         assertTrue(penStroke.getTags().contains("TEST"));
     }
-
 
     @Test
     public void testAddingMoreThanOne(){
         Media media = new Media(1, "", 0, 0, 0, 0);
 
         Tagger tagger = new Tagger();
-        tagger.setTag("TEST");
+        tagger.interact("TEST");
         tagger.addTag(media);
 
-        tagger.setTag("TEST2");
+        tagger.interact("TEST2");
         tagger.addTag(media);
 
         assertTrue(media.getTags().contains("TEST") && media.getTags().contains("TEST2"));
         assertEquals(2, media.getTags().size());
     }
 
+    @Test
+    public void testToolBarControllerTag(){
+        byte[] testByte = new byte[] {};
+        ArrayList<Duration> testDuration = new ArrayList<>();
+        MediaPlayable audio = new MediaPlayable("", 0, 0, 0, 0, testByte, new ArrayList<>(), "Audio");
+        GUIMedia<?> guiMedia = new GUIMedia<>(audio);
+
+        ToolBarController toolBarController = new ToolBarController();
+        toolBarController.tag("TEST", guiMedia);
+
+        assert audio.getTags().contains("TEST");
+
+    }
+
+    @Test
+    public void testRemoveTag(){
+        Media media = new Media(1, "", 0, 0, 0, 0);
+
+        Tagger tagger = new Tagger();
+        tagger.interact("TEST");
+        tagger.addTag(media);
+        assertTrue(media.getTags().contains("TEST"));
+
+        tagger.removeTag(media);
+        assertTrue(media.getTags().isEmpty());
+    }
 
 }

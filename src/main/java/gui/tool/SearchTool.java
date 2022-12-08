@@ -57,8 +57,6 @@ public class SearchTool implements Tool{
         private ArrayList<Double> yCoords;
         private int currentIndex;
 
-        private final int offsetX = 800;
-        private final int offsetY = 200;
         public SearchSettings(){
             // Creating the textfield for user input and button for searching
             Button searchButton = new Button("Search");
@@ -76,8 +74,7 @@ public class SearchTool implements Tool{
                 for (GUIMedia<?> media: page.getAllMedia()) {
                     pageMedia.add(media.getMedia());
                 }
-
-                SearchBarController sb = new SearchBarController(pageMedia, searchBar);
+                SearchBarController sb = new SearchBarController(pageMedia, searchBar.getText());
                 results.setText(resultStatement + " " + sb.results);
                 if (sb.results != 0){
                     findButton.setDisable(false);
@@ -88,7 +85,7 @@ public class SearchTool implements Tool{
             });
 
             findButton.setOnAction(e->{
-                page.jumpToTopLeft(xCoords.get(currentIndex) - offsetX, yCoords.get(currentIndex) - offsetY);
+                page.jumpToCenter(xCoords.get(currentIndex), yCoords.get(currentIndex));
 
                 currentIndex += 1;
                 if (currentIndex == xCoords.size()){
