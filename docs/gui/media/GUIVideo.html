@@ -15,7 +15,11 @@
 <script type="text/javascript" src="../../script-dir/jquery-ui.min.js"></script>
 </head>
 <body class="class-declaration-page">
-<script type="text/javascript">var pathtoroot = "../../";
+<script type="text/javascript">var evenRowColor = "even-row-color";
+var oddRowColor = "odd-row-color";
+var tableTab = "table-tab";
+var activeTableTab = "active-table-tab";
+var pathtoroot = "../../";
 loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
@@ -48,7 +52,7 @@ loadScripts(document, 'script');</script>
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor-detail">Constr</a>&nbsp;|&nbsp;</li>
-<li>Method</li>
+<li><a href="#method-detail">Method</a></li>
 </ul>
 </div>
 <div class="nav-list-search"><label for="search-input">SEARCH:</label>
@@ -71,7 +75,7 @@ loadScripts(document, 'script');</script>
 <div class="inheritance">javafx.scene.Parent
 <div class="inheritance">javafx.scene.layout.Region
 <div class="inheritance">javafx.scene.layout.Pane
-<div class="inheritance"><a href="GUIMedia.html" title="class in gui.media">gui.media.GUIMedia</a>&lt;<a href="../../app/media/MediaPlayable.html" title="class in app.media">MediaPlayable</a>&gt;
+<div class="inheritance"><a href="GUIMedia.html" title="class in gui.media">gui.media.GUIMedia</a>&lt;<a href="../../app/media/MediaAudio.html" title="class in app.media">MediaAudio</a>&gt;
 <div class="inheritance"><a href="GUIAudio.html" title="class in gui.media">gui.media.GUIAudio</a>
 <div class="inheritance">gui.media.GUIVideo</div>
 </div>
@@ -127,7 +131,7 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(app.media.MediaPlayable)" class="member-name-link">GUIVideo</a><wbr>(<a href="../../app/media/MediaPlayable.html" title="class in app.media">MediaPlayable</a>&nbsp;audio)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(app.media.MediaAudio)" class="member-name-link">GUIVideo</a><wbr>(<a href="../../app/media/MediaAudio.html" title="class in app.media">MediaAudio</a>&nbsp;audio)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -136,6 +140,19 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="method-summary" id="method-summary">
 <h2>Method Summary</h2>
+<div id="method-summary-table">
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
+<div id="method-summary-table.tabpanel" role="tabpanel">
+<div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getExtension()" class="member-name-link">getExtension</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+</div>
+</div>
+</div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-gui.media.GUIAudio">Methods inherited from class&nbsp;gui.media.<a href="GUIAudio.html" title="class in gui.media">GUIAudio</a></h3>
 <code><a href="GUIAudio.html#configureUI()">configureUI</a>, <a href="GUIAudio.html#createInterface()">createInterface</a>, <a href="GUIAudio.html#createTimestamps()">createTimestamps</a>, <a href="GUIAudio.html#echoClick()">echoClick</a>, <a href="GUIAudio.html#getAudioPlayer()">getAudioPlayer</a>, <a href="GUIAudio.html#getCurrentDuration()">getCurrentDuration</a>, <a href="GUIAudio.html#getPlaybackText()">getPlaybackText</a>, <a href="GUIAudio.html#getPlayerUI()">getPlayerUI</a>, <a href="GUIAudio.html#getTimestamps()">getTimestamps</a>, <a href="GUIAudio.html#getTimestampsText()">getTimestampsText</a>, <a href="GUIAudio.html#mediaUpdated(app.media.Media)">mediaUpdated</a>, <a href="GUIAudio.html#pause()">pause</a>, <a href="GUIAudio.html#play()">play</a>, <a href="GUIAudio.html#removed()">removed</a>, <a href="GUIAudio.html#setPlaybackRate(double)">setPlaybackRate</a>, <a href="GUIAudio.html#setPlaybackSliderValue(double)">setPlaybackSliderValue</a>, <a href="GUIAudio.html#setPlaybackText(java.lang.String)">setPlaybackText</a>, <a href="GUIAudio.html#setPlayButtonText(java.lang.String)">setPlayButtonText</a>, <a href="GUIAudio.html#setPlayerDuration(javafx.util.Duration)">setPlayerDuration</a>, <a href="GUIAudio.html#setPlayerUI(gui.media.PlayerInterface)">setPlayerUI</a>, <a href="GUIAudio.html#setPlayerVolume(double)">setPlayerVolume</a></code></div>
@@ -172,9 +189,27 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(app.media.MediaPlayable)">
+<section class="detail" id="&lt;init&gt;(app.media.MediaAudio)">
 <h3>GUIVideo</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">GUIVideo</span><wbr><span class="parameters">(<a href="../../app/media/MediaPlayable.html" title="class in app.media">MediaPlayable</a>&nbsp;audio)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">GUIVideo</span><wbr><span class="parameters">(<a href="../../app/media/MediaAudio.html" title="class in app.media">MediaAudio</a>&nbsp;audio)</span></div>
+</section>
+</li>
+</ul>
+</section>
+</li>
+<!-- ============ METHOD DETAIL ========== -->
+<li>
+<section class="method-details" id="method-detail">
+<h2>Method Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="getExtension()">
+<h3>getExtension</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getExtension</span>()</div>
+<dl class="notes">
+<dt>Overrides:</dt>
+<dd><code><a href="GUIAudio.html#getExtension()">getExtension</a></code>&nbsp;in class&nbsp;<code><a href="GUIAudio.html" title="class in gui.media">GUIAudio</a></code></dd>
+</dl>
 </section>
 </li>
 </ul>

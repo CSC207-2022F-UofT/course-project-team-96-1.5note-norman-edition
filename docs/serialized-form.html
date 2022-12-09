@@ -113,7 +113,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="serialized-class-details" id="app.media.Hyperlink">
 <h3>Class&nbsp;<a href="app/media/Hyperlink.html" title="class in app.media">app.media.Hyperlink</a></h3>
-<div class="type-signature">class Hyperlink extends <a href="app/media/TextBox.html" title="class in app.media">TextBox</a> implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
+<div class="type-signature">class Hyperlink extends <a href="app/media/MediaText.html" title="class in app.media">MediaText</a> implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
 <ul class="block-list">
 <li>
 <section class="detail">
@@ -217,6 +217,31 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="serialized-class-details" id="app.media.MediaAudio">
+<h3>Class&nbsp;<a href="app/media/MediaAudio.html" title="class in app.media">app.media.MediaAudio</a></h3>
+<div class="type-signature">class MediaAudio extends <a href="app/media/FileMedia.html" title="class in app.media">FileMedia</a> implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
+<ul class="block-list">
+<li>
+<section class="detail">
+<h4>Serialized Fields</h4>
+<ul class="block-list">
+<li class="block-list">
+<h5>timestamps</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;javafx.util.Duration&gt; timestamps</pre>
+<div class="block">Entity class for storing audio
+ <p>
+ Aside from regular Media and FileMedia parameters, defined by a list of Durations denoting points to be linked
+ to within the associated playable type
+ <p>
+ Representation Invariant: All Durations in timestamps are valid points in the associated media</div>
+</li>
+</ul>
+</section>
+</li>
+</ul>
+</section>
+</li>
+<li>
 <section class="serialized-class-details" id="app.media.MediaHyperlink">
 <h3>Class&nbsp;<a href="app/media/MediaHyperlink.html" title="class in app.media">app.media.MediaHyperlink</a></h3>
 <div class="type-signature">class MediaHyperlink extends <a href="app/media/Media.html" title="class in app.media">Media</a> implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
@@ -246,35 +271,6 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="serialized-class-details" id="app.media.MediaPlayable">
-<h3>Class&nbsp;<a href="app/media/MediaPlayable.html" title="class in app.media">app.media.MediaPlayable</a></h3>
-<div class="type-signature">class MediaPlayable extends <a href="app/media/FileMedia.html" title="class in app.media">FileMedia</a> implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
-<ul class="block-list">
-<li>
-<section class="detail">
-<h4>Serialized Fields</h4>
-<ul class="block-list">
-<li class="block-list">
-<h5>timestamps</h5>
-<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;javafx.util.Duration&gt; timestamps</pre>
-<div class="block">Entity class for storing playable types of media
- <p>
- Aside from regular Media and FileMedia parameters, defined by a list of Durations denoting points to be linked
- to within the associated playable type, and a String defining the type of this playabale
- <p>
- Representation Invariant: All Durations in timestamps are valid points in the associated playable media</div>
-</li>
-<li class="block-list">
-<h5>type</h5>
-<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> type</pre>
-</li>
-</ul>
-</section>
-</li>
-</ul>
-</section>
-</li>
-<li>
 <section class="serialized-class-details" id="app.media.MediaText">
 <h3>Class&nbsp;<a href="app/media/MediaText.html" title="class in app.media">app.media.MediaText</a></h3>
 <div class="type-signature">class MediaText extends <a href="app/media/Media.html" title="class in app.media">Media</a> implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
@@ -284,6 +280,10 @@ loadScripts(document, 'script');</script>
 <h4>Serialized Fields</h4>
 <ul class="block-list">
 <li class="block-list">
+<h5>colour</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> colour</pre>
+</li>
+<li class="block-list">
 <h5>text</h5>
 <pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> text</pre>
 </li>
@@ -291,6 +291,35 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 </ul>
+</section>
+</li>
+<li>
+<section class="serialized-class-details" id="app.media.MediaText.Box">
+<h3>Record Class&nbsp;<a href="app/media/MediaText.Box.html" title="class in app.media">app.media.MediaText.Box</a></h3>
+<div class="type-signature">class Box extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Record.html" title="class or interface in java.lang" class="external-link">Record</a> implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
+<ul class="block-list">
+<li>
+<section class="detail">
+<h4>Serialized Fields</h4>
+<ul class="block-list">
+<li class="block-list">
+<h5>leftCorner</h5>
+<pre>double leftCorner</pre>
+</li>
+<li class="block-list">
+<h5>rightCorner</h5>
+<pre>double rightCorner</pre>
+</li>
+</ul>
+</section>
+</li>
+</ul>
+</section>
+</li>
+<li>
+<section class="serialized-class-details" id="app.media.MediaVideo">
+<h3>Class&nbsp;<a href="app/media/MediaVideo.html" title="class in app.media">app.media.MediaVideo</a></h3>
+<div class="type-signature">class MediaVideo extends <a href="app/media/MediaAudio.html" title="class in app.media">MediaAudio</a> implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
 </section>
 </li>
 <li>
@@ -377,52 +406,6 @@ loadScripts(document, 'script');</script>
 <section class="serialized-class-details" id="app.media.RectangleShape">
 <h3>Class&nbsp;<a href="app/media/RectangleShape.html" title="class in app.media">app.media.RectangleShape</a></h3>
 <div class="type-signature">class RectangleShape extends <a href="app/media/GenericShape.html" title="class in app.media">GenericShape</a> implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
-</section>
-</li>
-<li>
-<section class="serialized-class-details" id="app.media.MediaText">
-<h3>Class&nbsp;<a href="app/media/TextBox.html" title="class in app.media">app.media.MediaText</a></h3>
-<div class="type-signature">class TextBox extends <a href="app/media/Media.html" title="class in app.media">Media</a> implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
-<ul class="block-list">
-<li>
-<section class="detail">
-<h4>Serialized Fields</h4>
-<ul class="block-list">
-<li class="block-list">
-<h5>colour</h5>
-<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> colour</pre>
-</li>
-<li class="block-list">
-<h5>text</h5>
-<pre><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a> text</pre>
-</li>
-</ul>
-</section>
-</li>
-</ul>
-</section>
-</li>
-<li>
-<section class="serialized-class-details" id="app.media.MediaText.Box">
-<h3>Record Class&nbsp;<a href="app/media/TextBox.Box.html" title="class in app.media">app.media.MediaText.Box</a></h3>
-<div class="type-signature">class Box extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Record.html" title="class or interface in java.lang" class="external-link">Record</a> implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></div>
-<ul class="block-list">
-<li>
-<section class="detail">
-<h4>Serialized Fields</h4>
-<ul class="block-list">
-<li class="block-list">
-<h5>leftCorner</h5>
-<pre>double leftCorner</pre>
-</li>
-<li class="block-list">
-<h5>rightCorner</h5>
-<pre>double rightCorner</pre>
-</li>
-</ul>
-</section>
-</li>
-</ul>
 </section>
 </li>
 </ul>

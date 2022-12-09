@@ -113,7 +113,9 @@ loadScripts(document, 'script');</script>
  javafx.geometry.Bounds&nbsp;bounds)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#insertImage()" class="member-name-link">insertImage</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#insertImage(app.MediaCommunicator,double,double)" class="member-name-link">insertImage</a><wbr>(<a href="../MediaCommunicator.html" title="class in app">MediaCommunicator</a>&nbsp;com,
+ double&nbsp;x,
+ double&nbsp;y)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#insertText()" class="member-name-link">insertText</a>()</code></div>
@@ -123,14 +125,18 @@ loadScripts(document, 'script');</script>
  javafx.geometry.Bounds&nbsp;bounds)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#modifyTimestamp(app.media.MediaPlayable,javafx.util.Duration,app.MediaCommunicator)" class="member-name-link">modifyTimestamp</a><wbr>(<a href="../media/MediaPlayable.html" title="class in app.media">MediaPlayable</a>&nbsp;audio,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#modifyTimestamp(app.media.MediaAudio,javafx.util.Duration,app.MediaCommunicator)" class="member-name-link">modifyTimestamp</a><wbr>(<a href="../media/MediaAudio.html" title="class in app.media">MediaAudio</a>&nbsp;audio,
  javafx.util.Duration&nbsp;timestamp,
  <a href="../MediaCommunicator.html" title="class in app">MediaCommunicator</a>&nbsp;communicator)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#tag(javafx.scene.control.TextField,gui.media.GUIMedia)" class="member-name-link">tag</a><wbr>(javafx.scene.control.TextField&nbsp;node,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#removeTag(java.lang.String,gui.media.GUIMedia)" class="member-name-link">removeTag</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;node,
  <a href="../../gui/media/GUIMedia.html" title="class in gui.media">GUIMedia</a>&lt;?&gt;&nbsp;guiMedia)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#tag(java.lang.String,gui.media.GUIMedia)" class="member-name-link">tag</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;node,
+ <a href="../../gui/media/GUIMedia.html" title="class in gui.media">GUIMedia</a>&lt;?&gt;&nbsp;guiMedia)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -174,9 +180,11 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="insertImage()">
+<section class="detail" id="insertImage(app.MediaCommunicator,double,double)">
 <h3>insertImage</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">insertImage</span>()
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">insertImage</span><wbr><span class="parameters">(<a href="../MediaCommunicator.html" title="class in app">MediaCommunicator</a>&nbsp;com,
+ double&nbsp;x,
+ double&nbsp;y)</span>
                  throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a></span></div>
 <dl class="notes">
 <dt>Throws:</dt>
@@ -209,9 +217,9 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="modifyTimestamp(app.media.MediaPlayable,javafx.util.Duration,app.MediaCommunicator)">
+<section class="detail" id="modifyTimestamp(app.media.MediaAudio,javafx.util.Duration,app.MediaCommunicator)">
 <h3>modifyTimestamp</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">modifyTimestamp</span><wbr><span class="parameters">(<a href="../media/MediaPlayable.html" title="class in app.media">MediaPlayable</a>&nbsp;audio,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">modifyTimestamp</span><wbr><span class="parameters">(<a href="../media/MediaAudio.html" title="class in app.media">MediaAudio</a>&nbsp;audio,
  javafx.util.Duration&nbsp;timestamp,
  <a href="../MediaCommunicator.html" title="class in app">MediaCommunicator</a>&nbsp;communicator)</span>
                      throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a></span></div>
@@ -229,9 +237,16 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="tag(javafx.scene.control.TextField,gui.media.GUIMedia)">
+<section class="detail" id="tag(java.lang.String,gui.media.GUIMedia)">
 <h3>tag</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">tag</span><wbr><span class="parameters">(javafx.scene.control.TextField&nbsp;node,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">tag</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;node,
+ <a href="../../gui/media/GUIMedia.html" title="class in gui.media">GUIMedia</a>&lt;?&gt;&nbsp;guiMedia)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="removeTag(java.lang.String,gui.media.GUIMedia)">
+<h3>removeTag</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">removeTag</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;node,
  <a href="../../gui/media/GUIMedia.html" title="class in gui.media">GUIMedia</a>&lt;?&gt;&nbsp;guiMedia)</span></div>
 </section>
 </li>

@@ -152,7 +152,7 @@ implements <a href="../../app/MediaObserver.html" title="interface in app">Media
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addMedia(gui.media.GUIMedia)" class="member-name-link">addMedia</a><wbr>(<a href="../media/GUIMedia.html" title="class in gui.media">GUIMedia</a>&nbsp;media)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addMedia(gui.media.GUIMedia)" class="member-name-link">addMedia</a><wbr>(<a href="../media/GUIMedia.html" title="class in gui.media">GUIMedia</a>&lt;?&gt;&nbsp;media)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Add the given GUIMedia object to this page.</div>
 </div>
@@ -162,11 +162,11 @@ implements <a href="../../app/MediaObserver.html" title="interface in app">Media
 <div class="block">given the x and y coords of a point, make that point the center of the visible box</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#contains(gui.media.GUIMedia)" class="member-name-link">contains</a><wbr>(<a href="../media/GUIMedia.html" title="class in gui.media">GUIMedia</a>&nbsp;media)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#contains(gui.media.GUIMedia)" class="member-name-link">contains</a><wbr>(<a href="../media/GUIMedia.html" title="class in gui.media">GUIMedia</a>&lt;?&gt;&nbsp;media)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Return whether or not the given GUIMedia object is within this page</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../media/GUIMedia.html" title="class in gui.media">GUIMedia</a>&gt;</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../media/GUIMedia.html" title="class in gui.media">GUIMedia</a>&lt;?&gt;&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getAllMedia()" class="member-name-link">getAllMedia</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Get all the media currently displayed on this page which have assigned IDs.</div>
@@ -247,7 +247,7 @@ implements <a href="../../app/MediaObserver.html" title="interface in app">Media
 <div class="block">Remove ALL GUIMedia objects from this page.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#removeMedia(gui.media.GUIMedia)" class="member-name-link">removeMedia</a><wbr>(<a href="../media/GUIMedia.html" title="class in gui.media">GUIMedia</a>&nbsp;media)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#removeMedia(gui.media.GUIMedia)" class="member-name-link">removeMedia</a><wbr>(<a href="../media/GUIMedia.html" title="class in gui.media">GUIMedia</a>&lt;?&gt;&nbsp;media)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Remove the given GUIMedia object from this page.</div>
 </div>
@@ -276,7 +276,7 @@ implements <a href="../../app/MediaObserver.html" title="interface in app">Media
 <div class="block">Set a node to display <i>on top</i> of the current page.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateMedia(gui.media.GUIMedia)" class="member-name-link">updateMedia</a><wbr>(<a href="../media/GUIMedia.html" title="class in gui.media">GUIMedia</a>&nbsp;media)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateMedia(gui.media.GUIMedia)" class="member-name-link">updateMedia</a><wbr>(<a href="../media/GUIMedia.html" title="class in gui.media">GUIMedia</a>&lt;?&gt;&nbsp;media)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Indicate that the given GUIMedia object has been updated.</div>
 </div>
@@ -358,28 +358,28 @@ implements <a href="../../app/MediaObserver.html" title="interface in app">Media
 <li>
 <section class="detail" id="addMedia(gui.media.GUIMedia)">
 <h3>addMedia</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addMedia</span><wbr><span class="parameters">(<a href="../media/GUIMedia.html" title="class in gui.media">GUIMedia</a>&nbsp;media)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addMedia</span><wbr><span class="parameters">(<a href="../media/GUIMedia.html" title="class in gui.media">GUIMedia</a>&lt;?&gt;&nbsp;media)</span></div>
 <div class="block">Add the given GUIMedia object to this page.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="contains(gui.media.GUIMedia)">
 <h3>contains</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">contains</span><wbr><span class="parameters">(<a href="../media/GUIMedia.html" title="class in gui.media">GUIMedia</a>&nbsp;media)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">contains</span><wbr><span class="parameters">(<a href="../media/GUIMedia.html" title="class in gui.media">GUIMedia</a>&lt;?&gt;&nbsp;media)</span></div>
 <div class="block">Return whether or not the given GUIMedia object is within this page</div>
 </section>
 </li>
 <li>
 <section class="detail" id="updateMedia(gui.media.GUIMedia)">
 <h3>updateMedia</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updateMedia</span><wbr><span class="parameters">(<a href="../media/GUIMedia.html" title="class in gui.media">GUIMedia</a>&nbsp;media)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updateMedia</span><wbr><span class="parameters">(<a href="../media/GUIMedia.html" title="class in gui.media">GUIMedia</a>&lt;?&gt;&nbsp;media)</span></div>
 <div class="block">Indicate that the given GUIMedia object has been updated.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="removeMedia(gui.media.GUIMedia)">
 <h3>removeMedia</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">removeMedia</span><wbr><span class="parameters">(<a href="../media/GUIMedia.html" title="class in gui.media">GUIMedia</a>&nbsp;media)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">removeMedia</span><wbr><span class="parameters">(<a href="../media/GUIMedia.html" title="class in gui.media">GUIMedia</a>&lt;?&gt;&nbsp;media)</span></div>
 <div class="block">Remove the given GUIMedia object from this page.</div>
 </section>
 </li>
@@ -393,7 +393,7 @@ implements <a href="../../app/MediaObserver.html" title="interface in app">Media
 <li>
 <section class="detail" id="getAllMedia()">
 <h3>getAllMedia</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../media/GUIMedia.html" title="class in gui.media">GUIMedia</a>&gt;</span>&nbsp;<span class="element-name">getAllMedia</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../media/GUIMedia.html" title="class in gui.media">GUIMedia</a>&lt;?&gt;&gt;</span>&nbsp;<span class="element-name">getAllMedia</span>()</div>
 <div class="block">Get all the media currently displayed on this page which have assigned IDs.</div>
 </section>
 </li>

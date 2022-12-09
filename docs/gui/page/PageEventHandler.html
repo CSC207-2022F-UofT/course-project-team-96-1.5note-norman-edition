@@ -77,12 +77,12 @@ loadScripts(document, 'script');</script>
 </dl>
 <dl class="notes">
 <dt>All Known Implementing Classes:</dt>
-<dd><code><a href="../tool/AudioTool.html" title="class in gui.tool">AudioTool</a></code>, <code><a href="../tool/ColourTool.html" title="class in gui.tool">ColourTool</a></code>, <code><a href="../tool/HyperlinkTool.html" title="class in gui.tool">HyperlinkTool</a></code>, <code><a href="../tool/MediaTool.html" title="class in gui.tool">MediaTool</a></code>, <code><a href="../tool/PenTool.html" title="class in gui.tool">PenTool</a></code>, <code><a href="../tool/SearchTool.html" title="class in gui.tool">SearchTool</a></code>, <code><a href="../tool/ShapeTool.html" title="class in gui.tool">ShapeTool</a></code>, <code><a href="../tool/TagTool.html" title="class in gui.tool">TagTool</a></code>, <code><a href="../tool/TextTool.html" title="class in gui.tool">TextTool</a></code>, <code><a href="../tool/VideoTool.html" title="class in gui.tool">VideoTool</a></code></dd>
+<dd><code><a href="../tool/AudioTool.html" title="class in gui.tool">AudioTool</a></code>, <code><a href="../tool/ColourTool.html" title="class in gui.tool">ColourTool</a></code>, <code><a href="../tool/HyperlinkTool.html" title="class in gui.tool">HyperlinkTool</a></code>, <code><a href="../tool/ImageTool.html" title="class in gui.tool">ImageTool</a></code>, <code><a href="../tool/MediaTool.html" title="class in gui.tool">MediaTool</a></code>, <code><a href="../tool/PenTool.html" title="class in gui.tool">PenTool</a></code>, <code><a href="../tool/SearchTool.html" title="class in gui.tool">SearchTool</a></code>, <code><a href="../tool/ShapeTool.html" title="class in gui.tool">ShapeTool</a></code>, <code><a href="../tool/TagTool.html" title="class in gui.tool">TagTool</a></code>, <code><a href="../tool/TextTool.html" title="class in gui.tool">TextTool</a></code>, <code><a href="../tool/VideoTool.html" title="class in gui.tool">VideoTool</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">PageEventHandler</span></div>
 <div class="block">Implementors of this interface provide handler methods which accept events
- from a app.media.Page.
+ from a Page.
  <p>
  Implementors will also be notified when their handlers are added to or
  removed from a page via the `enabledFor` and `disabledFor` methods.</div>
@@ -129,7 +129,7 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
 <div class="block">Called when the handler is set to receive events from the given page.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default <a href="PageEventHandler.HandlerMethod.html" title="class in gui.page">PageEventHandler.HandlerMethod</a>[]</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default <a href="PageEventHandler.HandlerMethod.html" title="class in gui.page">PageEventHandler.HandlerMethod</a>&lt;?&gt;[]</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getHandlerMethods()" class="member-name-link">getHandlerMethods</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
 <div class="block">Get the handler methods to be added to a page through which events will
@@ -152,7 +152,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getHandlerMethods()">
 <h3>getHandlerMethods</h3>
-<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="PageEventHandler.HandlerMethod.html" title="class in gui.page">PageEventHandler.HandlerMethod</a>[]</span>&nbsp;<span class="element-name">getHandlerMethods</span>()</div>
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="PageEventHandler.HandlerMethod.html" title="class in gui.page">PageEventHandler.HandlerMethod</a>&lt;?&gt;[]</span>&nbsp;<span class="element-name">getHandlerMethods</span>()</div>
 <div class="block">Get the handler methods to be added to a page through which events will
  be received.</div>
 </section>

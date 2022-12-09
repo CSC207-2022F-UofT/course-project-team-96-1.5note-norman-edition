@@ -116,8 +116,9 @@ implements <a href="Storage.html" title="interface in storage">Storage</a></span
 <div class="block">Allows the user to choose media to be added to the Page</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/net/URI.html" title="class or interface in java.net" class="external-link">URI</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#writeFile(java.lang.String,byte%5B%5D)" class="member-name-link">writeFile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
- byte[]&nbsp;Data)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#writeFile(java.lang.String,byte%5B%5D,java.lang.String)" class="member-name-link">writeFile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ byte[]&nbsp;Data,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;extension)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Writes a temp file for use by FileMedia</div>
 </div>
@@ -173,20 +174,22 @@ implements <a href="Storage.html" title="interface in storage">Storage</a></span
 </section>
 </li>
 <li>
-<section class="detail" id="writeFile(java.lang.String,byte[])">
+<section class="detail" id="writeFile(java.lang.String,byte[],java.lang.String)">
 <h3>writeFile</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/net/URI.html" title="class or interface in java.net" class="external-link">URI</a></span>&nbsp;<span class="element-name">writeFile</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
- byte[]&nbsp;Data)</span>
+ byte[]&nbsp;Data,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;extension)</span>
               throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a></span></div>
 <div class="block">Writes a temp file for use by FileMedia</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="Storage.html#writeFile(java.lang.String,byte%5B%5D)">writeFile</a></code>&nbsp;in interface&nbsp;<code><a href="Storage.html" title="interface in storage">Storage</a></code></dd>
+<dd><code><a href="Storage.html#writeFile(java.lang.String,byte%5B%5D,java.lang.String)">writeFile</a></code>&nbsp;in interface&nbsp;<code><a href="Storage.html" title="interface in storage">Storage</a></code></dd>
 <dt>Parameters:</dt>
 <dd><code>name</code> - what the temp file will be called</dd>
 <dd><code>Data</code> - the raw data to be written</dd>
+<dd><code>extension</code> - the extension type the written temp file will be. Must be in form '.extensionType'</dd>
 <dt>Returns:</dt>
-<dd>a URI indeitfying the temp file that was written</dd>
+<dd>a URI indentfying the temp file that was written</dd>
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a></code> - when writing fails for any reason</dd>
 </dl>
