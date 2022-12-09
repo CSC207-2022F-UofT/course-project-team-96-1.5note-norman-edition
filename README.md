@@ -24,6 +24,9 @@ To compile and run in IntelliJ, make sure of the following:
 You can then run the program using the "Run" button or with its keyboard
 shortcut (Shift-F10 by default).
 
+To run tests, switch to a JDK with version 17. After running tests, if you 
+want to compile the project again you must follow the above instructions again.
+
 ## Usage
 
 ### Managing Pages
