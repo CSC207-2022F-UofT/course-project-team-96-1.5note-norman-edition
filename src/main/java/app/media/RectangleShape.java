@@ -14,6 +14,7 @@ public class RectangleShape extends GenericShape {
      */
     public RectangleShape(Point2D p1, Point2D p2, String colour) {
         super("Rectangle", p1, p2, colour);
+        getTags().add("rectangle");
     }
 
     /**

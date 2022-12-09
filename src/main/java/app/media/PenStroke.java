@@ -29,6 +29,12 @@ public class PenStroke extends Media {
         segments = new ArrayList<>();
         this.thickness = thickness;
         this.colour = colour;
+
+        getTags().add("pen-stroke");
+        getTags().add("stroke");
+        getTags().add("pen");
+
+        setZindex(-2);
     }
 
     public void addSegment(Segment s) {

@@ -16,6 +16,7 @@ public class MediaText extends Media {
         super("text-box", x, y, 0, 0);
         this.text = text;
         this.colour = colour;
+        setZindex(-1);
     }
 
     public MediaText(double x, double y) {

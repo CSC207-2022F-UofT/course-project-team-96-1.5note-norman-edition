@@ -7,6 +7,13 @@ public class Hyperlink extends MediaText {
     public Hyperlink(double x, double y, String text, String link, String colour){
         super(x, y, text, colour);
         this.link = link;
+
+        getTags().add("URL");
+        getTags().add("url");
+        getTags().add("hyperlink");
+        getTags().add("link");
+
+        setZindex(-1);
     }
 
     public void setLink(String link){

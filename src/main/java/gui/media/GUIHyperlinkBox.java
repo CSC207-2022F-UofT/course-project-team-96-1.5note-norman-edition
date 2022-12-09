@@ -1,4 +1,5 @@
 package gui.media;
+import app.media.Media;
 import app.media.Hyperlink;
 import javafx.geometry.Point2D;
 import javafx.scene.paint.Color;
@@ -32,7 +33,16 @@ public class GUIHyperlinkBox extends GUIMedia<Hyperlink> {
 
     public GUIHyperlinkBox(Hyperlink media) {
         super(media);
+        setInitialValues();
         mediaUpdated(media);
+    }
+
+    @Override
+    public void mediaUpdated(Media media) {
+        Hyperlink hyperlink = (Hyperlink) media;
+        this.colour = Color.valueOf(hyperlink.getColour());
+        setText(hyperlink.getText());
+        setLink(hyperlink.getLink());
     }
 
     public String getLink(){
@@ -58,7 +68,6 @@ public class GUIHyperlinkBox extends GUIMedia<Hyperlink> {
 
     protected void setLink(String linkIn) {
         this.link = linkIn;
-        this.getMedia().setText(linkIn);
     }
     public String getText() { return this.text.getText(); }
 

@@ -37,6 +37,7 @@ public class PolygonShape extends GenericShape {
         this.radius = radius;
         this.startAngle = startAngle;
         this.sideCount = sideCount;
+        getTags().add("polygon");
     }
 
     /**
