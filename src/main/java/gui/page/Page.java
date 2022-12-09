@@ -485,10 +485,7 @@ public class Page extends StackPane implements MediaObserver, Zoomable {
      */
     public void jumpToCenter(double x, double y) {
         // * Translate the point to the top left of the view
-        double translateX = x - getTranslateX();
-        double translateY = y - getTranslateY();
-        mediaLayer.setTranslateX(translateX);
-        mediaLayer.setTranslateY(translateY);
+        jumpToTopLeft(x, y);
         // * Get the center of the view (in the mediaLayer's coordinate space)
         Bounds b = getVisibleBounds();
         Point2D center = new Point2D(b.getCenterX(), b.getCenterY());
