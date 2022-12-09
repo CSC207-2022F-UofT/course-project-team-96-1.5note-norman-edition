@@ -14,6 +14,7 @@ public class EllipseShape extends GenericShape {
      */
     public EllipseShape(Point2D p1, Point2D p2, String colour) {
         super("Ellipse", p1, p2, colour);
+        getTags().add("ellipse");
     }
 
     /**

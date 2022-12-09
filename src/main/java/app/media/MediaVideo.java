@@ -15,4 +15,9 @@ public class MediaVideo extends MediaAudio{
                       ArrayList<Duration> timestamps) {
         super(name, x, y, width, height, rawData, timestamps);
     }
+
+    @Override
+    protected void setDefaultTags() {
+        getTags().add("video");
+    }
 }

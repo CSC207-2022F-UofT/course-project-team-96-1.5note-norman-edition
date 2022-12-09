@@ -31,8 +31,8 @@ public class GUIMediaFactory {
         } else if (media instanceof GenericShape) {
             return GUIShapeFactory.getFor((GenericShape) media);
         } else if (media instanceof MediaText) {
-            // Text Box
             if (media instanceof Hyperlink) {
+                // Hyperlink Text Box
                 return new GUIHyperlinkBox((Hyperlink) media);
             } else {
                 // Plain Text Box

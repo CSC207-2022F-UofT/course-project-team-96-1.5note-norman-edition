@@ -17,6 +17,7 @@ public class MediaAudio extends FileMedia{
                       ArrayList<Duration>  timestamps) {
         super(name, x, y, width, height, rawData);
         this.timestamps = timestamps;
+        setDefaultTags();
     }
 
 
@@ -24,4 +25,7 @@ public class MediaAudio extends FileMedia{
         return timestamps;
     }
 
+    protected void setDefaultTags() {
+        getTags().add("audio");
+    }
 }
