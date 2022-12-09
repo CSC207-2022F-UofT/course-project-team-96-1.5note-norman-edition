@@ -27,6 +27,8 @@ shortcut (Shift-F10 by default).
 To run tests, switch to a JDK with version 17. After running tests, if you 
 want to compile the project again you must follow the above instructions again.
 
+Pre-built JAR files are also available on the releases page, along with a demo `page` file.
+
 ## Usage
 
 ### Managing Pages
