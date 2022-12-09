@@ -2,16 +2,17 @@
 
 ## Relevant Classes & Interfaces
 
-* `GenericShape`
-  * `RectangleShape`
-  * `ElipseShape`
-  * `PolygonShape`
-* `GUIShape`
-  * `GUIRectangle`
-  * `GUIEllipse`
-  * `GUIPolygon`
-* `ShapeTool`
-* `GUIShapeFactory`
+* `app.media.GenericShape`
+  * `app.media.RectangleShape`
+  * `app.media.ElipseShape`
+  * `app.media.PolygonShape`
+* `gui.media.GUIShape`
+  * `gui.media.GUIRectangle`
+  * `gui.media.GUIEllipse`
+  * `gui.media.GUIPolygon`
+* `gui.tool.ShapeTool`
+  * `gui.tool.ShapeType`
+* `gui.media.GUIShapeFactory`
 
 ## Summary
 
@@ -29,7 +30,8 @@ define how the shape should be drawn. Its purpose is to separate the GUI from th
 how we draw a shape should not be concerned with how we load and store it (Dependency Inversion).
 
 While the user drags the mouse, `JavaFX` calls the `ShapeTool` to update the shape. This call is then passed to
-the `Page` instance, which updates its media layer, for rendering.
+the `Page` instance, which updates its media layer, for rendering. Once a user has stopped dragging the mouse, the
+shape is no longer updated and is effectively finished.
 
 When a shape is loaded via the `GUIMediaFactory`, the `GUIShapeFactory` is used to create the exact shape type that is 
 needed. This way, the `GUIMediaFactory` does not need to concern itself with which type of shape it is loading, and
@@ -44,18 +46,16 @@ Liskov Substitution and open-closed principles.
 and utilize different attributes and methods specific to their shape type. These are good examples of the
 Liskov Substitution and open-closed principles.
 
-* Shapes are designed to be modular, and do not have any outwards dependencies, in line with clean architecture.
-  * *Frameworks and Adapters*: `Shapetool`, `GUIShapeFactory`
-  * *Application Business Rules*: `GUIShape` and its implementations
-  * *Enterprise Business Rules*: `GenericShape` and its implementations
+* Shapes have their own "Nodes" (JavaFX functionality) which they are drawn onto. Any transformation from say, 
+* the media tool, will affect this node and not the shape itself. It could be thought of as a parent.
 
-* We considered whether to use the `ToolBarController` (*Interface adapter*) and 
-`MediaCommunicator` (*Application Business Rules*) as intermediates in the creation of shapes, but decided against it.
-The following reasons motivated this decision:
-  * The `ShapeTool` must maintain a reference to the shape it's currently modifying, so a preview may be seen while
-  dragging the mouse. No other class must maintain such a reference, so it is unnecessary to add "middlemen".
-  * Only the `MediaTool` is concerned with moving the shapes within the page (updating their attributes), and has 
-  defined methods to do so.
+* The `ShapeType` enum is used by the settings pannel and the tool to determine what shape should be created.
+
+* Shapes are designed to be modular, and do not have any outwards dependencies, in line with clean architecture.
+  * *Frameworks and Adapters*: `Shapetool`, `GUIShapeFactory`, `GUIShape` and its implementations
+  * *Enterprise Business Rules*: `GenericShape` and its implementations
+  * Intermediate layers were determined as unnecessary, as `GenericShape` already has getter and setter methods, and 
+  it does not depend on anything else. Outer classes like `GUIShape` may depend on it, but not the other way around.
 
 ## Result
 * Modification of the shape's implementation will not affect the rest of the program
@@ -65,5 +65,12 @@ The following reasons motivated this decision:
   * Rendering and loading/saving to storage are effectively handled by the rest of the program.
 
 ## Test Case Coverage
-Test case coverage is good, with most classes being tested near 90% line coverage. Attached is a summary:
+Test case coverage is good, with relevant classes being tested near 90% line coverage. Attached is a summary:
 
+Test Coverage Header:
+![image](https://user-images.githubusercontent.com/39686698/206595011-081ebdcf-058e-41c8-b183-0e1dff1a1d69.png)
+
+Test Coverage:
+![image](https://user-images.githubusercontent.com/39686698/206595206-30bc0e49-56a1-462f-b01e-96e54e2e2007.png)
+![image](https://user-images.githubusercontent.com/39686698/206595386-e2791714-6258-44d9-b41c-4afae2dcdd11.png)
+![image](https://user-images.githubusercontent.com/39686698/206595427-392adef9-55da-4949-8d1e-5d96c29513f2.png)
