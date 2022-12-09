@@ -12,4 +12,5 @@ gui.page
 gui.page_screen
 gui.start_screen
 gui.tool
+gui.view_controllers
 storage

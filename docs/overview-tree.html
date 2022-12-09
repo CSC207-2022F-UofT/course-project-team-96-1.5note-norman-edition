@@ -63,6 +63,7 @@ loadScripts(document, 'script');</script>
 <li><a href="gui/page_screen/package-tree.html">gui.page_screen</a>, </li>
 <li><a href="gui/start_screen/package-tree.html">gui.start_screen</a>, </li>
 <li><a href="gui/tool/package-tree.html">gui.tool</a>, </li>
+<li><a href="gui/view_controllers/package-tree.html">gui.view_controllers</a>, </li>
 <li><a href="storage/package-tree.html">storage</a></li>
 </ul>
 </div>
@@ -74,6 +75,11 @@ loadScripts(document, 'script');</script>
 <li class="circle">javafx.application.Application
 <ul>
 <li class="circle">gui.<a href="gui/Main.html" class="type-name-link" title="class in gui">Main</a></li>
+</ul>
+</li>
+<li class="circle">app.media_managers.<a href="app/media_managers/AudioModifier.html" class="type-name-link" title="class in app.media_managers">AudioModifier</a>
+<ul>
+<li class="circle">app.media_managers.<a href="app/media_managers/VideoModifier.html" class="type-name-link" title="class in app.media_managers">VideoModifier</a></li>
 </ul>
 </li>
 <li class="circle">gui.tool.<a href="gui/tool/AudioTool.html" class="type-name-link" title="class in gui.tool">AudioTool</a> (implements gui.tool.<a href="gui/tool/Tool.html" title="interface in gui.tool">Tool</a>)
@@ -90,17 +96,23 @@ loadScripts(document, 'script');</script>
 <li class="circle">storage.<a href="storage/FileLoaderWriter.html" class="type-name-link" title="class in storage">FileLoaderWriter</a> (implements storage.<a href="storage/Storage.html" title="interface in storage">Storage</a>)</li>
 <li class="circle">gui.<a href="gui/GUICreator.html" class="type-name-link" title="class in gui">GUICreator</a></li>
 <li class="circle">gui.media.<a href="gui/media/GUIMediaFactory.html" class="type-name-link" title="class in gui.media">GUIMediaFactory</a></li>
+<li class="circle">gui.view_controllers.<a href="gui/view_controllers/GUIPlayerController.html" class="type-name-link" title="class in gui.view_controllers">GUIPlayerController</a></li>
 <li class="circle">gui.model.<a href="gui/model/GUIPlayerModel.html" class="type-name-link" title="class in gui.model">GUIPlayerModel</a></li>
 <li class="circle">gui.media.<a href="gui/media/GUIShapeFactory.html" class="type-name-link" title="class in gui.media">GUIShapeFactory</a></li>
 <li class="circle">gui.tool.<a href="gui/tool/HyperlinkTool.html" class="type-name-link" title="class in gui.tool">HyperlinkTool</a> (implements gui.tool.<a href="gui/tool/Tool.html" title="interface in gui.tool">Tool</a>)</li>
 <li class="circle">app.media_managers.<a href="app/media_managers/ImageModifier.html" class="type-name-link" title="class in app.media_managers">ImageModifier</a></li>
+<li class="circle">gui.tool.<a href="gui/tool/ImageTool.html" class="type-name-link" title="class in gui.tool">ImageTool</a> (implements gui.tool.<a href="gui/tool/Tool.html" title="interface in gui.tool">Tool</a>)</li>
 <li class="circle"><a href="Main.html" class="type-name-link" title="class in Unnamed Package">Main</a></li>
 <li class="circle">app.media.<a href="app/media/Media.html" class="type-name-link" title="class in app.media">Media</a> (implements java.io.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a>)
 <ul>
 <li class="circle">app.media.<a href="app/media/FileMedia.html" class="type-name-link" title="class in app.media">FileMedia</a>
 <ul>
+<li class="circle">app.media.<a href="app/media/MediaAudio.html" class="type-name-link" title="class in app.media">MediaAudio</a>
+<ul>
+<li class="circle">app.media.<a href="app/media/MediaVideo.html" class="type-name-link" title="class in app.media">MediaVideo</a></li>
+</ul>
+</li>
 <li class="circle">app.media.<a href="app/media/MediaImage.html" class="type-name-link" title="class in app.media">MediaImage</a></li>
-<li class="circle">app.media.<a href="app/media/MediaPlayable.html" class="type-name-link" title="class in app.media">MediaPlayable</a></li>
 </ul>
 </li>
 <li class="circle">app.media.<a href="app/media/GenericShape.html" class="type-name-link" title="class in app.media">GenericShape</a>
@@ -111,17 +123,15 @@ loadScripts(document, 'script');</script>
 </ul>
 </li>
 <li class="circle">app.media.<a href="app/media/MediaHyperlink.html" class="type-name-link" title="class in app.media">MediaHyperlink</a></li>
-<li class="circle">app.media.<a href="app/media/MediaText.html" class="type-name-link" title="class in app.media">MediaText</a></li>
-<li class="circle">app.media.<a href="app/media/PenStroke.html" class="type-name-link" title="class in app.media">PenStroke</a></li>
-<li class="circle">app.media.<a href="app/media/TextBox.html" class="type-name-link" title="class in app.media">TextBox</a>
+<li class="circle">app.media.<a href="app/media/MediaText.html" class="type-name-link" title="class in app.media">MediaText</a>
 <ul>
 <li class="circle">app.media.<a href="app/media/Hyperlink.html" class="type-name-link" title="class in app.media">Hyperlink</a></li>
 </ul>
 </li>
+<li class="circle">app.media.<a href="app/media/PenStroke.html" class="type-name-link" title="class in app.media">PenStroke</a></li>
 </ul>
 </li>
 <li class="circle">app.<a href="app/MediaCommunicator.html" class="type-name-link" title="class in app">MediaCommunicator</a></li>
-<li class="circle"><a href="MediaCommunicator.html" class="type-name-link" title="class in Unnamed Package">MediaCommunicator</a></li>
 <li class="circle">gui.tool.<a href="gui/tool/MediaTool.html" class="type-name-link" title="class in gui.tool">MediaTool</a> (implements gui.tool.<a href="gui/tool/Tool.html" title="interface in gui.tool">Tool</a>)</li>
 <li class="circle">javafx.scene.Node (implements javafx.event.EventTarget, javafx.css.Styleable)
 <ul>
@@ -140,6 +150,7 @@ loadScripts(document, 'script');</script>
 </li>
 <li class="circle">gui.media.<a href="gui/media/GUIHyperlink.html" class="type-name-link" title="class in gui.media">GUIHyperlink</a></li>
 <li class="circle">gui.media.<a href="gui/media/GUIHyperlinkBox.html" class="type-name-link" title="class in gui.media">GUIHyperlinkBox</a></li>
+<li class="circle">gui.media.<a href="gui/media/GUIImage.html" class="type-name-link" title="class in gui.media">GUIImage</a></li>
 <li class="circle">gui.media.<a href="gui/media/GUIPenStroke.html" class="type-name-link" title="class in gui.media">GUIPenStroke</a></li>
 <li class="circle">gui.media.<a href="gui/media/GUIShape.html" class="type-name-link" title="class in gui.media">GUIShape</a>
 <ul>
@@ -181,14 +192,12 @@ loadScripts(document, 'script');</script>
 </li>
 </ul>
 </li>
-<li class="circle">app.media.<a href="app/media/Page.html" class="type-name-link" title="class in app.media">Page</a></li>
 <li class="circle">gui.tool.<a href="gui/tool/PenTool.html" class="type-name-link" title="class in gui.tool">PenTool</a> (implements gui.tool.<a href="gui/tool/Tool.html" title="interface in gui.tool">Tool</a>)</li>
-<li class="circle">app.media_managers.<a href="app/media_managers/PlayableModifier.html" class="type-name-link" title="class in app.media_managers">PlayableModifier</a></li>
 <li class="circle">java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Record.html" class="type-name-link external-link" title="class or interface in java.lang">Record</a>
 <ul>
+<li class="circle">app.media.<a href="app/media/MediaText.Box.html" class="type-name-link" title="class in app.media">MediaText.Box</a> (implements java.io.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a>)</li>
 <li class="circle">gui.page.<a href="gui/page/PageEventHandler.HandlerMethod.html" class="type-name-link" title="class in gui.page">PageEventHandler.HandlerMethod</a>&lt;T&gt;</li>
 <li class="circle">app.media.<a href="app/media/PenStroke.Segment.html" class="type-name-link" title="class in app.media">PenStroke.Segment</a> (implements java.io.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a>)</li>
-<li class="circle">app.media.<a href="app/media/TextBox.Box.html" class="type-name-link" title="class in app.media">TextBox.Box</a> (implements java.io.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a>)</li>
 </ul>
 </li>
 <li class="circle">gui.<a href="gui/ResourceLoader.html" class="type-name-link" title="class in gui">ResourceLoader</a></li>

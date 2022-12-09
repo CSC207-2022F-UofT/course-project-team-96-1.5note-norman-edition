@@ -89,7 +89,7 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(gui.media.GUIAudio,javafx.util.Duration)" class="member-name-link">GUIPlayerModel</a><wbr>(<a href="../media/GUIAudio.html" title="class in gui.media">GUIAudio</a>&nbsp;associatedPlayer,
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(gui.media.Playable,javafx.util.Duration)" class="member-name-link">GUIPlayerModel</a><wbr>(<a href="../media/Playable.html" title="interface in gui.media">Playable</a>&nbsp;associatedPlayer,
  javafx.util.Duration&nbsp;totalDuration)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
@@ -107,8 +107,17 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#changePlayRate(double)" class="member-name-link">changePlayRate</a><wbr>(double&nbsp;value)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#changePlaybackSlider(double)" class="member-name-link">changePlaybackSlider</a><wbr>(double&nbsp;value)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#changePlayRate(double)" class="member-name-link">changePlayRate</a><wbr>(double&nbsp;value)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#changePlayTime(double,javafx.scene.media.MediaPlayer.Status)" class="member-name-link">changePlayTime</a><wbr>(double&nbsp;value,
+ javafx.scene.media.MediaPlayer.Status&nbsp;mediaStatus)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adjusts where the associated GUIAudio will play from when the user interacts with the playback slider</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#changeVolume(double)" class="member-name-link">changeVolume</a><wbr>(double&nbsp;value)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -123,17 +132,11 @@ loadScripts(document, 'script');</script>
 <div class="block">Formats a duration into a more readable time format</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#playbackSliderAdjusted(double,javafx.scene.media.MediaPlayer.Status)" class="member-name-link">playbackSliderAdjusted</a><wbr>(double&nbsp;value,
- javafx.scene.media.MediaPlayer.Status&nbsp;mediaStatus)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Adjusts where the associated GUIAudio will play from when the user interacts with the playback slider</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTotalDuration(javafx.util.Duration)" class="member-name-link">setTotalDuration</a><wbr>(javafx.util.Duration&nbsp;totalDuration)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updatePlaybackText(javafx.util.Duration)" class="member-name-link">updatePlaybackText</a><wbr>(javafx.util.Duration&nbsp;newDuration)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTotalDuration(javafx.util.Duration)" class="member-name-link">setTotalDuration</a><wbr>(javafx.util.Duration&nbsp;totalDuration)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updatePlaybackText(javafx.util.Duration)" class="member-name-link">updatePlaybackText</a><wbr>(javafx.util.Duration&nbsp;newDuration)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -152,9 +155,9 @@ loadScripts(document, 'script');</script>
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="&lt;init&gt;(gui.media.GUIAudio,javafx.util.Duration)">
+<section class="detail" id="&lt;init&gt;(gui.media.Playable,javafx.util.Duration)">
 <h3>GUIPlayerModel</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">GUIPlayerModel</span><wbr><span class="parameters">(<a href="../media/GUIAudio.html" title="class in gui.media">GUIAudio</a>&nbsp;associatedPlayer,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">GUIPlayerModel</span><wbr><span class="parameters">(<a href="../media/Playable.html" title="interface in gui.media">Playable</a>&nbsp;associatedPlayer,
  javafx.util.Duration&nbsp;totalDuration)</span></div>
 </section>
 </li>
@@ -193,9 +196,9 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="playbackSliderAdjusted(double,javafx.scene.media.MediaPlayer.Status)">
-<h3>playbackSliderAdjusted</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">playbackSliderAdjusted</span><wbr><span class="parameters">(double&nbsp;value,
+<section class="detail" id="changePlayTime(double,javafx.scene.media.MediaPlayer.Status)">
+<h3>changePlayTime</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">changePlayTime</span><wbr><span class="parameters">(double&nbsp;value,
  javafx.scene.media.MediaPlayer.Status&nbsp;mediaStatus)</span></div>
 <div class="block">Adjusts where the associated GUIAudio will play from when the user interacts with the playback slider
  <p>
@@ -205,6 +208,12 @@ loadScripts(document, 'script');</script>
 <dd><code>value</code> - what % of the full duration of associated audio to play from</dd>
 <dd><code>mediaStatus</code> - current status of the associated GUIAudio</dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="changePlaybackSlider(double)">
+<h3>changePlaybackSlider</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">changePlaybackSlider</span><wbr><span class="parameters">(double&nbsp;value)</span></div>
 </section>
 </li>
 <li>
