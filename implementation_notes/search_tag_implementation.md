@@ -52,3 +52,14 @@ Design patterns that I tried to incorporate in my design are the Observer design
 
 For my implementation, I was able to provide tests for most of the classes I created, although I was unable to test anything related to the GUI (tests related to `SearchTool` and `TagTool`) as testing with JavaFX seemed to be more complex than regular JUnit testing. I provided tests for all of the business logic and attached are some screenshots of the coverage of my tests.
 
+For Tagger tests:
+These tests should cover part of the `ToolBarController` as other team members have used this controller class as well for their specific tools, all of `Tagger`, as well as all of `InteractionManager`.
+
+![image](https://user-images.githubusercontent.com/29721326/206603518-41542de3-f29b-4a7e-bf0a-9e21c8dffc26.png)
+
+
+For Searcher tests:
+These tests should cover all of `SearchBarController` as well as `Tagger` and `InteractionManager`.
+
+![image](https://user-images.githubusercontent.com/29721326/206604028-75641607-0f7c-48ad-b71f-6bf41192341a.png)
+
